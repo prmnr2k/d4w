@@ -1,0 +1,30 @@
+.surfer{
+    background:url('./production/images/surfer.jpg') center no-repeat;
+    background-size:cover;
+}
+.bg-img{
+    text-align:center;
+}
+
+.vf2{
+    background:url('./production/images/vf2.jpg') center no-repeat;
+    background-size:cover;
+}
+
+.parashut{
+    background:url('./production/images/parashut.jpg') center no-repeat;
+    background-size:cover;
+}
+
+.child{
+    background:url('./production/images/child.jpg') center no-repeat;
+    background-size:cover;
+}
+
+.white-span{
+    color: #fff;
+}
+
+.grey-span{
+    color:#536273;
+}

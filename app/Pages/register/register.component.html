@@ -1,0 +1,113 @@
+<div class="wrapper row3">
+  <main id="container" class="clear">
+    <!-- container body -->
+    
+    <div class="register_block">
+      <div class="reg_block reg_left">
+        <h2>Professionnels du chiffre et du droit</h2>
+        <form action="" >
+          <label>Email</label>
+          <input type="text" name="email" [(ngModel)]="email"><br>
+          <label>Password</label>
+          <input type="password" name="password" [(ngModel)]="password"><br>
+          <label>First Name</label>
+          <input type="text" name="fname" [(ngModel)]="fname"><br>
+          <label>Last Name</label>
+          <input type="text" name="lname" [(ngModel)]="lname"><br>
+          <label>Phone</label>
+          <input type="text" name="phone" [(ngModel)]="phone"><br>
+          <button (click)="RegisterUser(email,password,fname,lname,phone)">Register</button>
+        </form>
+      </div>
+      <div class="reg_block reg_right">
+        <h2>Concepteurs de Solutions</h2>
+        <form >
+          <label>Email</label>
+          <input type="text" name="email" [(ngModel)]="email"><br>
+          <label>Password</label>
+          <input type="password" name="password" [(ngModel)]="password"><br>
+          <label>First Name</label>
+          <input type="text" name="fname" [(ngModel)]="fname"><br>
+          <label>Last Name</label>
+          <input type="text" name="lname" [(ngModel)]="lname"><br>
+          <label>Phone</label>
+          <input type="text" name="phone" [(ngModel)]="phone"><br>
+          <h3>Company</h3>
+          <label>Name</label>
+          <input type="text" name="cname" [(ngModel)]="cname"><br>
+          <label>Address</label>
+          <input type="text" name="caddress" [(ngModel)]="caddress"><br>
+          <label>Other Address</label>
+          <input type="text" name="coaddress" [(ngModel)]="coaddress"><br>
+          <label>Email</label>
+          <input type="text" name="cemail" [(ngModel)]="cemail"><br>
+          <label>Phone</label>
+          <input type="text" name="cphone" [(ngModel)]="cphone"><br>
+          <label>Worktime</label>
+          <input type="text" name="worktime" [(ngModel)]="worktime"><br>
+          <label>Company ID</label>
+          <input type="text" name="companyid" [(ngModel)]="companyid"><br>
+          <label>Description</label>
+          <textarea name="description" [(ngModel)]="description"></textarea><br>
+          <label>Social links</label>
+          <textarea name="links" [(ngModel)]="links"></textarea><br>
+          <label>Logo image</label>
+          <input type="file"><br>
+          <div class="part_reg">
+            <div>
+              <label>Company type</label>
+              <select name="c_type" [(ngModel)]="c_type" >
+                <option value="concepteur">Concepteur</option>
+                <option value="conseiller">Conseiller</option>
+                <option value="both">Both</option>
+              </select>
+            </div>
+            <div>
+              <label>Subcategory</label>
+              <select name="subcategory" [(ngModel)]="subcategory">
+                <option value="classique">Classique</option>
+                <option value="e_brooker">E-brooker</option>
+                <option value="fintech">Fintech</option>
+                <option value="crowdfunding">Crowdfunding</option>
+                <option value="lendfunding">Lendfunding</option>
+                <option value="institutionnels">Institutionnels</option>
+              </select>
+            </div>
+          </div><br>
+          <div class="part_reg">
+            <div>
+              <label>Expertises</label>
+              <select name="expertises" [(ngModel)]="expertises" multiple>
+                <option value="credit">Credit</option>
+                <option value="retraite">Retraite</option>
+                <option value="placement">Placement</option>
+                <option value="allocation">Allocation</option>
+                <option value="epargne">Epargne</option>
+                <option value="investissement">Investissement</option>
+                <option value="defiscalisation">Defiscalisation</option>
+                <option value="immobilier">Immobilier</option>
+                <option value="assurance">Assurance</option>
+                <option value="investissement_plaisir">Investissement plaisir</option>
+              </select>
+            </div>
+            <div>
+              <label>Agrements</label>
+              <select name="agrements" [(ngModel)]="agrements" multiple>
+                <option value="CJA">CJA</option>
+                <option value="CIF">CIF</option>
+                <option value="Courtier">Courtier</option>
+                <option value="IOSB">IOSB</option>
+                <option value="Carte_T">Carte-T</option>
+              </select>
+            </div>
+          </div><br>
+          <button (click)="RegisterUserCompany(email,password,fname,lname,phone,cname,caddress,coaddress,cemail,cphone,worktime,companyid,description,links,c_type,subcategory,expertises,agrements)">Register</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ########################################################################################## -->
+    <!-- / container body -->
+    <div class="clear"></div>
+  </main>
+</div>

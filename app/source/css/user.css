@@ -1,0 +1,13 @@
+/* User Space */
+
+.container960 {
+    max-width: 960px;
+}
+
+.hero--user {
+    max-height: 360px;
+}
+
+.container560 {
+    max-width: 560px;
+}

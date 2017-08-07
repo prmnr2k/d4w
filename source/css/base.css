@@ -55,7 +55,7 @@ a:hover {
      left: 6px;
 }
 .input-withicon {
-    padding-left: 32px;
+    padding-left: 32px !important;
 }
 
 .form-inline {

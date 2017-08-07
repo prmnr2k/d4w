@@ -9,91 +9,104 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
 var token_model_1 = require("./../models/token.model");
 var http_service_1 = require("./http.service");
 var router_1 = require("@angular/router");
-var Observable_1 = require("rxjs/Observable");
 require("rxjs/add/operator/map");
 require("rxjs/add/operator/catch");
 require("rxjs/add/observable/throw");
 require("rxjs/Rx");
 var Subject_1 = require("rxjs/Subject");
+var user_model_1 = require("../models/user.model");
+var activity_model_1 = require("../models/activity.model");
+var message_model_1 = require("../models/message.model");
+var ActivityList = [
+    new activity_model_1.ActivityModel(1, "addr1", "type1", new Date(), 3.5, "", "", "", "title1", "rule1", "description1", 5, "staff1", 1),
+    new activity_model_1.ActivityModel(2, "addr2", "type2", new Date(), 3.5, "", "", "", "title2", "rule2", "description2", 5, "staff2", 1),
+    new activity_model_1.ActivityModel(3, "addr3", "type3", new Date(), 3.5, "", "", "", "title3", "rule3", "description3", 5, "staff3", 1),
+    new activity_model_1.ActivityModel(4, "addr4", "type4", new Date(), 3.5, "", "", "", "title4", "rule4", "description4", 5, "staff4", 1),
+    new activity_model_1.ActivityModel(5, "addr5", "type5", new Date(), 3.5, "", "", "", "title5", "rule5", "description5", 5, "staff5", 1),
+    new activity_model_1.ActivityModel(6, "addr6", "type6", new Date(), 3.5, "", "", "", "title6", "rule6", "description6", 5, "staff6", 2),
+    new activity_model_1.ActivityModel(7, "addr7", "type7", new Date(), 3.5, "", "", "", "title7", "rule7", "description7", 5, "staff7", 2),
+    new activity_model_1.ActivityModel(8, "addr8", "type8", new Date(), 3.5, "", "", "", "title8", "rule8", "description8", 5, "staff8", 2),
+    new activity_model_1.ActivityModel(9, "addr9", "type9", new Date(), 3.5, "", "", "", "title9", "rule9", "description9", 5, "staff9", 2),
+    new activity_model_1.ActivityModel(10, "addr10", "type10", new Date(), 3.5, "", "", "", "title10", "rule10", "description10", 5, "staff10", 2),
+    new activity_model_1.ActivityModel(11, "addr11", "type11", new Date(), 3.5, "", "", "", "title11", "rule11", "description11", 5, "staff11", 3),
+    new activity_model_1.ActivityModel(12, "addr12", "type12", new Date(), 3.5, "", "", "", "title12", "rule12", "description12", 5, "staff12", 3),
+    new activity_model_1.ActivityModel(13, "addr13", "type13", new Date(), 3.5, "", "", "", "title13", "rule13", "description13", 5, "staff13", 3)
+];
+var UserList = [
+    new user_model_1.UserModel(1, "email1@gmail.com", "First_name1", "Last_name1", "phone1", new Date(), new Date()),
+    new user_model_1.UserModel(2, "email2@gmail.com", "First_name2", "Last_name2", "phone2", new Date(), new Date()),
+    new user_model_1.UserModel(3, "email3@gmail.com", "First_name3", "Last_name3", "phone3", new Date(), new Date())
+];
+var MessageList = [
+    new message_model_1.MessageModel("text1", 1, 2),
+    new message_model_1.MessageModel("text2", 2, 1),
+    new message_model_1.MessageModel("text3", 2, 1),
+    new message_model_1.MessageModel("text4", 1, 2),
+    new message_model_1.MessageModel("text5", 1, 2),
+    new message_model_1.MessageModel("text6", 1, 2),
+    new message_model_1.MessageModel("text7", 1, 2),
+    new message_model_1.MessageModel("text8", 1, 2),
+    new message_model_1.MessageModel("text9", 1, 2),
+    new message_model_1.MessageModel("text11", 3, 2),
+    new message_model_1.MessageModel("text12", 3, 2),
+    new message_model_1.MessageModel("text13", 3, 2),
+    new message_model_1.MessageModel("text14", 1, 2),
+    new message_model_1.MessageModel("text15", 1, 2),
+    new message_model_1.MessageModel("text16", 1, 3),
+    new message_model_1.MessageModel("text17", 3, 1),
+    new message_model_1.MessageModel("text18", 1, 3),
+    new message_model_1.MessageModel("text19", 3, 1)
+];
+var ActivityPromise = Promise.resolve(ActivityList);
+var UserPromise = Promise.resolve(UserList);
+var MessagePromise = Promise.resolve(MessageList);
 var MainService = (function () {
     function MainService(httpService, router) {
         this.httpService = httpService;
         this.router = router;
+        this.me = UserList.find(function (x) { return x.id == 1; });
         this.onAuthChange$ = new Subject_1.Subject();
         this.onAuthChange$.next(false);
     }
-    MainService.prototype.GetAllAds = function (params) {
-        /*return AdsPromise
-            .then(Ads => Ads.filter(x => x.description.includes(text) &&
-                ((category.length > 0)?(x.sub_category == category):true))
-            );*/
-        var options = new http_1.URLSearchParams();
-        for (var key in params) {
-            options.set(key, params[key]);
-        }
-        return this.httpService.GetData('/ads/all', options.toString());
+    MainService.prototype.GetAllMessages = function (sender) {
+        return MessagePromise
+            .then(function (messages) {
+            messages.find(function (x) { return x.sender == sender; });
+        });
     };
-    MainService.prototype.GetAdsById = function (id) {
-        /*return AdsPromise
-            .then(Ads => Ads.find(x => x.id == id));*/
-        return this.httpService.GetData('/ads/info/' + id, "");
+    MainService.prototype.SendMessage = function (content, rec) {
+        var _this = this;
+        return MessagePromise
+            .then(function (messages) {
+            messages.push(new message_model_1.MessageModel(content, _this.me.id, rec));
+        });
     };
-    MainService.prototype.CreateAd = function (title, desc) {
-        var params = { title: title, description: desc };
-        /*return AdsPromise
-            .then(Ads => Ads.push(new AdsModel(id+1,title,desc,"",this.me.id,1,1,null,null,"fintech",[""],[""])));*/
-        return this.httpService.PostData('/ads/create', JSON.stringify(params));
+    MainService.prototype.GetAllActivities = function () {
+        return ActivityPromise;
     };
-    MainService.prototype.DeleteAd = function (ad) {
-        return this.httpService.DeleteData('/ads/delete/' + ad.id);
+    MainService.prototype.GetActivityById = function (id) {
+        return ActivityPromise
+            .then(function (activity) { return activity.find(function (x) { return x.id == id; }); });
     };
-    MainService.prototype.UpdateAd = function (id, title, desc) {
-        var ad = { title: title, description: desc };
-        var params = new http_1.URLSearchParams();
-        params.set('ad', JSON.stringify(ad));
-        return this.httpService.PutData('/ads/update/' + id, JSON.stringify(params))
-            .map(function (resp) { return resp.json(); })
-            .catch(function (error) { return Observable_1.Observable.throw(error); });
+    MainService.prototype.DeleteActivityById = function (id) {
+        return ActivityPromise
+            .then(function (activityList) {
+            var activity = activityList.find(function (x) { return x.id == id; })[0];
+            activityList.splice(activityList.indexOf(activity), 1);
+        });
     };
-    MainService.prototype.GetAllUsers = function (params) {
-        var options = new http_1.URLSearchParams();
-        for (var key in params) {
-            options.set(key, params[key]);
-        }
-        /*return this.httpService.GetData('/users/all',params).toArray<UserModel>();*/
-        return this.httpService.GetData('/users/all', options.toString());
-    };
-    MainService.prototype.GetUserById = function (id) {
-        return this.httpService.GetData('/users/info/' + id, "");
+    MainService.prototype.CreateActivity = function (address, type, background, logo, location, title, rules, descr, bookings, stuff) {
+        var _this = this;
+        return ActivityPromise
+            .then(function (activityList) {
+            activityList.push(new activity_model_1.ActivityModel(activityList.length, address, type, new Date(), 0, background, logo, location, title, rules, descr, bookings, stuff, _this.me.id));
+        });
     };
     MainService.prototype.GetMe = function () {
         return this.httpService.GetData('/users/my_info', "");
-    };
-    MainService.prototype.CreateUser = function (user) {
-        var params = {
-            user: user,
-            expertises: ["placement"],
-            agrements: ["CJA"]
-        };
-        console.log(JSON.stringify(params));
-        return this.httpService.PostData('/users/create', JSON.stringify(params)).toPromise();
-    };
-    MainService.prototype.CreateUserCompany = function (user, company, expertises, agrements) {
-        var params = {
-            user: user,
-            company: company,
-            expertises: expertises,
-            agrements: agrements
-        };
-        console.log(JSON.stringify(params));
-        return this.httpService.PostData('/users/create', JSON.stringify(params)).toPromise();
-    };
-    MainService.prototype.UpdateUser = function (user) {
-        return this.httpService.PutData('/users/update', JSON.stringify(user)).toPromise();
     };
     MainService.prototype.UserLogin = function (email, password) {
         var _this = this;
@@ -126,29 +139,6 @@ var MainService = (function () {
         this.httpService.headers.delete('Authorization');
         this.onAuthChange$.next(false);
         localStorage.removeItem('token');
-    };
-    MainService.prototype.GetAllNews = function (params) {
-        var options = new http_1.URLSearchParams();
-        for (var key in params) {
-            options.set(key, params[key]);
-        }
-        return this.httpService.GetData('/news/all', options.toString());
-    };
-    MainService.prototype.GetNewsById = function (id) {
-        return this.httpService.GetData('/news/info/' + id, "");
-    };
-    MainService.prototype.CreateNews = function (title, descr) {
-        var params = { title: title, description: descr };
-        /*return AdsPromise
-            .then(Ads => Ads.push(new AdsModel(id+1,title,desc,"",this.me.id,1,1,null,null,"fintech",[""],[""])));*/
-        return this.httpService.PostData('/news/create', JSON.stringify(params));
-    };
-    MainService.prototype.UpdateNews = function (id, title, descr) {
-        var params = { ad: { title: title, description: descr } };
-        return this.httpService.PutData('/news/update/' + id, JSON.stringify(params));
-    };
-    MainService.prototype.DeleteNews = function (id) {
-        return this.httpService.DeleteData('/news/delete/' + id);
     };
     return MainService;
 }());

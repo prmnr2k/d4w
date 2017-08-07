@@ -1,6 +1,6 @@
 "use strict";
 var UserModel = (function () {
-    function UserModel(id, email, first_name, last_name, phone, created_at, updated_at, company) {
+    function UserModel(id, email, first_name, last_name, phone, created_at, updated_at) {
         /*if(first_name == null)
             this.first_name = "";
         if(last_name  == null)
@@ -16,7 +16,6 @@ var UserModel = (function () {
         this.phone = phone;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.company = company;
     }
     return UserModel;
 }());

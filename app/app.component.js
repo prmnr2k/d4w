@@ -15,7 +15,7 @@ var AppComponent = (function () {
     function AppComponent(mainService) {
         this.mainService = mainService;
         this.isLoggedIn = false;
-        this.me = new user_model_1.UserModel(null, "", "", "", "", null, null, null);
+        this.me = new user_model_1.UserModel(null, "", "", "", "", null, null);
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;

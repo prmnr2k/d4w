@@ -19,7 +19,7 @@ require("rxjs/add/observable/throw");
 var HttpService = (function () {
     function HttpService(http) {
         this.http = http;
-        this.serverUrl = "https://patrimoine.herokuapp.com";
+        this.serverUrl = "https://test.back.com"; // Url of Backend
         this.headers = new http_2.Headers([]);
         this.token = new token_model_1.TokenModel('');
     }
@@ -34,7 +34,7 @@ var HttpService = (function () {
         };
         if (!this.headers.has('Content-Type'))
             this.headers.append('Content-Type', 'application/json');
-        return this.http.post(this.serverUrl + '/auth/login', JSON.stringify(params), { headers: this.headers })
+        return this.http.post(this.serverUrl + '/authentication/login', JSON.stringify(params), { headers: this.headers })
             .map(function (resp) { return resp.json(); })
             .subscribe(function (data) {
             localStorage.setItem('token', data.token);

@@ -9,13 +9,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var user_model_1 = require("./models/user.model");
 var main_service_1 = require("./services/main.service");
 var AppComponent = (function () {
+    //me: UserModel = new UserModel(null,"","","","",null,null); 
     function AppComponent(mainService) {
         this.mainService = mainService;
         this.isLoggedIn = false;
-        this.me = new user_model_1.UserModel(null, "", "", "", "", null, null);
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -23,14 +22,10 @@ var AppComponent = (function () {
             if (bool) {
                 _this.isLoggedIn = bool;
                 if (_this.isLoggedIn)
-                    _this.mainService.GetMe()
-                        .subscribe(function (data) {
-                        console.log(JSON.stringify(data));
-                        _this.me = data;
-                        //console.log(this.me);
-                    });
+                    _this.mainService.GetMe();
             }
         });
+        this.mainService.MainInit();
         this.mainService.TryToLoginWithToken();
     };
     return AppComponent;

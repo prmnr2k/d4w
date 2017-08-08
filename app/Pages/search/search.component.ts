@@ -6,6 +6,7 @@ import { HttpService} from '../../services/http.service';
 
 import {MainService} from "./../../services/main.service";
 import { RightNavComponent } from '../../components/right.nav/right.nav.component';
+import { ActivityModel } from '../../models/activity.model';
 
 @Component({
     selector: "search",
@@ -14,11 +15,15 @@ import { RightNavComponent } from '../../components/right.nav/right.nav.componen
 })
 
 export class SearchComponent implements OnInit{
-    IsLoading = true;
+    Activities: ActivityModel[] = [];
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute){}
 
     ngOnInit(){
+        this.service.GetAllActivities()
+            .then(result=>{
+                this.Activities = result;
+            });
     }
 }

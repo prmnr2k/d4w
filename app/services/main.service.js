@@ -9,7 +9,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
-var token_model_1 = require("./../models/token.model");
 var http_service_1 = require("./http.service");
 var router_1 = require("@angular/router");
 require("rxjs/add/operator/map");
@@ -21,24 +20,15 @@ var user_model_1 = require("../models/user.model");
 var activity_model_1 = require("../models/activity.model");
 var message_model_1 = require("../models/message.model");
 var ActivityList = [
-    new activity_model_1.ActivityModel(1, "addr1", "type1", new Date(), 3.5, "", "", "", "title1", "rule1", "description1", 5, "staff1", 1),
-    new activity_model_1.ActivityModel(2, "addr2", "type2", new Date(), 3.5, "", "", "", "title2", "rule2", "description2", 5, "staff2", 1),
-    new activity_model_1.ActivityModel(3, "addr3", "type3", new Date(), 3.5, "", "", "", "title3", "rule3", "description3", 5, "staff3", 1),
-    new activity_model_1.ActivityModel(4, "addr4", "type4", new Date(), 3.5, "", "", "", "title4", "rule4", "description4", 5, "staff4", 1),
-    new activity_model_1.ActivityModel(5, "addr5", "type5", new Date(), 3.5, "", "", "", "title5", "rule5", "description5", 5, "staff5", 1),
-    new activity_model_1.ActivityModel(6, "addr6", "type6", new Date(), 3.5, "", "", "", "title6", "rule6", "description6", 5, "staff6", 2),
-    new activity_model_1.ActivityModel(7, "addr7", "type7", new Date(), 3.5, "", "", "", "title7", "rule7", "description7", 5, "staff7", 2),
-    new activity_model_1.ActivityModel(8, "addr8", "type8", new Date(), 3.5, "", "", "", "title8", "rule8", "description8", 5, "staff8", 2),
-    new activity_model_1.ActivityModel(9, "addr9", "type9", new Date(), 3.5, "", "", "", "title9", "rule9", "description9", 5, "staff9", 2),
-    new activity_model_1.ActivityModel(10, "addr10", "type10", new Date(), 3.5, "", "", "", "title10", "rule10", "description10", 5, "staff10", 2),
-    new activity_model_1.ActivityModel(11, "addr11", "type11", new Date(), 3.5, "", "", "", "title11", "rule11", "description11", 5, "staff11", 3),
-    new activity_model_1.ActivityModel(12, "addr12", "type12", new Date(), 3.5, "", "", "", "title12", "rule12", "description12", 5, "staff12", 3),
-    new activity_model_1.ActivityModel(13, "addr13", "type13", new Date(), 3.5, "", "", "", "title13", "rule13", "description13", 5, "staff13", 3)
+    new activity_model_1.ActivityModel(1, "Act1", "./production/images/parashut.jpg", "rules", new Date("2017-10-10"), new Date("2017-10-20"), 150, 10, "address1", "description1", new Date(), new Date(), 1),
+    new activity_model_1.ActivityModel(2, "Act2", "./production/images/parashut.jpg", "rules", new Date("2017-10-10"), new Date("2017-10-20"), 150, 10, "address1", "description1", new Date(), new Date(), 1),
+    new activity_model_1.ActivityModel(3, "Act3", "./production/images/surfer.jpg", "rules", new Date("2017-10-10"), new Date("2017-10-20"), 150, 10, "address1", "description1", new Date(), new Date(), 2),
+    new activity_model_1.ActivityModel(4, "Act4", "./production/images/child.jpg", "rules", new Date("2017-10-10"), new Date("2017-10-20"), 150, 10, "address1", "description1", new Date(), new Date(), 2)
 ];
 var UserList = [
-    new user_model_1.UserModel(1, "email1@gmail.com", "First_name1", "Last_name1", "phone1", new Date(), new Date()),
-    new user_model_1.UserModel(2, "email2@gmail.com", "First_name2", "Last_name2", "phone2", new Date(), new Date()),
-    new user_model_1.UserModel(3, "email3@gmail.com", "First_name3", "Last_name3", "phone3", new Date(), new Date())
+    new user_model_1.UserModel(1, "pro", "male", new Date("1994-06-05"), "./production/images/man.jpg", "source/images/userspace.png", [], "email1@email.com", "User1 Pro1", "+701234567890", null, "description1", "123456", new Date(), new Date()),
+    new user_model_1.UserModel(2, "pro", "male", new Date("1994-06-05"), "./production/images/man.jpg", "source/images/userspace.png", [], "email2@email.com", "User2 Pro2", "+701234567891", null, "description2", "123456", new Date(), new Date()),
+    new user_model_1.UserModel(3, "client", "male", new Date("1994-06-05"), "./production/images/man.jpg", null, null, "email3@email.com", "User3 Client3", "+712345678910", null, null, "123456", new Date(), new Date())
 ];
 var MessageList = [
     new message_model_1.MessageModel("text1", 1, 2),
@@ -71,6 +61,46 @@ var MainService = (function () {
         this.onAuthChange$ = new Subject_1.Subject();
         this.onAuthChange$.next(false);
     }
+    MainService.prototype.MainInit = function () {
+        //localStorage.clear();//optional, when models changed
+        var activities = JSON.parse(localStorage.getItem('ActivityList'));
+        if (!activities || activities.length == 0) {
+            localStorage.setItem('ActivityList', JSON.stringify(ActivityList));
+            console.log("activities now not empty");
+        }
+        else {
+            ActivityPromise = Promise.resolve(activities);
+            console.log(activities);
+        }
+        var users = JSON.parse(localStorage.getItem('UserList'));
+        if (!users || users.length == 0) {
+            localStorage.setItem('UserList', JSON.stringify(UserList));
+            console.log("users now not empty");
+        }
+        else {
+            UserPromise = Promise.resolve(users);
+            console.log(users);
+        }
+        var messages = JSON.parse(localStorage.getItem('MessageList'));
+        if (!messages || messages.length == 0) {
+            localStorage.setItem('MessageList', JSON.stringify(MessageList));
+            console.log("messages now not empty");
+        }
+        else {
+            MessagePromise = Promise.resolve(messages);
+            console.log(messages);
+        }
+    };
+    MainService.prototype.CreateUser = function (user_type, gender, birthday, profile_picture, background, gallery, full_name, email, phone, diploma_photo, activity_descr, password) {
+        return UserPromise
+            .then(function (users) {
+            users.push(new user_model_1.UserModel(users.length + 1, user_type, gender, birthday, profile_picture, background, gallery, email, full_name, phone, diploma_photo, activity_descr, password, new Date(), new Date()));
+            localStorage.setItem('UserList', JSON.stringify(users));
+        });
+    };
+    MainService.prototype.GetAllUsers = function () {
+        return UserPromise;
+    };
     MainService.prototype.GetAllMessages = function (sender) {
         return MessagePromise
             .then(function (messages) {
@@ -82,6 +112,7 @@ var MainService = (function () {
         return MessagePromise
             .then(function (messages) {
             messages.push(new message_model_1.MessageModel(content, _this.me.id, rec));
+            localStorage.setItem('MessageList', JSON.stringify(messages));
         });
     };
     MainService.prototype.GetAllActivities = function () {
@@ -96,49 +127,82 @@ var MainService = (function () {
             .then(function (activityList) {
             var activity = activityList.find(function (x) { return x.id == id; })[0];
             activityList.splice(activityList.indexOf(activity), 1);
+            localStorage.setItem('ActivityList', JSON.stringify(activityList));
         });
     };
-    MainService.prototype.CreateActivity = function (address, type, background, logo, location, title, rules, descr, bookings, stuff) {
+    MainService.prototype.CreateActivity = function (address, logo, title, rules, begin, finish, price, descr, bookings) {
         var _this = this;
         return ActivityPromise
             .then(function (activityList) {
-            activityList.push(new activity_model_1.ActivityModel(activityList.length, address, type, new Date(), 0, background, logo, location, title, rules, descr, bookings, stuff, _this.me.id));
+            activityList.push(new activity_model_1.ActivityModel(activityList.length + 1, title, logo, rules, begin, finish, price, bookings, address, descr, new Date(), new Date(), _this.me.id));
+            localStorage.setItem('ActivityList', JSON.stringify(activityList));
         });
     };
     MainService.prototype.GetMe = function () {
-        return this.httpService.GetData('/users/my_info', "");
+        var _this = this;
+        return UserPromise
+            .then(function (users) { return users.find(function (x) { return x.id == _this.me.id; }); });
+        //return this.httpService.GetData('/users/my_info',"");
+    };
+    MainService.prototype.GetUserById = function (id) {
+        return UserPromise
+            .then(function (users) { return users.find(function (x) { return x.id == id; }); });
     };
     MainService.prototype.UserLogin = function (email, password) {
         var _this = this;
-        return this.httpService.Login(email, password)
-            .add(function (data) {
-            console.log(data);
-            _this.GetMe()
-                .subscribe(function (user) {
-                _this.me = user;
+        return UserPromise
+            .then(function (users) {
+            var me = users.find(function (x) { return x.email == email; });
+            if (me && me.password == password) {
+                _this.me = me;
                 _this.onAuthChange$.next(true);
-                _this.router.navigate(["users", "me"]);
-            });
+                localStorage.setItem('CurrentUser', JSON.stringify(me));
+                console.log(localStorage.getItem('CurrentUser'));
+            }
         });
+        /*return this.httpService.Login(email,password)
+            .add((data:TokenModel)=>{
+                console.log(data);
+                
+                this.GetMe()
+                    .subscribe((user:UserModel)=>{
+                            this.me = user;
+                            this.onAuthChange$.next(true);
+                            this.router.navigate(["users","me"]);
+                        });
+                    
+            });*/
     };
     MainService.prototype.TryToLoginWithToken = function () {
-        var _this = this;
-        var token = localStorage.getItem('token');
-        if (token) {
-            this.httpService.token = new token_model_1.TokenModel(token);
-            this.httpService.headers.append('Authorization', token);
+        var me = JSON.parse(localStorage.getItem('CurrentUser'));
+        if (me && me.id) {
+            this.me = me;
+            this.onAuthChange$.next(true);
+            localStorage.setItem('CurrentUser', JSON.stringify(me));
+        }
+        else {
+            this.onAuthChange$.next(false);
+        }
+        /*let token = localStorage.getItem('token');
+        if(token)
+        {
+            this.httpService.token = new TokenModel(token);
+            this.httpService.headers.append('Authorization',token);
         }
         return this.GetMe()
-            .subscribe(function (user) {
-            _this.me = user;
-            _this.onAuthChange$.next(true);
-        });
+            .subscribe((user:UserModel)=>{
+                    this.me = user;
+                    this.onAuthChange$.next(true);
+                });*/
     };
     MainService.prototype.Logout = function () {
-        this.httpService.token = null;
+        this.me = null;
+        this.onAuthChange$.next(false);
+        localStorage.removeItem('CurrentUser');
+        /*this.httpService.token = null;
         this.httpService.headers.delete('Authorization');
         this.onAuthChange$.next(false);
-        localStorage.removeItem('token');
+        localStorage.removeItem('token');*/
     };
     return MainService;
 }());

@@ -15,25 +15,26 @@ import { MessageModel } from '../models/message.model';
 
 
 let ActivityList:ActivityModel[]=[
-    new ActivityModel(1,"addr1","type1",new Date(),3.5,"","","","title1","rule1","description1",5,"staff1",1),
-    new ActivityModel(2,"addr2","type2",new Date(),3.5,"","","","title2","rule2","description2",5,"staff2",1),
-    new ActivityModel(3,"addr3","type3",new Date(),3.5,"","","","title3","rule3","description3",5,"staff3",1),
-    new ActivityModel(4,"addr4","type4",new Date(),3.5,"","","","title4","rule4","description4",5,"staff4",1),
-    new ActivityModel(5,"addr5","type5",new Date(),3.5,"","","","title5","rule5","description5",5,"staff5",1),
-    new ActivityModel(6,"addr6","type6",new Date(),3.5,"","","","title6","rule6","description6",5,"staff6",2),
-    new ActivityModel(7,"addr7","type7",new Date(),3.5,"","","","title7","rule7","description7",5,"staff7",2),
-    new ActivityModel(8,"addr8","type8",new Date(),3.5,"","","","title8","rule8","description8",5,"staff8",2),
-    new ActivityModel(9,"addr9","type9",new Date(),3.5,"","","","title9","rule9","description9",5,"staff9",2),
-    new ActivityModel(10,"addr10","type10",new Date(),3.5,"","","","title10","rule10","description10",5,"staff10",2),
-    new ActivityModel(11,"addr11","type11",new Date(),3.5,"","","","title11","rule11","description11",5,"staff11",3),
-    new ActivityModel(12,"addr12","type12",new Date(),3.5,"","","","title12","rule12","description12",5,"staff12",3),
-    new ActivityModel(13,"addr13","type13",new Date(),3.5,"","","","title13","rule13","description13",5,"staff13",3)
+    new ActivityModel(1,"Act1","./production/images/parashut.jpg","rules",new Date("2017-10-10"),new Date("2017-10-20"),150,10,
+                "address1","description1",new Date(),new Date(),1),
+    new ActivityModel(2,"Act2","./production/images/parashut.jpg","rules",new Date("2017-10-10"),new Date("2017-10-20"),150,10,
+                "address1","description1",new Date(),new Date(),1),
+    new ActivityModel(3,"Act3","./production/images/surfer.jpg","rules",new Date("2017-10-10"),new Date("2017-10-20"),150,10,
+                "address1","description1",new Date(),new Date(),2),
+    new ActivityModel(4,"Act4","./production/images/child.jpg","rules",new Date("2017-10-10"),new Date("2017-10-20"),150,10,
+                "address1","description1",new Date(),new Date(),2)
 ];
 
 let UserList:UserModel[] = [
-    new UserModel(1,"email1@gmail.com","First_name1","Last_name1","phone1",new Date(),new Date()),
-    new UserModel(2,"email2@gmail.com","First_name2","Last_name2","phone2",new Date(),new Date()),
-    new UserModel(3,"email3@gmail.com","First_name3","Last_name3","phone3",new Date(),new Date())
+    new UserModel(1,"pro","male",new Date("1994-06-05"),"./production/images/man.jpg",
+                "source/images/userspace.png",[],"email1@email.com","User1 Pro1","+701234567890",
+                null,"description1","123456",new Date(),new Date()),
+    new UserModel(2,"pro","male",new Date("1994-06-05"),"./production/images/man.jpg",
+                "source/images/userspace.png",[],"email2@email.com","User2 Pro2","+701234567891",
+                null,"description2","123456",new Date(),new Date()),
+    new UserModel(3,"client","male",new Date("1994-06-05"),"./production/images/man.jpg",
+                null,null,"email3@email.com","User3 Client3","+712345678910",null,null,
+                "123456",new Date(),new Date())
 ];
 
 let MessageList:MessageModel[] = [
@@ -74,6 +75,70 @@ let MessagePromise = Promise.resolve(MessageList);
         }
         public me: UserModel = UserList.find(x=> x.id == 1);
 
+
+        MainInit(){
+            //localStorage.clear();//optional, when models changed
+
+            let activities = JSON.parse(localStorage.getItem('ActivityList'));
+            if(!activities || activities.length == 0){
+                localStorage.setItem('ActivityList',JSON.stringify(ActivityList));
+                console.log("activities now not empty");
+            }
+            else{
+                ActivityPromise = Promise.resolve(activities);
+                console.log(activities);
+            }
+            
+            let users = JSON.parse(localStorage.getItem('UserList'));
+            if(!users || users.length == 0){
+                localStorage.setItem('UserList',JSON.stringify(UserList));
+                console.log("users now not empty");
+            }
+            else{
+                UserPromise = Promise.resolve(users);
+                console.log(users);
+            }
+
+            let messages = JSON.parse(localStorage.getItem('MessageList'));
+            if(!messages || messages.length == 0){
+                localStorage.setItem('MessageList',JSON.stringify(MessageList));
+                console.log("messages now not empty");
+            }
+            else{
+                MessagePromise = Promise.resolve(messages);
+                console.log(messages);
+            }
+        }
+
+        CreateUser(user_type:string, gender:string,birthday:Date,profile_picture:string,
+                background:string,gallery:string[],full_name:string,email:string,phone:string,
+                diploma_photo:string,activity_descr:string,password:string){
+            return UserPromise
+                .then(users=>{
+                    users.push(new UserModel(
+                        users.length + 1,
+                        user_type,
+                        gender,
+                        birthday,
+                        profile_picture,
+                        background,
+                        gallery,
+                        email,
+                        full_name,
+                        phone,
+                        diploma_photo,
+                        activity_descr,
+                        password,
+                        new Date(),
+                        new Date()
+                    ));
+                    localStorage.setItem('UserList',JSON.stringify(users));
+                })
+        }
+
+        GetAllUsers(){
+            return UserPromise;
+        }
         GetAllMessages(sender:number){
             return MessagePromise
                 .then(messages =>{
@@ -85,6 +150,7 @@ let MessagePromise = Promise.resolve(MessageList);
             return MessagePromise
                 .then(messages=>{
                     messages.push(new MessageModel(content,this.me.id,rec));
+                    localStorage.setItem('MessageList',JSON.stringify(messages));
                 })
         }
 
@@ -100,40 +166,57 @@ let MessagePromise = Promise.resolve(MessageList);
                 .then(activityList =>{
                     let activity = activityList.find(x=> x.id == id)[0];
                     activityList.splice(activityList.indexOf(activity),1);
+                    localStorage.setItem('ActivityList',JSON.stringify(activityList));
                 })
         }
-        CreateActivity(address:string, type:string,background:string,logo:string,
-                        location:string,title:string,rules:string,descr:string,
-                        bookings:number,stuff:string)
+        CreateActivity(address:string,logo:string,title:string,
+                        rules:string,begin:Date,finish:Date,
+                        price:number,descr:string,bookings:number)
         {
             return ActivityPromise
                 .then(activityList=>{
                     activityList.push(new ActivityModel(
-                        activityList.length,
-                        address,
-                        type,
-                        new Date(),
-                        0,
-                        background,
-                        logo,
-                        location,
+                        activityList.length + 1,
                         title,
+                        logo,
                         rules,
-                        descr,
+                        begin,
+                        finish,
+                        price,
                         bookings,
-                        stuff,
+                        address,
+                        descr,
+                        new Date(),
+                        new Date(),
                         this.me.id));
+                    localStorage.setItem('ActivityList',JSON.stringify(activityList));
                 })
         }
 
 
         GetMe(){
-            return this.httpService.GetData('/users/my_info',"");
+            return UserPromise
+                .then(users=> users.find(x=>x.id == this.me.id))
+            //return this.httpService.GetData('/users/my_info',"");
+        }
+
+        GetUserById(id:number){
+            return UserPromise
+                .then(users=>users.find(x=>x.id == id));
         }
 
         UserLogin(email:string, password:string){
-            
-            return this.httpService.Login(email,password)
+            return UserPromise
+                .then(users=>{
+                    let me = users.find(x=>x.email == email);
+                    if(me && me.password == password){
+                        this.me = me;
+                        this.onAuthChange$.next(true);
+                        localStorage.setItem('CurrentUser',JSON.stringify(me));
+                        console.log(localStorage.getItem('CurrentUser'));
+                    }
+                })
+            /*return this.httpService.Login(email,password)
                 .add((data:TokenModel)=>{
                     console.log(data);
                     
@@ -144,13 +227,22 @@ let MessagePromise = Promise.resolve(MessageList);
                                 this.router.navigate(["users","me"]);
                             });
                         
-                });
+                });*/
                 
         }
 
         TryToLoginWithToken()
         {
-            let token = localStorage.getItem('token');
+            let me : UserModel = JSON.parse(localStorage.getItem('CurrentUser'));
+            if(me && me.id){
+                this.me = me;
+                this.onAuthChange$.next(true);
+                localStorage.setItem('CurrentUser',JSON.stringify(me));
+            }
+            else{
+                this.onAuthChange$.next(false);
+            }
+            /*let token = localStorage.getItem('token');
             if(token)
             {
                 this.httpService.token = new TokenModel(token);
@@ -160,15 +252,18 @@ let MessagePromise = Promise.resolve(MessageList);
                 .subscribe((user:UserModel)=>{
                         this.me = user;
                         this.onAuthChange$.next(true);
-                    });
+                    });*/
 
         }
 
         Logout(){
-            this.httpService.token = null;
+            this.me = null;
+            this.onAuthChange$.next(false);
+            localStorage.removeItem('CurrentUser');
+            /*this.httpService.token = null;
             this.httpService.headers.delete('Authorization');
             this.onAuthChange$.next(false);
-            localStorage.removeItem('token');
+            localStorage.removeItem('token');*/
         }
 
         

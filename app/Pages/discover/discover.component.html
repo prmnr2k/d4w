@@ -2,7 +2,6 @@
     <link rel="stylesheet" href="./../../source/css/index.css">
     <link rel="stylesheet" href="./../../source/css/search.css">
     <link rel="stylesheet" href="./../../source/css/discover.css">
-<right-nav></right-nav>
     <div class="hero">
       <div class="hero-content">
         <h1>Envie de dépenser votre énergie</h1>
@@ -46,113 +45,32 @@
                 <div class="cards">
                     <h3>Récentes</h3>
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/parashut.jpg');">
-                                    <h3 class="cardname">Parachute au-dessus de Paris</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">George</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
+                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6">
+                            <div class="card bg_cover" [ngStyle]="{'background':'url(' + item.picture + ')'}">
+                                <h3 class="cardname">{{item.title}}</h3>
+                                <h3 class="carddate">{{item.begin | date: "dd MMM"}}</h3>
+                                <div class="avatar">
+                                    <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
+                                    <span class="profile-text">Author</span>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/child.jpg');">
-                                    <h3 class="cardname">Surf à Montpellier</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">Juke</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/parashut.jpg');">
-                                    <h3 class="cardname">Parachute au-dessus de Paris</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">George</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/surfer.jpg');">
-                                    <h3 class="cardname">Le monde avec une hauteur de Mikhail</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">Michael</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
-                                </div>
+                                <span class="cardshadow"></span>
+                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
                             </div>
                         </div>
                     </div>
 
                     <h3>Le Plus Populaire</h3>
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/parashut.jpg');">
-                                    <h3 class="cardname">Parachute au-dessus de Paris</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">George</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
+                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6">
+                            <div class="card bg_cover" [ngStyle]="{'background':'url(' + item.picture + ')'}">
+                                <h3 class="cardname">{{item.title}}</h3>
+                                <h3 class="carddate">{{item.begin | date: "dd MMM"}}</h3>
+                                <div class="avatar">
+                                    <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
+                                    <span class="profile-text">Author</span>
                                 </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/child.jpg');">
-                                    <h3 class="cardname">Surf à Montpellier</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">Juke</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/parashut.jpg');">
-                                    <h3 class="cardname">Parachute au-dessus de Paris</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">George</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="card bg_cover" style="background-image:url('./production/images/surfer.jpg');">
-                                    <h3 class="cardname">Le monde avec une hauteur de Mikhail</h3>
-                                    <h3 class="carddate">June 24</h3>
-                                    <div class="avatar">
-                                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
-                                        <span class="profile-text">Michael</span>
-                                    </div>
-                                    <span class="cardshadow"></span>
-                                    <a href="activity.html"><span class="spanlink"></span></a>
-                                </div>
+                                <span class="cardshadow"></span>
+                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
                             </div>
                         </div>
                     </div>

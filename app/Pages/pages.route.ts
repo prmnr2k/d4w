@@ -6,13 +6,19 @@ import { DiscoverComponent } from './discover/discover.component';
 import { ActivityComponent } from './activity/activity.component';
 import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { CreateActivityComponent } from './createActivity/createActivity.component';
 
 export const routs = [
     { path:"", pathMatch : "full",component:IndexComponent },
     { path:"discover", component:DiscoverComponent},
-    { path:"activity",component:ActivityComponent},
+    { path:"activity/:id",component:ActivityComponent},
     {path:"search",component: SearchComponent},
-    {path:"user",component:UserComponent},
+    {path:"users/:id",component:UserComponent},
+    {path:"login", component: LoginComponent},
+    {path:"registration",component: RegisterComponent},
+    {pat:"create_activity",component: CreateActivityComponent},
     { path: "401", component: UnauthorizedComponent},
     { path: "404", component: NotFoundComponent},
     {path: "**", component:NotFoundComponent}

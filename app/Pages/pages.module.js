@@ -19,6 +19,8 @@ var activity_component_1 = require("./activity/activity.component");
 var index_component_1 = require("./index/index.component");
 var search_component_1 = require("./search/search.component");
 var user_component_1 = require("./user/user.component");
+var register_component_1 = require("./register/register.component");
+var createActivity_component_1 = require("./createActivity/createActivity.component");
 var PageModule = (function () {
     function PageModule() {
     }
@@ -31,13 +33,13 @@ PageModule = __decorate([
             index_1.LoginComponent, index_component_1.IndexComponent, index_1.UnauthorizedComponent,
             index_1.NotFoundComponent, discover_component_1.DiscoverComponent, search_component_1.SearchComponent,
             center_nav_component_1.CenterNavComponent, right_nav_component_1.RightNavComponent, activity_component_1.ActivityComponent,
-            user_component_1.UserComponent
+            user_component_1.UserComponent, register_component_1.RegisterComponent, createActivity_component_1.CreateActivityComponent
         ],
         exports: [
             index_1.LoginComponent, index_component_1.IndexComponent, index_1.UnauthorizedComponent,
             index_1.NotFoundComponent, discover_component_1.DiscoverComponent, search_component_1.SearchComponent,
             center_nav_component_1.CenterNavComponent, right_nav_component_1.RightNavComponent, activity_component_1.ActivityComponent,
-            user_component_1.UserComponent
+            user_component_1.UserComponent, register_component_1.RegisterComponent, createActivity_component_1.CreateActivityComponent
         ],
         providers: [http_service_1.HttpService, page_guards_1.PageAccessGuard]
     })

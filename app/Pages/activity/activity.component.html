@@ -3,10 +3,9 @@
     <link rel="stylesheet" href="./../../source/css/search.css">
     <link rel="stylesheet" href="./../../source/css/discover.css">
     <link rel="stylesheet" href="./../../source/css/activity.css">
-<center-nav></center-nav>
-<div class="hero center-block" style="background:url('source/images/Poxod-v-gory.jpg') center no-repeat; background-size:cover;">
+<div class="hero center-block" [ngStyle]="{'background':'url(' + Activity.picture + ') center no-repeat'}" [style.backgroundSize]="'cover'">
       <div class="hero-content">
-        <h1>Le monde avec une hauteur de Mikhail</h1>
+        <h1>{{Activity.title}}</h1>
       </div>
     </div>
     <div class="content1440">
@@ -15,14 +14,13 @@
                 <div class="col-sm-7">
                     <div class="round-card">
                         <div class="avatar pull-left">
-                            <img class="profile-logo" alt="logo" src="./production/images/man.jpg" style="center">
-                            <span class="profile-text">George</span>
+                            <img class="profile-logo" alt="logo" [src]="User.profile_picture" style="center">
+                            <span class="profile-text">{{User.name}}</span>
                             <a href="user.html"><span class="spanlink"></span></a>
                         </div>
                         <div class="about-org">
-                            <h3>Organizer Mikhail</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <h3>{{User.name}}</h3>
+                            <p>{{User.activity_description}}</p>
                         </div>
                     </div>
                 </div>
@@ -32,7 +30,7 @@
                             <h3>Reserve</h3>
                             <form action="#" method="post" class="controls-inline">
                                 <div class="form-group form-group-makeinline">
-                                    <input type="text" class="form-control input-withicon input-lg" placeholder="June 23">
+                                    <input type="date" [value]="Activity.begin" class="form-control input-withicon input-lg">
                                     <span class="material-icons input-icon">today</span>
                                 </div>
                                 <div class="form-group form-group-makeinline">
@@ -42,7 +40,7 @@
                                 <div class="form-group form-group-makeinline">
                                     <button type="button" class="btn btn-success input-withicon btn-lg">Reserve</button>
                                     <span class="material-icons input-icon" style="color: #fff">credit_card</span>
-                                    <span class="booking-price">150 euro</span>
+                                    <span class="booking-price">{{Activity.price}} euro</span>
                                 </div>
                             </form>
                         </div>
@@ -54,9 +52,7 @@
                     <div class="pl32">
                         <div class="activity-description">
                             <h4>Description</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                        </div>
+                            <p>{{Activity.description}}</p></div>
                         <div class="activity-comments-ratings">
                             <h3>Comments & Rating</h3>
                             <div class="container-fluid ratings">

@@ -4,8 +4,7 @@
     <link rel="stylesheet" href="./../../production/css/discover.css">
     <link rel="stylesheet" href="./../../production/css/activity.css">
     <link rel="stylesheet" href="./../../production/css/user.css">
-<center-nav></center-nav>  
-<div class="hero hero--user center-block" style="background:url('source/images/userspace.png') center no-repeat; background-size:cover;">
+<div class="hero hero--user center-block" [ngStyle]="{'background':'url(' + User.background + ') center no-repeat', 'background-size':'cover'}">
       <div class="hero-content">
         <h1>User Space</h1>
       </div>
@@ -15,11 +14,11 @@
             <div class="col-xs-12">
                 <div class="round-card">
                     <div class="avatar pull-left">
-                        <img class="profile-logo" alt="logo" src="./production/images/man.jpg">
+                        <img class="profile-logo" alt="logo" [src]="User.profile_picture">
                     </div>
                     <div class="about-org">
-                        <h3>Name Surname</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h3>{{User.name}}</h3>
+                        <p>{{User.activity_description}}</p>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -28,11 +27,26 @@
         <div class="row">
             <div class="col-xs-12">
                 <ul class="list-inline text-center">
-                  <li class="active"><h2>Profile Edit</h2></li>
-                  <li><h2><a href="#">Payments</a></h2></li>
-                  <li><h2><a href="#">Messages</a></h2></li>
+                    <li [ngClass]="MenuItem=='edit'?'active':''" class="active">
+                        <h2>
+                            <span *ngIf="MenuItem=='edit'">Profile Edit</span>
+                            <a (click)="SetMenuItem('edit')" *ngIf="MenuItem!='edit'">Profile Edit</a>
+                        </h2>
+                    </li>
+                    <li [ngClass]="MenuItem=='payments'?'active':''" class="active">
+                        <h2>
+                            <span *ngIf="MenuItem=='payments'">Payments</span>
+                            <a (click)="SetMenuItem('payments')" *ngIf="MenuItem!='payments'">Payments</a>
+                        </h2>
+                    </li>
+                    <li [ngClass]="MenuItem=='messages'?'active':''" class="active">
+                        <h2>
+                            <span *ngIf="MenuItem=='messages'">Messages</span>
+                            <a (click)="SetMenuItem('messages')" *ngIf="MenuItem!='messages'">Messages</a>
+                        </h2>
+                    </li>
                 </ul>
-                <div class="container-fluid center-block container560">
+                <div *ngIf="MenuItem=='edit'" class="container-fluid center-block container560">
                     <form action="#" method="post" class="controls-inline">
                         <div class="form-group">
                           <label for="name">Name Surname</label>
@@ -55,16 +69,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <ul class="list-inline text-center">
-                  <li><h2><a routerLink="/profile_edeit">Profile Edit</a></h2></li>
-                  <li class="active"><h2>Payments</h2></li>
-                  <li><h2><a routerLink="/messages">Messages</a></h2></li>
-                </ul>
-                <div class="container-fluid center-block container560">
+                <div *ngIf="MenuItem=='payments'" class="container-fluid center-block container560">
                     <table class="table">
                         <thead>
                             <tr>
@@ -102,16 +107,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <ul class="list-inline text-center">
-                  <li><h2><a href="#">Profile Edit</a></h2></li>
-                  <li><h2><a href="#">Payments</a></h2></li>
-                  <li class="active"><h2>Messages</h2></li>
-                </ul>
-                <div class="container-fluid center-block container560">
+                <div *ngIf="MenuItem=='messages'" class="container-fluid center-block container560">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -145,4 +141,5 @@
                 </div>
             </div>
         </div>
+        
     </div>

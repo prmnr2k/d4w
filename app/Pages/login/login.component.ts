@@ -21,9 +21,12 @@ export class LoginComponent implements OnInit{
     OnLoginButtonClick(username: string, password:string)
     {
         this.mainService.UserLogin(username,password)
-        .add((data:TokenModel)=>{
+            .then(result=>{
+              this.router.navigate(["user"]);  
+            });
+        /*.add((data:TokenModel)=>{
             
-        });
+        });*/
         
     }
 }

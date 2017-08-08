@@ -12,38 +12,37 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../../services/http.service");
 var main_service_1 = require("./../../services/main.service");
-var RegisterComponent = (function () {
-    function RegisterComponent(router, mainService) {
+var CreateActivityComponent = (function () {
+    function CreateActivityComponent(router, activatedRoute, service) {
         this.router = router;
-        this.mainService = mainService;
+        this.activatedRoute = activatedRoute;
+        this.service = service;
     }
-    RegisterComponent.prototype.ngOnInit = function () {
+    CreateActivityComponent.prototype.ngOnInit = function () {
     };
-    RegisterComponent.prototype.RegisterPro = function (gender, bd, email, full_name, phone, password, description) {
+    CreateActivityComponent.prototype.OnCreateActivityButtonClick = function (address, logo, title, rules, begin, finish, price, descr, bookings) {
         var _this = this;
-        this.mainService.CreateUser('pro', gender, bd, "./production/images/man.jpg", "source/images/userspace.png", null, full_name, email, phone, null, description, password)
+        this.service.CreateActivity(address, './production/images/surfer.jpg', title, rules, begin, finish, price, descr, bookings)
             .then(function (result) {
-            console.log(JSON.parse(localStorage.getItem('UserList')));
-            _this.router.navigate(["login"]);
+            _this.service.GetAllActivities()
+                .then(function (res) {
+                var act = res.find(function (x) { return x.title == title && x.description == descr && x.price == price; });
+                _this.router.navigate(['/activity', act.id]);
+            });
         });
     };
-    RegisterComponent.prototype.RegisterClient = function (gender, bd, email, full_name, phone, password) {
-        var _this = this;
-        this.mainService.CreateUser('client', gender, bd, "./production/images/man.jpg", null, null, full_name, email, phone, null, null, password)
-            .then(function (result) {
-            _this.router.navigate(["login"]);
-        });
-    };
-    return RegisterComponent;
+    return CreateActivityComponent;
 }());
-RegisterComponent = __decorate([
+CreateActivityComponent = __decorate([
     core_1.Component({
-        selector: "ads",
-        templateUrl: "app/Pages/register/register.component.html",
+        moduleId: module.id,
+        selector: "createActivity",
+        templateUrl: "./createActivity.component.ts",
         providers: [http_service_1.HttpService]
     }),
     __metadata("design:paramtypes", [router_1.Router,
+        router_1.ActivatedRoute,
         main_service_1.MainService])
-], RegisterComponent);
-exports.RegisterComponent = RegisterComponent;
-//# sourceMappingURL=register.component.js.map
+], CreateActivityComponent);
+exports.CreateActivityComponent = CreateActivityComponent;
+//# sourceMappingURL=createActivity.component.js.map

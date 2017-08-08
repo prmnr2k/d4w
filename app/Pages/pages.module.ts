@@ -15,6 +15,8 @@ import { ActivityComponent } from './activity/activity.component';
 import { IndexComponent } from './index/index.component';
 import { SearchComponent } from './search/search.component';
 import { UserComponent } from './user/user.component';
+import { RegisterComponent } from './register/register.component';
+import { CreateActivityComponent } from './createActivity/createActivity.component';
 
 @NgModule({
     imports:      [ CommonModule,FormsModule,RouterModule ],
@@ -22,13 +24,13 @@ import { UserComponent } from './user/user.component';
         LoginComponent, IndexComponent,UnauthorizedComponent,
         NotFoundComponent, DiscoverComponent, SearchComponent,
         CenterNavComponent,RightNavComponent,ActivityComponent,
-        UserComponent
+        UserComponent,RegisterComponent,CreateActivityComponent
     ],
     exports: [
         LoginComponent, IndexComponent, UnauthorizedComponent,
         NotFoundComponent,DiscoverComponent, SearchComponent,
         CenterNavComponent,RightNavComponent,ActivityComponent,
-        UserComponent
+        UserComponent,RegisterComponent,CreateActivityComponent
     ],
     providers: [HttpService, PageAccessGuard]
 })

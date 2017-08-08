@@ -12,14 +12,43 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../../services/http.service");
 var main_service_1 = require("./../../services/main.service");
+var user_model_1 = require("../../models/user.model");
 var UserComponent = (function () {
-    function UserComponent(router, service, params) {
+    function UserComponent(router, service, activatedRoute) {
         this.router = router;
         this.service = service;
-        this.params = params;
+        this.activatedRoute = activatedRoute;
         this.IsLoading = true;
+        this.User = new user_model_1.UserModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this.isMe = false;
+        this.MenuItem = "edit";
     }
     UserComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.forEach(function (params) {
+            var userId = params["id"];
+            console.log(userId);
+            //TODO: REWRITE THIS HARDCODE
+            if (userId == 'me') {
+                _this.isMe = true;
+                _this.service.GetMe()
+                    .then(function (result) {
+                    _this.User = result;
+                    console.log("ME");
+                    console.log(_this.User);
+                });
+            }
+            else {
+                _this.service.GetUserById(userId)
+                    .then(function (result) {
+                    _this.User = result;
+                    console.log(_this.User);
+                });
+            }
+        });
+    };
+    UserComponent.prototype.SetMenuItem = function (item) {
+        this.MenuItem = item;
     };
     return UserComponent;
 }());

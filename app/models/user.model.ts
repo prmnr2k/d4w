@@ -2,23 +2,21 @@
 export class UserModel{
     constructor(
         public id: number,
-        public email:string, 
-        public first_name: string,
-        public last_name: string,
+        public user_type: string, // client/pro
+        public gender: string, // male/female
+        public birth_day : Date,
+        public profile_picture:string,
+        public background: string,
+        public gallery: string[],
+        public email: string, 
+        public name: string,
         public phone: string,
+        public diploma_photo: string,
+        public activity_description: string,
+        public password: string,
         public created_at: Date,
         public updated_at: Date
     ){
-        /*if(first_name == null)
-            this.first_name = "";
-        if(last_name  == null)
-            this.last_name = "";
-        if(phone == null)
-            this.phone = "";
-        if(email == null)
-            this.email = "";*/
-        
-
     }
 
 }

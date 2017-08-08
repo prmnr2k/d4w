@@ -17,9 +17,14 @@ var SearchComponent = (function () {
         this.router = router;
         this.service = service;
         this.params = params;
-        this.IsLoading = true;
+        this.Activities = [];
     }
     SearchComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service.GetAllActivities()
+            .then(function (result) {
+            _this.Activities = result;
+        });
     };
     return SearchComponent;
 }());

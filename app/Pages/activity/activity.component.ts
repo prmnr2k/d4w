@@ -4,11 +4,11 @@ import { RouterModule } from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import { HttpService} from '../../services/http.service';
 
-import { NewsModel} from "./../../models/news.model";
-import { AllNewsModel} from "./../../models/allnews.model";
 
 import {MainService} from "./../../services/main.service";
 import { RightNavComponent } from '../../components/right.nav/right.nav.component';
+import { ActivityModel } from '../../models/activity.model';
+import { UserModel } from '../../models/user.model';
 
 @Component({
     selector: "activity",
@@ -18,10 +18,22 @@ import { RightNavComponent } from '../../components/right.nav/right.nav.componen
 
 export class ActivityComponent implements OnInit{
     IsLoading = true;
+    Activity: ActivityModel = new ActivityModel(null,null,null,null,null,null,null,null,null,null,null,null,null);
+    User:UserModel = new UserModel(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
     constructor(private router: Router,
         private service: MainService,
-        private params: ActivatedRoute){}
+        private activatedRoute: ActivatedRoute){}
 
     ngOnInit(){
+         this.activatedRoute.params.forEach((params:Params) => {
+            let actId= params["id"];
+            this.service.GetActivityById(actId)
+                .then(result=>{
+                    this.Activity = result;
+                    this.service.GetUserById(this.Activity.user_id)
+                        .then(res=>{
+                            this.User = res; 
+                        })
+                })
     }
 }

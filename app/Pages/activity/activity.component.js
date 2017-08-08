@@ -12,14 +12,30 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../../services/http.service");
 var main_service_1 = require("./../../services/main.service");
+var activity_model_1 = require("../../models/activity.model");
+var user_model_1 = require("../../models/user.model");
 var ActivityComponent = (function () {
-    function ActivityComponent(router, service, params) {
+    function ActivityComponent(router, service, activatedRoute) {
         this.router = router;
         this.service = service;
-        this.params = params;
+        this.activatedRoute = activatedRoute;
         this.IsLoading = true;
+        this.Activity = new activity_model_1.ActivityModel(null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this.User = new user_model_1.UserModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
     ActivityComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoute.params.forEach(function (params) {
+            var actId = params["id"];
+            _this.service.GetActivityById(actId)
+                .then(function (result) {
+                _this.Activity = result;
+                _this.service.GetUserById(_this.Activity.user_id)
+                    .then(function (res) {
+                    _this.User = res;
+                });
+            });
+        });
     };
     return ActivityComponent;
 }());

@@ -11,15 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../../services/http.service");
-var main_service_1 = require("./../../services/main.service");
+var main_service_1 = require("../../services/main.service");
 var DiscoverComponent = (function () {
     function DiscoverComponent(router, service, params) {
         this.router = router;
         this.service = service;
         this.params = params;
         this.IsLoading = true;
+        this.Activities = [];
     }
     DiscoverComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.service.GetAllActivities()
+            .then(function (result) {
+            _this.Activities = result;
+            for (var item in _this.Activities) {
+            }
+        });
     };
     return DiscoverComponent;
 }());

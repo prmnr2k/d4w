@@ -14,7 +14,7 @@ export class AppComponent  implements OnInit {
 
     
     isLoggedIn:boolean = false;
-    me: UserModel = new UserModel(null,"","","","",null,null); 
+    //me: UserModel = new UserModel(null,"","","","",null,null); 
     constructor(
         private mainService: MainService){}
     ngOnInit(){
@@ -23,13 +23,14 @@ export class AppComponent  implements OnInit {
                 this.isLoggedIn = bool;
                 if(this.isLoggedIn)
                     this.mainService.GetMe()
-                        .subscribe((data:UserModel)=>{
+                        /*.subscribe((data:UserModel)=>{
                             console.log(JSON.stringify(data));
                             this.me = data;
                             //console.log(this.me);
-                        });
+                        });*/
             }
         });
+        this.mainService.MainInit();
         this.mainService.TryToLoginWithToken();
     }
 }

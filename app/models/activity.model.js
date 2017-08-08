@@ -1,20 +1,19 @@
 "use strict";
 var ActivityModel = (function () {
-    function ActivityModel(id, address, activity_type, creation_date, rating, background_url, logo_url, location, title, rules_of_security, description, max_bookings_per_day, stuff_to_take, creator) {
+    function ActivityModel(id, title, picture, rules_of_security, begin, finish, price, bookings_per_day, address, description, created_at, updated_at, user_id) {
         this.id = id;
-        this.address = address;
-        this.activity_type = activity_type;
-        this.creation_date = creation_date;
-        this.rating = rating;
-        this.background_url = background_url;
-        this.logo_url = logo_url;
-        this.location = location;
         this.title = title;
+        this.picture = picture;
         this.rules_of_security = rules_of_security;
+        this.begin = begin;
+        this.finish = finish;
+        this.price = price;
+        this.bookings_per_day = bookings_per_day;
+        this.address = address;
         this.description = description;
-        this.max_bookings_per_day = max_bookings_per_day;
-        this.stuff_to_take = stuff_to_take;
-        this.creator = creator;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.user_id = user_id;
     }
     return ActivityModel;
 }());

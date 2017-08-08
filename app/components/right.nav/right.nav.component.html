@@ -5,10 +5,12 @@
         </div>
         <ul class="list-inline pull-right">
             <li><a routerLink="/">Index</a></li>
-        <li><a routerLink="/discover">Discover</a></li>
-        <li ><a routerLink="/activity">Activity</a></li>
-        <li ><a routerLink="/search">Search</a></li>
-        <li ><a routerLink="/user">User</a></li>
+            <li><a routerLink="/discover">Discover</a></li>
+            <li ><a routerLink="/activity">Activity</a></li>
+            <li ><a routerLink="/search">Search</a></li>
+            <li ><a routerLink="/users/me">User</a></li>
+            <li *ngIf="!isLoggedIn" ><a routerLink="/login">Login</a></li>
+            <li *ngIf="!isLoggedIn"><a routerLink="/registration">Registration</a></li>
         </ul>
     </div>
 </nav>

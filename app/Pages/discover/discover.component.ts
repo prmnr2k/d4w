@@ -26,9 +26,6 @@ export class DiscoverComponent implements OnInit{
         this.service.GetAllActivities()
             .then(result=>{
                 this.Activities = result;
-                for(let item in this.Activities){
-
-                }
             });
     }
 }

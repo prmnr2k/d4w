@@ -27,6 +27,7 @@ var ActivityComponent = (function () {
         var _this = this;
         this.activatedRoute.params.forEach(function (params) {
             var actId = params["id"];
+            console.log(actId);
             _this.service.GetActivityById(actId)
                 .then(function (result) {
                 _this.Activity = result;

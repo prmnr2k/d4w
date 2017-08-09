@@ -175,8 +175,8 @@ let MessagePromise = Promise.resolve(MessageList);
         {
             return ActivityPromise
                 .then(activityList=>{
-                    activityList.push(new ActivityModel(
-                        activityList.length + 1,
+                    let activity = new ActivityModel(
+                        activityList.length +1,
                         title,
                         logo,
                         rules,
@@ -188,7 +188,10 @@ let MessagePromise = Promise.resolve(MessageList);
                         descr,
                         new Date(),
                         new Date(),
-                        this.me.id));
+                        this.me.id
+                    );
+                    console.log(activity);
+                    activityList.push(activity);
                     localStorage.setItem('ActivityList',JSON.stringify(activityList));
                 })
         }

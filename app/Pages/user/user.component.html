@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12">
+            <div *ngIf="isMe" class="col-xs-12">
                 <ul class="list-inline text-center">
                     <li [ngClass]="MenuItem=='edit'?'active':''" class="active">
                         <h2>

@@ -29,7 +29,7 @@ var UserComponent = (function () {
             var userId = params["id"];
             console.log(userId);
             //TODO: REWRITE THIS HARDCODE
-            if (userId == 'me') {
+            if (userId == 'me' || userId == _this.service.me.id) {
                 _this.isMe = true;
                 _this.service.GetMe()
                     .then(function (result) {

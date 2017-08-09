@@ -28,7 +28,7 @@ export class UserComponent implements OnInit{
             let userId = params["id"];
             console.log(userId);
             //TODO: REWRITE THIS HARDCODE
-            if(userId == 'me'){
+            if(userId == 'me' || userId == this.service.me.id){
                 this.isMe = true;
                 this.service.GetMe()
                     .then(result=>{

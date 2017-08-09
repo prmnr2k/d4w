@@ -25,8 +25,6 @@ var DiscoverComponent = (function () {
         this.service.GetAllActivities()
             .then(function (result) {
             _this.Activities = result;
-            for (var item in _this.Activities) {
-            }
         });
     };
     return DiscoverComponent;

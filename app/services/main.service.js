@@ -134,7 +134,9 @@ var MainService = (function () {
         var _this = this;
         return ActivityPromise
             .then(function (activityList) {
-            activityList.push(new activity_model_1.ActivityModel(activityList.length + 1, title, logo, rules, begin, finish, price, bookings, address, descr, new Date(), new Date(), _this.me.id));
+            var activity = new activity_model_1.ActivityModel(activityList.length + 1, title, logo, rules, begin, finish, price, bookings, address, descr, new Date(), new Date(), _this.me.id);
+            console.log(activity);
+            activityList.push(activity);
             localStorage.setItem('ActivityList', JSON.stringify(activityList));
         });
     };

@@ -18,7 +18,7 @@ export const routs = [
     {path:"users/:id",component:UserComponent},
     {path:"login", component: LoginComponent},
     {path:"registration",component: RegisterComponent},
-    {pat:"create_activity",component: CreateActivityComponent},
+    {path:"create_activity",component: CreateActivityComponent},
     { path: "401", component: UnauthorizedComponent},
     { path: "404", component: NotFoundComponent},
     {path: "**", component:NotFoundComponent}

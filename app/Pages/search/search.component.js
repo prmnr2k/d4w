@@ -23,6 +23,7 @@ var SearchComponent = (function () {
         var _this = this;
         this.service.GetAllActivities()
             .then(function (result) {
+            console.log(result);
             _this.Activities = result;
         });
     };

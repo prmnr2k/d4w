@@ -18,15 +18,14 @@ var CreateActivityComponent = (function () {
         this.activatedRoute = activatedRoute;
         this.service = service;
     }
-    CreateActivityComponent.prototype.ngOnInit = function () {
-    };
+    CreateActivityComponent.prototype.ngOnInit = function () { };
     CreateActivityComponent.prototype.OnCreateActivityButtonClick = function (address, logo, title, rules, begin, finish, price, descr, bookings) {
         var _this = this;
-        this.service.CreateActivity(address, './production/images/surfer.jpg', title, rules, begin, finish, price, descr, bookings)
+        this.service.CreateActivity(address, "./production/images/surfer.jpg", title, rules, begin, finish, price, descr, bookings)
             .then(function (result) {
             _this.service.GetAllActivities()
                 .then(function (res) {
-                var act = res.find(function (x) { return x.title == title && x.description == descr && x.price == price; });
+                var act = res.find(function (x) { return x.title == title && x.description == descr; });
                 _this.router.navigate(['/activity', act.id]);
             });
         });
@@ -35,9 +34,8 @@ var CreateActivityComponent = (function () {
 }());
 CreateActivityComponent = __decorate([
     core_1.Component({
-        moduleId: module.id,
-        selector: "createActivity",
-        templateUrl: "./createActivity.component.ts",
+        selector: 'createActivity',
+        templateUrl: './app/Pages/createActivity/createActivity.component.html',
         providers: [http_service_1.HttpService]
     }),
     __metadata("design:paramtypes", [router_1.Router,

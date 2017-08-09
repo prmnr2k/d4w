@@ -17,7 +17,7 @@ exports.routs = [
     { path: "users/:id", component: user_component_1.UserComponent },
     { path: "login", component: login_component_1.LoginComponent },
     { path: "registration", component: register_component_1.RegisterComponent },
-    { pat: "create_activity", component: createActivity_component_1.CreateActivityComponent },
+    { path: "create_activity", component: createActivity_component_1.CreateActivityComponent },
     { path: "401", component: unauthorized_component_1.UnauthorizedComponent },
     { path: "404", component: notfound_component_1.NotFoundComponent },
     { path: "**", component: notfound_component_1.NotFoundComponent }

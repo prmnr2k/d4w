@@ -23,6 +23,7 @@ export class SearchComponent implements OnInit{
     ngOnInit(){
         this.service.GetAllActivities()
             .then(result=>{
+                console.log(result);
                 this.Activities = result;
             });
     }

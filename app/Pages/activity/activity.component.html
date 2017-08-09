@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="./../../source/css/search.css">
     <link rel="stylesheet" href="./../../source/css/discover.css">
     <link rel="stylesheet" href="./../../source/css/activity.css">
-<div class="hero center-block" [ngStyle]="{'background':'url(' + Activity.picture + ') center no-repeat'}" [style.backgroundSize]="'cover'">
+<div class="hero center-block" [ngStyle]="{'background':'url(' + Activity.picture + ') center no-repeat','backgroundSize':'cover'}">
       <div class="hero-content">
         <h1>{{Activity.title}}</h1>
       </div>
@@ -16,7 +16,7 @@
                         <div class="avatar pull-left">
                             <img class="profile-logo" alt="logo" [src]="User.profile_picture" style="center">
                             <span class="profile-text">{{User.name}}</span>
-                            <a href="user.html"><span class="spanlink"></span></a>
+                            <a [routerLink]="['/users/'+User.id]"><span class="spanlink"></span></a>
                         </div>
                         <div class="about-org">
                             <h3>{{User.name}}</h3>

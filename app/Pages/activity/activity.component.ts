@@ -25,8 +25,10 @@ export class ActivityComponent implements OnInit{
         private activatedRoute: ActivatedRoute){}
 
     ngOnInit(){
+        
          this.activatedRoute.params.forEach((params:Params) => {
             let actId= params["id"];
+            console.log(actId);
             this.service.GetActivityById(actId)
                 .then(result=>{
                     this.Activity = result;
@@ -35,5 +37,6 @@ export class ActivityComponent implements OnInit{
                             this.User = res; 
                         })
                 })
+        });
     }
 }

@@ -19,7 +19,7 @@ var UserComponent = (function () {
         this.service = service;
         this.activatedRoute = activatedRoute;
         this.IsLoading = true;
-        this.User = new user_model_1.UserModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this.User = new user_model_1.UserModel();
         this.isMe = false;
         this.MenuItem = "edit";
     }
@@ -31,19 +31,10 @@ var UserComponent = (function () {
             //TODO: REWRITE THIS HARDCODE
             if (userId == 'me' || userId == _this.service.me.id) {
                 _this.isMe = true;
-                _this.service.GetMe()
-                    .then(function (result) {
-                    _this.User = result;
-                    console.log("ME");
-                    console.log(_this.User);
-                });
+                _this.service.GetMe();
             }
             else {
-                _this.service.GetUserById(userId)
-                    .then(function (result) {
-                    _this.User = result;
-                    console.log(_this.User);
-                });
+                _this.service.GetUserById(userId);
             }
         });
     };

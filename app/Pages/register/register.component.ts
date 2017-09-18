@@ -2,9 +2,9 @@ import { Component,OnInit}      from '@angular/core';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { HttpService} from '../../services/http.service';
 
-import { UserModel} from './../index';
-
 import {MainService} from "./../../services/main.service";
+import { CreateUserModel } from '../../models/createUser.model';
+import { UserModel } from '../../models/user.model';
 
 @Component({
     selector: "ads",
@@ -13,24 +13,49 @@ import {MainService} from "./../../services/main.service";
 })
 
 export class RegisterComponent implements OnInit{
+    RegisterUser:CreateUserModel = new CreateUserModel();
     ngOnInit(): void {
     }
     constructor(private router: Router,
         private mainService: MainService){}
-    RegisterPro(gender:string,bd:Date,email:string,full_name:string,phone:string,password:string,description:string)
-    {
-        this.mainService.CreateUser('pro',gender,bd,"./production/images/man.jpg","source/images/userspace.png",null,full_name,email,phone,null,description,password)
-        .then(result=>{
-            console.log(JSON.parse(localStorage.getItem('UserList')));
-            this.router.navigate(["login"]);
-        });
+    Register(){
+        console.log(this.RegisterUser);
+        if(this.RegisterUser.user_type == 'client'){
+            this.RegisterUser.address = null;
+            this.RegisterUser.phone = null;
+            this.RegisterUser.description = null;
+            this.RegisterUser.diploma = null;
+            this.RegisterUser.background = null;
+        }
+        this.mainService.CreateUser(this.RegisterUser)
+            .subscribe((result:UserModel)=>{
+                console.log(result);
+            },
+        (err:any)=>{
+            console.log(err);
+        })
     }
 
-    RegisterClient(gender:string,bd:Date,email:string,full_name:string,phone:string,password:string)
-    {
-        this.mainService.CreateUser('client',gender,bd,"./production/images/man.jpg",null,null,full_name,email,phone,null,null,password)
-        .then(result=>{
-            this.router.navigate(["login"]);
-        });
+    changeListener(field:string,$event: any) : void {
+        this.readThis(field,$event.target);
+    }
+
+    readThis(field:string,inputValue: any): void {
+        let file:File = inputValue.files[0];
+        if(!file) return;
+        let myReader:FileReader = new FileReader();
+        myReader.onloadend = (e) => {
+            if(field == 'user_logo'){
+                this.RegisterUser.image = myReader.result;
+            }
+            else if(field == 'diploma')
+            {
+                this.RegisterUser.diploma = myReader.result;
+            }
+            else {
+                this.RegisterUser.background = myReader.result;
+            }
+        }
+        myReader.readAsDataURL(file);
     }
 }

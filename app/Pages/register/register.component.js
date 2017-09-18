@@ -12,27 +12,52 @@ var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var http_service_1 = require("../../services/http.service");
 var main_service_1 = require("./../../services/main.service");
+var createUser_model_1 = require("../../models/createUser.model");
 var RegisterComponent = (function () {
     function RegisterComponent(router, mainService) {
         this.router = router;
         this.mainService = mainService;
+        this.RegisterUser = new createUser_model_1.CreateUserModel();
     }
     RegisterComponent.prototype.ngOnInit = function () {
     };
-    RegisterComponent.prototype.RegisterPro = function (gender, bd, email, full_name, phone, password, description) {
-        var _this = this;
-        this.mainService.CreateUser('pro', gender, bd, "./production/images/man.jpg", "source/images/userspace.png", null, full_name, email, phone, null, description, password)
-            .then(function (result) {
-            console.log(JSON.parse(localStorage.getItem('UserList')));
-            _this.router.navigate(["login"]);
+    RegisterComponent.prototype.Register = function () {
+        console.log(this.RegisterUser);
+        if (this.RegisterUser.user_type == 'client') {
+            this.RegisterUser.address = null;
+            this.RegisterUser.phone = null;
+            this.RegisterUser.description = null;
+            this.RegisterUser.diploma = null;
+            this.RegisterUser.background = null;
+        }
+        this.mainService.CreateUser(this.RegisterUser)
+            .subscribe(function (result) {
+            console.log(result);
+        }, function (err) {
+            console.log(err);
         });
     };
-    RegisterComponent.prototype.RegisterClient = function (gender, bd, email, full_name, phone, password) {
+    RegisterComponent.prototype.changeListener = function (field, $event) {
+        this.readThis(field, $event.target);
+    };
+    RegisterComponent.prototype.readThis = function (field, inputValue) {
         var _this = this;
-        this.mainService.CreateUser('client', gender, bd, "./production/images/man.jpg", null, null, full_name, email, phone, null, null, password)
-            .then(function (result) {
-            _this.router.navigate(["login"]);
-        });
+        var file = inputValue.files[0];
+        if (!file)
+            return;
+        var myReader = new FileReader();
+        myReader.onloadend = function (e) {
+            if (field == 'user_logo') {
+                _this.RegisterUser.image = myReader.result;
+            }
+            else if (field == 'diploma') {
+                _this.RegisterUser.diploma = myReader.result;
+            }
+            else {
+                _this.RegisterUser.background = myReader.result;
+            }
+        };
+        myReader.readAsDataURL(file);
     };
     return RegisterComponent;
 }());

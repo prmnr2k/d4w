@@ -19,14 +19,15 @@ var AppComponent = (function () {
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.mainService.onAuthChange$.subscribe(function (bool) {
-            if (bool) {
-                _this.isLoggedIn = bool;
-                if (_this.isLoggedIn)
-                    _this.mainService.GetMe();
-            }
+            _this.isLoggedIn = bool;
+            if (_this.isLoggedIn)
+                _this.mainService.GetMe();
         });
-        this.mainService.MainInit();
         this.mainService.TryToLoginWithToken();
+    };
+    AppComponent.prototype.Logout = function () {
+        console.log();
+        this.mainService.Logout();
     };
     return AppComponent;
 }());

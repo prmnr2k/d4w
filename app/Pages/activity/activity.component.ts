@@ -18,8 +18,8 @@ import { UserModel } from '../../models/user.model';
 
 export class ActivityComponent implements OnInit{
     IsLoading = true;
-    Activity: ActivityModel = new ActivityModel(null,null,null,null,null,null,null,null,null,null,null,null,null);
-    User:UserModel = new UserModel(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+    Activity: ActivityModel = new ActivityModel();
+    User:UserModel = new UserModel();
     constructor(private router: Router,
         private service: MainService,
         private activatedRoute: ActivatedRoute){}
@@ -29,14 +29,7 @@ export class ActivityComponent implements OnInit{
          this.activatedRoute.params.forEach((params:Params) => {
             let actId= params["id"];
             console.log(actId);
-            this.service.GetActivityById(actId)
-                .then(result=>{
-                    this.Activity = result;
-                    this.service.GetUserById(this.Activity.user_id)
-                        .then(res=>{
-                            this.User = res; 
-                        })
-                })
+            this.service.GetActivityById(actId);
         });
     }
 }

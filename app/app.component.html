@@ -6,9 +6,10 @@
         <li ><a routerLink="/activity">Activity</a></li>
         <li ><a routerLink="/search">Search</a></li>
         <li ><a routerLink="/users/me">User</a></li>
-        <li ><a routerLink="/login">Login</a></li>
-        <li ><a routerLink="/registration">Registration</a></li>
-        <li><a routerLink="/create_activity">Create activity</a></li>
+        <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
+        <li *ngIf="!isLoggedIn"><a routerLink="/registration">Registration</a></li>
+        <li *ngIf="isLoggedIn"><a (click)="Logout()">Logout</a></li>
+        <li *ngIf="isLoggedIn"><a routerLink="/create_activity">Create activity</a></li>
     </ul>
 </nav>
 <router-outlet></router-outlet>

@@ -17,11 +17,22 @@ var PageAccessGuard = (function () {
         this.router = router;
     }
     PageAccessGuard.prototype.canActivate = function (route, state) {
-        if (!this.service.httpService.headers.has('Authorization')) {
+        console.log(route);
+        console.log(state);
+        /*if(!this.service.httpService.headers.has('Authorization')){
             this.router.navigate(["401"]);
             return false;
-        }
+        }*/
+        console.log(route.routeConfig.path);
+        if (route.routeConfig.path == "login" || route.routeConfig.path == "registration")
+            return this.LoginPageAccess();
         return true;
+    };
+    PageAccessGuard.prototype.LoginPageAccess = function () {
+        var result = this.service.IsLogedIn();
+        if (result)
+            this.router.navigate(['/']);
+        return !result;
     };
     return PageAccessGuard;
 }());

@@ -21,11 +21,7 @@ var DiscoverComponent = (function () {
         this.Activities = [];
     }
     DiscoverComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.service.GetAllActivities()
-            .then(function (result) {
-            _this.Activities = result;
-        });
+        this.service.GetAllActivities();
     };
     return DiscoverComponent;
 }());

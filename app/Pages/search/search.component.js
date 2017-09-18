@@ -20,12 +20,7 @@ var SearchComponent = (function () {
         this.Activities = [];
     }
     SearchComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.service.GetAllActivities()
-            .then(function (result) {
-            console.log(result);
-            _this.Activities = result;
-        });
+        this.service.GetAllActivities();
     };
     return SearchComponent;
 }());

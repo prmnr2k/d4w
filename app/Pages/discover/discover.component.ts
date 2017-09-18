@@ -23,9 +23,6 @@ export class DiscoverComponent implements OnInit{
         private params: ActivatedRoute){}
 
     ngOnInit(){
-        this.service.GetAllActivities()
-            .then(result=>{
-                this.Activities = result;
-            });
+        this.service.GetAllActivities();
     }
 }

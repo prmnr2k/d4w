@@ -23,12 +23,12 @@ var LoginComponent = (function () {
     LoginComponent.prototype.OnLoginButtonClick = function (username, password) {
         var _this = this;
         this.mainService.UserLogin(username, password)
-            .then(function (result) {
-            _this.router.navigate(["user"]);
+            .subscribe(function (data) {
+            _this.mainService.BaseInitAfterLogin(data);
+            _this.router.navigate(['/']);
+        }, function (err) {
+            console.log(err);
         });
-        /*.add((data:TokenModel)=>{
-            
-        });*/
     };
     return LoginComponent;
 }());
@@ -38,8 +38,9 @@ __decorate([
 ], LoginComponent.prototype, "onLoggedIn", void 0);
 LoginComponent = __decorate([
     core_1.Component({
-        selector: "ads",
-        templateUrl: "app/Pages/login/login.component.html",
+        moduleId: module.id,
+        selector: "login",
+        templateUrl: "./login.component.html",
         providers: [http_service_1.HttpService]
     }),
     __metadata("design:paramtypes", [router_1.Router,

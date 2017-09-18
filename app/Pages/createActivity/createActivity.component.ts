@@ -25,13 +25,5 @@ export class CreateActivityComponent{
     OnCreateActivityButtonClick(address:string, logo:string, title:string, rules:string, begin:Date, finish:Date, price:number, descr:string, bookings:number)
     {
         this.service.CreateActivity(address,"./production/images/surfer.jpg",title,rules,begin,finish,price,descr,bookings)
-            .then(result=>{
-                this.service.GetAllActivities()
-                    .then(res=>{
-                        let act = res.find(x=> x.title==title && x.description==descr);
-                        this.router.navigate(['/activity',act.id]);
-
-                    });
-            });
     }
 }

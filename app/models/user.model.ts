@@ -1,22 +1,20 @@
 
-export class UserModel{
-    constructor(
-        public id: number,
-        public user_type: string, // client/pro
-        public gender: string, // male/female
-        public birth_day : Date,
-        public profile_picture:string,
-        public background: string,
-        public gallery: string[],
-        public email: string, 
-        public name: string,
-        public phone: string,
-        public diploma_photo: string,
-        public activity_description: string,
-        public password: string,
-        public created_at: Date,
-        public updated_at: Date
-    ){
+export class UserModel{ 
+    constructor( 
+    public id?:number, 
+    public email?:string, 
+    public created_at?: Date, 
+    public updated_at?: Date, 
+    public name?:string, 
+    public date_of_birth?:Date, 
+    public image_id?:number, 
+    public user_type?:string, 
+    public gender?: string, 
+    public background_id?: number, 
+    public diploma_id?:number, 
+    public address?: string, 
+    public phone?:string, 
+    public description?:string 
+    ){ 
     }
-
 }

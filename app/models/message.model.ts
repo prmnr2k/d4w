@@ -1,7 +1,12 @@
 export class MessageModel{
     constructor(
-        public text:string,
-        public sender: number,
-        public recipient: number
+        public id?: number,
+        public title?: string,
+        public  body?: string,
+        public created_at?: Date,
+        public updated_at?: Date,
+        public  from_id?: number,
+        public to_id?: number,
+        public is_read?: boolean
     ){}
 }

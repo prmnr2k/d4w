@@ -21,10 +21,6 @@ export class SearchComponent implements OnInit{
         private params: ActivatedRoute){}
 
     ngOnInit(){
-        this.service.GetAllActivities()
-            .then(result=>{
-                console.log(result);
-                this.Activities = result;
-            });
+        this.service.GetAllActivities();
     }
 }

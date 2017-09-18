@@ -4,78 +4,57 @@
   <main id="container" class="clear">
     <!-- container body -->
     
-    <div class="register_block">
-      <div class="reg_block reg_left">
-        <h2>Je suis client</h2>
-        <form action="">
-          <label>Name</label>
-          <input type="text" name="c_name" [(ngModel)]="c_name"><br>
+    <div>
+          
+      <div >
+        <h2>Je suis {{(RegisterUser.user_type == 'professional')?'prestataire':'client'}}</h2>
+        <form (ngSubmit)="Register()">
+          <label>Email</label>
+          <input type="text" name="user_email" [ngModel]="RegisterUser.email" (ngModelChange)="RegisterUser.email = $event"><br>
 
-          <label>Birthday</label>
-          <input type="date" name="c_birthday" [(ngModel)]="c_birthday"><br>
-          
-          <label>E-mail</label>
-          <input type="text" name="c_email" [(ngModel)]="c_email"><br>
-
-          <label>Phone</label>
-          <input type="text" name="c_phone" [(ngModel)]="c_phone"><br>
-          
-          <label>Logo image</label>
-          <input type="file"><br>
-          
           <label>Password</label>
-          <input type="password" name="c_password" [(ngModel)]="c_password"><br>
+          <input type="password" name="password" [ngModel]="RegisterUser.password" (ngModelChange)="RegisterUser.password = $event"><br>
+
+          <label>Name</label>
+          <input type="text" name="user_name" [ngModel]="RegisterUser.name" (ngModelChange)="RegisterUser.name = $event"><br>
+
+          <label>Logo image</label>
+          <img [src]='RegisterUser.image'>
+          <input type="file" accept="image/*" name="logo_img" (change)="changeListener('user_logo',$event)"><br>
           
+          <label>Birthday</label>
+          <input type="date" name="p_birthday" [ngModel]="RegisterUser.date_of_birth" (ngModelChange)="RegisterUser.date_of_birth = $event"><br>
+
           <label>Gender</label>
-          <select name="c_gender" [(ngModel)]="c_gender">
+          <select name="p_gender" [ngModel]="RegisterUser.gender" (ngModelChange)="RegisterUser.gender = $event">
             <option value="male">Male</option>
             <option value="female">Female</option>
-          </select>
+          </select><br>
 
-          <button (click)="RegisterClient(c_gender,c_birthday,c_email,c_name,c_phone,c_password)">Register</button>
-        </form>
-      </div>
-          
-      <div class="reg_block reg_right">
-        <h2>Je suis prestataire</h2>
-        <form action="">
-          <label>Name</label>
-          <input type="text" name="p_name" [(ngModel)]="p_name"><br>
+          <label>User type</label>
+          <select name="user_type" [ngModel]="RegisterUser.user_type" (ngModelChange)="RegisterUser.user_type = $event">
+            <option value="client">Client</option>
+            <option value="professional">Professional</option>
+          </select><br>
+          <div *ngIf="RegisterUser.user_type == 'professional'">
+            <label>Address</label>
+            <input type="text" name="address" [ngModel]="RegisterUser.address" (ngModelChange)="RegisterUser.address = $event"><br>
+            
+            <label>Phone</label>
+            <input type="text" name="p_phone" [ngModel]="RegisterUser.phone" (ngModelChange)="RegisterUser.phone = $event"><br>
+            
+            <label>Activity description</label>
+            <textarea name="p_description" [ngModel]="RegisterUser.description" (ngModelChange)="RegisterUser.description = $event" ></textarea><br>
 
-          <label>Birthday</label>
-          <input type="date" name="p_birthday" [(ngModel)]="p_birthday"><br>
-          
-          <label>E-mail</label>
-          <input type="text" name="p_email" [(ngModel)]="p_email"><br>
+            <label>Photocopy of diploma</label>
+            <img [src]='RegisterUser.diploma'>
+            <input type="file"  accept="image/*" name="diploma" (change)="changeListener('diploma',$event)"><br>
 
-          <label>Phone</label>
-          <input type="text" name="p_phone" [(ngModel)]="p_phone"><br>
-          
-          <label>Logo image</label>
-          <input type="file"><br>
-
-          <label>Background image</label>
-          <input type="file"><br>
-
-          <label>Gallery</label>
-          <input type="file"><br>
-
-          <label>Photocopy of diploma</label>
-          <input type="file"><br>
-
-          <label>Activity description</label>
-          <textarea name="p_description" [(ngModel)]="p_description" ></textarea><br>
-          
-          <label>Password</label>
-          <input type="password" name="p_password" [(ngModel)]="p_password"><br>
-          
-          <label>Gender</label>
-          <select name="p_gender" [(ngModel)]="p_gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-
-          <button (click)="RegisterPro(p_gender,p_birthday,p_email,p_name,p_phone,p_password,p_description)">Register</button>
+            <label>Background image</label>
+            <img [src]='RegisterUser.background'>
+            <input type="file"  accept="image/*" name="background" (change)="changeListener('background',$event)"><br>
+          </div>
+          <button type="submit">Register</button>
         </form>
       </div>
     </div>

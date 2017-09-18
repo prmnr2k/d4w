@@ -19,18 +19,16 @@ export class AppComponent  implements OnInit {
         private mainService: MainService){}
     ngOnInit(){
         this.mainService.onAuthChange$.subscribe(bool => {
-            if(bool){
                 this.isLoggedIn = bool;
                 if(this.isLoggedIn)
-                    this.mainService.GetMe()
-                        /*.subscribe((data:UserModel)=>{
-                            console.log(JSON.stringify(data));
-                            this.me = data;
-                            //console.log(this.me);
-                        });*/
-            }
+                    this.mainService.GetMe();
         });
-        this.mainService.MainInit();
+
         this.mainService.TryToLoginWithToken();
+    }
+
+    Logout(){
+        console.log()
+        this.mainService.Logout();
     }
 }

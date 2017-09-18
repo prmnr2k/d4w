@@ -20,22 +20,15 @@ var ActivityComponent = (function () {
         this.service = service;
         this.activatedRoute = activatedRoute;
         this.IsLoading = true;
-        this.Activity = new activity_model_1.ActivityModel(null, null, null, null, null, null, null, null, null, null, null, null, null);
-        this.User = new user_model_1.UserModel(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this.Activity = new activity_model_1.ActivityModel();
+        this.User = new user_model_1.UserModel();
     }
     ActivityComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.activatedRoute.params.forEach(function (params) {
             var actId = params["id"];
             console.log(actId);
-            _this.service.GetActivityById(actId)
-                .then(function (result) {
-                _this.Activity = result;
-                _this.service.GetUserById(_this.Activity.user_id)
-                    .then(function (res) {
-                    _this.User = res;
-                });
-            });
+            _this.service.GetActivityById(actId);
         });
     };
     return ActivityComponent;

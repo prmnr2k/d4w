@@ -1,13 +1,14 @@
 import { Component,OnInit, Input, Output, EventEmitter}      from '@angular/core';
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { HttpService} from '../../services/http.service';
 
-import {TokenModel} from './../index';
+import { HttpService} from '../../services/http.service';
 import {MainService} from "./../../services/main.service";
+import { TokenModel } from '../../models/token.model';
 
 @Component({
-    selector: "ads",
-    templateUrl: "app/Pages/login/login.component.html",
+    moduleId:module.id,
+    selector: "login",
+    templateUrl: "./login.component.html",
     providers: [HttpService]
 })
 
@@ -21,12 +22,15 @@ export class LoginComponent implements OnInit{
     OnLoginButtonClick(username: string, password:string)
     {
         this.mainService.UserLogin(username,password)
-            .then(result=>{
-              this.router.navigate(["user"]);  
-            });
-        /*.add((data:TokenModel)=>{
-            
-        });*/
+            .subscribe((data:TokenModel)=>{
+                this.mainService.BaseInitAfterLogin(data);
+                this.router.navigate(['/']);
+            },
+            (err:any)=>{
+                console.log(err);
+            }
+        );
+        
         
     }
 }

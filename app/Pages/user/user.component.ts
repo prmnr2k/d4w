@@ -16,7 +16,7 @@ import { UserModel } from '../../models/user.model';
 
 export class UserComponent implements OnInit{
     IsLoading = true;
-    User:UserModel = new UserModel(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+    User:UserModel = new UserModel();
     isMe = false;
     MenuItem = "edit";
     constructor(private router: Router,
@@ -30,31 +30,10 @@ export class UserComponent implements OnInit{
             //TODO: REWRITE THIS HARDCODE
             if(userId == 'me' || userId == this.service.me.id){
                 this.isMe = true;
-                this.service.GetMe()
-                    .then(result=>{
-                        this.User = result;
-                        console.log("ME");
-                        console.log(this.User);
-                    });
-                    /*.subscribe((data:UserModel) => {
-                        if(data.id){
-                            this.User = data;
-                            console.log(this.User);
-                            this.IsLoading = false;
-                        }
-                    });*/
+                this.service.GetMe();
             }
             else{
-                this.service.GetUserById(userId)
-                    .then(result=>{
-                        this.User = result;
-                        console.log(this.User);
-                    });
-                    /*.subscribe((data:UserModel) => {
-                        this.User = data;
-                        console.log(this.User);
-                        this.IsLoading = false;
-                    });*/
+                this.service.GetUserById(userId);
             }
         });
     }

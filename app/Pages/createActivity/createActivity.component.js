@@ -20,15 +20,7 @@ var CreateActivityComponent = (function () {
     }
     CreateActivityComponent.prototype.ngOnInit = function () { };
     CreateActivityComponent.prototype.OnCreateActivityButtonClick = function (address, logo, title, rules, begin, finish, price, descr, bookings) {
-        var _this = this;
-        this.service.CreateActivity(address, "./production/images/surfer.jpg", title, rules, begin, finish, price, descr, bookings)
-            .then(function (result) {
-            _this.service.GetAllActivities()
-                .then(function (res) {
-                var act = res.find(function (x) { return x.title == title && x.description == descr; });
-                _this.router.navigate(['/activity', act.id]);
-            });
-        });
+        this.service.CreateActivity(address, "./production/images/surfer.jpg", title, rules, begin, finish, price, descr, bookings);
     };
     return CreateActivityComponent;
 }());

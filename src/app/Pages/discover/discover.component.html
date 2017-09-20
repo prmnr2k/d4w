@@ -1,0 +1,77 @@
+
+    <div class="hero">
+      <div class="hero-content">
+        <h1>Envie de dépenser votre énergie</h1>
+        <h2>Trouver une activité autour de vous</h2>
+      </div>
+    </div>
+    <div class="container1440 center-block container-fluid">
+        <div class="row">
+            <div class="col-sm-3 left-side">
+                <div class="controls">
+                    <h3>Find Activities</h3>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-withicon input-lg" placeholder="Emplacement..">
+                            <span class="material-icons input-icon">location_on</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-withicon input-lg" placeholder="Activitées">
+                            <span class="material-icons input-icon">favorite</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-withicon input-lg" placeholder="June 23">
+                            <span class="material-icons input-icon">today</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-withicon input-lg" placeholder="Recent">
+                            <span class="material-icons input-icon">access_time</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control input-withicon input-lg" placeholder="This is dropdown checkbox">
+                            <span class="material-icons input-icon">filter_list</span>
+                        </div>
+                        <div class="form-group form-group-makeinline">
+                            <button type="button" class="btn btn-success input-withicon btn-lg">Appliquer</button>
+                            <span class="material-icons input-icon white-span">search</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-9 left-side">
+                <div class="cards">
+                    <h3>Récentes</h3>
+                    <div class="container-fluid">
+                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6">
+                            <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
+                                <h3 class="cardname">{{item.title}}</h3>
+                                <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
+                                <div class="avatar">
+                                    <img class="profile-logo" alt="logo" src="./app/images/man.jpg">
+                                    <span class="profile-text">Author</span>
+                                </div>
+                                <span class="cardshadow"></span>
+                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>Le Plus Populaire</h3>
+                    <div class="container-fluid">
+                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6">
+                            <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
+                                <h3 class="cardname">{{item.title}}</h3>
+                                <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
+                                <div class="avatar">
+                                    <img class="profile-logo" alt="logo" src="./app/images/man.jpg">
+                                    <span class="profile-text">Author</span>
+                                </div>
+                                <span class="cardshadow"></span>
+                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -30,12 +30,19 @@ export class DiscoverComponent implements OnInit{
             .subscribe((res:ActivityModel[])=>{
                 this.Activities = res;
                 for(let item of this.Activities){
-                    //TODO: GET USER BY ID
-                    this.service.GetImageById(item.image_id)
-                        .subscribe((image:Base64ImageModel)=>{
-                            this.Images['act'+item.id]=image.base64;
-                            console.log(this.Images);
+                    this.service.GetUserById(item.user_id)
+                        .subscribe((user:UserModel)=>{
+                            this.Users[item.user_id] = user;
+                            this.service.GetImageById(item.image_id)
+                                .subscribe((image:Base64ImageModel)=>{
+                                    this.Images['act'+item.id]=image.base64;
+                                    this.service.GetImageById(user.image_id)
+                                        .subscribe((img:Base64ImageModel)=>{
+                                            this.Images['user'+item.user_id]=img.base64;
+                                        })
+                                })
                         })
+                    
                 }
             });
     }

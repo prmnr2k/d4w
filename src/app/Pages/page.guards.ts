@@ -4,6 +4,7 @@ import {Observable} from "rxjs/Rx";
 import {MainService} from "./../services/main.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Injectable } from '@angular/core';
+import { UserModel } from '../models/user.model';
 
 @Injectable()
 export class PageAccessGuard implements CanActivate{
@@ -24,8 +25,16 @@ export class PageAccessGuard implements CanActivate{
 
     LoginPageAccess():boolean{
         let result = this.service.IsLogedIn();
-        if(result)
-            this.router.navigate(['/']);
-        return !result;
+        if(result){
+            this.service.GetMe()
+                .subscribe((res:UserModel)=>{
+                    console.log(res);
+                },
+            (err:any)=>{
+                console.log(err);
+            })
+        }
+            //this.router.navigate(['/']);
+        return true;
     }
 }

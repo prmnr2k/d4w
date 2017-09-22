@@ -14,7 +14,9 @@ export class UserModel{
     public diploma_id?:number, 
     public address?: string, 
     public phone?:string, 
-    public description?:string 
+    public description?:string,
+    public lat?: number,
+    public lng?: number 
     ){ 
     }
 }

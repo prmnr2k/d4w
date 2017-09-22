@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
   }
 
   Logout(){
-      console.log()
+      //console.log();
       this.mainService.Logout();
   }
 }

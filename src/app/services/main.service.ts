@@ -109,10 +109,10 @@ import { CreateUserModel } from '../models/createUser.model';
             localStorage.setItem('token',data.token);
             this.httpService.BaseInitByToken(data.token);
             this.GetMe()
-            .subscribe((user:UserModel)=>{
-                    this.me = user;
-                    this.onAuthChange$.next(true);
-                });
+                .subscribe((user:UserModel)=>{
+                        this.me = user;
+                        this.onAuthChange$.next(true);
+                    });
         }
 
         TryToLoginWithToken()
@@ -253,6 +253,10 @@ import { CreateUserModel } from '../models/createUser.model';
 
         ChangePassword(old_pw:string,new_pw:string){
             return this.httpService.PostData('/users/change_password',JSON.stringify({old_password:old_pw,new_password:new_pw}));
+        }
+
+        GetUserById(id:number){
+            return this.httpService.GetData('/users/get/'+id,'');
         }
 
         /* USERS BLOCK END */

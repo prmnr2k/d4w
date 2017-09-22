@@ -1,4 +1,4 @@
-<div class="hero hero--user center-block" [ngStyle]="{'background':'url(User.background) center no-repeat', 'background-size':'cover'}">
+<div class="hero hero--user center-block" [ngStyle]="{'background':'url('+Background+') center no-repeat', 'background-size':'cover'}">
       <div class="hero-content">
         <h1>User Space</h1>
       </div>
@@ -8,7 +8,7 @@
             <div class="col-xs-12">
                 <div class="round-card">
                     <div class="avatar pull-left">
-                        <img class="profile-logo" alt="logo" [src]="'User.profile_picture'">
+                        <img class="profile-logo" alt="logo" [src]="Logo">
                     </div>
                     <div class="about-org">
                         <h3>{{User.name}}</h3>

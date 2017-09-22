@@ -1,36 +1,60 @@
-<div class="wrapper row2">
-      
- </div>
 <div class="wrapper row3">
     <main id="container" class="clear">
-        <div class="ads_creation reg_block">
-            <div class="ad_create_form">
-                <h1>Create activity</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row middle">
+                    <div class="h123 h1-first">
+                        <h1 class="middle-text grey-span topmarg30">Create activity</h1>
+                    </div>
+                </div>
                 <form (ngSubmit)="OnCreateActivityButtonClick()">
-                    <label>Title</label>
-                    <input type="text" name="title" [ngModel]="Activity.title" (ngModelChange)="Activity.title = $event"><br>
-                    <label>Picture</label>
-                    <input type="file"  (change)="changeListener($event)"><br>
-                    <label>Price</label>
-                    <input type="number" name="price"  [ngModel]="Activity.price" (ngModelChange)="Activity.price = $event"><br>
+                    <div class="col-sm-6 col-sm-push-2 marg-auto">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control input-lg" name="title" [ngModel]="Activity.title" (ngModelChange)="Activity.title = $event">
+                    </div><br>
+                    <div class="form-group">
+                        <label>Picture</label>
+                        <img [src]="Activity.image">
+                        <input type="file"  (change)="changeListener($event)">
+                    </div><br>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" class="form-control input-lg" name="price"  [ngModel]="Activity.price" (ngModelChange)="Activity.price = $event">
+                    </div><br>
+                    <div class="form-group">
+                        <label>Number of possible bookings per day</label>
+                        <input type="number" class="form-control input-lg" name="booking" [ngModel]="Activity.num_of_bookings" (ngModelChange)="Activity.num_of_bookings = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control input-lg" name="address" [ngModel]="Activity.address" (ngModelChange)="Activity.address = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Detailed address</label>
+                        <input type="text" class="form-control input-lg" name="address" [ngModel]="Activity.detailed_address" (ngModelChange)="Activity.detailed_address = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control input-lg" [ngModel]="Activity.description" (ngModelChange)="Activity.description = $event"></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Begining date</label>
+                        <input type="date" class="form-control input-lg" name="begin" [ngModel]="Start" (ngModelChange)="Start = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Finish date</label>
+                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish" (ngModelChange)="Finish = $event">
+                    </div>
+                    <br>
 
-                    <label>Number of possible bookings per day</label>
-                    <input type="number" name="booking" [ngModel]="Activity.num_of_bookings" (ngModelChange)="Activity.num_of_bookings = $event"><br>
-                    <label>Address</label>
-                    <input type="text" name="address" [ngModel]="Activity.address" (ngModelChange)="Activity.address = $event"><br>
-
-                    <label>Detailed address</label>
-                    <input type="text" name="address" [ngModel]="Activity.detailed_address" (ngModelChange)="Activity.detailed_address = $event"><br>
-                    
-                    <label>Description</label>
-                    <textarea name="description" [ngModel]="Activity.description" (ngModelChange)="Activity.description = $event"></textarea><br>
-                    
-                    <label>Begining date</label>
-                    <input type="date" name="begin" [ngModel]="Start" (ngModelChange)="Start = $event"><br>
-                    <label>Finish date</label>
-                    <input type="date" name="finish" [ngModel]="Finish" (ngModelChange)="Finish = $event"><br>
-
-                    <button type="submit">Register</button>
+                    <div class="row"><div class="col-md-12 text-center"><button class="btn btn-success btn-lg" type="submit">Create activity</button></div></div>
+                    </div>
                 </form>
             </div>
         </div>

@@ -17,22 +17,24 @@ export class LoginComponent implements OnInit{
         login:'',
         password:''
     }
+    isLoading = true;
     ngOnInit(): void {
+        this.isLoading = false;
     }
     constructor(private router: Router,
         private mainService: MainService){}
 
-    @Output() onLoggedIn: EventEmitter<boolean> = new EventEmitter<boolean>();
     OnLoginButtonClick()
     {
+        this.isLoading = true;
         this.mainService.UserLogin(this.loginData.login,this.loginData.password)
             .subscribe((data:TokenModel)=>{
-                console.log(data);
                 this.mainService.BaseInitAfterLogin(data);
                 this.router.navigate(['/']);
             },
             (err:any)=>{
                 console.log(err);
+                this.isLoading = false;
             }
         );
         

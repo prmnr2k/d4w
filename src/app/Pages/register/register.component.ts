@@ -14,13 +14,15 @@ import { UserModel } from '../../models/user.model';
 })
 
 export class RegisterComponent implements OnInit{
+    isLoading = true;
     RegisterUser:CreateUserModel = new CreateUserModel();
     ngOnInit(): void {
+        this.isLoading = false;
     }
     constructor(private router: Router,
         private mainService: MainService){}
     Register(){
-        console.log(this.RegisterUser);
+        this.isLoading = true;
         if(this.RegisterUser.user_type == 'client'){
             this.RegisterUser.address = null;
             this.RegisterUser.phone = null;
@@ -31,9 +33,11 @@ export class RegisterComponent implements OnInit{
         this.mainService.CreateUser(this.RegisterUser)
             .subscribe((result:UserModel)=>{
                 console.log(result);
+                this.isLoading = false;
             },
         (err:any)=>{
             console.log(err);
+            this.isLoading = false;
         })
     }
 

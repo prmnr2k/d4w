@@ -39,7 +39,8 @@
                 </div>
             </div>
             <div class="col-sm-9 left-side">
-                <div class="cards">
+                <div class="loading" *ngIf="isLoading"></div>
+                <div class="cards" *ngIf="!isLoading">
                     <h3>Récentes</h3>
                     <div class="container-fluid">
                         <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6">
@@ -47,8 +48,8 @@
                                 <h3 class="cardname">{{item.title}}</h3>
                                 <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
                                 <div class="avatar">
-                                    <img class="profile-logo" alt="logo" src="./app/images/man.jpg">
-                                    <span class="profile-text">Author</span>
+                                    <img class="profile-logo" alt="logo" [src]="Images['user'+item.user_id]?Images['user'+item.user_id]:'./app/images/man.jpg'">
+                                    <span class="profile-text">{{Users[item.user_id].name?Users[item.user_id].name:'Author'}}</span>
                                 </div>
                                 <span class="cardshadow"></span>
                                 <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>

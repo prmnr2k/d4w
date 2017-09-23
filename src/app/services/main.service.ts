@@ -244,6 +244,7 @@ import { CreateUserModel } from '../models/createUser.model';
                 name : user.name,
                 date_of_birth : user.date_of_birth,
                 gender : user.gender,
+                user_type:user.user_type,
                 address : (user.user_type == "professional")?user.address:null,
                 phone : (user.user_type == "professional")?user.phone:null,
                 description : (user.user_type == "professional")?user.description:null
@@ -260,4 +261,21 @@ import { CreateUserModel } from '../models/createUser.model';
         }
 
         /* USERS BLOCK END */
+
+        /* COMMENTS BLOCK START */
+        GetAllComments(params:any){
+            return this.httpService.GetData('/comments/get_all',this.ParamsToUrlSearchParams(params));
+        }
+        GetCommentById(id:number){
+            return this.httpService.GetData('/comments/get/'+id,"");
+        }
+        CreateComment(params:any){
+            return this.httpService.PostData('/comments/create',JSON.stringify(params));
+        }
+        DeleteComment(id:number){
+            return this.httpService.DeleteData('/comments/delete/'+id);
+        }
+        /* COMMENTS BLOCK END */
+
+
     }

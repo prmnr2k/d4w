@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit{
         this.isLoading = true;
         this.mainService.UserLogin(this.loginData.login,this.loginData.password)
             .subscribe((data:TokenModel)=>{
+                console.log(data);
                 this.mainService.BaseInitAfterLogin(data);
                 this.router.navigate(['/']);
             },

@@ -2,13 +2,19 @@
 <div class="wrapper row3">
   <main id="container" class="clear">
     <!-- container body -->
+    <div *ngIf="isRegOk">
+      <h2 class="ok-msg"> Your account was created! You will redirect to your page soon! </h2>
+    </div>
+    <div *ngIf="isRegErr">
+      <h2 class="error-msg">{{ErrMsg}}</h2>
+    </div>
     <div class="row loading" *ngIf="isLoading"></div>
     <div class="row" *ngIf="!isLoading">
-      <div class="col-md-12">
+      <div class="col-md-8 marg-auto">
         <h2 class="text-center">Je suis {{(RegisterUser.user_type == 'professional')?'prestataire':'client'}}</h2><br>
         <form (ngSubmit)="Register()">
         <div class="row">
-          <div class="col-sm-3 col-sm-push-2">
+          <div class="col-sm-4 col-sm-push-2">
             <div class="form-group">
               <label>Email</label>
               <input type="text" class="form-control input-lg" name="user_email" [ngModel]="RegisterUser.email" (ngModelChange)="RegisterUser.email = $event">
@@ -27,7 +33,7 @@
               <input type="file" accept="image/*" name="logo_img" (change)="changeListener('user_logo',$event)">
             </div>
           </div>
-          <div class="col-sm-5 col-sm-push-2">
+          <div class="col-sm-8 col-sm-push-2">
             <div class="form-group">
               <label>Birthday</label>
               <input type="date" class="form-control input-lg" name="p_birthday" [ngModel]="RegisterUser.date_of_birth" (ngModelChange)="RegisterUser.date_of_birth = $event">

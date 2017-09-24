@@ -120,6 +120,7 @@ import { CalendarModel } from '../models/calendar.model';
         TryToLoginWithToken()
         {
             let token = localStorage.getItem('token');
+            console.log(token);
             //let token = window.localStorage.getItem('token');
             if(token)
             {
@@ -162,7 +163,7 @@ import { CalendarModel } from '../models/calendar.model';
         }
 
         DeleteActivity(id:number){
-            return this.httpService.DeleteData('/activities/delete/'+id,"");
+            return this.httpService.DeleteData('/activities/delete/'+id);
         }
 
         ActivityModelToCreateActivityModel(act:ActivityModel){
@@ -209,7 +210,7 @@ import { CalendarModel } from '../models/calendar.model';
         }
 
         DeleteBooking(id:number){
-            return this.httpService.DeleteData('/bookings/delete/' + id,"");
+            return this.httpService.DeleteData('/bookings/delete/' + id);
         }
 
         /* BOOKINGS BLOCK END */
@@ -294,8 +295,8 @@ import { CalendarModel } from '../models/calendar.model';
         CreateComment(params:any){
             return this.httpService.PostData('/comments/create',JSON.stringify(params));
         }
-        DeleteComment(id:number,params:any){
-            return this.httpService.DeleteData('/comments/delete/'+id,this.ParamsToUrlSearchParams(params));
+        DeleteComment(id:number){
+            return this.httpService.DeleteData('/comments/delete/'+id);
         }
         /* COMMENTS BLOCK END */
 

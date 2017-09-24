@@ -150,7 +150,14 @@ a:hover {
 .bg-img{
     text-align:center;
 }
-
+.error-msg{
+    color:red;
+    text-align: center;
+}
+.ok-msg{
+    color:rgba(0,255,0,1);
+    text-align: center;
+}
 .vf2{
     background:url('./../images/vf2.jpg') center no-repeat;
     background-size:cover;

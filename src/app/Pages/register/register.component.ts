@@ -16,13 +16,19 @@ import { UserModel } from '../../models/user.model';
 export class RegisterComponent implements OnInit{
     isLoading = true;
     RegisterUser:CreateUserModel = new CreateUserModel();
+    isRegOk = false;
+    isRegErr = false;
+    ErrMsg = '';
     ngOnInit(): void {
         this.isLoading = false;
     }
     constructor(private router: Router,
         private mainService: MainService){}
     Register(){
+        this.isRegOk = false;
+        this.isRegErr = false;
         this.isLoading = true;
+        scrollTo(0,0);
         if(this.RegisterUser.user_type == 'client'){
             this.RegisterUser.address = null;
             this.RegisterUser.phone = null;
@@ -33,10 +39,15 @@ export class RegisterComponent implements OnInit{
         this.mainService.CreateUser(this.RegisterUser)
             .subscribe((result:UserModel)=>{
                 console.log(result);
-                this.isLoading = false;
+                this.isRegOk = true;
+                setTimeout(()=>{
+                    this.router.navigate(['/login']);
+                },5000)
             },
         (err:any)=>{
             console.log(err);
+            this.ErrMsg = err._body;
+            this.isRegErr = true;
             this.isLoading = false;
         })
     }

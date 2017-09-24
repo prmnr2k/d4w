@@ -127,7 +127,7 @@ export class ActivityComponent implements OnInit{
             })
     }
     OnDeleteComment(item:CommentModel){
-        this.service.DeleteComment(item.id,{activity_id:item.activity_id,title:item.title,body:item.body})
+        this.service.DeleteComment(item.id)
             .subscribe(()=>{
                 this.GetComments();
             })

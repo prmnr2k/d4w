@@ -7,10 +7,12 @@ export class ActivityModel{
         public price?:number,
         public num_of_bookings?:number,
         public address?:string,
+        public detailed_address?:string,
         public description?:string,
         public created_at?:Date,
         public updated_at?:Date,
         public user_id?:number,
-        public calendar?:CalendarModel[]
+        public calendar?:CalendarModel[],
+        public rate?:number
     ){}
 }

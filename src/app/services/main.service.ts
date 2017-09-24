@@ -16,6 +16,8 @@ import { CreateActivityModel } from '../models/createActivity.model';
 import { CreateBookingModel } from '../models/createBooking.model';
 import { CreateMessageModel } from '../models/createMessage.model';
 import { CreateUserModel } from '../models/createUser.model';
+import { CalendarModel } from '../models/calendar.model';
+
 
     @Injectable()
     export class MainService{
@@ -160,7 +162,27 @@ import { CreateUserModel } from '../models/createUser.model';
         }
 
         DeleteActivity(id:number){
-            return this.httpService.DeleteData('/activities/delete/'+id);
+            return this.httpService.DeleteData('/activities/delete/'+id,"");
+        }
+
+        ActivityModelToCreateActivityModel(act:ActivityModel){
+            let res:CreateActivityModel = {
+                title:act.title,
+                price:act.price,
+                num_of_bookings:act.num_of_bookings,
+                address:act.address,
+                detailed_address:act.detailed_address,
+                description:act.description,
+                calendar:this.CalendarArrToDateArr(act.calendar),
+                rate:act.rate
+            };
+            return res;
+        }
+        CalendarArrToDateArr(calendar:CalendarModel[]):Date[]{
+            let result:Date[] = [];
+            for(let item of calendar)
+                result.push(item.date);
+            return result;
         }
         /* ACTIVITIES BLOCK END */
 
@@ -171,7 +193,7 @@ import { CreateUserModel } from '../models/createUser.model';
         }
 
         GetActivityBookings(id:number){
-            return this.httpService.GetData(' /bookings/get_activity_bookings/' + id,"");
+            return this.httpService.GetData('/bookings/get_activity_bookings/' + id,"");
         }
 
         CreateBooking(params:CreateBookingModel){
@@ -187,7 +209,7 @@ import { CreateUserModel } from '../models/createUser.model';
         }
 
         DeleteBooking(id:number){
-            return this.httpService.DeleteData('/bookings/delete/' + id);
+            return this.httpService.DeleteData('/bookings/delete/' + id,"");
         }
 
         /* BOOKINGS BLOCK END */
@@ -272,8 +294,8 @@ import { CreateUserModel } from '../models/createUser.model';
         CreateComment(params:any){
             return this.httpService.PostData('/comments/create',JSON.stringify(params));
         }
-        DeleteComment(id:number){
-            return this.httpService.DeleteData('/comments/delete/'+id);
+        DeleteComment(id:number,params:any){
+            return this.httpService.DeleteData('/comments/delete/'+id,this.ParamsToUrlSearchParams(params));
         }
         /* COMMENTS BLOCK END */
 

@@ -453,7 +453,10 @@ h1{
 .pull-left{
     float:left;
 }
-
+.center-h2{
+    width:100%;
+    text-align: center;
+}
 .round-card {
     padding: 32px;
     border-radius: 8px;
@@ -471,14 +474,19 @@ h1{
 .inline-block {
     display: inline-block;
 }
+.commentbody{
+    text-align: justify;
+}
 
 .about-org {
     padding-left: 122px;
     min-height: 145px;
+    text-align: justify;
 }
 
 .activity-description {
     margin-bottom: 48px;
+    text-align: justify;
 }
 
 .booking-price {
@@ -524,7 +532,7 @@ h1{
 }
 
 .container560 {
-    max-width: 560px;
+    width: 560px;
 }
 
 /* login */
@@ -645,6 +653,65 @@ h1{
     color: #333;
     text-decoration: none;
 }
+
+
+/* Activities */
+.my_ad_header{
+    max-width: 80%;
+    margin-left: 170px;
+    margin-right: 75px;
+    position: relative;
+    top: -15px;
+}
+.delete_button{
+    float:right;
+    margin-left: 10px;
+}
+.delete_button button.edit{
+    background-image: url(./../images/edit.png);
+}
+.delete_button button{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #00406b;
+    background: white;
+    color: #00406b;
+    background-image: url(./../images/trash.png);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 20px;
+    margin-top: 10px;
+}
+.activity_image{
+    float: left;
+    margin-right: 5px;
+    padding: 5px;
+    max-width: 160px;
+}
+.activity_image>img{
+    max-width: 150px;
+}
+
+li.users_ad{
+    max-height: 250px;
+}
+li.users_ad article{
+    display: flow-root;
+}
+
+/* Comments */
+#activities ul{margin:40px 0 40px 0; padding:0; list-style:none;}
+#activities li{margin:0 0 15px 0; padding: 13px 13px 13px 0px;}
+#activities .avatar{float:right; margin:0 0 10px 10px; padding:3px; border:1px solid;}
+#activities address{font-weight:bold;}
+#activities time{font-size:smaller;}
+#activities .comcont{display:block; margin:0; padding:0;}
+#activities .comcont p{margin:10px 5px 10px 0; padding:0;}
+#activities li:nth-child(2n){
+    background-image: url("./../images/pattern.png");
+}
+
 
 
 @media (min-width: 1200px){

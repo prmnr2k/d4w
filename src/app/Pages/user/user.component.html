@@ -201,6 +201,30 @@
                     </table>
                 </div>
             </div>
+            <div class="col-xs-12">
+                <h2 class="center-h2">Activities</h2>
+                <div id="activities" class="container-fluid center-block container560">
+                    <ul>
+                        <li *ngFor="let item of Activities" class="users_ad">
+                            <article>
+                                <div class="delete_button">
+                                    <button (click)="OnDeleteAct(item)" ></button>
+                                </div>
+                                <div class="delete_button">
+                                    <button class="edit" (click)="OnEditAct(item)" ></button>
+                                </div>
+                                <div class="activity_image">
+                                    <img [src]="ActImages[item.id]">
+                                </div>
+                                <header class="my_ad_header">
+                                    <h2 ><a [routerLink]="['/activity/' + item.id]">{{item.title}}</a></h2>
+                                </header>
+                                
+                            </article>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
         
     </div>

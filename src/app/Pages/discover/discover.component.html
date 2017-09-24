@@ -43,7 +43,7 @@
                 <div class="cards" *ngIf="!isLoading">
                     <h3>Récentes</h3>
                     <div class="container-fluid">
-                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6">
+                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">
                             <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
                                 <h3 class="cardname">{{item.title}}</h3>
                                 <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
@@ -59,7 +59,7 @@
 
                     <h3>Le Plus Populaire</h3>
                     <div class="container-fluid">
-                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6">
+                        <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">
                             <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
                                 <h3 class="cardname">{{item.title}}</h3>
                                 <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>

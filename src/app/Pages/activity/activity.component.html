@@ -1,5 +1,5 @@
 <div class="row loading" *ngIf="isLoading"></div>
-<div *ngIf="!isLoading" class="hero center-block" [ngStyle]="{'background':'url(' + ActivityImg + ') center no-repeat','backgroundSize':'cover'}">
+<div *ngIf="!isLoading" class="hero center-block" [ngStyle]="{'background':'url(' + ActivityImg + ') center no-repeat', 'background-size':'cover'}">
     <div class="row middle">
         <div class="h123 h1-first">
                 <h1>{{Activity.title}}</h1>
@@ -13,8 +13,8 @@
                 <div class="round-card">
                     <div class="avatar pull-left">
                         <img class="profile-logo" alt="logo" src="./app/images/man.jpg" style="center">
-                        <span class="profile-text">{{User.name?User.name:'Author'}}</span>
-                        <a [routerLink]="['/users/'+User.id]"><span class="spanlink"></span></a>
+                        <span class="profile-text">{{User?User.name:'Author'}}</span>
+                        <a [routerLink]="['/users',Activity?Activity.user_id:'0']"><span class="spanlink"></span></a>
                     </div>
                     <div class="about-org">
                         <h3>{{User.name?User.name:'Author'}}</h3>
@@ -26,19 +26,19 @@
                 <div class="booking">
                     <div class="round-card">
                         <h3>Reserve</h3>
-                        <form action="#" method="post">
+                        <form (ngSubmit)="CreateBooking()">
                             <div class="form-group">
-                                <input type="date" class="form-control input-withicon input-lg" [min]="Start | date:'yyyy-MM-dd'" [value]="Start | date:'yyyy-MM-dd'">
+                                <input type="date" name="booking_date" class="form-control input-withicon input-lg"  [ngModel]="Booking.date | date:'yyyy-MM-dd'" (ngModelChange)="Booking.date = $event"  [min]="Start | date:'yyyy-MM-dd'" [max]="Finish | date:'yyyy-MM-dd'">
                                 <span class="material-icons input-icon">today</span>
                             </div>
                             <div class="form-group form-group-makeinline">
-                                <input type="text" class="form-control input-withicon input-lg" placeholder="1">
+                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="Booking.num_of_participants" (ngModelChange)="Booking.num_of_participants = $event" [max]="Activity.num_of_bookings" placeholder="1">
                                 <span class="material-icons input-icon">people</span>
                             </div>
                             <div class="form-group form-group-makeinline">
-                                <button type="button" class="btn btn-success input-withicon btn-lg">Reserve</button>
+                                <button type="submit" class="btn btn-success input-withicon btn-lg">Reserve</button>
                                 <span class="material-icons input-icon" style="color: #fff">credit_card</span>
-                                <span class="booking-price">{{Activity.price}} euro</span>
+                                <span class="booking-price">{{+Activity.price}} euro/ticket</span>
                             </div>
                         </form>
                     </div>
@@ -52,7 +52,7 @@
                         <h4>Description</h4>
                         <p>{{Activity.description}}</p></div>
                     <div class="activity-comments-ratings">
-                        <h3>Comments & Rating</h3>
+                        <h3>Rating</h3>
                         <div class="container-fluid ratings">
                             <div class="row">
                                 <div class="col-xs-6 col-sm-3 text-center">
@@ -73,20 +73,42 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="container-fluid post-comment">
+                            <h3>Add commentary</h3>
+                            <form (ngSubmit)="AddComment()">
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control input-lg" name="title" [ngModel]="Comment.title" (ngModelChange)="Comment.title = $event">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea name="description" class="form-control input-lg" [ngModel]="Comment.body" (ngModelChange)="Comment.body = $event"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-success btn-lg" type="submit">Add commentary</button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
                         <div class="container-fluid comments">
-                            <div class="comment">
+                            <h3>Comments</h3>
+                            <div class="comment" *ngFor="let item of Comments">
                                 <div class="avatar pull-left">
-                                    <img class="profile-logo" alt="logo" src="./app/images/man.jpg" style="center">
-                                    <span class="profile-text">George</span>
-                                    <a href="user.html"><span class="spanlink"></span></a>
+                                    <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
+                                    <span class="profile-text">{{Users[item.user_id]?Users[item.user_id].name: 'Author'}}</span>
+                                    <a [routerLink]="['/users',item.user_id]"><span class="spanlink"></span></a>
                                 </div>
                                 <div class="commentbody-rating-date">
-                                    <div class="commentbody">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+                                    <div class="delete_button" *ngIf="Me.id == item.user_id">
+                                        <button (click)="OnDeleteComment(item)" ></button>
+                                    </div>
+                                    
+                                    <div class="commentbody" [innerHTML]="item.body">
                                     </div>
                                     <div class="rating-date">
                                         <div class="commentmeta inline-block">
-                                            <span class="material-icons">date_range</span>23.06.2017
+                                            <span class="material-icons">date_range</span>{{item.updated_at | date:'dd.M.yyyy'}}
                                         </div>
                                         <div class="commentmeta inline-block">
                                             <span class="material-icons">star</span>5.0
@@ -95,35 +117,25 @@
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
-                            </div>
-                            <hr />
-                            <div class="comment">
-                                <div class="avatar pull-left">
-                                    <img class="profile-logo" alt="logo" src="./app/images/man.jpg" style="center">
-                                    <span class="profile-text">George</span>
-                                    <a href="user.html"><span class="spanlink"></span></a>
-                                </div>
-                                <div class="commentbody-rating-date">
-                                    <div class="commentbody">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-                                    </div>
-                                    <div class="rating-date">
-                                        <div class="commentmeta inline-block">
-                                            <span class="material-icons">date_range</span>23.06.2017
-                                        </div>
-                                        <div class="commentmeta inline-block">
-                                            <span class="material-icons">star</span>5.0
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                                <div class="clearfix"></div>
+                                
+                                <hr />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-offset-5"></div>
+            <div class="col-sm-offset-5">
+                <ul>
+                    <li *ngFor="let item of Bookings">
+                        {{item.id}}
+                        <br>
+                        {{item.date}}
+                        <br>
+                        {{item.user_id}}
+                    </li>
+                </ul>
+                
+            </div>
         </div>
     </div>
 </div>

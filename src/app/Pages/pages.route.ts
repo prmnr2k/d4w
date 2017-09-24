@@ -9,6 +9,7 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { CreateActivityComponent } from './createActivity/createActivity.component';
+import { EditActivityComponent } from './editActivity/editActivity.component';
 
 export const routs = [
     { path:"", pathMatch : "full",component:IndexComponent, canActivate: [PageAccessGuard] },
@@ -21,5 +22,6 @@ export const routs = [
     {path:"create_activity",component: CreateActivityComponent, canActivate: [PageAccessGuard]},
     { path: "401", component: UnauthorizedComponent, canActivate: [PageAccessGuard]},
     { path: "404", component: NotFoundComponent, canActivate: [PageAccessGuard]},
+    { path: "edit_act/:id", component:EditActivityComponent, canActivate: [PageAccessGuard]},
     {path: "**", component:NotFoundComponent, canActivate: [PageAccessGuard]}
 ];

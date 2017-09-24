@@ -58,10 +58,10 @@ export class HttpService
             .map((resp:Response)=>resp.json())
             .catch((error:any) =>{return Observable.throw(error);});
     }
-    DeleteData(method:string){
+    DeleteData(method:string,data:string){
         if(!this.headers.has('Content-Type'))
             this.headers.append('Content-Type','application/json');
-        return this.http.delete(this.serverUrl + method,{headers:this.headers})
+        return this.http.delete(this.serverUrl + method + data,{headers:this.headers})
             .map((resp:Response)=>resp.json())
             .catch((error:any) =>{return Observable.throw(error);});
     }

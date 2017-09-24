@@ -1,0 +1,63 @@
+<div class="wrapper row3">
+    <main id="container" class="clear">
+        <div class="row">
+            <div class="loading" *ngIf="isLoading"></div>
+            <div class="col-md-12" *ngIf="!isLoading">
+                <div class="row middle">
+                    <div class="h123 h1-first">
+                        <h1 class="middle-text grey-span topmarg30">Edit activity</h1>
+                    </div>
+                </div>
+                <form (ngSubmit)="OnEditActivityButtonClick()">
+                    <div class="col-sm-6 col-sm-push-2 marg-auto">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" class="form-control input-lg" name="title" [ngModel]="Activity.title" (ngModelChange)="Activity.title = $event">
+                    </div><br>
+                    <div class="form-group">
+                        <label>Picture</label>
+                        <img [src]="Activity.image">
+                        <input type="file"  (change)="changeListener($event)">
+                    </div><br>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" class="form-control input-lg" name="price"  [ngModel]="Activity.price" (ngModelChange)="Activity.price = $event">
+                    </div><br>
+                    <div class="form-group">
+                        <label>Number of possible bookings per day</label>
+                        <input type="number" class="form-control input-lg" name="booking" [ngModel]="Activity.num_of_bookings" (ngModelChange)="Activity.num_of_bookings = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control input-lg" name="address" [ngModel]="Activity.address" (ngModelChange)="Activity.address = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Detailed address</label>
+                        <input type="text" class="form-control input-lg" name="address" [ngModel]="Activity.detailed_address" (ngModelChange)="Activity.detailed_address = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control input-lg" [ngModel]="Activity.description" (ngModelChange)="Activity.description = $event"></textarea>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Begining date</label>
+                        <input type="date" class="form-control input-lg" name="begin" [ngModel]="Start | date:'yyyy-MM-dd'" (ngModelChange)="Start = $event">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Finish date</label>
+                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish | date:'yyyy-MM-dd'" (ngModelChange)="Finish = $event">
+                    </div>
+                    <br>
+
+                    <div class="row"><div class="col-md-12 text-center"><button class="btn btn-success btn-lg" type="submit">Save activity</button></div></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>

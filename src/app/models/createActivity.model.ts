@@ -8,7 +8,9 @@ export class CreateActivityModel{
         public detailed_address?:string,
         public description?: string,
         public calendar?: Date[],
-        public rate?:number
+        public rate?:number,
+        public lat?: number,
+        public lng?:number
     ){
 
     }

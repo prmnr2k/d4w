@@ -10,6 +10,7 @@ import {MainService} from "./services/main.service";;
 import { routs } from './Pages/pages.route';
 import { PageModule } from './Pages/pages.module';
 import { ModalComponent } from './components/modal.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
     imports:      [ 
@@ -17,7 +18,10 @@ import { ModalComponent } from './components/modal.component';
         RouterModule.forRoot(routs),
         PageModule,
         HttpModule,
-        FormsModule
+        FormsModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4'
+        })
     ],
     declarations: [ AppComponent],
     providers: [ MainService, HttpModule, ModalComponent],

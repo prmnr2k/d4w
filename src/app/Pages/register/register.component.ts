@@ -74,4 +74,5 @@ export class RegisterComponent implements OnInit{
         }
         myReader.readAsDataURL(file);
     }
+
 }

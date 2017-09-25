@@ -1,10 +1,14 @@
 <div class="wrapper row3">
     <main id="container" class="clear">
-        <div class="row">
+        <div class="row loading" *ngIf="isLoading"></div>
+        <div class="row" *ngIf="!isLoading">
             <div class="col-md-12">
                 <div class="row middle">
                     <div class="h123 h1-first">
                         <h1 class="middle-text grey-span topmarg30">Create activity</h1>
+                    </div>
+                    <div *ngIf="isCreateErr">
+                        <h2 class="error-msg">{{ErrMsg}}</h2>
                     </div>
                 </div>
                 <form (ngSubmit)="OnCreateActivityButtonClick()">
@@ -44,15 +48,20 @@
                     <br>
                     <div class="form-group">
                         <label>Begining date</label>
-                        <input type="date" class="form-control input-lg" name="begin" [ngModel]="Start" (ngModelChange)="Start = $event">
+                        <input type="date" class="form-control input-lg" name="begin" [ngModel]="Start | date:'yyyy-MM-dd'" (ngModelChange)="Start = $event" [min]="Today | date:'yyyy-MM-dd'">
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Finish date</label>
-                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish" (ngModelChange)="Finish = $event">
+                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish" (ngModelChange)="Finish = $event" [min]="Start | date:'yyyy-MM-dd'">
                     </div>
                     <br>
-
+                    
+                    <div class="col-md-12">
+                        <agm-map (mapClick)="mapClicked($event)" [latitude]="Activity?.lat" [longitude]="Activity?.lng">
+                            <agm-marker [markerDraggable]="true" [latitude]="Activity?.lat" [longitude]="Activity?.lng"></agm-marker>
+                        </agm-map>
+                    </div>
                     <div class="row"><div class="col-md-12 text-center"><button class="btn btn-success btn-lg" type="submit">Create activity</button></div></div>
                     </div>
                 </form>

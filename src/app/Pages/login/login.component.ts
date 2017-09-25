@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit{
         login:'',
         password:''
     }
+    isLoginErr = false;
     isLoading = true;
     ngOnInit(): void {
         this.isLoading = false;
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit{
     OnLoginButtonClick()
     {
         this.isLoading = true;
+        this.isLoginErr = false;
         this.mainService.UserLogin(this.loginData.login,this.loginData.password)
             .subscribe((data:TokenModel)=>{
                 console.log(data);
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit{
                 this.router.navigate(['/']);
             },
             (err:any)=>{
-                console.log(err);
+                this.isLoginErr = true;
                 this.isLoading = false;
             }
         );

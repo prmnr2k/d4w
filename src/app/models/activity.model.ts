@@ -13,6 +13,11 @@ export class ActivityModel{
         public updated_at?:Date,
         public user_id?:number,
         public calendar?:CalendarModel[],
-        public rate?:number
+        public rate?:number,
+        public lat?: number,
+        public lng?:number,
+        public dostance?:number,
+        public bearing?:number
+
     ){}
 }

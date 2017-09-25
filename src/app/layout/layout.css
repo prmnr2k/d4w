@@ -444,7 +444,9 @@ h1{
 }
 
 .map {
-    margin-bottom: -6px;
+    
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
 .controls-inline {
@@ -752,6 +754,13 @@ li.users_ad article{
 
 .unread{
     font-weight: bold;
+}
+agm-map {
+    height: 300px;
+}
+
+.search_map{
+    height: 500px;
 }
 
 @media (min-width: 1200px){

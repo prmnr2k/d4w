@@ -6,6 +6,7 @@ import { HttpService} from '../../services/http.service';
 
 import {MainService} from "./../../services/main.service";
 import { ActivityModel } from '../../models/activity.model';
+import { UserModel } from '../../models/user.model';
 
 @Component({
     moduleId:module.id,
@@ -16,11 +17,29 @@ import { ActivityModel } from '../../models/activity.model';
 
 export class SearchComponent implements OnInit{
     Activities: ActivityModel[] = [];
+    Params = {
+        title:'',
+        description:'',
+        address:'',
+        dates:'',
+        radius:15
+    }
+    lat:number = 48.8916733;
+    lng:number = 2.3016161;
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute){}
 
     ngOnInit(){
+        this.service.GetMe()
+            .subscribe((res:UserModel)=>{
+                this.lat = res.lat;
+                this.lng = res.lng;
+            })
         this.service.GetAllActivities();
     }
+    mapClicked($event: any) {
+        this.lat = $event.coords.lat;
+        this.lng = $event.coords.lng;
+      }
 }

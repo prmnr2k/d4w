@@ -2,6 +2,7 @@ import { NgModule }      from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { HttpService} from '../services/http.service';
 import { FormsModule }   from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 import { RouterModule } from "@angular/router";
 import { PageAccessGuard } from './page.guards';
@@ -19,7 +20,10 @@ import { EditActivityComponent } from './editActivity/editActivity.component';
 import { ModalComponent } from '../components/modal.component';
 
 @NgModule({
-    imports:      [ CommonModule,FormsModule,RouterModule ],
+    imports:      [ CommonModule,FormsModule,RouterModule,
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4'
+        }) ],
     declarations: [
         LoginComponent, IndexComponent,UnauthorizedComponent,
         NotFoundComponent, DiscoverComponent, SearchComponent,

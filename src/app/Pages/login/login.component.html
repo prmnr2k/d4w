@@ -10,6 +10,10 @@
     <div class="loading" *ngIf="isLoading"></div>
     <div class="login_form" *ngIf="!isLoading">
       <h1>Login</h1>
+      
+      <div *ngIf="isLoginErr">
+        <h2 class="error-msg">Incorrect email or password!</h2>
+      </div>
       <form (ngSubmit)="OnLoginButtonClick()">
         <div class="form-group">
           <label for="login">Email</label>

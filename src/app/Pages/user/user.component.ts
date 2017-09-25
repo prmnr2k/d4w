@@ -26,7 +26,7 @@ export class UserComponent implements OnInit{
     Logo:string = "./app/images/man.jpg";
     Background:string = "./app/images/hero-back.png";
     Diploma:string = '';
-    MenuItem = "edit";
+    MenuItem = "bookings";
     ProfileMenu = "profile";
     MessagesMenu = "received";
     Activities:ActivityModel[]=[];
@@ -39,7 +39,7 @@ export class UserComponent implements OnInit{
     CurrentMessage:MessageModel = new MessageModel();
     MessOk = false;
     MessErr = false;
-
+    BookingLoading = true;
     BookingsMenu = "future";
     Bookings:BookingModel[] = [];
     BookingsActivities: ActivityModel[] = [];
@@ -179,7 +179,7 @@ export class UserComponent implements OnInit{
     }
 
     BookingsTypeChanged($event){
-        this.MessLoading = true;
+        this.BookingLoading = true;
         this.BookingsMenu = $event;
         if(this.BookingsMenu == "future"){
             this.GetFutureBookings();
@@ -206,13 +206,18 @@ export class UserComponent implements OnInit{
     }
 
     GetActivitiesByBookings(){
+        let total = this.Bookings.length;
+        let current = 0;
         for(let item of this.Bookings){
             this.service.GetActivity(item.activity_id)
                 .subscribe((res:ActivityModel)=>{
                     this.BookingsActivities[res.id] = res;
+                    current += 1;
+                    if(current == total)
+                        this.BookingLoading = false;
                 })
         }
-        this.MessLoading = false;
+        
     }
 
     MessagesTypeChanged($event){
@@ -240,11 +245,15 @@ export class UserComponent implements OnInit{
             })
     }
     GetUsersByMessages(){
+        let total = this.Messages.length;
+        let current = 0;
         for(let item of this.Messages){
             if(!this.Users[item.from_id]){
                 this.service.GetUserById(item.from_id)
                     .subscribe((res:UserModel)=>{
                         this.Users[item.from_id]=res;
+                        current += 1;
+                        
                     })
             }
             if(!this.Users[item.to_id]){

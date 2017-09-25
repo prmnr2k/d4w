@@ -53,7 +53,7 @@
                     <br>
                     <div class="form-group">
                         <label>Finish date</label>
-                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish" (ngModelChange)="Finish = $event" [min]="Start | date:'yyyy-MM-dd'">
+                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish | date:'yyyy-MM-dd'" (ngModelChange)="Finish = $event" [min]="Start | date:'yyyy-MM-dd'">
                     </div>
                     <br>
                     

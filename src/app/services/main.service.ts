@@ -52,13 +52,15 @@ import { CalendarModel } from '../models/calendar.model';
                 if(prop){
                     if( prop instanceof Array){
                         for(let i in prop){
-                            options.append(key+"[]",prop[i]);
+                            if(prop[i])
+                                options.append(key+"[]",prop[i]);
                         }
                     }
                     else
                         options.set(key,params[key]);
                 }
             }
+            console.log(options.toString());
             return options.toString();
         }
 

@@ -10,8 +10,24 @@
             <div class="col-sm-3 left-side">
                 <div class="controls">
                     <h3>Find Activities</h3>
-                    <form>
+                    <form (ngSubmit)="GetAllActivities()">
                         <div class="form-group">
+                            <input type="text" name="desc" class="form-control input-withicon input-lg" [ngModel]="Params.title" (ngModelChange)="Params.title = $event" placeholder="Title..">
+                            <span class="material-icons input-icon">location_on</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="desc" class="form-control input-withicon input-lg" [ngModel]="Params.description" (ngModelChange)="Params.description = $event" placeholder="Description..">
+                            <span class="material-icons input-icon">location_on</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" name="start" class="form-control input-withicon input-lg" [ngModel]="Params.from_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.from_date = $event" placeholder="Start..">
+                            <span  class="material-icons input-icon">today</span>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" name="finish" class="form-control input-withicon input-lg" [ngModel]="Params.to_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.to_date = $event" placeholder="Finish..">
+                            <span class="material-icons input-icon">today</span>
+                        </div>
+                        <!--<div class="form-group">
                             <input type="text" class="form-control input-withicon input-lg" placeholder="Emplacement..">
                             <span class="material-icons input-icon">location_on</span>
                         </div>
@@ -30,9 +46,9 @@
                         <div class="form-group">
                             <input type="text" class="form-control input-withicon input-lg" placeholder="This is dropdown checkbox">
                             <span class="material-icons input-icon">filter_list</span>
-                        </div>
+                        </div>-->
                         <div class="form-group form-group-makeinline">
-                            <button type="button" class="btn btn-success input-withicon btn-lg">Appliquer</button>
+                            <button type="submit" class="btn btn-success input-withicon btn-lg">Appliquer</button>
                             <span class="material-icons input-icon white-span">search</span>
                         </div>
                     </form>

@@ -10,7 +10,7 @@
     <h1>User.name</h1>
     </div>-->
 </div>
-    <div *ngIf="!isLoading" class="container-fluid center-block pull-top container560">
+    <div *ngIf="!isLoading" class="container-fluid center-block pull-top container700">
         <div class="row">
             <div class="col-xs-12">
                 <div class="round-card">
@@ -26,18 +26,18 @@
             </div>
         </div>
         <div class="row">
-            <div *ngIf="isMe" class="col-xs-12">
-                <ul class="list-inline text-center">
-                    <li [ngClass]="MenuItem=='edit'?'active':''">
+            <div *ngIf="isMe" class="col-xs-12 container700">
+                <ul class="list-inline text-center container700">
+                    <li [ngClass]="MenuItem=='bookings'?'active':''">
                         <h2>
-                            <span *ngIf="MenuItem=='edit'">Profile Edit</span>
-                            <a (click)="SetMenuItem('edit')" *ngIf="MenuItem!='edit'">Profile Edit</a>
+                            <span *ngIf="MenuItem=='bookings'">Bookings</span>
+                            <a (click)="SetMenuItem('bookings')" *ngIf="MenuItem!='bookings'">Bookings</a>
                         </h2>
                     </li>
-                    <li [ngClass]="MenuItem=='payments'?'active':''">
+                    <li [ngClass]="MenuItem=='activity'?'active':''">
                         <h2>
-                            <span *ngIf="MenuItem=='payments'">Payments</span>
-                            <a (click)="SetMenuItem('payments')" *ngIf="MenuItem!='payments'">Payments</a>
+                            <span *ngIf="MenuItem=='activity'">My Activities</span>
+                            <a (click)="SetMenuItem('activity')" *ngIf="MenuItem!='activity'">My Activities</a>
                         </h2>
                     </li>
                     <li [ngClass]="MenuItem=='messages'?'active':''">
@@ -46,13 +46,40 @@
                             <a (click)="SetMenuItem('messages')" *ngIf="MenuItem!='messages'">Messages</a>
                         </h2>
                     </li>
-                    <li [ngClass]="MenuItem=='bookings'?'active':''">
+                    <li [ngClass]="MenuItem=='payments'?'active':''">
                         <h2>
-                            <span *ngIf="MenuItem=='bookings'">Bookings</span>
-                            <a (click)="SetMenuItem('bookings')" *ngIf="MenuItem!='bookings'">Bookings</a>
+                            <span *ngIf="MenuItem=='payments'">Payments</span>
+                            <a (click)="SetMenuItem('payments')" *ngIf="MenuItem!='payments'">Payments</a>
+                        </h2>
+                    </li>
+                    <li [ngClass]="MenuItem=='edit'?'active':''">
+                        <h2>
+                            <span *ngIf="MenuItem=='edit'">Profile Edit</span>
+                            <a (click)="SetMenuItem('edit')" *ngIf="MenuItem!='edit'">Profile Edit</a>
                         </h2>
                     </li>
                 </ul>
+                <div id="activities" *ngIf="MenuItem=='activity'" class="container-fluid center-block container560">
+                        <div class="row loading" *ngIf="BookingLoading"></div>
+                        <h3 *ngIf="!BookingLoading && Activities.length == 0" class="h-center">There is no bookings!</h3>
+                        <table *ngIf="!BookingLoading && Activities.length > 0" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th colspan="2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of let item of Activities">
+                                    <td><img [src]="ActImages[item.id]"></td>
+                                    <td><h4><a [routerLink]="['/activity/' + item.id]">{{item.title}}</a></h4></td>
+                                    <td><a class="read-more" [routerLink]="['/edit_act',item.id]">edit</a></td>
+                                    <td><a class="read-more" (click)="OnDeleteAct(item)">delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
                 <div *ngIf="MenuItem=='edit'" class="container-fluid center-block container560">
                     <div class="form-group width70 marg-auto">
                         <label>Select option</label>
@@ -277,35 +304,11 @@
                     </table>
                 </div>
             </div>
-            <div class="col-xs-12" *ngIf="isMe && Activities.length > 0">
-                
-                <h2 class="center-h2">My activities</h2>
-                <div id="activities" class="container-fluid center-block container560">
-
-                        <table *ngIf="!MessLoading && Bookings.length >0" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    <th colspan="2">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of let item of Activities">
-                                    <td><img [src]="ActImages[item.id]"></td>
-                                    <td><h4><a [routerLink]="['/activity/' + item.id]">{{item.title}}</a></h4></td>
-                                    <td><a class="read-more" [routerLink]="['/edit_act',item.id]">edit</a></td>
-                                    <td><a class="read-more" (click)="OnDeleteAct(item)">delete</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                </div>
-            </div>
         </div>
         
     </div>
     <div class="col-sm-10 marg-auto left-side">
-    <div class="cards" *ngIf="!isLoading">
+    <div class="cards" *ngIf="!isLoading && Activities.length > 0">
             <h3 class="h-center">User's activities</h3>
             <div class="container-fluid">
                 <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">

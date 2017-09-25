@@ -21,6 +21,16 @@ export class DiscoverComponent implements OnInit{
     Activities: ActivityModel[] = [];
     Users:UserModel[] = [];
     Images:string[] = [];
+    Start:Date;
+    Finish:Date;
+    Params = {
+        limit:10,
+        offset:0,
+        from_date:null,
+        to_date:null,
+        title:'',
+        description:''
+    };
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute){}
@@ -32,8 +42,12 @@ export class DiscoverComponent implements OnInit{
 
     GetAllActivities(){
         this.isLoading = true;
-        this.service.GetAllActivities({limit:10})
+        
+        //this.Params.dates = [this.Start, this.Finish];
+        console.log(this.Params);
+        this.service.GetAllActivities(this.Params)
         .subscribe((res:ActivityModel[])=>{
+            console.log(res);
             this.Activities = res;
             for(let item of this.Activities){
                 if(item.image_id){
@@ -46,7 +60,6 @@ export class DiscoverComponent implements OnInit{
                 this.service.GetUserById(item.user_id)
                     .subscribe((user:UserModel)=>{
                         this.Users[item.user_id] = user;
-                        console.log(this.Users);
                         if(user.image_id){
                             this.service.GetImageById(user.image_id)
                                 .subscribe((img:Base64ImageModel)=>{
@@ -55,6 +68,7 @@ export class DiscoverComponent implements OnInit{
                         }
                     })
             }
+            
             this.isLoading = false;
         });
     }

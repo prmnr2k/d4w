@@ -12,6 +12,8 @@ import { Base64ImageModel } from '../../models/base64image.model';
 import { CommentModel } from '../../models/comment.model';
 import { CreateBookingModel } from '../../models/createBooking.model';
 import { BookingModel } from '../../models/booking.model';
+import { CreateMessageModel } from '../../models/createMessage.model';
+import { MessageModel } from '../../models/message.model';
 
 @Component({
     moduleId:module.id,
@@ -33,6 +35,7 @@ export class ActivityComponent implements OnInit{
     Users:UserModel[] = [];
     Images:string[] = [];
     Me:UserModel = new UserModel();
+    MyBooking:BookingModel = new BookingModel();
     Comment = {
         title: '',
         body: '',
@@ -40,6 +43,11 @@ export class ActivityComponent implements OnInit{
     }
     Booking:CreateBookingModel = new CreateBookingModel();
     Bookings:BookingModel[] = [];
+    isBookingErr = false;
+    Message:CreateMessageModel = new CreateMessageModel();
+    MessOk = false;
+    MessErr = false;
+    MessLoading = false;
     constructor(private router: Router,
         private service: MainService,
         private activatedRoute: ActivatedRoute){}
@@ -95,21 +103,16 @@ export class ActivityComponent implements OnInit{
         this.service.GetAllComments({activity_id:this.Activity.id})
             .subscribe((res:CommentModel[])=>{
                 this.Comments = res;
-                this.GetUsers();
+                this.GetUsersByComments();
             })
     }
 
-    GetUsers(){
+    GetUsersByComments(){
         for(let item of this.Comments){
             this.service.GetUserById(item.user_id)
                 .subscribe((user:UserModel)=>{
                     this.Users[user.id] = user;
-                    if(user.image_id){
-                        this.service.GetImageById(user.image_id)
-                            .subscribe((image:Base64ImageModel)=>{
-                                this.Images[user.id] = image.base64;
-                            })
-                    }
+                    this.GetImageByUser(user);
                 })
         }
     }
@@ -134,18 +137,118 @@ export class ActivityComponent implements OnInit{
     }
 
     CreateBooking(){
-        console.log(this.Booking);
+        this.isBookingErr = false;
         this.Booking.activity_id = this.Activity.id;
+        this.Booking.date = this.Start;
+        if(this.Booking.num_of_participants > this.Activity.num_of_bookings){
+            this.isBookingErr = true;
+            this.Booking.num_of_participants = this.Activity.num_of_bookings;
+            return;
+        }
         this.service.CreateBooking(this.Booking)
             .subscribe((book:BookingModel)=>{
                 this.GetBookings();
-            })
+            },
+        (err:any)=>{
+            this.isBookingErr = true;
+            setTimeout(()=>{
+                this.isBookingErr = false;
+            },5000)
+        })
     }
 
+    UpdateBooking(){
+        this.isBookingErr = false;
+        console.log(this.MyBooking);
+        if(this.MyBooking.num_of_participants > this.Activity.num_of_bookings){
+            this.isBookingErr = true;
+            this.MyBooking.num_of_participants = this.Activity.num_of_bookings
+            return;
+        }
+        this.service.UpdateBooking(this.MyBooking.id,{num_of_participants:this.MyBooking.num_of_participants})
+            .subscribe((res:BookingModel)=>{
+                console.log(res);
+                this.MyBooking = res;
+                this.GetBookings();
+            },
+            (err:any)=>{
+                this.isBookingErr = true;
+                setTimeout(()=>{
+                    this.isBookingErr = false;
+                },5000)
+            })
+    }
+    Unsubscribe()
+    {
+        console.log("unsub");
+        this.service.DeleteBooking(this.MyBooking.id)
+            .subscribe(()=>{
+                this.MyBooking = new BookingModel();
+                this.GetBookings();
+            })
+    }
     GetBookings(){
         this.service.GetActivityBookings(this.Activity.id)
             .subscribe((res:BookingModel[])=>{
                 this.Bookings = res;
+                this.GetUsersByBookings();
             })
+    }
+    GetUsersByBookings(){
+        for(let item of this.Bookings){
+            if(item.user_id == this.Me.id){
+                this.MyBooking = item;
+            }
+            this.service.GetUserById(item.user_id)
+                .subscribe((user:UserModel)=>{
+                    this.Users[user.id] = user;
+                    this.GetImageByUser(user);
+                })
+        }
+    }
+
+    GetImageByUser(user:UserModel){
+        if(user.image_id){
+            this.service.GetImageById(user.image_id)
+                .subscribe((image:Base64ImageModel)=>{
+                    this.Images[user.id] = image.base64;
+                })
+        }
+    }
+
+    MyBookingNumOfPartsChanged($event:any){
+        this.MyBooking.num_of_participants = $event;
+    }
+
+    SendMessage(){
+        this.MessLoading = true;
+        this.MessErr = false;
+        this.MessOk = false;
+        this.Message.to_id = this.Activity.user_id;
+        if(!this.Message.title || !this.Message.body){
+            this.MessErr = true;
+            this.MessLoading = false;
+            setTimeout(()=>{
+                this.MessErr = false;
+            },5000);
+            return;
+        }
+        this.service.CreateMessage(this.Message)
+            .subscribe((mes:MessageModel)=>{
+                this.Message.title = "";
+                this.Message.body = "";
+                this.MessOk = true;
+                this.MessLoading = false;
+                setTimeout(()=>{
+                    this.MessOk = false;
+                },5000);
+            },
+        (err:any)=>{
+            this.MessErr = true;
+            this.MessLoading = false;
+            setTimeout(()=>{
+                this.MessErr = false;
+            },5000);
+        })
     }
 }

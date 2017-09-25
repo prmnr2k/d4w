@@ -9,6 +9,8 @@ import { UserModel } from '../../models/user.model';
 import { Base64ImageModel } from '../../models/base64image.model';
 import { CreateUserModel } from '../../models/createUser.model';
 import { ActivityModel } from '../../models/activity.model';
+import { MessageModel } from '../../models/message.model';
+import { BookingModel } from '../../models/booking.model';
 
 @Component({
     moduleId:module.id,
@@ -18,7 +20,7 @@ import { ActivityModel } from '../../models/activity.model';
 })
 
 export class UserComponent implements OnInit{
-    IsLoading = true;
+    isLoading = true;
     User:UserModel = new UserModel();
     isMe = false;
     Logo:string = "./app/images/man.jpg";
@@ -26,19 +28,31 @@ export class UserComponent implements OnInit{
     Diploma:string = '';
     MenuItem = "edit";
     ProfileMenu = "profile";
+    MessagesMenu = "received";
     Activities:ActivityModel[]=[];
     ActImages:string[] = [];
     UserUpdate:CreateUserModel = new CreateUserModel();
+    Messages:MessageModel[] = [];
+    Users:UserModel[] = [];
+    MessLoading = true;
+    Message:MessageModel = new MessageModel();
+    CurrentMessage:MessageModel = new MessageModel();
+    MessOk = false;
+    MessErr = false;
+
+    BookingsMenu = "future";
+    Bookings:BookingModel[] = [];
+    BookingsActivities: ActivityModel[] = [];
     constructor(private router: Router,
         private service: MainService,
         private activatedRoute: ActivatedRoute){}
 
     ngOnInit(){
         this.activatedRoute.params.forEach((params:Params) => {
+            this.isLoading = true;
             let userId = params["id"];
-            console.log(userId);
             //TODO: REWRITE THIS HARDCODE
-            if(userId == 'me' /*|| userId == this.service.me.id*/){
+            if(userId == 'me' || userId == this.service.me.id){
                 this.isMe = true;
                 this.service.GetMe()
                     .subscribe((res:UserModel)=>{
@@ -89,7 +103,11 @@ export class UserComponent implements OnInit{
                         this.UserUpdate.diploma = diploma.base64;
                 });
         }
+        
         this.GetActivityies();
+        this.MessagesTypeChanged(this.MessagesMenu);
+        this.BookingsTypeChanged(this.BookingsMenu);
+        this.isLoading = false;
     }
     GetActivityies(){
         this.service.GetAllActivities({user_id:this.User.id})
@@ -158,6 +176,128 @@ export class UserComponent implements OnInit{
 
     OnEditAct(item:ActivityModel){
         this.router.navigate(['/edit_act',item.id]);
+    }
+
+    BookingsTypeChanged($event){
+        this.MessLoading = true;
+        this.BookingsMenu = $event;
+        if(this.BookingsMenu == "future"){
+            this.GetFutureBookings();
+        }
+        else{
+            this.GetPastBookings();
+        }
+    }
+
+    GetFutureBookings(){
+        this.service.GetFutureBookings()
+            .subscribe((res:BookingModel[])=>{
+                this.Bookings = res;
+                this.GetActivitiesByBookings();
+            })
+    }
+
+    GetPastBookings(){
+        this.service.GetPastBookings()
+            .subscribe((res:BookingModel[])=>{
+                this.Bookings = res;
+                this.GetActivitiesByBookings();
+            })
+    }
+
+    GetActivitiesByBookings(){
+        for(let item of this.Bookings){
+            this.service.GetActivity(item.activity_id)
+                .subscribe((res:ActivityModel)=>{
+                    this.BookingsActivities[res.id] = res;
+                })
+        }
+        this.MessLoading = false;
+    }
+
+    MessagesTypeChanged($event){
+        this.MessagesMenu = $event;
+        if(this.MessagesMenu == "received")
+            this.GetRecievedMessages();
+        else this.GetSentMessages();
+    }
+    GetRecievedMessages(){
+        this.MessLoading = true;
+        this.service.GetReceivedMessages("")
+            .subscribe((res:MessageModel[])=>{
+                this.Messages = res;
+                this.GetUsersByMessages();
+                this.MessLoading = false;
+            })
+    }
+    GetSentMessages(){
+        this.MessLoading = true;
+        this.service.GetSentMessages("")
+            .subscribe((res:MessageModel[])=>{
+                this.Messages = res;
+                this.GetUsersByMessages();
+                this.MessLoading = false;
+            })
+    }
+    GetUsersByMessages(){
+        for(let item of this.Messages){
+            if(!this.Users[item.from_id]){
+                this.service.GetUserById(item.from_id)
+                    .subscribe((res:UserModel)=>{
+                        this.Users[item.from_id]=res;
+                    })
+            }
+            if(!this.Users[item.to_id]){
+                this.service.GetUserById(item.to_id)
+                    .subscribe((res:UserModel)=>{
+                        this.Users[item.to_id]=res;
+                    })
+            }
+        }
+    }
+
+    ReadMessages(item:MessageModel,modal:any){
+        this.CurrentMessage = item;
+        modal.show();
+        this.service.MarkMessagesAsRead(item.id)
+            .subscribe(()=>{
+                
+            },
+        (err)=>{
+            this.MessagesTypeChanged(this.MessagesMenu);
+        })
+    }
+
+    SendMessage(){
+        this.MessLoading = true;
+        this.MessErr = false;
+        this.MessOk = false;
+        this.Message.to_id = this.MessagesMenu == "sent" ? this.CurrentMessage.to_id : this.CurrentMessage.from_id;
+        if(!this.Message.title || !this.Message.body){
+            this.MessErr = true;
+            this.MessLoading = false;
+            setTimeout(()=>{
+                this.MessErr = false;
+            },5000);
+            return;
+        }
+        this.service.CreateMessage(this.Message)
+            .subscribe((mes:MessageModel)=>{
+                this.Message.title = "";
+                this.Message.body = "";
+                this.MessOk = true;
+                this.MessagesTypeChanged(this.MessagesMenu);
+                setTimeout(()=>{
+                    this.MessOk = false;
+                },5000);
+            },
+        (err:any)=>{
+            this.MessErr = true;
+            this.MessLoading = false;
+            setTimeout(()=>{
+                this.MessErr = false;
+            },5000);
+        })
     }
 
 }

@@ -197,6 +197,14 @@ import { CalendarModel } from '../models/calendar.model';
             return this.httpService.GetData('/bookings/get_activity_bookings/' + id,"");
         }
 
+        GetPastBookings(){
+            return this.httpService.GetData("/bookings/get_past_bookings","");
+        }
+
+        GetFutureBookings(){
+            return this.httpService.GetData("/bookings/get_future_bookings","");
+        }
+
         CreateBooking(params:CreateBookingModel){
             return this.httpService.PostData('/bookings/create',JSON.stringify(params));
         }
@@ -229,8 +237,8 @@ import { CalendarModel } from '../models/calendar.model';
             return this.httpService.GetData('/messages/get_received',this.ParamsToUrlSearchParams(params));
         }
 
-        MarkMessagesAsRead(){
-            return this.httpService.PostData('/messages/mark_read/','');
+        MarkMessagesAsRead(id:number){
+            return this.httpService.PostData('/messages/mark_read/' + id,'');
         }
 
         CreateMessage(params:CreateMessageModel){

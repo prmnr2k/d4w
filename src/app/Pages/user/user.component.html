@@ -1,14 +1,16 @@
-<div class="hero hero--user center-block" [ngStyle]="{'background':'url('+Background+') center no-repeat', 'background-size':'cover'}">
-        <div class="row middle">
-            <div class="h123 h1-first">
-                <h1>{{User.name}}</h1>
-            </div>
+
+<div class="row loading" *ngIf="isLoading"></div>
+<div *ngIf="!isLoading" class="hero hero--user center-block" [ngStyle]="{'background':'url('+Background+') center no-repeat', 'background-size':'cover'}">
+    <div class="row middle">
+        <div class="h123 h1-first">
+            <h1>{{User.name}}</h1>
         </div>
-      <!--<div class="hero-content">
-        <h1>User.name</h1>
-      </div>-->
     </div>
-    <div class="container-fluid center-block pull-top container560">
+    <!--<div class="hero-content">
+    <h1>User.name</h1>
+    </div>-->
+</div>
+    <div *ngIf="!isLoading" class="container-fluid center-block pull-top container560">
         <div class="row">
             <div class="col-xs-12">
                 <div class="round-card">
@@ -42,6 +44,12 @@
                         <h2>
                             <span *ngIf="MenuItem=='messages'">Messages</span>
                             <a (click)="SetMenuItem('messages')" *ngIf="MenuItem!='messages'">Messages</a>
+                        </h2>
+                    </li>
+                    <li [ngClass]="MenuItem=='bookings'?'active':''">
+                        <h2>
+                            <span *ngIf="MenuItem=='bookings'">Bookings</span>
+                            <a (click)="SetMenuItem('bookings')" *ngIf="MenuItem!='bookings'">Bookings</a>
                         </h2>
                     </li>
                 </ul>
@@ -131,6 +139,7 @@
                     </form>
                 </div>
                 <div *ngIf="MenuItem=='payments'" class="container-fluid center-block container560">
+                    
                     <table class="table">
                         <thead>
                             <tr>
@@ -169,62 +178,148 @@
                     </table>
                 </div>
                 <div *ngIf="MenuItem=='messages'" class="container-fluid center-block container560">
-                    <table class="table table-striped">
+                    <div class="form-group width70 marg-auto">
+                        <label>Select option</label>
+                        <select class="form-control" [ngModel]="MessagesMenu" (ngModelChange)="MessagesTypeChanged($event)">
+                            <option value="received">Received messages</option>
+                            <option value="sent">Sent messages</option>
+                        </select>
+                    </div>
+                    <div class="row loading" *ngIf="MessLoading"></div>
+                    <h3 *ngIf="!MessLoading && Messages.length == 0" class="h-center">There is no messages!</h3>
+                    <table *ngIf="!MessLoading && Messages.length > 0" class="table table-striped">
                         <thead>
                             <tr>
-                                <th>#</th>
-                                <th>User</th>
-                                <th>Message</th>
+                                <th>{{MessagesMenu=="received"?"From":"To"}}</th>
+                                <th>Title</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Yes, we can manage to do this...</td>
-                                <td><a routerLink="/more" class="read-more">show</a></td>
+                            <tr *ngFor="let item of Messages">
+                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{Users[MessagesMenu=='received'?item.from_id:item.to_id]?(Users[MessagesMenu=='received'?item.from_id:item.to_id].name):''}}</td>
+                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{item.title}}</td>
+                                <td><a class="read-more" (click)="ReadMessages(item,modal1)">show</a></td>
                             </tr>
+                        </tbody>
+                    </table>
+                    <modal #modal1>
+                        <div *ngIf="MessagesMenu=='received'" class="app-modal-header">
+                            Message from <b>{{Users[CurrentMessage.from_id]?.name}}</b>
+                        </div>
+                        <div *ngIf="MessagesMenu=='sent'" class="app-modal-header">
+                            Message for <b>{{Users[CurrentMessage.to_id]?.name}}</b>
+                        </div>
+                        <div class="app-modal-body">
+                            <div *ngIf="MessOk">
+                                <h4 class="ok-msg"> Your message was send to 
+                                    <b *ngIf="MessagesMenu=='received'">{{Users[CurrentMessage.from_id]?.name}}</b>
+                                    <b *ngIf="MessagesMenu=='sent'">{{Users[CurrentMessage.to_id]?.name}}</b>
+                                </h4>
+                            </div>
+                            <div *ngIf="MessErr">
+                                <h4 class="error-msg">Input correct title and body!</h4>
+                            </div>
+                            <div *ngIf="MesLoading" class="loading max-height200"></div>
+                            <div>
+                            <form *ngIf="!MesLoading" (ngSubmit)="SendMessage()">
+                                <div>
+                                    <h4>{{CurrentMessage.title}}</h4>
+                                    <p [innerHTML]="CurrentMessage.body"></p>
+                                </div>
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" class="form-control input-lg" name="title" [ngModel]="Message.title" (ngModelChange)="Message.title = $event">
+                                </div>
+                                <div class="form-group">
+                                    <label>Body</label>
+                                    <textarea name="description" class="form-control input-lg" [ngModel]="Message.body" (ngModelChange)="Message.body = $event"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-success btn-lg" type="submit">Send message</button>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+
+                        </div>
+                        <div class="app-modal-footer">
+                            <button type="button" class="btn btn-primary" (click)="modal1.hide()">Cancel</button>
+                        </div>
+                    </modal>
+                </div>
+                <div *ngIf="MenuItem=='bookings'" class="container-fluid center-block container560">
+                    <div class="form-group width70 marg-auto">
+                        <label>Select option</label>
+                        <select class="form-control" [ngModel]="BookingsMenu" (ngModelChange)="BookingsTypeChanged($event)">
+                            <option value="future">Future</option>
+                            <option value="past">Past</option>
+                        </select>
+                    </div>
+                    <h3 *ngIf="!MessLoading && Bookings.length == 0" class="h-center">There is no bookings!</h3>
+                    <div class="row loading" *ngIf="MessLoading"></div>
+                    <table *ngIf="!MessLoading && Bookings.length >0" class="table table-striped">
+                        <thead>
                             <tr>
-                                <th scope="row">2</th>
-                                <td>Mikhail</td>
-                                <td>Let's meet on this square at 7pm — http://...</td>
-                                <td><a routerLink="/more" class="read-more">show</a></td>
+                                <th>Dates</th>
+                                <th>Title</th>
+                                <th>Actions</th>
                             </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>you</td>
-                                <td>Thanks a lot, that was awesome</td>
-                                <td><a routerLink="/more" class="read-more">show</a></td>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of Bookings">
+                                <td>{{BookingsActivities[item.activity_id]?.calendar[0]?.date | date: "dd.M.yyyy"}} - {{BookingsActivities[item.activity_id]?.calendar[1]?.date | date: "dd.M.yyyy"}}</td>
+                                <td>{{BookingsActivities[item.activity_id]?.title}}</td>
+                                <td><a class="read-more" [routerLink]="['/activity',item.activity_id]">more</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-xs-12">
-                <h2 class="center-h2">Activities</h2>
+            <div class="col-xs-12" *ngIf="isMe && Activities.length > 0">
+                
+                <h2 class="center-h2">My activities</h2>
                 <div id="activities" class="container-fluid center-block container560">
-                    <ul>
-                        <li *ngFor="let item of Activities" class="users_ad">
-                            <article>
-                                <div class="delete_button">
-                                    <button (click)="OnDeleteAct(item)" ></button>
-                                </div>
-                                <div class="delete_button">
-                                    <button class="edit" (click)="OnEditAct(item)" ></button>
-                                </div>
-                                <div class="activity_image">
-                                    <img [src]="ActImages[item.id]">
-                                </div>
-                                <header class="my_ad_header">
-                                    <h2 ><a [routerLink]="['/activity/' + item.id]">{{item.title}}</a></h2>
-                                </header>
-                                
-                            </article>
-                        </li>
-                    </ul>
+
+                        <table *ngIf="!MessLoading && Bookings.length >0" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th colspan="2">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of let item of Activities">
+                                    <td><img [src]="ActImages[item.id]"></td>
+                                    <td><h4><a [routerLink]="['/activity/' + item.id]">{{item.title}}</a></h4></td>
+                                    <td><a class="read-more" [routerLink]="['/edit_act',item.id]">edit</a></td>
+                                    <td><a class="read-more" (click)="OnDeleteAct(item)">delete</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                 </div>
             </div>
         </div>
         
+    </div>
+    <div class="col-sm-10 marg-auto left-side">
+    <div class="cards" *ngIf="!isLoading">
+            <h3 class="h-center">User's activities</h3>
+            <div class="container-fluid">
+                <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">
+                    <div class="card bg_cover" [ngStyle]="{'background':'url(' + ActImages[item.id] + ')'}">
+                        <h3 class="cardname">{{item.title}}</h3>
+                        <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
+                        <div class="avatar">
+                            <img class="profile-logo" alt="logo" [src]="Logo?Logo:'./app/images/man.jpg'">
+                            <span class="profile-text">{{User.name?User.name:'Author'}}</span>
+                        </div>
+                        <span class="cardshadow"></span>
+                        <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>

@@ -9,6 +9,7 @@ import { AppComponent }   from './app.component';
 import {MainService} from "./services/main.service";;
 import { routs } from './Pages/pages.route';
 import { PageModule } from './Pages/pages.module';
+import { ModalComponent } from './components/modal.component';
 
 @NgModule({
     imports:      [ 
@@ -19,7 +20,7 @@ import { PageModule } from './Pages/pages.module';
         FormsModule
     ],
     declarations: [ AppComponent],
-    providers: [ MainService, HttpModule],
+    providers: [ MainService, HttpModule, ModalComponent],
     bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

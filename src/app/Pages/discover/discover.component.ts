@@ -32,7 +32,7 @@ export class DiscoverComponent implements OnInit{
 
     GetAllActivities(){
         this.isLoading = true;
-        this.service.GetAllActivities()
+        this.service.GetAllActivities({limit:10})
         .subscribe((res:ActivityModel[])=>{
             this.Activities = res;
             for(let item of this.Activities){

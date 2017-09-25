@@ -132,6 +132,18 @@ a:hover {
 .header .container-fluid {
     padding: 0 32px;
 }
+.container-fluid{
+    display: inline-table;
+}
+.word-break p, .word-break h4{
+    word-break: break-all; 
+    word-wrap: break-word;
+}
+
+.border-bottom-hr{
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    min-height: 135px;
+}
 .row{
     margin-left:0px;
     margin-right:0px;
@@ -149,6 +161,12 @@ a:hover {
 }
 .bg-img{
     text-align:center;
+}
+.h-center{
+    text-align:center;
+}
+td img{
+    max-width:150px;
 }
 .error-msg{
     color:red;
@@ -514,10 +532,11 @@ h1{
     margin-top: 24px;
 }
 .commentbody-rating-date {
-    padding: 16px 0px 16px 124px;
+    padding: 5px 0px 16px 124px;
 }
 .rating-date {
     text-align: right;
+    margin-bottom: 10px;
 }
 .commentmeta {
     padding: 0 8px;
@@ -718,12 +737,35 @@ li.users_ad article{
 #activities li:nth-child(2n){
     background-image: url("./../images/pattern.png");
 }
+.max-height200
+{
+    max-height: 200px;
+}
+.btn.btn-primary.btn-lg{
+    font-weight: bold;
+    line-height: 1;
+    color: #ffffff;
+    border-radius: 7px;
+    padding: 16px 14px;
+    text-align: left;
+}
 
-
+.unread{
+    font-weight: bold;
+}
 
 @media (min-width: 1200px){
     .container {
         width: 1170px;
+    }
+}
+
+@media (min-width: 576px){
+    .modal-dialog {
+        position: relative;
+        top: 170px;
+        margin: auto;
+        max-height: 500px;
     }
 }
 

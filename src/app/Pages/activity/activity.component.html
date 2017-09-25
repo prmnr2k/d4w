@@ -24,12 +24,15 @@
             </div>
             <div class="col-sm-5">
                 <div class="booking">
-                    <div class="round-card">
+                    <div *ngIf="!MyBooking.id" class="round-card">
                         <h3>Reserve</h3>
+                        <div *ngIf="isBookingErr">
+                            <h4 class="error-msg">Incorrect number of participants!</h4>
+                        </div>
                         <form (ngSubmit)="CreateBooking()">
                             <div class="form-group">
-                                <input type="date" name="booking_date" class="form-control input-withicon input-lg"  [ngModel]="Booking.date | date:'yyyy-MM-dd'" (ngModelChange)="Booking.date = $event"  [min]="Start | date:'yyyy-MM-dd'" [max]="Finish | date:'yyyy-MM-dd'">
-                                <span class="material-icons input-icon">today</span>
+                                {{Start | date:'dd.M.yyyy'}} - {{Finish | date:'dd.M.yyyy'}}
+                                <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
                                 <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="Booking.num_of_participants" (ngModelChange)="Booking.num_of_participants = $event" [max]="Activity.num_of_bookings" placeholder="1">
@@ -41,6 +44,63 @@
                                 <span class="booking-price">{{+Activity.price}} euro/ticket</span>
                             </div>
                         </form>
+                    </div>
+                    <div *ngIf="MyBooking.id > 0" class="round-card">
+                        <h3>Update my booking</h3>
+                        <div *ngIf="isBookingErr">
+                            <h4 class="error-msg">Incorrect number of participants!</h4>
+                        </div>
+                        <form (ngSubmit)="UpdateBooking()">
+                            <div class="form-group">
+                                {{Start | date:'dd.M.yyyy'}} - {{Finish | date:'dd.M.yyyy'}}
+                                <!--<span class="material-icons input-icon">today</span>-->
+                            </div>
+                            <div class="form-group form-group-makeinline">
+                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="MyBooking.num_of_participants" (ngModelChange)="MyBooking.num_of_participants = $event" [max]="Activity.num_of_bookings" placeholder="1">
+                                <span class="material-icons input-icon">people</span>
+                            </div>
+                            <div class="form-group form-group-makeinline">
+                                <button type="submit" class="btn btn-success input-withicon btn-lg">Update</button>
+                                <span class="material-icons input-icon" style="color: #fff">credit_card</span>
+                                <span class="booking-price">{{+Activity.price}} euro/ticket</span>
+                            </div>
+                        </form>
+                        <div class="form-group form-group-makeinline">
+                            <button type="button" class="btn btn-pink btn-lg" (click)="Unsubscribe()">Unsubscribe</button>
+                            <button type="button" class="btn btn-primary btn-lg" (click)="modal1.show()">Send message</button>
+                            <modal #modal1>
+                              <div class="app-modal-header">
+                                Send message to <b>{{User.name}}</b>
+                              </div>
+                              <div class="app-modal-body">
+                                <div *ngIf="MessOk">
+                                    <h4 class="ok-msg"> Your message was send to <b>{{User.name}}</b></h4>
+                                </div>
+                                <div *ngIf="MessErr">
+                                    <h4 class="error-msg">Input correct title and body!</h4>
+                                </div>
+                                <div *ngIf="MesLoading" class="loading max-height200"></div>
+                                <form *ngIf="!MesLoading" (ngSubmit)="SendMessage()">
+                                    <div class="form-group">
+                                        <label>Title</label>
+                                        <input type="text" class="form-control input-lg" name="title" [ngModel]="Message.title" (ngModelChange)="Message.title = $event">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Body</label>
+                                        <textarea name="description" class="form-control input-lg" [ngModel]="Message.body" (ngModelChange)="Message.body = $event"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-success btn-lg" type="submit">Send message</button>
+                                        </div>
+                                    </div>
+                                 </form>
+                              </div>
+                              <div class="app-modal-footer">
+                                <button type="button" class="btn btn-primary" (click)="modal1.hide()">Cancel</button>
+                              </div>
+                            </modal>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,28 +153,28 @@
                         </div>
                         <div class="container-fluid comments">
                             <h3>Comments</h3>
-                            <div class="comment" *ngFor="let item of Comments">
+                            <div class="comment word-break" *ngFor="let item of Comments">
                                 <div class="avatar pull-left">
                                     <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
                                     <span class="profile-text">{{Users[item.user_id]?Users[item.user_id].name: 'Author'}}</span>
                                     <a [routerLink]="['/users',item.user_id]"><span class="spanlink"></span></a>
                                 </div>
                                 <div class="commentbody-rating-date">
-                                    <div class="delete_button" *ngIf="Me.id == item.user_id">
-                                        <button (click)="OnDeleteComment(item)" ></button>
-                                    </div>
-                                    
-                                    <div class="commentbody" [innerHTML]="item.body">
-                                    </div>
                                     <div class="rating-date">
                                         <div class="commentmeta inline-block">
                                             <span class="material-icons">date_range</span>{{item.updated_at | date:'dd.M.yyyy'}}
                                         </div>
-                                        <div class="commentmeta inline-block">
-                                            <span class="material-icons">star</span>5.0
-                                        </div>
-                                        <div class="clearfix"></div>
                                     </div>
+                                    
+                                    <div class="commentbody">
+                                        <h4>{{item.title}}</h4>
+                                        <p [innerHTML]="item.body"></p>
+                                    </div>
+                                    
+                                    <div class="delete_button" *ngIf="Me.id == item.user_id">
+                                        <button (click)="OnDeleteComment(item)" ></button>
+                                    </div>
+                                    
                                 </div>
                                 <div class="clearfix"></div>
                                 
@@ -125,16 +185,30 @@
                 </div>
             </div>
             <div class="col-sm-offset-5">
-                <ul>
-                    <li *ngFor="let item of Bookings">
-                        {{item.id}}
-                        <br>
-                        {{item.date}}
-                        <br>
-                        {{item.user_id}}
-                    </li>
-                </ul>
-                
+                <div *ngIf="Bookings.length > 0">
+                    <h3>Researved</h3>
+                    <div class="comment border-bottom-hr" *ngFor="let item of Bookings">
+                        <div class="avatar pull-left">
+                            <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
+                            <span class="profile-text">{{Users[item.user_id]?Users[item.user_id].name: 'Author'}}</span>
+                            <a [routerLink]="['/users',item.user_id]"><span class="spanlink"></span></a>
+                        </div>
+                        <div class="commentbody-rating-date">
+                            
+                            <div class="commentbody">
+                                <span>Reserved tickets: {{item.num_of_participants}}</span>
+                            </div>
+                            <div class="rating-date">
+                                <div class="commentmeta inline-block">
+                                    <span class="material-icons">date_range</span>{{item.updated_at | date:'dd.M.yyyy'}}
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        
+                    </div>
+                </div>
             </div>
         </div>
     </div>

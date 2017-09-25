@@ -16,6 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { EditActivityComponent } from './editActivity/editActivity.component';
+import { ModalComponent } from '../components/modal.component';
 
 @NgModule({
     imports:      [ CommonModule,FormsModule,RouterModule ],
@@ -23,13 +24,13 @@ import { EditActivityComponent } from './editActivity/editActivity.component';
         LoginComponent, IndexComponent,UnauthorizedComponent,
         NotFoundComponent, DiscoverComponent, SearchComponent,
         ActivityComponent, UserComponent,RegisterComponent,
-        CreateActivityComponent,EditActivityComponent
+        CreateActivityComponent,EditActivityComponent,ModalComponent
     ],
     exports: [
         LoginComponent, IndexComponent, UnauthorizedComponent,
         NotFoundComponent,DiscoverComponent, SearchComponent,
         ActivityComponent,UserComponent,RegisterComponent,
-        CreateActivityComponent,EditActivityComponent
+        CreateActivityComponent,EditActivityComponent,ModalComponent
     ],
     providers: [HttpService, PageAccessGuard]
 })

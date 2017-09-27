@@ -11,6 +11,7 @@ import { routs } from './Pages/pages.route';
 import { PageModule } from './Pages/pages.module';
 import { ModalComponent } from './components/modal.component';
 import { AgmCoreModule } from '@agm/core';
+import { BsDatepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
     imports:      [ 
@@ -21,7 +22,8 @@ import { AgmCoreModule } from '@agm/core';
         FormsModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4'
-        })
+        }),
+        BsDatepickerModule.forRoot()
     ],
     declarations: [ AppComponent],
     providers: [ MainService, HttpModule, ModalComponent],

@@ -8,6 +8,7 @@ import { ActivityModel } from '../../models/activity.model';
 import { MainService } from '../../services/main.service';
 import { UserModel } from '../../models/user.model';
 import { Base64ImageModel } from '../../models/base64image.model';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     moduleId:module.id,
@@ -31,11 +32,13 @@ export class DiscoverComponent implements OnInit{
         title:'',
         description:''
     };
+    bsConfig:Partial<BsDatepickerConfig>;
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute){}
 
     ngOnInit(){
+        this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.GetAllActivities();
     }
 

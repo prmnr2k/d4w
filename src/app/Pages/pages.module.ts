@@ -18,12 +18,18 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { NotFoundComponent } from './notfound/notfound.component';
 import { EditActivityComponent } from './editActivity/editActivity.component';
 import { ModalComponent } from '../components/modal.component';
+import { BsDatepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
-    imports:      [ CommonModule,FormsModule,RouterModule,
+    imports:      [ 
+        CommonModule,
+        FormsModule,
+        RouterModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4'
-        }) ],
+        }),
+        BsDatepickerModule.forRoot()
+    ],
     declarations: [
         LoginComponent, IndexComponent,UnauthorizedComponent,
         NotFoundComponent, DiscoverComponent, SearchComponent,

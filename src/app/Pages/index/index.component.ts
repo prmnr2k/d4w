@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import { HttpService} from '../../services/http.service';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     moduleId:module.id,
@@ -7,4 +8,10 @@ import { HttpService} from '../../services/http.service';
     templateUrl: "./index.component.html"
 })
 
-export class IndexComponent{}
+export class IndexComponent implements OnInit{
+    bsConfig:Partial<BsDatepickerConfig>;
+    ngOnInit() {
+        this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
+        
+    }
+}

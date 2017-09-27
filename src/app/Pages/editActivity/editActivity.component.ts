@@ -7,6 +7,7 @@ import {MainService} from "./../../services/main.service";
 import { ActivityModel } from '../../models/activity.model';
 import { CreateActivityModel } from '../../models/createActivity.model';
 import { Base64ImageModel } from '../../models/base64image.model';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     moduleId:module.id,
@@ -21,6 +22,7 @@ export class EditActivityComponent{
     Finish:Date = new Date();
     isLoading = true;
     actId = 0;
+    bsConfig:Partial<BsDatepickerConfig>;
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -29,6 +31,7 @@ export class EditActivityComponent{
     }
 
     ngOnInit() {
+        this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.isLoading = true;
         this.activatedRoute.params.forEach((params:Params) => {
             this.actId = params["id"];
@@ -49,7 +52,7 @@ export class EditActivityComponent{
                 })
         }
         this.Start = this.Activity.calendar[0];
-        this.Finish = this.Activity.calendar[1];
+        this.Finish = this.Activity.calendar[1]?this.Activity.calendar[1] : new Date();
         this.isLoading = false;
     }
     OnEditActivityButtonClick()

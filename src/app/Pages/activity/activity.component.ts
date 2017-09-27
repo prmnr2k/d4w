@@ -69,9 +69,7 @@ export class ActivityComponent implements OnInit{
         this.service.GetActivity(this.actId)
             .subscribe((act:ActivityModel)=>{
                 this.Activity = act;
-                console.log(this.Activity);
                 this.Start = this.Start > this.Activity.calendar[0].date?this.Start:this.Activity.calendar[0].date;
-                this.Finish = this.Start < this.Activity.calendar[1].date? this.Activity.calendar[1].date: null;
                 if(this.Activity.image_id){
                     this.service.GetImageById(this.Activity.image_id)
                         .subscribe((img:Base64ImageModel)=>{
@@ -94,7 +92,6 @@ export class ActivityComponent implements OnInit{
     GetComments(){
         this.service.GetAllComments({activity_id:this.Activity.id})
             .subscribe((res:CommentModel[])=>{
-                console.log(res);
                 this.Comments = res;
                 for(let item of this.Comments){
                     if(item.user_image_id){
@@ -154,7 +151,6 @@ export class ActivityComponent implements OnInit{
 
     UpdateBooking(){
         this.isBookingErr = false;
-        console.log(this.MyBooking);
         if(this.MyBooking.num_of_participants > this.Activity.num_of_bookings){
             this.isBookingErr = true;
             this.MyBooking.num_of_participants = this.Activity.num_of_bookings
@@ -162,7 +158,6 @@ export class ActivityComponent implements OnInit{
         }
         this.service.UpdateBooking(this.MyBooking.id,{num_of_participants:this.MyBooking.num_of_participants})
             .subscribe((res:BookingModel)=>{
-                console.log(res);
                 this.MyBooking = res;
                 this.GetBookings();
             },
@@ -175,7 +170,6 @@ export class ActivityComponent implements OnInit{
     }
     Unsubscribe()
     {
-        console.log("unsub");
         this.service.DeleteBooking(this.MyBooking.id)
             .subscribe(()=>{
                 this.MyBooking = new BookingModel();
@@ -186,7 +180,6 @@ export class ActivityComponent implements OnInit{
         this.service.GetActivityBookings(this.Activity.id)
             .subscribe((res:BookingModel[])=>{
                 this.Bookings = res;
-                console.log(this.Bookings);
                 for(let item of this.Bookings){
                     if(item.user_id == this.Me.id){
                         this.MyBooking = item;

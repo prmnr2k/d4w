@@ -48,12 +48,12 @@
                     <br>
                     <div class="form-group">
                         <label>Begining date</label>
-                        <input type="date" class="form-control input-lg" name="begin" [ngModel]="Start | date:'yyyy-MM-dd'" #beginDate (blur)="Start = beginDate.value" [min]="Today | date:'yyyy-MM-dd'">
+                        <input type="text" class="form-control input-lg" bsDatepicker [bsConfig]="bsConfig" name="begin" [ngModel]="Start" (ngModelChange)="Start = $event" [minDate]="Today">
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Finish date</label>
-                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish | date:'yyyy-MM-dd'" #finishDate (ngModelChange)="Finish = finishDate.value" [min]="Start | date:'yyyy-MM-dd'">
+                        <input type="text" class="form-control input-lg" bsDatepicker [bsConfig]="bsConfig" name="finish" [ngModel]="Finish" (ngModelChange)="Finish = $event" [minDate]="Start">
                     </div>
                     <br>
                     

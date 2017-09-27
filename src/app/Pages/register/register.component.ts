@@ -5,6 +5,7 @@ import { HttpService} from '../../services/http.service';
 import {MainService} from "./../../services/main.service";
 import { CreateUserModel } from '../../models/createUser.model';
 import { UserModel } from '../../models/user.model';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     moduleId:module.id,
@@ -19,7 +20,9 @@ export class RegisterComponent implements OnInit{
     isRegOk = false;
     isRegErr = false;
     ErrMsg = '';
+    bsConfig:Partial<BsDatepickerConfig>;
     ngOnInit(): void {
+        this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.isLoading = false;
     }
     constructor(private router: Router,

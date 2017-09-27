@@ -7,6 +7,7 @@ import {MainService} from "./../../services/main.service";
 import { ActivityModel } from '../../models/activity.model';
 import { CreateActivityModel } from '../../models/createActivity.model';
 import { UserModel } from '../../models/user.model';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
     moduleId:module.id,
@@ -23,6 +24,7 @@ export class CreateActivityComponent{
     isLoading = false;
     isCreateErr = false;
     ErrMsg = '';
+    bsConfig:Partial<BsDatepickerConfig>;
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -31,6 +33,7 @@ export class CreateActivityComponent{
     }
 
     ngOnInit() {
+        this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
                 this.Activity.lat = res.lat;
@@ -102,6 +105,10 @@ export class CreateActivityComponent{
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
             this.ErrMsg += "Finish date";*/
+            return false;
+        }
+
+        if(this.Finish < this.Start){
             return false;
         }
 

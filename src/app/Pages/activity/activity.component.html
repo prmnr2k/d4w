@@ -13,7 +13,7 @@
                 <div class="round-card" [ngClass]="{'height333': MyBooking.id > 0,'height265':!(MyBooking.id > 0)}">
                     <div class="avatar pull-left">
                         <img class="profile-logo" alt="logo" [src]="UserLogo?UserLogo:'./app/images/man.jpg'" style="center">
-                        <span class="profile-text">{{Activity.user_name}}</span>
+                        <span class="profile-text">{{Activity.user_name?Activity.user_name:'Author'}}</span>
                         <a [routerLink]="['/users',Activity?Activity.user_id:'0']"><span class="spanlink"></span></a>
                     </div>
                     <div class="about-org">
@@ -31,7 +31,7 @@
                         </div>
                         <form (ngSubmit)="CreateBooking()">
                             <div class="form-group">
-                                {{Start | date:'dd.M.yyyy'}} - {{Finish | date:'dd.M.yyyy'}}
+                                {{Start | date:'dd.M.yyyy'}}
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
@@ -52,7 +52,7 @@
                         </div>
                         <form (ngSubmit)="UpdateBooking()">
                             <div class="form-group">
-                                {{Start | date:'dd.M.yyyy'}} - {{Finish | date:'dd.M.yyyy'}}
+                                {{Start | date:'dd.M.yyyy'}}
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">

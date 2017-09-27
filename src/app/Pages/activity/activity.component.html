@@ -12,13 +12,13 @@
             <div class="col-sm-7">
                 <div class="round-card" [ngClass]="{'height333': MyBooking.id > 0,'height265':!(MyBooking.id > 0)}">
                     <div class="avatar pull-left">
-                        <img class="profile-logo" alt="logo" src="./app/images/man.jpg" style="center">
-                        <span class="profile-text">{{User?User.name:'Author'}}</span>
+                        <img class="profile-logo" alt="logo" [src]="UserLogo?UserLogo:'./app/images/man.jpg'" style="center">
+                        <span class="profile-text">{{Activity.user_name}}</span>
                         <a [routerLink]="['/users',Activity?Activity.user_id:'0']"><span class="spanlink"></span></a>
                     </div>
                     <div class="about-org">
-                        <h3>{{User.name?User.name:'Author'}}</h3>
-                        <p [innerHTML]="User.description"></p>
+                        <h3>{{Activity.user_name}}</h3>
+                        <p [innerHTML]="Activity.user_description"></p>
                     </div>
                 </div>
             </div>
@@ -70,11 +70,11 @@
                             <button type="button" class="btn btn-primary btn-lg" (click)="modal1.show()">Send message</button>
                             <modal #modal1>
                               <div class="app-modal-header">
-                                Send message to <b>{{User.name}}</b>
+                                Send message to <b>{{Activity.user_name}}</b>
                               </div>
                               <div class="app-modal-body">
                                 <div *ngIf="MessOk">
-                                    <h4 class="ok-msg"> Your message was send to <b>{{User.name}}</b></h4>
+                                    <h4 class="ok-msg"> Your message was send to <b>{{Activity.user_name}}</b></h4>
                                 </div>
                                 <div *ngIf="MessErr">
                                     <h4 class="error-msg">Input correct title and body!</h4>
@@ -159,7 +159,7 @@
                             <div class="comment word-break" *ngFor="let item of Comments">
                                 <div class="avatar pull-left">
                                     <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
-                                    <span class="profile-text">{{Users[item.user_id]?Users[item.user_id].name: 'Author'}}</span>
+                                    <span class="profile-text">{{item.user_name?item.user_name: 'Author'}}</span>
                                     <a [routerLink]="['/users',item.user_id]"><span class="spanlink"></span></a>
                                 </div>
                                 <div class="commentbody-rating-date">
@@ -193,7 +193,7 @@
                     <div class="comment border-bottom-hr" *ngFor="let item of Bookings">
                         <div class="avatar pull-left">
                             <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
-                            <span class="profile-text">{{Users[item.user_id]?Users[item.user_id].name: 'Author'}}</span>
+                            <span class="profile-text">{{item.user_name?item.user_name: 'Author'}}</span>
                             <a [routerLink]="['/users',item.user_id]"><span class="spanlink"></span></a>
                         </div>
                         <div class="commentbody-rating-date">

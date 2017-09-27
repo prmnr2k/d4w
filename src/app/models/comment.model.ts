@@ -6,6 +6,8 @@ export class CommentModel{
         public title?:string,
         public body?:string,
         public created_at?:Date,
-        public updated_at?:Date
+        public updated_at?:Date,
+        public user_name?:string,
+        public user_image_id?:number
     ){}
 }

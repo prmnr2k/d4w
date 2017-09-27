@@ -517,10 +517,10 @@ h1{
     width:100%;
 }
 .height333{
-    height: 333px;
+    min-height: 333px;
 }
 .height265{
-    height: 265px;
+    min-height: 265px;
 }
 .round-card h3 {
     margin-top: 0;

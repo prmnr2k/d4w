@@ -17,7 +17,10 @@ export class ActivityModel{
         public lat?: number,
         public lng?:number,
         public dostance?:number,
-        public bearing?:number
+        public bearing?:number,
+        public user_name?:string,
+        public user_image_id?:number,
+        public user_description?:string
 
     ){}
 }

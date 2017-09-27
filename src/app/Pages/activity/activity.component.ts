@@ -26,7 +26,6 @@ export class ActivityComponent implements OnInit{
     isLoading = true;
     Activity: ActivityModel = new ActivityModel();
     ActivityImg:string;
-    User:UserModel = new UserModel();
     Start:Date = new Date();
     Finish:Date = new Date();
     UserLogo:string = '';
@@ -70,7 +69,7 @@ export class ActivityComponent implements OnInit{
         this.service.GetActivity(this.actId)
             .subscribe((act:ActivityModel)=>{
                 this.Activity = act;
-                
+                console.log(this.Activity);
                 this.Start = this.Start > this.Activity.calendar[0].date?this.Start:this.Activity.calendar[0].date;
                 this.Finish = this.Start < this.Activity.calendar[1].date? this.Activity.calendar[1].date: null;
                 if(this.Activity.image_id){
@@ -79,43 +78,33 @@ export class ActivityComponent implements OnInit{
                             this.ActivityImg = img.base64;
                         })
                 }
-                this.GetUserInfo();
+                if(this.Activity.user_image_id){
+                    this.service.GetImageById(this.Activity.user_image_id)
+                    .subscribe((img:Base64ImageModel)=>{
+                        this.UserLogo = img.base64;
+                    })
+                }
                 this.GetComments();
                 this.GetBookings();
+                this.isLoading = false;
             });
     }
 
-    GetUserInfo(){
-        this.service.GetUserById(this.Activity.user_id)
-            .subscribe((user:UserModel)=>{
-                this.User = user;
-                if(this.User.image_id){
-                    this.service.GetImageById(this.User.image_id)
-                        .subscribe((img:Base64ImageModel)=>{
-                            this.UserLogo = img.base64;
-                        })
-                }
-                
-                this.isLoading = false;
-            })
-    }
 
     GetComments(){
         this.service.GetAllComments({activity_id:this.Activity.id})
             .subscribe((res:CommentModel[])=>{
+                console.log(res);
                 this.Comments = res;
-                this.GetUsersByComments();
+                for(let item of this.Comments){
+                    if(item.user_image_id){
+                        this.service.GetImageById(item.user_image_id)
+                            .subscribe((img:Base64ImageModel)=>{
+                                this.Images[item.user_id] = img.base64;
+                            })
+                        }
+                }
             })
-    }
-
-    GetUsersByComments(){
-        for(let item of this.Comments){
-            this.service.GetUserById(item.user_id)
-                .subscribe((user:UserModel)=>{
-                    this.Users[user.id] = user;
-                    this.GetImageByUser(user);
-                })
-        }
     }
 
     AddComment(){
@@ -197,30 +186,21 @@ export class ActivityComponent implements OnInit{
         this.service.GetActivityBookings(this.Activity.id)
             .subscribe((res:BookingModel[])=>{
                 this.Bookings = res;
-                this.GetUsersByBookings();
+                console.log(this.Bookings);
+                for(let item of this.Bookings){
+                    if(item.user_id == this.Me.id){
+                        this.MyBooking = item;
+                    }
+                    if(item.user_image_id && !this.Images[item.user_id]){
+                        this.service.GetImageById(item.user_image_id)
+                            .subscribe((img:Base64ImageModel)=>{
+                                this.Images[item.user_id] = img.base64;
+                            });
+                    }
+                }
             })
     }
-    GetUsersByBookings(){
-        for(let item of this.Bookings){
-            if(item.user_id == this.Me.id){
-                this.MyBooking = item;
-            }
-            this.service.GetUserById(item.user_id)
-                .subscribe((user:UserModel)=>{
-                    this.Users[user.id] = user;
-                    this.GetImageByUser(user);
-                })
-        }
-    }
 
-    GetImageByUser(user:UserModel){
-        if(user.image_id){
-            this.service.GetImageById(user.image_id)
-                .subscribe((image:Base64ImageModel)=>{
-                    this.Images[user.id] = image.base64;
-                })
-        }
-    }
 
     MyBookingNumOfPartsChanged($event:any){
         this.MyBooking.num_of_participants = $event;

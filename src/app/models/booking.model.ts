@@ -6,7 +6,9 @@ export class BookingModel{
         public is_validated?:boolean,
         public created_at?: Date,
         public updated_at?: Date,
-        public user_id?: number
+        public user_id?: number,
+        public user_name?:string,
+        public user_image_id?:number
     ) {
         if(!num_of_participants)
             this.num_of_participants = 1;

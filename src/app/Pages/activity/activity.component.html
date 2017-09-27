@@ -10,7 +10,7 @@
     <div class="container center-block pull-top">
         <div class="row">
             <div class="col-sm-7">
-                <div class="round-card">
+                <div class="round-card" [ngClass]="{'height333': MyBooking.id > 0,'height265':!(MyBooking.id > 0)}">
                     <div class="avatar pull-left">
                         <img class="profile-logo" alt="logo" src="./app/images/man.jpg" style="center">
                         <span class="profile-text">{{User?User.name:'Author'}}</span>
@@ -135,6 +135,9 @@
                         </div>
                         <div class="container-fluid post-comment">
                             <h3>Add commentary</h3>
+                            <div *ngIf="isCommentErr">
+                                <h4 class="error-msg">Input title and description!</h4>
+                            </div>
                             <form (ngSubmit)="AddComment()">
                                     <div class="form-group">
                                         <label>Title</label>

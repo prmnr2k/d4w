@@ -48,6 +48,7 @@ export class ActivityComponent implements OnInit{
     MessOk = false;
     MessErr = false;
     MessLoading = false;
+    isCommentErr = false;
     constructor(private router: Router,
         private service: MainService,
         private activatedRoute: ActivatedRoute){}
@@ -118,6 +119,11 @@ export class ActivityComponent implements OnInit{
     }
 
     AddComment(){
+        this.isCommentErr = false;
+        if(!this.Comment.body || !this.Comment.title){
+            this.isCommentErr = true;
+            return;
+        }
         this.Comment.activity_id = this.Activity.id;
         this.service.CreateComment(this.Comment)
             .subscribe((res:CommentModel)=>{

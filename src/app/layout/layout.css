@@ -97,8 +97,15 @@ a:hover {
 }
 .list-inline>li:first-child {
     padding-left: 0;
+    margin-left: 0;
 }
 
+nav>.list-inline>li{
+    margin: 0px 5px;
+}
+textarea.input-lg{
+    height: 92px;
+}
 
 .footer {
     width: 100%;
@@ -416,9 +423,20 @@ h1{
 }
 
 #date{
-  width: 150px;
+  width: 220px;
   max-width: 400px;
   vertical-align: middle;
+}
+
+.h1-first-index>h1{
+    margin-top: 96px;
+    margin-bottom: 16px;
+    font-size: 40px;
+    font-weight: bold;
+    background: rgba(0,0,0,0.0);
+    color:#eb6996;
+    height: 60px;
+    padding: 10px;
 }
 
 #research{
@@ -493,6 +511,16 @@ h1{
     background-color: #fff;
     background-image: url("./../images/pattern.png");
     margin-bottom: 32px;
+    width: 100%;
+}
+.col-xs-12{
+    width:100%;
+}
+.height333{
+    height: 333px;
+}
+.height265{
+    height: 265px;
 }
 .round-card h3 {
     margin-top: 0;
@@ -764,10 +792,15 @@ li.users_ad article{
 }
 agm-map {
     height: 300px;
+    margin-bottom: 30px;
 }
 
 .search_map{
     height: 500px;
+}
+
+.mrg-top20{
+    margin-top:20px;
 }
 
 @media (min-width: 1200px){

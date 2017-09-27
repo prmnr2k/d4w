@@ -72,4 +72,12 @@ export class DiscoverComponent implements OnInit{
             this.isLoading = false;
         });
     }
+
+    FromDateChanged($event){
+        let date:Date = new Date($event);
+        if(date){
+            console.log($event);
+            this.Params.from_date = $event;
+        }
+    }
 }

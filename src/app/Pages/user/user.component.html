@@ -60,9 +60,9 @@
                     </li>
                 </ul>
                 <div id="activities" *ngIf="MenuItem=='activity'" class="container-fluid center-block container560">
-                        <div class="row loading" *ngIf="BookingLoading"></div>
-                        <h3 *ngIf="!BookingLoading && Activities.length == 0" class="h-center">There is no bookings!</h3>
-                        <table *ngIf="!BookingLoading && Activities.length > 0" class="table table-striped">
+                        <div class="row loading" *ngIf="ActLoading"></div>
+                        <h3 *ngIf="!ActLoading && Activities.length == 0" class="h-center">There is no bookings!</h3>
+                        <table *ngIf="!ActLoading && Activities.length > 0" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>Image</th>
@@ -88,7 +88,8 @@
                             <option value="password">Change password</option>
                         </select>
                     </div>
-                    <form *ngIf="ProfileMenu == 'password'" (ngSubmit)="ChangePw(old_password,new_password)" class="controls-inline">
+                    <div class="loading" *ngIf="ProfLoading"></div>
+                    <form *ngIf="ProfileMenu == 'password' && !ProfLoading" (ngSubmit)="ChangePw(old_password,new_password)" class="controls-inline">
                         <h2>Change password</h2>
                         <div class="form-group">
                             <label for="old_password">Current password</label>
@@ -105,7 +106,7 @@
                             <span class="material-icons input-icon" style="color: #fff;">save</span>
                         </div>
                     </form>
-                    <form *ngIf="ProfileMenu == 'profile'" (ngSubmit)="UpdateUser()">
+                    <form *ngIf="ProfileMenu == 'profile' && !ProfLoading" (ngSubmit)="UpdateUser()">
                         <h2>Edit profile</h2>
                         <div class="row">
                             <div class="form-group width70 marg-auto">

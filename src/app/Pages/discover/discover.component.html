@@ -12,19 +12,21 @@
                     <h3>Find Activities</h3>
                     <form (ngSubmit)="GetAllActivities()">
                         <div class="form-group">
-                            <input type="text" name="desc" class="form-control input-withicon input-lg" [ngModel]="Params.title" (ngModelChange)="Params.title = $event" placeholder="Title..">
-                            <span class="material-icons input-icon">location_on</span>
+                            <input type="text" name="desc" class="form-control input-lg" [ngModel]="Params.title" (ngModelChange)="Params.title = $event" placeholder="Title..">
+                            
                         </div>
                         <div class="form-group">
-                            <input type="text" name="desc" class="form-control input-withicon input-lg" [ngModel]="Params.description" (ngModelChange)="Params.description = $event" placeholder="Description..">
-                            <span class="material-icons input-icon">location_on</span>
+                            <input type="text" name="desc" class="form-control input-lg" [ngModel]="Params.description" (ngModelChange)="Params.description = $event" placeholder="Description..">
+                            
                         </div>
                         <div class="form-group">
-                            <input type="date" name="start" class="form-control input-withicon input-lg" [ngModel]="Params.from_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.from_date = $event" placeholder="Start..">
+                            <label>From</label>
+                            <input type="date" #fromDate name="start" class="form-control input-withicon input-lg" [ngModel]="Params.from_date | date:'yyyy-MM-dd'" (blur)="Params.from_date = fromDate.value" placeholder="Start..">
                             <span  class="material-icons input-icon">today</span>
                         </div>
                         <div class="form-group">
-                            <input type="date" name="finish" class="form-control input-withicon input-lg" [ngModel]="Params.to_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.to_date = $event" placeholder="Finish..">
+                            <label>To</label>
+                            <input type="date" name="finish" class="form-control input-withicon input-lg" [ngModel]="Params.to_date | date:'yyyy-MM-dd'" #toDate (blur)="Params.to_date = toDate.value" [min]="Params.from_date | date:'yyyy-MM-dd'" placeholder="Finish..">
                             <span class="material-icons input-icon">today</span>
                         </div>
                         <!--<div class="form-group">

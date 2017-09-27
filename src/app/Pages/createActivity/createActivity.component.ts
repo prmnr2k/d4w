@@ -40,75 +40,86 @@ export class CreateActivityComponent{
     }
 
     CheckActivity():boolean{
-        this.ErrMsg = "Input correct data: "
-        let len = this.ErrMsg.length;
+        //this.ErrMsg = "Input correct data: "
+        this.ErrMsg = "Fill in all fields"
+        let len = this.ErrMsg.length + 1;
+        this.ErrMsg += "!";
         if(!this.Activity.title){
-            this.ErrMsg += "Title"
+            //this.ErrMsg += "Title"
+            return false;
         }
+
         if(!this.Activity.image){
-            if(len < this.ErrMsg.length)
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Picture";
+            this.ErrMsg += "Picture";*/
+            return false;
         }
 
-        if(!this.Activity.price){
-            if(len < this.ErrMsg.length)
+        if(!this.Activity.price || this.Activity.price < 0){
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Price";
+            this.ErrMsg += "Price";*/
+            return false;
         }
 
-        if(!this.Activity.num_of_bookings){
-            if(len < this.ErrMsg.length)
+        if(!this.Activity.num_of_bookings || this.Activity.num_of_bookings < 0){
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Number of possible bookings per day";
+            this.ErrMsg += "Number of possible bookings per day";*/
+            return false;
         }
 
         if(!this.Activity.address){
-            if(len < this.ErrMsg.length)
+           /* if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Address";
+            this.ErrMsg += "Address";*/
+            return false;
         }
 
         if(!this.Activity.detailed_address){
-            if(len < this.ErrMsg.length)
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Detailed address";
+            this.ErrMsg += "Detailed address";*/
+            return false;
         }
 
         if(!this.Activity.description){
-            if(len < this.ErrMsg.length)
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Description";
+            this.ErrMsg += "Description";*/
+            return false;
         }
 
         if(!this.Start){
-            if(len < this.ErrMsg.length)
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Begining date";
+            this.ErrMsg += "Begining date";*/
+            return false;
         }
 
         if(!this.Finish){
-            if(len < this.ErrMsg.length)
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Finish date";
+            this.ErrMsg += "Finish date";*/
+            return false;
         }
 
         if(!this.Activity.lat && !this.Activity.lng){
-            if(len < this.ErrMsg.length)
+            /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
-            this.ErrMsg += "Mark on the map";
+            this.ErrMsg += "Mark on the map";*/
+            return false;
         }
-        console.log(this.ErrMsg);
-        console.log(this.ErrMsg.length);
-        console.log(len);
-        return (this.ErrMsg.length + 1) > len;
+        //this.ErrMsg += "!";
+        return this.ErrMsg.length == len;
     }
     OnCreateActivityButtonClick()
     {
         this.isLoading = true;
         this.isCreateErr = false;
         scrollTo(0,0);
-        if(this.CheckActivity()){
+        if(!this.CheckActivity()){
             this.isCreateErr = true;
             this.isLoading = false;
             return;

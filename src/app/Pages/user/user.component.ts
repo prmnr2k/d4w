@@ -26,11 +26,13 @@ export class UserComponent implements OnInit{
     Logo:string = "./app/images/man.jpg";
     Background:string = "./app/images/hero-back.png";
     Diploma:string = '';
+    ProfLoading = true;
     MenuItem = "bookings";
     ProfileMenu = "profile";
     MessagesMenu = "received";
     Activities:ActivityModel[]=[];
     ActImages:string[] = [];
+    ActLoading = true;
     UserUpdate:CreateUserModel = new CreateUserModel();
     Messages:MessageModel[] = [];
     Users:UserModel[] = [];
@@ -51,6 +53,7 @@ export class UserComponent implements OnInit{
         this.activatedRoute.params.forEach((params:Params) => {
             this.isLoading = true;
             let userId = params["id"];
+            this.MenuItem = 'activity';
             //TODO: REWRITE THIS HARDCODE
             if(userId == 'me' || userId == this.service.me.id){
                 this.isMe = true;
@@ -76,6 +79,7 @@ export class UserComponent implements OnInit{
     }
 
     AfterGettingUser(user:UserModel){
+        this.ProfLoading = true;
         this.User = user;
         if(this.isMe)
             this.UserUpdate = this.service.UserModelToCreateUserModel(this.User);
@@ -107,40 +111,62 @@ export class UserComponent implements OnInit{
         this.GetActivityies();
         this.MessagesTypeChanged(this.MessagesMenu);
         this.BookingsTypeChanged(this.BookingsMenu);
+        this.ProfLoading = false;
         this.isLoading = false;
     }
     GetActivityies(){
+        this.ActLoading = true;
         this.service.GetAllActivities({user_id:this.User.id})
-        .subscribe((res:ActivityModel[])=>{
-            this.Activities = res;
-            for(let item of this.Activities){
-                if(item.image_id){
-                    this.service.GetImageById(item.image_id)
-                        .subscribe((res:Base64ImageModel)=>{
-                            this.ActImages[item.id]=res.base64;
-                        })
+            .subscribe((res:ActivityModel[])=>{
+                this.Activities = res;
+                let total = this.Activities.length;
+                let current = 0;
+                if(total == 0)
+                {
+                    this.ActLoading = false;
                 }
-            }
-        })
+                for(let item of this.Activities){
+                    if(item.image_id){
+                        this.service.GetImageById(item.image_id)
+                            .subscribe((res:Base64ImageModel)=>{
+                                this.ActImages[item.id]=res.base64;
+                                current += 1;
+                                if(total==current){
+                                    this.ActLoading = false;
+                                }
+                            })
+                    }
+                    else{
+                        current += 1;
+                        if(total==current){
+                            this.ActLoading = false;
+                        }
+                    }
+                }
+            })
     }
 
     ChangePw(old_password:string,new_password:string){
+        this.ProfLoading = true;
         this.service.ChangePassword(old_password,new_password)
             .subscribe((res:UserModel)=>{
-                console.log(res);
                 this.AfterGettingUser(res);
             },
             (err:any)=>{
-                console.log(err);
+                this.ProfLoading = false;
             })
     }
 
     UpdateUser(){
+        this.ProfLoading = true;
         this.service.UpdateUser(this.User.id,this.UserUpdate)
             .subscribe((res:UserModel)=>{
                 console.log(res);
                 this.AfterGettingUser(res);
-            })
+            },
+        (err)=>{
+            this.ProfLoading = false;
+        })
             
     }
 

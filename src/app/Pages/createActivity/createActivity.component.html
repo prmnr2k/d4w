@@ -4,10 +4,10 @@
         <div class="row" *ngIf="!isLoading">
             <div class="col-md-12">
                 <div class="row middle">
-                    <div class="h123 h1-first">
+                    <div class="h123  h1-first-index">
                         <h1 class="middle-text grey-span topmarg30">Create activity</h1>
                     </div>
-                    <div *ngIf="isCreateErr">
+                    <div *ngIf="isCreateErr" class="h123 h1-first">
                         <h2 class="error-msg">{{ErrMsg}}</h2>
                     </div>
                 </div>
@@ -48,12 +48,12 @@
                     <br>
                     <div class="form-group">
                         <label>Begining date</label>
-                        <input type="date" class="form-control input-lg" name="begin" [ngModel]="Start | date:'yyyy-MM-dd'" (ngModelChange)="Start = $event" [min]="Today | date:'yyyy-MM-dd'">
+                        <input type="date" class="form-control input-lg" name="begin" [ngModel]="Start | date:'yyyy-MM-dd'" #beginDate (blur)="Start = beginDate.value" [min]="Today | date:'yyyy-MM-dd'">
                     </div>
                     <br>
                     <div class="form-group">
                         <label>Finish date</label>
-                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish | date:'yyyy-MM-dd'" (ngModelChange)="Finish = $event" [min]="Start | date:'yyyy-MM-dd'">
+                        <input type="date" class="form-control input-lg" name="finish" [ngModel]="Finish | date:'yyyy-MM-dd'" #finishDate (ngModelChange)="Finish = finishDate.value" [min]="Start | date:'yyyy-MM-dd'">
                     </div>
                     <br>
                     
@@ -62,7 +62,7 @@
                             <agm-marker [markerDraggable]="true" [latitude]="Activity?.lat" [longitude]="Activity?.lng"></agm-marker>
                         </agm-map>
                     </div>
-                    <div class="row"><div class="col-md-12 text-center"><button class="btn btn-success btn-lg" type="submit">Create activity</button></div></div>
+                    <div class="row"><div class="col-md-12 text-center"><button class="btn btn-success btn-lg mrg-top20" type="submit">Create activity</button></div></div>
                     </div>
                 </form>
             </div>

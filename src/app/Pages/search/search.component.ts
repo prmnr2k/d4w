@@ -41,5 +41,5 @@ export class SearchComponent implements OnInit{
     mapClicked($event: any) {
         this.lat = $event.coords.lat;
         this.lng = $event.coords.lng;
-      }
+    }
 }

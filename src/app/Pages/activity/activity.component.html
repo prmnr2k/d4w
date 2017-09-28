@@ -23,7 +23,24 @@
                 </div>
             </div>
             <div class="col-sm-5">
-                <div class="booking">
+                <div class="booking" *ngIf="!isLoggedIn">
+                    <div class="round-card">
+                        <h3>Activity information</h3>
+                        <form>
+                            <div class="form-group">
+                                <span>The activity starts on <b>{{Start | date:'dd.M.yyyy'}}</b></span>
+                                <!--<span class="material-icons input-icon">today</span>-->
+                            </div>
+                            <div class="form-group form-group-makeinline">
+                                <span>Maximum number of participants is <b>{{Activity.num_of_bookings}}</b></span>
+                            </div>
+                            <div class="form-group form-group-makeinline">
+                                <span>Price: <b>{{+Activity.price}} euro/participant</b></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="booking" *ngIf="isLoggedIn">
                     <div *ngIf="!MyBooking.id" class="round-card">
                         <h3>Reserve</h3>
                         <div *ngIf="isBookingErr">
@@ -103,6 +120,8 @@
                         </div>
                     </div>
                 </div>
+
+                
             </div>
         </div>
         <div class="row">
@@ -174,7 +193,7 @@
                                         <p [innerHTML]="item.body"></p>
                                     </div>
                                     
-                                    <div class="delete_button" *ngIf="Me.id == item.user_id">
+                                    <div class="delete_button" *ngIf="isLoggedIn && Me.id == item.user_id">
                                         <button (click)="OnDeleteComment(item)" ></button>
                                     </div>
                                     

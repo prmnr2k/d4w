@@ -50,7 +50,6 @@ export class DiscoverComponent implements OnInit{
         console.log(this.Params);
         this.service.GetAllActivities(this.Params)
         .subscribe((res:ActivityModel[])=>{
-            console.log(res);
             this.Activities = res;
             for(let item of this.Activities){
                 if(item.image_id){
@@ -73,8 +72,11 @@ export class DiscoverComponent implements OnInit{
             }
             
             this.isLoading = false;
-        });
-    }
+        },
+    (err:any)=>{
+        this.SomeErr(err);
+    });
+}
 
     FromDateChanged($event){
         let date:Date = new Date($event);
@@ -82,5 +84,7 @@ export class DiscoverComponent implements OnInit{
             console.log($event);
             this.Params.from_date = $event;
         }
+    }
+    SomeErr(err:any){
     }
 }

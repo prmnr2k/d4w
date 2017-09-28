@@ -23,6 +23,7 @@ import { MessageModel } from '../../models/message.model';
 })
 
 export class ActivityComponent implements OnInit{
+    isLoggedIn = false;
     isLoading = true;
     Activity: ActivityModel = new ActivityModel();
     ActivityImg:string;
@@ -55,6 +56,22 @@ export class ActivityComponent implements OnInit{
     ngOnInit(){
          this.activatedRoute.params.forEach((params:Params) => {
             this.isLoading = true;
+            this.isLoggedIn = this.service.IsLogedIn();
+            this.service.onAuthChange$
+                .subscribe((isLogged:boolean)=>{
+                    this.isLoggedIn = isLogged;
+                    if(this.isLoggedIn){
+                        this.service.GetMe()
+                            .subscribe((res:UserModel)=>{
+                                this.Me = res;
+                            })
+                        this.GetComments();
+                        this.GetBookings();
+                    }
+                    else{
+                        this.Me = new UserModel();
+                    }
+                })
             this.actId= params["id"];
 
             this.GetActivity();
@@ -181,7 +198,7 @@ export class ActivityComponent implements OnInit{
             .subscribe((res:BookingModel[])=>{
                 this.Bookings = res;
                 for(let item of this.Bookings){
-                    if(item.user_id == this.Me.id){
+                    if(this.isLoggedIn && item.user_id == this.Me.id){
                         this.MyBooking = item;
                     }
                     if(item.user_image_id && !this.Images[item.user_id]){

@@ -86,6 +86,7 @@ export class ActivityComponent implements OnInit{
         this.service.GetActivity(this.actId)
             .subscribe((act:ActivityModel)=>{
                 this.Activity = act;
+                console.log(act);
                 this.Start = this.Start > this.Activity.calendar[0].date?this.Start:this.Activity.calendar[0].date;
                 if(this.Activity.image_id){
                     this.service.GetImageById(this.Activity.image_id)
@@ -159,6 +160,7 @@ export class ActivityComponent implements OnInit{
                 this.GetBookings();
             },
         (err:any)=>{
+            console.log(err);
             this.isBookingErr = true;
             setTimeout(()=>{
                 this.isBookingErr = false;
@@ -198,7 +200,7 @@ export class ActivityComponent implements OnInit{
             .subscribe((res:BookingModel[])=>{
                 this.Bookings = res;
                 for(let item of this.Bookings){
-                    if(this.isLoggedIn && item.user_id == this.Me.id){
+                    if(this.isLoggedIn && this.Me && item.user_id == this.Me.id){
                         this.MyBooking = item;
                     }
                     if(item.user_image_id && !this.Images[item.user_id]){

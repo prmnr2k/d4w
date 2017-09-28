@@ -52,7 +52,7 @@
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
-                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="Booking.num_of_participants" (ngModelChange)="Booking.num_of_participants = $event" [max]="Activity.num_of_bookings" placeholder="1">
+                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="Booking.num_of_participants" (ngModelChange)="Booking.num_of_participants = $event" [max]="Activity.num_of_bookings" placeholder="1" min="0">
                                 <span class="material-icons input-icon">people</span>
                             </div>
                             <div class="form-group form-group-makeinline">
@@ -73,7 +73,7 @@
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
-                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="MyBooking.num_of_participants" (ngModelChange)="MyBooking.num_of_participants = $event" [max]="Activity.num_of_bookings">
+                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="MyBooking.num_of_participants" (ngModelChange)="MyBooking.num_of_participants = $event" min="0" [max]="Activity.num_of_bookings">
                                 <span class="material-icons input-icon">people</span>
                             </div>
                             <div class="form-group form-group-makeinline">
@@ -193,7 +193,7 @@
                                         <p [innerHTML]="item.body"></p>
                                     </div>
                                     
-                                    <div class="delete_button" *ngIf="isLoggedIn && Me.id == item.user_id">
+                                    <div class="delete_button" *ngIf="isLoggedIn && Me && Me.id == item.user_id">
                                         <button (click)="OnDeleteComment(item)" ></button>
                                     </div>
                                     

@@ -55,6 +55,7 @@ export class UserComponent implements OnInit{
             let userId = params["id"];
             this.MenuItem = 'activity';
             //TODO: REWRITE THIS HARDCODE
+            console.log(this.service.me.id);
             if(userId == 'me' || userId == this.service.me.id){
                 this.isMe = true;
                 this.service.GetMe()

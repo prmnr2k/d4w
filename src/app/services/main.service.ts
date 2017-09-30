@@ -216,6 +216,7 @@ import { CalendarModel } from '../models/calendar.model';
         }
 
         UpdateBooking(id:number, params?:any){
+            console.log( JSON.stringify(params));
             return this.httpService.PutData('/bookings/update/' + id, JSON.stringify(params));
         }
 

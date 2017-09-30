@@ -89,9 +89,8 @@ export class ActivityComponent implements OnInit{
         this.service.GetActivity(this.actId)
             .subscribe((act:ActivityModel)=>{
                 this.Activity = act;
-                this.BookingDate = this.Activity.calendar[0].date;
-                console.log(act);
-                this.Start = this.Start > this.Activity.calendar[0].date?this.Start:this.Activity.calendar[0].date;
+                this.Booking.date = this.Activity.calendar[0].date;
+                console.log(this.Booking.date);
                 if(this.Activity.image_id){
                     this.service.GetImageById(this.Activity.image_id)
                         .subscribe((img:Base64ImageModel)=>{
@@ -153,7 +152,6 @@ export class ActivityComponent implements OnInit{
     CreateBooking(){
         this.isBookingErr = false;
         this.Booking.activity_id = this.Activity.id;
-        this.Booking.date = this.Start;
         if(this.Booking.num_of_participants > this.Activity.num_of_bookings){
             this.isBookingErr = true;
             this.Booking.num_of_participants = this.Activity.num_of_bookings;
@@ -179,7 +177,7 @@ export class ActivityComponent implements OnInit{
             this.MyBooking.num_of_participants = this.Activity.num_of_bookings
             return;
         }
-        this.service.UpdateBooking(this.MyBooking.id,{num_of_participants:this.MyBooking.num_of_participants})
+        this.service.UpdateBooking(this.MyBooking.id,{num_of_participants:this.MyBooking.num_of_participants,date:this.MyBooking.date})
             .subscribe((res:BookingModel)=>{
                 this.MyBooking = res;
                 this.GetBookings();
@@ -205,7 +203,7 @@ export class ActivityComponent implements OnInit{
                 this.Bookings = res;
                 for(let item of this.Bookings){
                     if(this.isLoggedIn && this.Me && item.user_id == this.Me.id){
-                        this.MyBooking = item;
+                        this.SetMyBooking(item);
                     }
                     if(item.user_image_id && !this.Images[item.user_id]){
                         this.service.GetImageById(item.user_image_id)
@@ -214,27 +212,44 @@ export class ActivityComponent implements OnInit{
                             });
                     }
                 }
-                this.GetBookingsByDate(this.BookingDate);
+                if(this.isLoggedIn && this.Me && this.MyBooking && this.MyBooking.id){
+                    this.BookingDate = this.MyBooking.date;
+                    this.GetBookingsByDateSub(this.MyBooking.date);
+                }
+                else
+                    this.GetBookingsByDateUnsub(this.Booking.date);
             })
     }
 
+    SetMyBooking(bk:BookingModel){
+        this.MyBooking.id = bk.id;
+        this.MyBooking.num_of_participants = bk.num_of_participants;
+        this.MyBooking.date = bk.date;
+    }
+
     GetBookingsByDate(date:Date){
-        this.BookingDate = date;
         this.DateBookings = this.Bookings
-            .filter((obj:BookingModel)=>{
-                return obj.date== this.BookingDate;
-            });
+            .filter((obj:BookingModel)=> obj.date== date);
+        console.log(this.Bookings);
+        console.log(this.DateBookings);
+        console.log(date);
         this.Available = this.Activity.num_of_bookings;
-        console.log(this.Available);
         for(let i of this.DateBookings){
             this.Available -= i.num_of_participants;
         }
-        if(this.Booking && this.Booking.num_of_participants){
-            this.Available += this.Booking.num_of_participants;
+    }
+
+    GetBookingsByDateSub(date:Date){
+        this.MyBooking.date = date;
+        this.GetBookingsByDate(this.MyBooking.date);
+        if(this.BookingDate == this.MyBooking.date){
+            this.Available += this.MyBooking.num_of_participants;
         }
-        console.log(this.Available);
+    }
 
-
+    GetBookingsByDateUnsub(date:Date){
+        this.Booking.date = date;
+        this.GetBookingsByDate(this.Booking.date)
     }
 
 

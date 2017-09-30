@@ -231,6 +231,23 @@ td img{
 .width70{
     width:70%;
 }
+select.input-lg{
+    padding: 0px 0px 5px 0px;
+}
+.width-float{
+    margin-bottom:5px;
+}
+.width-float:last-child{
+    margin-bottom: 0px;
+}
+.width-float>input{
+    width: 76%;
+    float: left;
+}
+.width-float>button{
+    height: 46px;
+    float: right;
+}
 form>h2{
     color:#536273;
     text-align: center;

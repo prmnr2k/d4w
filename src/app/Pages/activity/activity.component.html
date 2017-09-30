@@ -47,11 +47,16 @@
                             <h4 class="error-msg">Incorrect number of participants! Available places is <b>{{Available}}</b></h4>
                         </div>
                         <form (ngSubmit)="CreateBooking()">
-                            <div class="form-group">
-                                {{Start | date:'dd.M.yyyy'}}
+                            <div class="form-group  form-group-makeinline">
+                                <select class="form-control input-withicon input-lg" name="booking_date" [ngModel]="Booking.date" (ngModelChange)="GetBookingsByDateUnsub($event)">
+                                    <option *ngFor="let item of Activity.calendar" [value]="item.date">{{item.date | date:'M/dd/yyyy'}}</option>
+
+                                </select>
+                                <span class="material-icons input-icon">today</span>
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
+                                <label>Available places: <b>{{Available}}</b></label>
                                 <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="Booking.num_of_participants" (ngModelChange)="Booking.num_of_participants = $event" [max]="Available" placeholder="1" min="0">
                                 <span class="material-icons input-icon">people</span>
                             </div>
@@ -68,17 +73,22 @@
                             <h4 class="error-msg"> Available places is <b>{{Available}}</b></h4>
                         </div>
                         <form (ngSubmit)="UpdateBooking()">
-                            <div class="form-group">
-                                {{Start | date:'dd.M.yyyy'}}
-                                <!--<span class="material-icons input-icon">today</span>-->
+                            <div class="form-group  form-group-makeinline">
+                                <select class="form-control input-withicon input-lg" name="booking_date" [ngModel]="MyBooking.date" (ngModelChange)="GetBookingsByDateSub($event)">
+                                    <option *ngFor="let item of Activity.calendar" [value]="item.date">{{item.date | date:'dd.M.yyyy'}}</option>
+
+                                </select>
+                                <span class="material-icons input-icon">today</span>
                             </div>
                             <div class="form-group form-group-makeinline">
+                                <label>Available places: <b>{{Available}}</b></label>
                                 <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="MyBooking.num_of_participants" (ngModelChange)="MyBooking.num_of_participants = $event" min="0" [max]="Available">
                                 <span class="material-icons input-icon">people</span>
                             </div>
                             <div class="form-group form-group-makeinline">
                                 <button type="submit" class="btn btn-success input-withicon btn-lg">Update</button>
                                 <span class="material-icons input-icon" style="color: #fff">credit_card</span>
+                                
                                 <span class="booking-price">{{+Activity.price}} euro/ticket</span>
                             </div>
                         </form>

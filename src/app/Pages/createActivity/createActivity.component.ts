@@ -34,6 +34,7 @@ export class CreateActivityComponent{
 
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
+        this.Activity.calendar = [new Date()];
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
                 this.Activity.lat = res.lat;
@@ -94,24 +95,6 @@ export class CreateActivityComponent{
             return false;
         }
 
-        if(!this.Start){
-            /*if(len < this.ErrMsg.length)
-                this.ErrMsg += ",";
-            this.ErrMsg += "Begining date";*/
-            return false;
-        }
-
-        if(!this.Finish){
-            /*if(len < this.ErrMsg.length)
-                this.ErrMsg += ",";
-            this.ErrMsg += "Finish date";*/
-            return false;
-        }
-
-        if(this.Finish < this.Start){
-            return false;
-        }
-
         if(!this.Activity.lat && !this.Activity.lng){
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
@@ -131,7 +114,6 @@ export class CreateActivityComponent{
             this.isLoading = false;
             return;
         }
-        this.Activity.calendar = [this.Start, this.Finish];
         console.log(this.Activity);
         this.service.CreateActivity(this.Activity)
         .subscribe((res:ActivityModel)=>{
@@ -157,5 +139,11 @@ export class CreateActivityComponent{
     mapClicked($event: any) {
         this.Activity.lat = $event.coords.lat;
         this.Activity.lng = $event.coords.lng;
-      }
+    }
+    NewDate(){
+        this.Activity.calendar.push(new Date());
+    }
+    DeleteDate(index:number){
+        this.Activity.calendar.splice(index,1);
+    }
 }

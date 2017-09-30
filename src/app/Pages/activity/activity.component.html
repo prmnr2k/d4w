@@ -44,7 +44,7 @@
                     <div *ngIf="!MyBooking.id" class="round-card">
                         <h3>Reserve</h3>
                         <div *ngIf="isBookingErr">
-                            <h4 class="error-msg">Incorrect number of participants!</h4>
+                            <h4 class="error-msg">Incorrect number of participants! Available places is <b>{{Available}}</b></h4>
                         </div>
                         <form (ngSubmit)="CreateBooking()">
                             <div class="form-group">
@@ -52,7 +52,7 @@
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
-                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="Booking.num_of_participants" (ngModelChange)="Booking.num_of_participants = $event" [max]="Activity.num_of_bookings" placeholder="1" min="0">
+                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="Booking.num_of_participants" (ngModelChange)="Booking.num_of_participants = $event" [max]="Available" placeholder="1" min="0">
                                 <span class="material-icons input-icon">people</span>
                             </div>
                             <div class="form-group form-group-makeinline">
@@ -65,7 +65,7 @@
                     <div *ngIf="MyBooking.id > 0" class="round-card">
                         <h3>Update my booking</h3>
                         <div *ngIf="isBookingErr">
-                            <h4 class="error-msg">Incorrect number of participants!</h4>
+                            <h4 class="error-msg"> Available places is <b>{{Available}}</b></h4>
                         </div>
                         <form (ngSubmit)="UpdateBooking()">
                             <div class="form-group">
@@ -73,7 +73,7 @@
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
-                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="MyBooking.num_of_participants" (ngModelChange)="MyBooking.num_of_participants = $event" min="0" [max]="Activity.num_of_bookings">
+                                <input type="number" name="booking_num" class="form-control input-withicon input-lg"  [ngModel]="MyBooking.num_of_participants" (ngModelChange)="MyBooking.num_of_participants = $event" min="0" [max]="Available">
                                 <span class="material-icons input-icon">people</span>
                             </div>
                             <div class="form-group form-group-makeinline">
@@ -209,7 +209,7 @@
             <div class="col-sm-offset-5">
                 <div *ngIf="Bookings.length > 0">
                     <h3>Researved</h3>
-                    <div class="comment border-bottom-hr" *ngFor="let item of Bookings">
+                    <div class="comment border-bottom-hr" *ngFor="let item of DateBookings">
                         <div class="avatar pull-left">
                             <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
                             <span class="profile-text">{{item.user_name?item.user_name: 'Author'}}</span>

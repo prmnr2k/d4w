@@ -36,6 +36,7 @@ export class ActivityComponent implements OnInit{
     Images:string[] = [];
     Me:UserModel = new UserModel();
     MyBooking:BookingModel = new BookingModel();
+    BookingDate:Date = new Date();
     Comment = {
         title: '',
         body: '',
@@ -43,12 +44,14 @@ export class ActivityComponent implements OnInit{
     }
     Booking:CreateBookingModel = new CreateBookingModel();
     Bookings:BookingModel[] = [];
+    DateBookings: BookingModel[] = [];
     isBookingErr = false;
     Message:CreateMessageModel = new CreateMessageModel();
     MessOk = false;
     MessErr = false;
     MessLoading = false;
     isCommentErr = false;
+    Available = 0;
     constructor(private router: Router,
         private service: MainService,
         private activatedRoute: ActivatedRoute){}
@@ -86,6 +89,7 @@ export class ActivityComponent implements OnInit{
         this.service.GetActivity(this.actId)
             .subscribe((act:ActivityModel)=>{
                 this.Activity = act;
+                this.BookingDate = this.Activity.calendar[0].date;
                 console.log(act);
                 this.Start = this.Start > this.Activity.calendar[0].date?this.Start:this.Activity.calendar[0].date;
                 if(this.Activity.image_id){
@@ -210,7 +214,27 @@ export class ActivityComponent implements OnInit{
                             });
                     }
                 }
+                this.GetBookingsByDate(this.BookingDate);
             })
+    }
+
+    GetBookingsByDate(date:Date){
+        this.BookingDate = date;
+        this.DateBookings = this.Bookings
+            .filter((obj:BookingModel)=>{
+                return obj.date== this.BookingDate;
+            });
+        this.Available = this.Activity.num_of_bookings;
+        console.log(this.Available);
+        for(let i of this.DateBookings){
+            this.Available -= i.num_of_participants;
+        }
+        if(this.Booking && this.Booking.num_of_participants){
+            this.Available += this.Booking.num_of_participants;
+        }
+        console.log(this.Available);
+
+
     }
 
 

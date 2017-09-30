@@ -8,7 +8,8 @@ export class BookingModel{
         public updated_at?: Date,
         public user_id?: number,
         public user_name?:string,
-        public user_image_id?:number
+        public user_image_id?:number,
+        public date?:Date
     ) {
         if(!num_of_participants)
             this.num_of_participants = 1;

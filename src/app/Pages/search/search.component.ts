@@ -1,4 +1,4 @@
-import { Component,OnInit }      from '@angular/core';
+import { Component,OnInit,NgModule }      from '@angular/core';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { RouterModule } from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
@@ -7,6 +7,10 @@ import { HttpService} from '../../services/http.service';
 import {MainService} from "./../../services/main.service";
 import { ActivityModel } from '../../models/activity.model';
 import { UserModel } from '../../models/user.model';
+import { Base64ImageModel } from '../../models/base64image.model';
+
+
+import { NgForm} from '@angular/forms';
 
 @Component({
     moduleId:module.id,
@@ -16,7 +20,10 @@ import { UserModel } from '../../models/user.model';
 })
 
 export class SearchComponent implements OnInit{
+    isLoading = true;
     Activities: ActivityModel[] = [];
+    Users:UserModel[] = [];
+    Images:string[] = [];
     Params = {
         title:'',
         description:'',
@@ -36,10 +43,43 @@ export class SearchComponent implements OnInit{
                 this.lat = res.lat;
                 this.lng = res.lng;
             })
-        this.service.GetAllActivities();
+        this.GetAllActivities();
     }
     mapClicked($event: any) {
         this.lat = $event.coords.lat;
         this.lng = $event.coords.lng;
+      }
+
+      GetAllActivities(){
+        this.isLoading = true;
+        //this.Params.dates = [this.Start, this.Finish];
+        console.log("info ");
+        console.log(this.Params);
+        this.service.GetAllActivities(this.Params)
+        .subscribe((res:ActivityModel[])=>{
+            console.log(res);
+            this.Activities = res;
+            for(let item of this.Activities){
+                if(item.image_id){
+                    this.service.GetImageById(item.image_id)
+                        .subscribe((image:Base64ImageModel)=>{
+                            this.Images['act'+item.id]=image.base64;
+                            
+                        })
+                }
+                this.service.GetUserById(item.user_id)
+                    .subscribe((user:UserModel)=>{
+                        this.Users[item.user_id] = user;
+                        if(user.image_id){
+                            this.service.GetImageById(user.image_id)
+                                .subscribe((img:Base64ImageModel)=>{
+                                    this.Images['user'+item.user_id]=img.base64;
+                                })
+                        }
+                    })
+            } 
+            this.isLoading = false;
+        });
     }
+
 }

@@ -1,10 +1,10 @@
 <nav class="container-fluid header">
   <h1><a class="sportrotter" routerLink="/">Sporanga</a></h1>
   <ul class="list-inline">
-    <li><a routerLink="/">Index</a></li>
+    <li><a routerLink="/">Home</a></li>
     <li><a routerLink="/discover">Discover</a></li>
     <li ><a routerLink="/search">Search</a></li>
-    <li *ngIf="isLoggedIn"><a routerLink="/users/me">User</a></li>
+    <li *ngIf="isLoggedIn"><a routerLink="/users/me">My profile</a></li>
     <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
     <li *ngIf="!isLoggedIn"><a routerLink="/registration">Registration</a></li>
     <li *ngIf="isLoggedIn"><a (click)="Logout()">Logout</a></li>

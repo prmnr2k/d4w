@@ -24,11 +24,11 @@
                     </div><br>
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="number" class="form-control input-lg" name="price"  [ngModel]="Activity.price" (ngModelChange)="Activity.price = $event">
+                        <input type="number" class="form-control input-lg" name="price"  [ngModel]="Activity.price"  min="0" (ngModelChange)="Activity.price = $event">
                     </div><br>
                     <div class="form-group">
                         <label>Number of possible bookings per day</label>
-                        <input type="number" class="form-control input-lg" name="booking" [ngModel]="Activity.num_of_bookings" (ngModelChange)="Activity.num_of_bookings = $event">
+                        <input type="number" class="form-control input-lg" name="booking" [ngModel]="Activity.num_of_bookings"  min="0" (ngModelChange)="Activity.num_of_bookings = $event">
                     </div>
                     <br>
                     <div class="form-group">

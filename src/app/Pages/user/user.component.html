@@ -61,7 +61,7 @@
                 </ul>
                 <div id="activities" *ngIf="MenuItem=='activity'" class="container-fluid center-block container560">
                         <div class="row loading" *ngIf="ActLoading"></div>
-                        <h3 *ngIf="!ActLoading && Activities.length == 0" class="h-center">There is no bookings!</h3>
+                        <h3 *ngIf="!ActLoading && Activities.length == 0" class="h-center">There are no activities!</h3>
                         <table *ngIf="!ActLoading && Activities.length > 0" class="table table-striped">
                             <thead>
                                 <tr>

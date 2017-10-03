@@ -19,20 +19,22 @@ import { NgForm} from '@angular/forms';
     providers: [HttpService]
 })
 
-export class SearchComponent implements OnInit{
+export class SearchComponent implements OnInit {
     isLoading = true;
     Activities: ActivityModel[] = [];
-    Users:UserModel[] = [];
-    Images:string[] = [];
+    Users: UserModel[] = [];
+    Images: string[] = [];
     Params = {
-        title:'',
-        description:'',
-        address:'',
-        dates:'',
-        radius:15
+        title: '',
+        description: '',
+        address: '',
+        dates: '',
+        user_id: '',
+        radius: null
     }
     lat:number = 48.8916733;
     lng:number = 2.3016161;
+    isAdvanced:boolean = false;
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute){}
@@ -48,12 +50,16 @@ export class SearchComponent implements OnInit{
     mapClicked($event: any) {
         this.lat = $event.coords.lat;
         this.lng = $event.coords.lng;
+
+        console.log("coords");
+        console.log(this.lat);
+        console.log(this.lng);
+ 
+        
       }
 
       GetAllActivities(){
         this.isLoading = true;
-        //this.Params.dates = [this.Start, this.Finish];
-        console.log("info ");
         console.log(this.Params);
         this.service.GetAllActivities(this.Params)
         .subscribe((res:ActivityModel[])=>{

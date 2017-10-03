@@ -7,7 +7,7 @@
                     <div class="form-group">
                             <input type="text" name="desc_title" class="form-control input-withicon input-lg"  [ngModel]="Params.title" (ngModelChange)="Params.title = $event" placeholder="Title">
                             <span class="material-icons input-icon">title</span>
-                        </div>
+                    </div>
                     <div class="form-group">
                             <input type="text" name="desc_descr" class="form-control input-withicon input-lg" [ngModel]="Params.description" (ngModelChange)="Params.description = $event" placeholder="Description">
                             <span class="material-icons input-icon">description</span>
@@ -15,18 +15,34 @@
                     <div class="form-group">
                             <input type="text" name="desc_location" class="form-control input-withicon input-lg" [ngModel]="Params.address" (ngModelChange)="Params.address = $event" placeholder="Address">
                             <span class="material-icons input-icon">location_on</span>
-                        </div>
+                    </div>
                     <div class="form-group">
                             <input type="text" name="desc_toll" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
                             <span class="material-icons input-icon">toll</span>
-                        </div>
+                    </div>
                     
+
+                    <div *ngIf="isAdvanced">
+                        <div class="form-group">
+                            <input type="text" name="desc_toll" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
+                            <span class="material-icons input-icon">toll</span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" name="desc_toll" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
+                            <span class="material-icons input-icon">toll</span>
+                        </div>
+                    </div>
 
                     <div class="form-group form-group-makeinline">
                         <button type="submit" class="btn btn-success input-withicon btn-lg">Appliquer</button>
                         <span class="material-icons input-icon" style="color: #fff">search</span>
-                       <a routerLink="/advanced_search" class="read-more" data-text="hide advanced search" data-textdefault="show advanced search">show advanced search</a>
+                       <a class="read-more" data-text="hide advanced search" data-textdefault="show advanced search" (click)="isAdvanced=!isAdvanced">show advanced search</a>
                     </div>
+
+                   
+
+
                 </form> 
             
             </div>
@@ -35,12 +51,13 @@
             <div class="col-xs-12 col-md-6 map">
                     <agm-map class="search_map" (mapClick)="mapClicked($event)" [latitude]="lat" [longitude]="lng">
                         <agm-marker [markerDraggable]="true" [latitude]="lat" [longitude]="lng"></agm-marker>
+
                     </agm-map>
                 </div>
 
             <div class="col-sm-10 marg-auto left-side">
                     <div class="cards" *ngIf="!isLoading && Activities.length > 0">
-                            <h3 class="h-center">Activities</h3>
+                           
                             <div class="container-fluid">
                                 <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">
                                         <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">

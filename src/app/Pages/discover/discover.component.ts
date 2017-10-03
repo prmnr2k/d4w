@@ -27,6 +27,7 @@ export class DiscoverComponent implements OnInit{
     Params = {
         limit:10,
         offset:0,
+        address:'',
         from_date:null,
         to_date:null,
         title:'',

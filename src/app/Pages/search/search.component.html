@@ -16,10 +16,7 @@
                             <input type="text" name="desc_location" class="form-control input-withicon input-lg" [ngModel]="Params.address" (ngModelChange)="Params.address = $event" placeholder="Address">
                             <span class="material-icons input-icon">location_on</span>
                     </div>
-                    <div class="form-group">
-                            <input type="text" name="desc_toll" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
-                            <span class="material-icons input-icon">toll</span>
-                    </div>
+                    
                     
                     <div class="form-group" *ngIf="isAdvanced">
                         <input type="text" name="desc_toll1" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
@@ -27,14 +24,30 @@
                     </div>
 
                     <div class="form-group" *ngIf="isAdvanced">
-                        <input type="text" name="desc_toll2" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
-                        <span class="material-icons input-icon">toll</span>
+                        <input type="text" name="start" class="form-control input-withicon input-lg" bsDatepicker [bsConfig]="bsConfig" [ngModel]="Params.from_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.from_date = $event" placeholder="Date from">
+                        <span  class="material-icons input-icon">today</span>
                     </div>
+
+                    <div class="form-group" *ngIf="isAdvanced">
+                        <input type="text" name="finish" class="form-control input-withicon input-lg" bsDatepicker [bsConfig]="bsConfig" [ngModel]="Params.to_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.to_date = $event" placeholder="Date to">
+                        <span  class="material-icons input-icon">today</span>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
 
                     <div class="form-group form-group-makeinline">
                         <button type="submit" class="btn btn-success input-withicon btn-lg">Appliquer</button>
                         <span class="material-icons input-icon" style="color: #fff">search</span>
-                       <a class="read-more" data-text="hide advanced search" data-textdefault="show advanced search" (click)="isAdvanced=!isAdvanced">show advanced search</a>
+                       <a class="read-more" data-text="hide advanced search" data-textdefault="show advanced search" (click)="isAdvanced=!isAdvanced">{{isAdvanced?"hide":"show"}} advanced search</a>
                     </div>
 
                    
@@ -59,7 +72,7 @@
                     <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">
                         <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
                             <h3 class="cardname">{{item.title}}</h3>
-                            <h3 class="carddate">{{item.begin | date: "dd MMM"}}</h3>
+                            <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
                             <div class="avatar">
                                 <img class="profile-logo" alt="logo" [src]="Images['user'+item.user_id]?Images['user'+item.user_id]:'./app/images/man.jpg'">
                                 <span class="profile-text">{{Users[item.user_id]?.name?Users[item.user_id]?.name:'Author'}}</span>

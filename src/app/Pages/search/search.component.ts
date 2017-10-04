@@ -8,7 +8,7 @@ import {MainService} from "./../../services/main.service";
 import { ActivityModel } from '../../models/activity.model';
 import { UserModel } from '../../models/user.model';
 import { Base64ImageModel } from '../../models/base64image.model';
-
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { NgForm} from '@angular/forms';
 
@@ -24,22 +24,27 @@ export class SearchComponent implements OnInit {
     Activities: ActivityModel[] = [];
     Users: UserModel[] = [];
     Images: string[] = [];
+    Start:Date;
+    Finish:Date;
     Params = {
         title: '',
         description: '',
         address: '',
-        dates: '',
+        from_date:null,
+        to_date:null,
         user_id: '',
         radius: null
     }
     lat:number = 48.8916733;
     lng:number = 2.3016161;
     isAdvanced:boolean = false;
+    bsConfig:Partial<BsDatepickerConfig>;
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute){}
 
     ngOnInit(){
+        this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
                 this.lat = res.lat;
@@ -86,6 +91,14 @@ export class SearchComponent implements OnInit {
             } 
             this.isLoading = false;
         });
+    }
+
+    FromDateChanged($event){
+        let date:Date = new Date($event);
+        if(date){
+            console.log($event);
+            this.Params.from_date = $event;
+        }
     }
 
 }

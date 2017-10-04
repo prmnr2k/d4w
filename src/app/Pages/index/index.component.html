@@ -15,12 +15,13 @@
                 <span class="material-icons input-icon">today</span>
             </div>
             <div class="form-group form-group-makeinline">
-                <button type="button" class="btn btn-success input-withicon btn-lg">Rechercher</button>
+                <button type="button" class="btn btn-success input-withicon btn-lg" (click)="openSearch()">Rechercher</button>
                 <span class="material-icons input-icon white-span">search</span>
             </div>
         </form>
     </div>
 </div>
+
 
 <div class="container center-block container1440">
     <div class="row middle">
@@ -33,56 +34,67 @@
             <h2 class="middle-text-2">Profitez de la vie avec les autres autour de vous</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="card col-md-8 bg_cover" style="background-image:url('./app/images/surfer.jpg');">
-            <h3 class="cardname">Le monde avec une hauteur de Mikhail</h3>
-            <h3 class="carddate">June 24</h3>
-            <div class="avatar">
-                <img class="profile-logo" alt="logo" src="./app/images/man.jpg">
-                <span class="profile-text">Michael</span>
+
+    <div *ngIf="!isLoading && Activities.length > 0">
+        <div class="row">
+            <div *ngIf="Activities.length >0 " class="card col-md-8 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[0].id] + ')'}">
+                <h3 class="cardname">{{Activities[0].title}}</h3>
+                <h3 class="carddate">{{Activities[0].calendar[0].date | date: "dd MMM"}}</h3>
+                <div class="avatar">
+                    <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[0].user_id]?Images['user'+Activities[0].user_id]:'./app/images/man.jpg'">
+                    <span class="profile-text">{{Users[Activities[0].user_id]?.name?Users[Activities[0].user_id]?.name:'Author'}}</span>
+                </div>
+                <span class="cardshadow"></span>
+                <a [routerLink]="['/activity',Activities[0].id]"><span class="spanlink"></span></a>
             </div>
-            <span class="cardshadow"></span>
-            <a routerLink="/activity"><span class="spanlink"></span></a>
-        </div>
-        <div class="card col-md-4 bg_cover" style="background-image:url('./app/images/vf2.jpg');">
-            <h3 class="cardname">Rafting fraîche</h3>
-            <h3 class="carddate">June 24</h3>
-            <div class="avatar">
-                <img class="profile-logo" alt="logo" src="./app/images/man.jpg">
-                <span class="profile-text">Diana</span>
+            <div *ngIf="Activities.length > 1" class="card col-md-4 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[1].id] + ')'}">
+                <h3 class="cardname">{{Activities[1].title}}</h3>
+                <h3 class="carddate">{{Activities[1].calendar[0].date | date: "dd MMM"}}</h3>
+                <div class="avatar">
+                    <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[1].user_id]?Images['user'+Activities[1].user_id]:'./app/images/man.jpg'">
+                    <span class="profile-text">{{Users[Activities[1].user_id]?.name?Users[Activities[1].user_id]?.name:'Author'}}</span>
+                </div>
+                <span class="cardshadow"></span>
+                <a [routerLink]="['/activity',Activities[1].id]"><span class="spanlink"></span></a>
             </div>
-            <span class="cardshadow"></span>
-            <a routerLink="/activity"><span class="spanlink"></span></a>
+        </div>   
+        
+        <div class="row">
+            <div *ngIf="Activities.length >2 " class="card col-md-4 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[2].id] + ')'}">
+                <h3 class="cardname">{{Activities[2].title}}</h3>
+                <h3 class="carddate">{{Activities[2].calendar[0].date | date: "dd MMM"}}</h3>
+                <div class="avatar">
+                    <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[2].user_id]?Images['user'+Activities[2].user_id]:'./app/images/man.jpg'">
+                    <span class="profile-text">{{Users[Activities[2].user_id]?.name?Users[Activities[2].user_id]?.name:'Author'}}</span>
+                </div>
+                <span class="cardshadow"></span>
+                <a [routerLink]="['/activity',Activities[2].id]"><span class="spanlink"></span></a>
+            </div>
+            <div *ngIf="Activities.length > 3" class="card col-md-8 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[3].id] + ')'}">
+                <h3 class="cardname">{{Activities[3].title}}</h3>
+                <h3 class="carddate">{{Activities[3].calendar[0].date | date: "dd MMM"}}</h3>
+                <div class="avatar">
+                    <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[3].user_id]?Images['user'+Activities[3].user_id]:'./app/images/man.jpg'">
+                    <span class="profile-text">{{Users[Activities[3].user_id]?.name?Users[Activities[3].user_id]?.name:'Author'}}</span>
+                </div>
+                <span class="cardshadow"></span>
+                <a [routerLink]="['/activity',Activities[3].id]"><span class="spanlink"></span></a>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="card col-md-4 bg_cover" style="background-image:url('./app/images/parashut.jpg');">
-            <h3 class="cardname">Parachute au-dessus de Paris</h3>
-            <h3 class="carddate">June 24</h3>
-            <div class="avatar">
-                <img class="profile-logo" alt="logo" src="./app/images/man.jpg">
-                <span class="profile-text">George</span>
-            </div>
-            <span class="cardshadow"></span>
-            <a routerLink="/activity"><span class="spanlink"></span></a>
-        </div>
-        <div class="card col-md-8 bg_cover" style="background:url('./app/images/child.jpg');">
-            <h3 class="cardname">Surf à Montpellier</h3>
-            <h3 class="carddate">June 24</h3>
-            <div class="avatar">
-                <img class="profile-logo" alt="logo" src="./app/images/man.jpg">
-                <span class="profile-text">Juke</span>
-            </div>
-            <span class="cardshadow"></span>
-            <a routerLink="/activity"><span class="spanlink"></span></a>
-        </div>
-    </div>
-    <div class="row middle3">
-        <div class="col-md-12">
-            <a routerLink="/discover" class="btn btn-default btn-pink btn-withicon">Découvrir les activités <span class="material-icons">favorite</span></a>    
-        </div>
+
+<div class="row middle3">
+    <div class="col-md-12">
+        <a routerLink="/discover" class="btn btn-default btn-pink btn-withicon">Découvrir les activités <span class="material-icons">favorite</span></a>    
     </div>
 </div>
+</div>
+
+
+
+
+
+
 
 <div class="container-fluid container1440 center-block">
         <div class="row middle">

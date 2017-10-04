@@ -57,14 +57,17 @@ export class UserComponent implements OnInit{
             //TODO: REWRITE THIS HARDCODE
             console.log(this.service.me.id);
             if(userId == 'me' || userId == this.service.me.id){
+                
                 this.isMe = true;
                 this.service.GetMe()
                     .subscribe((res:UserModel)=>{
+                       
                         this.AfterGettingUser(res);
                     },
                     (err:any)=>{
                         console.log(err);
                     });
+                    
             }
             else{
                this.service.GetUserById(userId)
@@ -80,6 +83,7 @@ export class UserComponent implements OnInit{
     }
 
     AfterGettingUser(user:UserModel){
+       
         this.ProfLoading = true;
         this.User = user;
         if(this.isMe)
@@ -108,7 +112,7 @@ export class UserComponent implements OnInit{
                         this.UserUpdate.diploma = diploma.base64;
                 });
         }
-        
+       
         this.GetActivityies();
         this.MessagesTypeChanged(this.MessagesMenu);
         this.BookingsTypeChanged(this.BookingsMenu);

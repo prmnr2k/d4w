@@ -17,7 +17,6 @@
                         <a [routerLink]="['/users',Activity?Activity.user_id:'0']"><span class="spanlink"></span></a>
                     </div>
                     <div class="about-org">
-                        <h3>{{Activity.user_name}}</h3>
                         <p [innerHTML]="Activity.user_description"></p>
                     </div>
                 </div>
@@ -138,10 +137,16 @@
             <div class="col-sm-7">
                 <div class="pl32">
                     <div class="activity-description">
-                        <h4>Description</h4>
+                        <h3>Description</h3>
                         <p>{{Activity.description}}</p></div>
-                    <div class="activity-comments-ratings">
-                        <h3>Rating</h3>
+                    
+                    
+                        <div class="activity-comments-ratings">
+                        
+                        
+        
+
+                            <h3>Rating</h3>
                         <div class="container-fluid ratings">
                             <div class="row">
                                 <div class="col-xs-6 col-sm-3 text-center">
@@ -165,7 +170,7 @@
                         <div class="container-fluid post-comment" *ngIf="isLoggedIn">
                             <h3>Add commentary</h3>
                             <div *ngIf="isCommentErr">
-                                <h4 class="error-msg">Input title and description!</h4>
+                                <h4 class="error-msg">Input description!</h4>
                             </div>
                             <form (ngSubmit)="AddComment()">
                                     <div class="form-group">
@@ -183,6 +188,7 @@
                                     </div>
                             </form>
                         </div>
+
                         <div class="container-fluid comments">
                             <h3>Comments</h3>
                             <div class="comment word-break" *ngFor="let item of Comments">

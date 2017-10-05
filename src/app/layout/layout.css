@@ -597,6 +597,10 @@ h1{
     padding-right: 4px;
 }
 
+.activity-description p{
+    word-wrap: break-word;
+    padding: 10px;
+}
 /* User Space */
 
 .container960 {

@@ -218,6 +218,8 @@
                     <table *ngIf="!MessLoading && Messages.length > 0" class="table table-striped">
                         <thead>
                             <tr>
+                                <th>Date</th>
+                                <th>Time</th>
                                 <th>{{MessagesMenu=="received"?"From":"To"}}</th>
                                 <th>Title</th>
                                 <th>Actions</th>
@@ -225,6 +227,8 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of Messages">
+                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{item.created_at| date: 'dd/MM/yyyy'}}</td>
+                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{item.created_at| date: 'HH:mm'}}</td>
                                 <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{Users[MessagesMenu=='received'?item.from_id:item.to_id]?(Users[MessagesMenu=='received'?item.from_id:item.to_id].name):''}}</td>
                                 <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{item.title}}</td>
                                 <td><a class="read-more" (click)="ReadMessages(item,modal1)">show</a></td>

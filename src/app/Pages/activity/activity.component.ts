@@ -127,7 +127,7 @@ export class ActivityComponent implements OnInit{
 
     AddComment(){
         this.isCommentErr = false;
-        if(!this.Comment.body || !this.Comment.title){
+        if(!this.Comment.body){
             this.isCommentErr = true;
             return;
         }

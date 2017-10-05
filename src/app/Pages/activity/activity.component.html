@@ -162,7 +162,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="container-fluid post-comment">
+                        <div class="container-fluid post-comment" *ngIf="isLoggedIn">
                             <h3>Add commentary</h3>
                             <div *ngIf="isCommentErr">
                                 <h4 class="error-msg">Input title and description!</h4>

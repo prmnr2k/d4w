@@ -15,11 +15,13 @@ import { BookingModel } from '../../models/booking.model';
 import { CreateMessageModel } from '../../models/createMessage.model';
 import { MessageModel } from '../../models/message.model';
 
+
 @Component({
     moduleId:module.id,
     selector: "activity",
     templateUrl: "./activity.component.html",
     providers: [HttpService]
+    
 })
 
 export class ActivityComponent implements OnInit{
@@ -42,6 +44,10 @@ export class ActivityComponent implements OnInit{
         body: '',
         activity_id: 0
     }
+    ParamsRate={
+        activity_id:0,
+        rate:0
+    }
     Booking:CreateBookingModel = new CreateBookingModel();
     Bookings:BookingModel[] = [];
     DateBookings: BookingModel[] = [];
@@ -52,11 +58,26 @@ export class ActivityComponent implements OnInit{
     MessLoading = false;
     isCommentErr = false;
     Available = 0;
+    
+
+    pukCount:number = 5;
+    pukEmptyImage:string = 'https://maxcdn.icons8.com/Share/icon/Messaging//star1600.png';
+    pukFullImage:string = 'http://icons.iconarchive.com/icons/psdblast/flat-christmas/512/star-icon.png';
+    pukImageWidth:string = '40px';
+    pukImageHeight:string = '40px';
+    pukHoverIndex:number;
+    pukList:number[] = [];
+
     constructor(private router: Router,
         private service: MainService,
         private activatedRoute: ActivatedRoute){}
 
     ngOnInit(){
+
+        for (let i = 1; i <= this.pukCount; i++) {
+            this.pukList.push(i);
+        }
+
          this.activatedRoute.params.forEach((params:Params) => {
             this.isLoading = true;
             this.isLoggedIn = this.service.IsLogedIn();
@@ -70,6 +91,7 @@ export class ActivityComponent implements OnInit{
                             })
                         this.GetComments();
                         this.GetBookings();
+
                     }
                     else{
                         this.Me = new UserModel();
@@ -81,13 +103,18 @@ export class ActivityComponent implements OnInit{
             this.service.GetMe()
                 .subscribe((res:UserModel)=>{
                     this.Me = res;
+                    
                 })
         });
+
+        
     }
 
     GetActivity(){
         this.service.GetActivity(this.actId)
             .subscribe((act:ActivityModel)=>{
+                this.ParamsRate.rate=act.rate;
+                this.ParamsRate.activity_id=act.id;
                 this.Activity = act;
                 this.Booking.date = this.Activity.calendar[0].date;
                 console.log(this.Booking.date);
@@ -221,6 +248,7 @@ export class ActivityComponent implements OnInit{
             })
     }
 
+
     SetMyBooking(bk:BookingModel){
         this.MyBooking.id = bk.id;
         this.MyBooking.num_of_participants = bk.num_of_participants;
@@ -288,4 +316,90 @@ export class ActivityComponent implements OnInit{
             },5000);
         })
     }
+
+
+
+
+
+
+    pukChangeSvg(newPukValue:number):void {
+        this.ParamsRate.rate = newPukValue;
+    };
+
+
+    pukChangeImage(newPukValue:number):void {
+        this.ParamsRate.rate  = newPukValue;
+    };
+
+
+    pukHover(pukValue:number) {
+        this.pukHoverIndex = pukValue;
+    }
+
+    private onClickRate(pukModel:number):void {
+        this.ParamsRate.rate = pukModel;
+
+        console.log(this.ParamsRate);
+
+      //  this.setRate();
+       
+    }
+
+    private onMouseEnterRate(pukModel:number):void {
+                this.pukHoverIndex = pukModel;
+                
+            }
+        
+        
+    private onMouseLeaveRate():void{
+        this.pukHoverIndex = null;
+    }
+
+
+ 
+
+
+
+    private getStyleRate(index:number):Object {
+        if (this.pukEmptyImage && this.pukFullImage) {
+
+            let image_url;
+            if (this.pukHoverIndex) {
+                image_url = index <= this.pukHoverIndex ? this.pukFullImage : this.pukEmptyImage;
+            }
+            else {
+                image_url = index <= this.ParamsRate.rate ? this.pukFullImage : this.pukEmptyImage;
+            }
+
+            return {
+                "background-size": this.pukImageWidth + ' ' + this.pukImageHeight,
+                "background-image": "url(" + image_url + ")",
+                "display": "inline-block",
+                "width": this.pukImageWidth,
+                "height": this.pukImageHeight
+            };
+        }
+
+    }
+
+    private getStyleColor():Object {
+       let color:string='red';
+        if(this.ParamsRate.rate==5)color=`#0b60a3`;
+        if(this.ParamsRate.rate==4)color=`#00a8b0`;
+        if(this.ParamsRate.rate==3)color=`#67b548`;
+        if(this.ParamsRate.rate==2)color=`#89cf6d`;
+        if(this.ParamsRate.rate==1)color=`#b05153`;
+            return {
+                
+                "background-color": color
+            };
+        }
+
+
+
+    setRate(){
+        this.service.ChangeRate(this.ParamsRate)
+        .subscribe(()=>this.GetActivity());
+    }
+
 }

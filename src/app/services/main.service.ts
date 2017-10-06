@@ -311,5 +311,8 @@ import { CalendarModel } from '../models/calendar.model';
         }
         /* COMMENTS BLOCK END */
 
+        ChangeRate(params:any){
+            return this.httpService.PostData('/activities/rate',JSON.stringify(params));
+        }
 
     }

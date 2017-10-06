@@ -32,7 +32,11 @@ export class IndexComponent implements OnInit{
         address: '',
         from_date:null
     }
-
+    ParamsSearch = {
+        title: ``,
+        address: ``,
+        from_date:``
+    }
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute){}
@@ -41,6 +45,7 @@ export class IndexComponent implements OnInit{
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.GetFourActivities();
+        
     }
     GetFourActivities(){
         this.isLoading = true;
@@ -74,6 +79,7 @@ export class IndexComponent implements OnInit{
     }
 
     openSearch(){
-       
+       console.log(`search`);
+       this.router.navigate(['/discover',{address:this.ParamsSearch.address,title:this.ParamsSearch.title,from_date:this.ParamsSearch.from_date}]);
     }
 }

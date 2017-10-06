@@ -1,6 +1,6 @@
 import { Component,OnInit }      from '@angular/core';
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { RouterModule } from '@angular/router';
+import { RouterModule} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import { HttpService} from '../../services/http.service';
 
@@ -35,11 +35,19 @@ export class DiscoverComponent implements OnInit{
     };
     bsConfig:Partial<BsDatepickerConfig>;
     constructor(private router: Router,
+        private route: ActivatedRoute,
         private service: MainService,
         private params: ActivatedRoute){}
 
     ngOnInit(){
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
+        let sub:any = this.route.params.subscribe(params => {
+            this.Params.limit = +params['limit']; // (+) converts string 'id' to a number
+            this.Params.address = params['address'];
+            this.Params.title = params['title'];
+            this.Params.from_date = params['from_date'];
+            
+         });
         this.GetAllActivities();
     }
 

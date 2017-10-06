@@ -601,6 +601,39 @@ h1{
     word-wrap: break-word;
     padding: 10px;
 }
+
+.puk-rating{
+    list-style: none;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.puk-rating li {
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.puk-rating li:first-child {
+    margin-left: 0
+}
+
+.panel-rating {
+    padding: 10px;
+padding-left: 35px;
+    padding-bottom: 6px;
+    background-color: #008ca8;
+    display: inline-block;
+    border-radius: 10px;
+    width: 60%;
+  }
+.panel-rating p{
+    color: white;
+ padding-top:6px;
+   padding-left: 245px;
+    font-size: 35px;
+}
+
 /* User Space */
 
 .container960 {

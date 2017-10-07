@@ -9,7 +9,7 @@
 <div *ngIf="!isLoading" class="content1440">
     <div class="container center-block pull-top">
         <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-6">
                 <div class="round-card" [ngClass]="{'height333': MyBooking.id > 0,'height265':!(MyBooking.id > 0)}">
                     <div class="avatar pull-left">
                         <img class="profile-logo" alt="logo" [src]="UserLogo?UserLogo:'./app/images/man.jpg'" style="center">
@@ -21,17 +21,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-6">
                 <div class="booking" *ngIf="!isLoggedIn">
                     <div class="round-card">
                         <h3>Activity information</h3>
                         <form>
-                            <div class="form-group">
-                                <span>The activity starts on <b>{{Start | date:'dd.M.yyyy'}}</b></span>
+                            <div class="form-group  form-group-makeinline">
+                                <select class="form-control input-withicon input-lg" name="booking_date" [ngModel]="Booking.date" (ngModelChange)="GetBookingsByDateUnsub($event)">
+                                    <option *ngFor="let item of Activity.calendar" [value]="item.date">{{item.date | date:'M/dd/yyyy'}}</option>
+
+                                </select>
+                                <span class="material-icons input-icon">today</span>
                                 <!--<span class="material-icons input-icon">today</span>-->
                             </div>
                             <div class="form-group form-group-makeinline">
                                 <span>Maximum number of participants is <b>{{Activity.num_of_bookings}}</b></span>
+                                <label>Available places for {{Booking.date | date:'M/dd/yyyy'}} : <b>{{Available}}</b></label>
                             </div>
                             <div class="form-group form-group-makeinline">
                                 <span>Price: <b>{{+Activity.price}} euro/participant</b></span>
@@ -40,7 +45,31 @@
                     </div>
                 </div>
                 <div class="booking" *ngIf="isLoggedIn">
-                    <div *ngIf="!MyBooking.id" class="round-card">
+                    <div *ngIf="Me.id == Activity.user_id" class="round-card">
+                        <h3>Activity information</h3>
+                        <form>
+                            <div class="form-group  form-group-makeinline">
+                                <select class="form-control input-withicon input-lg" name="booking_date" [ngModel]="Booking.date" (ngModelChange)="GetBookingsByDateUnsub($event)">
+                                    <option *ngFor="let item of Activity.calendar" [value]="item.date">{{item.date | date:'M/dd/yyyy'}}</option>
+
+                                </select>
+                                <span class="material-icons input-icon">today</span>
+                                <!--<span class="material-icons input-icon">today</span>-->
+                            </div>
+                            <div class="form-group form-group-makeinline">
+                                <span>Maximum number of participants is <b>{{Activity.num_of_bookings}}</b></span>
+                                <label>Available places for {{Booking.date | date:'M/dd/yyyy'}} : <b>{{Available}}</b></label>
+                            </div>
+                            <div class="form-group form-group-makeinline">
+                                <span>Price: <b>{{+Activity.price}} euro/participant</b></span>
+                            </div>
+                        </form>
+                        <div class="form-group form-group-makeinline">
+                            <button type="button" class="btn btn-primary btn-lg" (click)="EditActivity()">Edit Activity</button>
+                            <button type="button" class="btn btn-pink btn-lg" (click)="DeleteActivity()">Delete Activity</button>
+                        </div>
+                    </div>
+                    <div *ngIf="!MyBooking.id && Me.id != Activity.user_id" class="round-card">
                         <h3>Reserve</h3>
                         <div *ngIf="isBookingErr">
                             <h4 class="error-msg">Incorrect number of participants! Available places is <b>{{Available}}</b></h4>
@@ -66,7 +95,7 @@
                             </div>
                         </form>
                     </div>
-                    <div *ngIf="MyBooking.id > 0" class="round-card">
+                    <div *ngIf="MyBooking.id > 0 && Me.id != Activity.user_id" class="round-card">
                         <h3>Update my booking</h3>
                         <div *ngIf="isBookingErr">
                             <h4 class="error-msg"> Available places is <b>{{Available}}</b></h4>

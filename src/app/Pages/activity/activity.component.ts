@@ -420,4 +420,18 @@ export class ActivityComponent implements OnInit{
         else console.log(`not auth!`);
     }
 
+
+    EditActivity(){
+        this.router.navigate(['/edit_act',this.Activity.id]);
+    }
+    DeleteActivity(){
+        this.service.DeleteActivity(this.Activity.id)
+            .subscribe(()=>{
+                this.router.navigate(['/users','me',{menu:'activity'}]);
+            },
+        (err)=>{
+            console.log(err);
+        })
+    }
+
 }

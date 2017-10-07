@@ -8,6 +8,7 @@ import { ActivityModel } from '../../models/activity.model';
 import { CreateActivityModel } from '../../models/createActivity.model';
 import { Base64ImageModel } from '../../models/base64image.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { UserModel } from '../../models/user.model';
 
 @Component({
     moduleId:module.id,
@@ -39,6 +40,11 @@ export class EditActivityComponent{
                 .subscribe((act:ActivityModel)=>{
                     this.AfterGettingActivity(act);
                 })
+            this.service.GetMe()
+                .subscribe((res:UserModel)=>{
+                    this.Activity.lat = res.lat;
+                    this.Activity.lng = res.lng;
+                })
         });
     }
 
@@ -59,12 +65,12 @@ export class EditActivityComponent{
     {
         scrollTo(0,0);
         this.isLoading = true;
-        this.Activity.calendar = [this.Start, this.Finish];
         console.log(this.Activity);
         this.service.UpdateActivity(this.actId,this.Activity)
         .subscribe((res:ActivityModel)=>{
-            console.log(res);
-            this.AfterGettingActivity(res);
+            this.router.navigate(['/activity',res.id]);
+            /*console.log(res);
+            this.AfterGettingActivity(res);*/
         },
     (err:any)=>{
         console.log(err);
@@ -82,5 +88,15 @@ export class EditActivityComponent{
                 this.Activity.image = myReader.result;
         }
         myReader.readAsDataURL(file);
+    }
+    mapClicked($event: any) {
+        this.Activity.lat = $event.coords.lat;
+        this.Activity.lng = $event.coords.lng;
+    }
+    NewDate(){
+        this.Activity.calendar.push(new Date());
+    }
+    DeleteDate(index:number){
+        this.Activity.calendar.splice(index,1);
     }
 }

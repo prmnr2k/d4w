@@ -14,7 +14,7 @@ import { CreateBookingModel } from '../../models/createBooking.model';
 import { BookingModel } from '../../models/booking.model';
 import { CreateMessageModel } from '../../models/createMessage.model';
 import { MessageModel } from '../../models/message.model';
-
+import { RateModel } from '../../models/rate.model';
 
 @Component({
     moduleId:module.id,
@@ -39,14 +39,15 @@ export class ActivityComponent implements OnInit{
     Me:UserModel = new UserModel();
     MyBooking:BookingModel = new BookingModel();
     BookingDate:Date = new Date();
+   // ParamsRate: RateModel = new RateModel();
     Comment = {
         title: '',
         body: '',
         activity_id: 0
     }
     ParamsRate={
-        activity_id:0,
-        rate:0
+        activity_id:null,
+        rate:null
     }
     Booking:CreateBookingModel = new CreateBookingModel();
     Bookings:BookingModel[] = [];
@@ -115,6 +116,7 @@ export class ActivityComponent implements OnInit{
             .subscribe((act:ActivityModel)=>{
                 this.ParamsRate.rate=act.rate;
                 this.ParamsRate.activity_id=act.id;
+              
                 this.Activity = act;
                 this.Booking.date = this.Activity.calendar[0].date;
                 console.log(this.Booking.date);
@@ -341,7 +343,7 @@ export class ActivityComponent implements OnInit{
 
         console.log(this.ParamsRate);
 
-      //  this.setRate();
+        this.setRate();
        
     }
 
@@ -385,10 +387,10 @@ export class ActivityComponent implements OnInit{
     private getStyleColor():Object {
        let color:string='red';
         if(this.ParamsRate.rate==5)color=`#0b60a3`;
-        if(this.ParamsRate.rate==4)color=`#00a8b0`;
-        if(this.ParamsRate.rate==3)color=`#67b548`;
-        if(this.ParamsRate.rate==2)color=`#89cf6d`;
-        if(this.ParamsRate.rate==1)color=`#b05153`;
+        else if(this.ParamsRate.rate>=4)color=`#00a8b0`;
+        else if(this.ParamsRate.rate>=3)color=`#67b548`;
+        else if(this.ParamsRate.rate>=2)color=`#89cf6d`;
+        else if(this.ParamsRate.rate>=1)color=`#b05153`;
             return {
                 
                 "background-color": color
@@ -398,8 +400,24 @@ export class ActivityComponent implements OnInit{
 
 
     setRate(){
-        this.service.ChangeRate(this.ParamsRate)
-        .subscribe(()=>this.GetActivity());
+        console.log(this.service.getTok());
+        if(this.isLoggedIn&&this.MyBooking.id>0){
+
+        this.service.UnRateActivity(this.ParamsRate.activity_id)
+        .subscribe(()=>{
+            console.log(`unrate it!!`);},
+        (err:any)=>{
+            console.log(err);
+        });
+
+        this.service.RateActivity(this.ParamsRate)
+        .subscribe(()=>{
+            console.log(`rate it!!`);
+        this.GetActivity()},
+        (err:any)=>{
+            console.log(err);
+        });}
+        else console.log(`not auth!`);
     }
 
 }

@@ -143,22 +143,18 @@
                     
                         <div class="activity-comments-ratings">
                         
+                        <div *ngIf="MyBooking.id > 0">
+                            <h3>Rating</h3>
+                                <div class="panel-rating" [ngStyle]="getStyleColor()">
+                                    <ul class="puk-rating">
+                                        <li *ngFor="let item of pukList"  (mouseenter)="onMouseEnterRate(item)" (mouseleave)="onMouseLeaveRate()">
+                                            <i  [ngStyle]="getStyleRate(item)" (click)="onClickRate(item)"></i>
+                                        </li>
+                                    </ul>
+                                    <p>{{ParamsRate.rate}}</p>
+                                </div>
+                        </div>
                         
-        
-
-                        <h3>Rating</h3>
-
-
-                <div class="panel-rating" [ngStyle]="getStyleColor()">
-                    <ul class="puk-rating">
-                        <li *ngFor="let item of pukList"  (mouseenter)="onMouseEnterRate(item)" (mouseleave)="onMouseLeaveRate()">
-                            <i  [ngStyle]="getStyleRate(item)" (click)="onClickRate(item)"></i>
-                        </li>
-                    </ul>
-                    <p>{{ParamsRate.rate}}</p>
-                </div>
-
-
                         <div class="container-fluid post-comment" *ngIf="isLoggedIn">
                             <h3>Add commentary</h3>
                             <div *ngIf="isCommentErr">

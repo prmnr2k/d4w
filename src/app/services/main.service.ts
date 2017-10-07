@@ -17,6 +17,7 @@ import { CreateBookingModel } from '../models/createBooking.model';
 import { CreateMessageModel } from '../models/createMessage.model';
 import { CreateUserModel } from '../models/createUser.model';
 import { CalendarModel } from '../models/calendar.model';
+import { RateModel } from '../models/rate.model';
 
 
     @Injectable()
@@ -98,6 +99,10 @@ import { CalendarModel } from '../models/calendar.model';
             if(token && token.token)
                 result = true;
             return result;
+        }
+        getTok()
+        {
+            return this.httpService.GetToken();
         }
 
         UserLogin(email:string, password:string){
@@ -311,8 +316,12 @@ import { CalendarModel } from '../models/calendar.model';
         }
         /* COMMENTS BLOCK END */
 
-        ChangeRate(params:any){
+        RateActivity(params:any){
             return this.httpService.PostData('/activities/rate',JSON.stringify(params));
+        }
+        UnRateActivity(activity_id:number)
+        {
+            return this.httpService.PostData('/activities/onrate',JSON.stringify(activity_id));
         }
 
     }

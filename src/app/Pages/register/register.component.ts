@@ -32,6 +32,15 @@ export class RegisterComponent implements OnInit{
         this.isRegErr = false;
         this.isLoading = true;
         scrollTo(0,0);
+        let regexp = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$');
+        if(!this.RegisterUser.email || !(regexp.test(this.RegisterUser.email)) || !this.RegisterUser.password || this.RegisterUser.password.length < 6){
+            this.ErrMsg = "Input correct data!";
+            this.isRegErr = true;
+            this.isLoading = false;;
+            return;
+        }
+
+
         if(this.RegisterUser.user_type == 'client'){
             this.RegisterUser.address = null;
             this.RegisterUser.phone = null;
@@ -39,6 +48,7 @@ export class RegisterComponent implements OnInit{
             this.RegisterUser.diploma = null;
             this.RegisterUser.background = null;
         }
+        
         this.mainService.CreateUser(this.RegisterUser)
             .subscribe((result:UserModel)=>{
                 console.log(result);

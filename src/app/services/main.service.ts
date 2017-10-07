@@ -248,6 +248,18 @@ import { CalendarModel } from '../models/calendar.model';
             return this.httpService.PostData('/messages/create',JSON.stringify(params));
         }
 
+        MarkAllAsRead(user_id:number){
+            return this.httpService.PostData('/messages/mark_all_read/' + user_id,"");
+        }
+
+        GetChatsByUsers(){
+            return this.httpService.GetData('/messages/get_messaged_users', "");
+        }
+
+        GetChatHistory(params:any){
+            return this.httpService.GetData('/messages/get_history',this.ParamsToUrlSearchParams(params));
+        }
+
         /* MESSAGES BLOCK END */
 
         /* USERS BLOCK START */

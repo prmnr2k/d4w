@@ -206,73 +206,59 @@
                     </table>
                 </div>
                 <div *ngIf="MenuItem=='messages'" class="container-fluid center-block container560">
-                    <div class="form-group width70 marg-auto">
-                        <label>Select option</label>
-                        <select class="form-control" [ngModel]="MessagesMenu" (ngModelChange)="MessagesTypeChanged($event)">
-                            <option value="received">Received messages</option>
-                            <option value="sent">Sent messages</option>
-                        </select>
-                    </div>
-                    <div class="row loading" *ngIf="MessLoading"></div>
-                    <h3 *ngIf="!MessLoading && Messages.length == 0" class="h-center">There is no messages!</h3>
-                    <table *ngIf="!MessLoading && Messages.length > 0" class="table table-striped">
+                    <div class="row loading" *ngIf="ChatsLoading"></div>
+                    <h3 *ngIf="!ChatsLoading && ChatList.length == 0" class="h-center">There is no messages!</h3>
+                    <table *ngIf="!ChatsLoading && ChatList.length > 0" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Date</th>
                                 <th>Time</th>
-                                <th>{{MessagesMenu=="received"?"From":"To"}}</th>
-                                <th>Title</th>
+                                <th>Interlocuteur</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let item of Messages">
-                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{item.created_at| date: 'dd/MM/yyyy'}}</td>
-                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{item.created_at| date: 'HH:mm'}}</td>
-                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{Users[MessagesMenu=='received'?item.from_id:item.to_id]?(Users[MessagesMenu=='received'?item.from_id:item.to_id].name):''}}</td>
-                                <td [ngClass]="{'unread':!item.is_read && MessagesMenu=='received'}">{{item.title}}</td>
+                            <tr *ngFor="let item of ChatList">
+                                <td [ngClass]="{'unread':item.has_unread}">{{item.last_date| date: 'dd/MM/yyyy'}}</td>
+                                <td [ngClass]="{'unread':item.has_unread}">{{item.last_date| date: 'HH:mm'}}</td>
+                                <td [ngClass]="{'unread':item.has_unread}">{{item.name}}</td>
+                                
                                 <td><a class="read-more" (click)="ReadMessages(item,modal1)">show</a></td>
                             </tr>
                         </tbody>
                     </table>
                     <modal #modal1>
-                        <div *ngIf="MessagesMenu=='received'" class="app-modal-header">
-                            Message from <b>{{Users[CurrentMessage.from_id]?.name}}</b>
-                        </div>
-                        <div *ngIf="MessagesMenu=='sent'" class="app-modal-header">
-                            Message for <b>{{Users[CurrentMessage.to_id]?.name}}</b>
+                        <div class="app-modal-header">
+                            Chat with <b>{{CurrentChat.name}}</b>
                         </div>
                         <div class="app-modal-body">
                             <div *ngIf="MessOk">
                                 <h4 class="ok-msg"> Your message was send to 
-                                    <b *ngIf="MessagesMenu=='received'">{{Users[CurrentMessage.from_id]?.name}}</b>
-                                    <b *ngIf="MessagesMenu=='sent'">{{Users[CurrentMessage.to_id]?.name}}</b>
+                                    <b>{{CurrentChat.name}}</b>
                                 </h4>
                             </div>
                             <div *ngIf="MessErr">
-                                <h4 class="error-msg">Input correct title and body!</h4>
+                                <h4 class="error-msg">Input body!</h4>
                             </div>
                             <div *ngIf="MesLoading" class="loading max-height200"></div>
-                            <div>
-                            <form *ngIf="!MesLoading" (ngSubmit)="SendMessage()">
-                                <div>
-                                    <h4>{{CurrentMessage.title}}</h4>
-                                    <p [innerHTML]="CurrentMessage.body"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input type="text" class="form-control input-lg" name="title" [ngModel]="Message.title" (ngModelChange)="Message.title = $event">
-                                </div>
-                                <div class="form-group">
-                                    <label>Body</label>
-                                    <textarea name="description" class="form-control input-lg" [ngModel]="Message.body" (ngModelChange)="Message.body = $event"></textarea>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 text-center">
-                                        <button class="btn btn-success btn-lg" type="submit">Send message</button>
+                            <div *ngIf="!MesLoading">
+                                <div class="chat-history">
+                                    <h3 *ngIf="!MesLoading && Messages.length == 0" class="h-center">There is no messages!</h3>
+                                    <div *ngFor="let item of Messages" class="message_item" [ngClass]="{'my_message':item.from_id == User.id}">
+                                        <p class="message_body">{{item.body}}</p>
+                                        <p class="message_date">{{item.updated_at | date:'HH:mm, dd/MM/yyyy'}}</p>
                                     </div>
                                 </div>
-                            </form>
+                                <form  (ngSubmit)="SendMessage()">
+                                    <div class="form-group">
+                                        <textarea name="description" class="form-control input-lg" [ngModel]="Message.body" (ngModelChange)="Message.body = $event"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <button class="btn btn-success btn-lg" type="submit">Send message</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
 
                         </div>

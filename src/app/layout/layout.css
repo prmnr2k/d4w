@@ -155,6 +155,9 @@ textarea.input-lg{
     margin-left:0px;
     margin-right:0px;
 }
+.modal-header{
+    padding: 5px;
+}
 .marg-auto{
     margin:10px auto 30px auto;;
 }
@@ -856,6 +859,44 @@ agm-map {
 .mrg-top20{
     margin-top:20px;
 }
+input:required:valid{
+    -webkit-box-shadow: 0px 0px 3px 2px rgba(0,255,0,1);
+    -moz-box-shadow: 0px 0px 3px 2px rgba(0,255,0,1);
+    box-shadow: 0px 0px 3px 2px rgba(0,255,0,1);
+}
+input:required:invalid{
+    -webkit-box-shadow: 0px 0px 3px 2px rgba(255,0,0,1);
+    -moz-box-shadow: 0px 0px 3px 2px rgba(255,0,0,1);
+    box-shadow: 0px 0px 3px 2px rgba(255,0,0,1);
+}
+.message_item{
+    background-color: #e8e8e8;
+    max-width: 80%;
+    border-radius: 19px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.my_message{
+    background-color: #cccccc;
+    margin-left: auto;
+}
+.message_body{
+    margin-bottom: 5px;
+    word-break: break-all;
+}
+.message_date{
+    text-align: right;
+    font-size: 12px;
+}
+.modal-body{
+    padding: 5px;
+}
+.chat-history{
+    overflow-y: scroll;
+    height: 350px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
 
 @media (min-width: 1200px){
     .container {
@@ -866,7 +907,7 @@ agm-map {
 @media (min-width: 576px){
     .modal-dialog {
         position: relative;
-        top: 170px;
+        top: 140px;
         margin: auto;
         max-height: 500px;
     }

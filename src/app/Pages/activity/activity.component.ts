@@ -224,7 +224,15 @@ export class ActivityComponent implements OnInit{
             .subscribe(()=>{
                 this.MyBooking = new BookingModel();
                 this.GetBookings();
-            })
+            });
+
+        this.service.UnRateActivity({activity_id:this.ParamsRate.activity_id})
+            .subscribe(()=>{
+                console.log(`unrate it!!`);
+                this.GetActivity();},
+            (err:any)=>{
+                console.log(err);
+            });
     }
     GetBookings(){
         this.service.GetActivityBookings(this.Activity.id)
@@ -320,47 +328,43 @@ export class ActivityComponent implements OnInit{
     }
 
 
-
-
-
-
     pukChangeSvg(newPukValue:number):void {
+        if(this.canRate())
         this.ParamsRate.rate = newPukValue;
     };
 
 
     pukChangeImage(newPukValue:number):void {
+        if(this.canRate())
         this.ParamsRate.rate  = newPukValue;
     };
 
 
     pukHover(pukValue:number) {
+        if(this.canRate())
         this.pukHoverIndex = pukValue;
     }
 
     private onClickRate(pukModel:number):void {
+        if(this.canRate()){
         this.ParamsRate.rate = pukModel;
 
         console.log(this.ParamsRate);
 
         this.setRate();
+    }
        
     }
 
     private onMouseEnterRate(pukModel:number):void {
-                this.pukHoverIndex = pukModel;
-                
-            }
-        
+        if(this.canRate())
+                this.pukHoverIndex = pukModel;        
+     }
         
     private onMouseLeaveRate():void{
+        if(this.canRate())
         this.pukHoverIndex = null;
     }
-
-
- 
-
-
 
     private getStyleRate(index:number):Object {
         if (this.pukEmptyImage && this.pukFullImage) {
@@ -391,39 +395,40 @@ export class ActivityComponent implements OnInit{
         else if(this.ParamsRate.rate>=3)color=`#67b548`;
         else if(this.ParamsRate.rate>=2)color=`#89cf6d`;
         else if(this.ParamsRate.rate>=1)color=`#b05153`;
+        else if(this.ParamsRate.rate==0)color=`#FF00FF`;
             return {
                 
                 "background-color": color
             };
         }
 
+    private setRate(){
+        if(this.canRate()){
+            console.log(this.service.getTok());
+            if(this.isLoggedIn&&this.MyBooking.id>0){
 
+            this.service.UnRateActivity(this.ParamsRate.activity_id)
+            .subscribe(()=>{
+                console.log(`unrate it!!`);},
+            (err:any)=>{
+                console.log(err);
+            });
 
-    setRate(){
-        console.log(this.service.getTok());
-        if(this.isLoggedIn&&this.MyBooking.id>0){
-
-        this.service.UnRateActivity(this.ParamsRate.activity_id)
-        .subscribe(()=>{
-            console.log(`unrate it!!`);},
-        (err:any)=>{
-            console.log(err);
-        });
-
-        this.service.RateActivity(this.ParamsRate)
-        .subscribe(()=>{
-            console.log(`rate it!!`);
-        this.GetActivity()},
-        (err:any)=>{
-            console.log(err);
-        });}
-        else console.log(`not auth!`);
+            this.service.RateActivity(this.ParamsRate)
+            .subscribe(()=>{
+                console.log(`rate it!!`);
+            this.GetActivity()},
+            (err:any)=>{
+                console.log(err);
+            });}
+            else console.log(`not auth!`);
+        }
     }
-
 
     EditActivity(){
         this.router.navigate(['/edit_act',this.Activity.id]);
     }
+
     DeleteActivity(){
         this.service.DeleteActivity(this.Activity.id)
             .subscribe(()=>{
@@ -434,4 +439,21 @@ export class ActivityComponent implements OnInit{
         })
     }
 
+    datePrev()
+    {
+        let isDatePrev:boolean = false;
+        let today: Date = new Date();
+        for (var item of this.Activity.calendar) {
+            let cur: Date = new Date(item.date);
+            if (today>cur) isDatePrev = true;   
+        }
+        return isDatePrev;
+    }
+
+    private canRate()
+    {
+        let canRate:boolean = false;
+        if ( this.MyBooking.id > 0 && this.Me.id != this.Activity.user_id) canRate = true;
+        return canRate;
+    }
 }

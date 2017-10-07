@@ -146,4 +146,6 @@ export class CreateActivityComponent{
     DeleteDate(index:number){
         this.Activity.calendar.splice(index,1);
     }
+
+   
 }

@@ -331,9 +331,9 @@ import { RateModel } from '../models/rate.model';
         RateActivity(params:any){
             return this.httpService.PostData('/activities/rate',JSON.stringify(params));
         }
-        UnRateActivity(activity_id:number)
+        UnRateActivity(params:any)
         {
-            return this.httpService.PostData('/activities/onrate',JSON.stringify(activity_id));
+            return this.httpService.PostData('/activities/unrate',JSON.stringify(params));
         }
 
     }

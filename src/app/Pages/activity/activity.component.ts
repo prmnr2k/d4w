@@ -67,8 +67,9 @@ export class ActivityComponent implements OnInit{
     
 
     pukCount:number = 5;
-    pukEmptyImage:string = 'https://maxcdn.icons8.com/Share/icon/Messaging//star1600.png';
-    pukFullImage:string = 'http://icons.iconarchive.com/icons/psdblast/flat-christmas/512/star-icon.png';
+    pukEmptyImage:string = './app/images/empty-star-icon.png';
+    pukFullImage:string = './app/images/star-icon.png';
+    pukHalfImage:string = './app/images/half-star-icon.png';
     pukImageWidth:string = '30px';
     pukImageHeight:string = '30px';
     pukHoverIndex:number;
@@ -481,6 +482,11 @@ export class ActivityComponent implements OnInit{
             if (index<=this.TotalRate.rate) {
                 image_url = this.pukFullImage;
             }
+            else if(index<this.TotalRate.rate+1)
+            {
+                image_url = this.pukHalfImage;
+            }
+
             else {
                 image_url = this.pukEmptyImage;
             }

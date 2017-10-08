@@ -137,10 +137,6 @@
                                 <div *ngIf="MesLoading" class="loading max-height200"></div>
                                 <form *ngIf="!MesLoading" (ngSubmit)="SendMessage()">
                                     <div class="form-group">
-                                        <label>Title</label>
-                                        <input type="text" class="form-control input-lg" name="title" [ngModel]="Message.title" (ngModelChange)="Message.title = $event">
-                                    </div>
-                                    <div class="form-group">
                                         <label>Body</label>
                                         <textarea name="description" class="form-control input-lg" [ngModel]="Message.body" (ngModelChange)="Message.body = $event"></textarea>
                                     </div>

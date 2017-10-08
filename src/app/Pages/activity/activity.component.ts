@@ -309,7 +309,7 @@ export class ActivityComponent implements OnInit{
         this.MessErr = false;
         this.MessOk = false;
         this.Message.to_id = this.Activity.user_id;
-        if(!this.Message.title || !this.Message.body){
+        if(!this.Message.body){
             this.MessErr = true;
             this.MessLoading = false;
             setTimeout(()=>{
@@ -319,7 +319,6 @@ export class ActivityComponent implements OnInit{
         }
         this.service.CreateMessage(this.Message)
             .subscribe((mes:MessageModel)=>{
-                this.Message.title = "";
                 this.Message.body = "";
                 this.MessOk = true;
                 this.MessLoading = false;

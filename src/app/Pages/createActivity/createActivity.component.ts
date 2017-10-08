@@ -34,7 +34,8 @@ export class CreateActivityComponent{
 
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
-        this.Activity.calendar = [new Date()];
+        this.Activity.calendar = [];
+        this.NewDate();
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
                 this.Activity.lat = res.lat;
@@ -142,9 +143,14 @@ export class CreateActivityComponent{
     }
     NewDate(){
         this.Activity.calendar.push(new Date());
+        //this.Activity.calendar.push(new Date());
     }
     DeleteDate(index:number){
+        console.log(index);
         this.Activity.calendar.splice(index,1);
+    }
+    ActivityCalendarChanged(index:number, date:Date){
+        this.Activity.calendar[index] = date;
     }
 
    

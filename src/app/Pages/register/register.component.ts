@@ -6,6 +6,7 @@ import {MainService} from "./../../services/main.service";
 import { CreateUserModel } from '../../models/createUser.model';
 import { UserModel } from '../../models/user.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { TokenModel } from '../../models/token.model';
 
 @Component({
     moduleId:module.id,
@@ -53,9 +54,11 @@ export class RegisterComponent implements OnInit{
             .subscribe((result:UserModel)=>{
                 console.log(result);
                 this.isRegOk = true;
-                setTimeout(()=>{
-                    this.router.navigate(['/login']);
-                },5000)
+                this.mainService.UserLogin(this.RegisterUser.email,this.RegisterUser.password)
+                    .subscribe((token:TokenModel)=>{
+                        this.mainService.BaseInitAfterLogin(token);
+                        this.router.navigate(['/users','me']);
+                    })
             },
         (err:any)=>{
             console.log(err);

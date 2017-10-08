@@ -61,7 +61,6 @@ export class UserComponent implements OnInit{
                 
                 this.isMe = true;
                 let menu = params["menu"];
-                menu = 'messages';
                 if(menu)
                     this.MenuItem = menu;
                 this.service.GetMe()
@@ -247,6 +246,9 @@ export class UserComponent implements OnInit{
             .subscribe((res:BookingModel[])=>{
                 this.Bookings = res;
                 this.GetActivitiesByBookings();
+            },
+            (err)=>{
+                this.GetBookingsErr();
             })
     }
 
@@ -255,12 +257,22 @@ export class UserComponent implements OnInit{
             .subscribe((res:BookingModel[])=>{
                 this.Bookings = res;
                 this.GetActivitiesByBookings();
-            })
+            },
+        (err)=>{
+            this.GetBookingsErr();
+        })
+    }
+
+    GetBookingsErr(){
+        this.BookingLoading = false;
     }
 
     GetActivitiesByBookings(){
         let total = this.Bookings.length;
         let current = 0;
+        if(total == 0){
+            this.BookingLoading = false;
+        }
         for(let item of this.Bookings){
             this.service.GetActivity(item.activity_id)
                 .subscribe((res:ActivityModel)=>{
@@ -268,7 +280,12 @@ export class UserComponent implements OnInit{
                     current += 1;
                     if(current == total)
                         this.BookingLoading = false;
-                })
+                },
+            (err)=>{
+                current += 1;
+                if(current == total)
+                    this.BookingLoading = false;
+            })
         }
         
     }

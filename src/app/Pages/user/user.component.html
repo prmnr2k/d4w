@@ -275,9 +275,9 @@
                             <option value="past">Past</option>
                         </select>
                     </div>
-                    <h3 *ngIf="!MessLoading && Bookings.length == 0" class="h-center">There is no bookings!</h3>
-                    <div class="row loading" *ngIf="MessLoading"></div>
-                    <table *ngIf="!MessLoading && Bookings.length >0" class="table table-striped">
+                    <h3 *ngIf="!BookingLoading&& Bookings.length == 0" class="h-center">There is no bookings!</h3>
+                    <div class="row loading" *ngIf="BookingLoading"></div>
+                    <table *ngIf="!BookingLoading && Bookings.length >0" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Dates</th>
@@ -287,7 +287,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of Bookings">
-                                <td>{{BookingsActivities[item.activity_id]?.calendar[0]?.date | date: "dd.M.yyyy"}} - {{BookingsActivities[item.activity_id]?.calendar[1]?.date | date: "dd.M.yyyy"}}</td>
+                                <td>{{item.date | date:'M/dd/yyyy'}}</td>
                                 <td>{{BookingsActivities[item.activity_id]?.title}}</td>
                                 <td><a class="read-more" [routerLink]="['/activity',item.activity_id]">more</a></td>
                             </tr>

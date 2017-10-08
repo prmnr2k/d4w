@@ -34,16 +34,6 @@
                     </div>
 
 
-
-
-
-
-
-
-
-
-
-
                     <div class="form-group form-group-makeinline">
                         <button type="submit" class="btn btn-success input-withicon btn-lg">Appliquer</button>
                         <span class="material-icons input-icon" style="color: #fff">search</span>
@@ -60,7 +50,10 @@
 
         <div class="col-xs-12 col-md-6 map">
             <agm-map class="search_map" (mapClick)="mapClicked($event)" [latitude]="lat" [longitude]="lng">
-                <agm-marker [markerDraggable]="true" [latitude]="lat" [longitude]="lng"></agm-marker>
+               
+                <div *ngFor="let item of Activities; let i = index">
+                    <agm-marker [markerDraggable]="true" [latitude]="item.lat" [longitude]="item.lng"></agm-marker> 
+                </div>
 
             </agm-map>
         </div>

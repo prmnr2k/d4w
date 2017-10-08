@@ -175,13 +175,36 @@
                        
                             <div *ngIf="datePrev()">
                                 <h3>Rating</h3>
-                                    <div class="panel-rating" [ngStyle]="getStyleColor()">
+                                    
+
+                                    <div class="panel-rating" *ngIf="canRate()" [ngStyle]="getStyleColor()">
+                                        <div *ngIf="MyRate.rate!=0"> 
+                                            <p>My Rate: {{MyRate.rate}}</p>
+                                        </div>
+                                        <div *ngIf="MyRate.rate==0"> 
+                                                <p>Rate it!</p>
+                                        </div>
                                         <ul class="puk-rating">
                                             <li *ngFor="let item of pukList"  (mouseenter)="onMouseEnterRate(item)" (mouseleave)="onMouseLeaveRate()">
                                                 <i  [ngStyle]="getStyleRate(item)" (click)="onClickRate(item)"></i>
                                             </li>
                                         </ul>
-                                        <p *ngIf="ParamsRate.rate > 0">{{ParamsRate.rate}}</p>
+                                    </div>
+
+                                    <div class="panel-rating" [ngStyle]="getStyleColorTotal()">
+                                            <div *ngIf="TotalRate.rate!=0"> 
+                                                <p>Total Rate: {{TotalRate.rate}}</p>
+                                            </div>
+                                            <div *ngIf="TotalRate.rate==0"> 
+                                                 <p>No rating!</p>
+                                            </div>
+                                            
+                                            <ul class="puk-rating">
+                                                <li *ngFor="let item of pukList" >
+                                                    <i  [ngStyle]="getStyleRateTotal(item)" ></i>
+                                                </li>
+                                            </ul>
+                                           
                                     </div>
                             </div>
 

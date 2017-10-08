@@ -45,10 +45,15 @@ export class ActivityComponent implements OnInit{
         body: '',
         activity_id: 0
     }
+
     ParamsRate={
         activity_id:null,
         rate:null
     }
+
+    TotalRate:RateModel = new RateModel();
+    MyRate:RateModel = new RateModel();
+
     Booking:CreateBookingModel = new CreateBookingModel();
     Bookings:BookingModel[] = [];
     DateBookings: BookingModel[] = [];
@@ -64,8 +69,8 @@ export class ActivityComponent implements OnInit{
     pukCount:number = 5;
     pukEmptyImage:string = 'https://maxcdn.icons8.com/Share/icon/Messaging//star1600.png';
     pukFullImage:string = 'http://icons.iconarchive.com/icons/psdblast/flat-christmas/512/star-icon.png';
-    pukImageWidth:string = '40px';
-    pukImageHeight:string = '40px';
+    pukImageWidth:string = '30px';
+    pukImageHeight:string = '30px';
     pukHoverIndex:number;
     pukList:number[] = [];
 
@@ -114,7 +119,9 @@ export class ActivityComponent implements OnInit{
     GetActivity(){
         this.service.GetActivity(this.actId)
             .subscribe((act:ActivityModel)=>{
-                this.ParamsRate.rate=act.rate;
+
+                
+                this.TotalRate.rate=act.rate;
                 this.ParamsRate.activity_id=act.id;
               
                 this.Activity = act;
@@ -134,6 +141,7 @@ export class ActivityComponent implements OnInit{
                 }
                 this.GetComments();
                 this.GetBookings();
+                this.getRate();
                 this.isLoading = false;
             });
     }
@@ -330,13 +338,13 @@ export class ActivityComponent implements OnInit{
 
     pukChangeSvg(newPukValue:number):void {
         if(this.canRate())
-        this.ParamsRate.rate = newPukValue;
+        this.MyRate.rate = newPukValue;
     };
 
 
     pukChangeImage(newPukValue:number):void {
         if(this.canRate())
-        this.ParamsRate.rate  = newPukValue;
+        this.MyRate.rate  = newPukValue;
     };
 
 
@@ -347,9 +355,8 @@ export class ActivityComponent implements OnInit{
 
     private onClickRate(pukModel:number):void {
         if(this.canRate()){
-        this.ParamsRate.rate = pukModel;
+            this.MyRate.rate = pukModel;
 
-        console.log(this.ParamsRate);
 
         this.setRate();
     }
@@ -374,7 +381,7 @@ export class ActivityComponent implements OnInit{
                 image_url = index <= this.pukHoverIndex ? this.pukFullImage : this.pukEmptyImage;
             }
             else {
-                image_url = index <= this.ParamsRate.rate ? this.pukFullImage : this.pukEmptyImage;
+                image_url = index <= this.MyRate.rate ? this.pukFullImage : this.pukEmptyImage;
             }
 
             return {
@@ -390,12 +397,12 @@ export class ActivityComponent implements OnInit{
 
     private getStyleColor():Object {
        let color:string='red';
-        if(this.ParamsRate.rate==5)color=`#0b60a3`;
-        else if(this.ParamsRate.rate>=4)color=`#00a8b0`;
-        else if(this.ParamsRate.rate>=3)color=`#67b548`;
-        else if(this.ParamsRate.rate>=2)color=`#89cf6d`;
-        else if(this.ParamsRate.rate>=1)color=`#b05153`;
-        else if(this.ParamsRate.rate==0)color=`#FF00FF`;
+        if(this.MyRate.rate==5)color=`#0b60a3`;
+        else if(this.MyRate.rate>=4)color=`#00a8b0`;
+        else if(this.MyRate.rate>=3)color=`#67b548`;
+        else if(this.MyRate.rate>=2)color=`#89cf6d`;
+        else if(this.MyRate.rate>=1)color=`#b05153`;
+        else if(this.MyRate.rate==0)color=`#FF00FF`;
             return {
                 
                 "background-color": color
@@ -413,7 +420,7 @@ export class ActivityComponent implements OnInit{
             (err:any)=>{
                 console.log(err);
             });
-
+            this.ParamsRate.rate = this.MyRate.rate;
             this.service.RateActivity(this.ParamsRate)
             .subscribe(()=>{
                 console.log(`rate it!!`);
@@ -456,4 +463,51 @@ export class ActivityComponent implements OnInit{
         if ( this.MyBooking.id > 0 && this.Me.id != this.Activity.user_id) canRate = true;
         return canRate;
     }
+
+    private getRate(){
+
+        this.service.GetRate(this.Activity.id)
+        .subscribe((res:RateModel)=>{
+            this.MyRate = res;
+        });
+
+        
+    }
+
+    private getStyleRateTotal(index:number):Object {
+        if (this.pukEmptyImage && this.pukFullImage) {
+
+            let image_url;
+            if (index<=this.TotalRate.rate) {
+                image_url = this.pukFullImage;
+            }
+            else {
+                image_url = this.pukEmptyImage;
+            }
+
+            return {
+                "background-size": this.pukImageWidth + ' ' + this.pukImageHeight,
+                "background-image": "url(" + image_url + ")",
+                "display": "inline-block",
+                "width": this.pukImageWidth,
+                "height": this.pukImageHeight
+            };
+        }
+
+    }
+
+    private getStyleColorTotal():Object {
+       let color:string='red';
+        if(this.TotalRate.rate==5)color=`#0b60a3`;
+        else if(this.TotalRate.rate>=4)color=`#00a8b0`;
+        else if(this.TotalRate.rate>=3)color=`#67b548`;
+        else if(this.TotalRate.rate>=2)color=`#89cf6d`;
+        else if(this.TotalRate.rate>=1)color=`#b05153`;
+        else if(this.TotalRate.rate==0)color=`#FF00FF`;
+            return {
+                
+                "background-color": color
+            };
+        }
+
 }

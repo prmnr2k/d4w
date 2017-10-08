@@ -335,5 +335,8 @@ import { RateModel } from '../models/rate.model';
         {
             return this.httpService.PostData('/activities/unrate',JSON.stringify(params));
         }
+        GetRate(id:number){
+            return this.httpService.GetData('/activities/get_my_rate/'+id,"");
+        }
 
     }

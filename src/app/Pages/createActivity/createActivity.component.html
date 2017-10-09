@@ -28,7 +28,7 @@
                     </div><br>
                     <div class="form-group">
                         <label>Number of possible bookings per day</label>
-                        <input type="number" class="form-control input-lg" name="booking" [ngModel]="Activity.num_of_bookings"  min="0" max="100000" (ngModelChange)="Activity.num_of_bookings = $event">
+                        <input type="number" class="form-control input-lg" name="booking" #book [ngModel]="Activity.num_of_bookings"  [min]="0" [max]="10000" (blur)="ChangeBookings(book)" >
                     </div>
                     <br>
                     <div class="form-group">
@@ -50,8 +50,13 @@
                     <div class="form-group  form-group-makeinline">
                         <label>Dates</label>
                         <div class="width-float" *ngFor="let item of Activity.calendar; let i = index">
+<<<<<<< HEAD
                                 <input  type="text" class="form-control input-lg width-float" bsDatepicker [bsConfig]="bsConfig" name="begin{{i}}" [ngModel]="item" (ngModelChange)="ActivityCalendarChanged(i,$event)">
                                 <button class="btn btn-pink btn-lg mrg" type="button" (click)="DeleteDate(i)">Delete date</button>
+=======
+                            <input  type="text" class="form-control input-lg width-float" bsDatepicker [bsConfig]="bsConfig" name="begin" [ngModel]="item" (ngModelChange)="ActivityCalendarChanged(i,$event)">
+                            <button class="btn btn-pink btn-lg mrg" type="button" (click)="DeleteDate(i)">Delete date</button>
+>>>>>>> d89426e5c3f26dbe87bba656b525debc06accd5a
                         </div>
                         <button class="btn btn-success btn-lg mrg-top20" type="button" (click)="NewDate()">Add one more date</button>
                     </div>

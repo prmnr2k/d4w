@@ -18,6 +18,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 export class CreateActivityComponent{
     Activity:CreateActivityModel = new CreateActivityModel();
+    lastChangeClnd:number=null;
     Start:Date = new Date();
     Finish:Date = new Date();
     Today:Date = new Date();
@@ -31,7 +32,6 @@ export class CreateActivityComponent{
         private service: MainService)
     {
     }
-
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.Activity.calendar = [];
@@ -143,15 +143,18 @@ export class CreateActivityComponent{
     }
     NewDate(){
         this.Activity.calendar.push(new Date());
-        //this.Activity.calendar.push(new Date());
+        
     }
     DeleteDate(index:number){
-        console.log(index);
         this.Activity.calendar.splice(index,1);
     }
-    ActivityCalendarChanged(index:number, date:Date){
+
+    ActivityCalendarChanged(index:number, date:Date){     
         this.Activity.calendar[index] = date;
+        console.log('calendar', this.Activity.calendar);
     }
+
+
 
    
 }

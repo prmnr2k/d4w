@@ -153,5 +153,11 @@ export class CreateActivityComponent{
         this.Activity.calendar[index] = date;
     }
 
+    ChangeBookings(elem){
+        if(elem.value > 10000)
+            elem.value = 10000;
+        this.Activity.num_of_bookings = elem.value;
+    }
+
    
 }

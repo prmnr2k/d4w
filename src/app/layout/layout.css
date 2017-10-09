@@ -240,6 +240,9 @@ select.input-lg{
 .width-float{
     margin-bottom:5px;
 }
+.width-230{
+    width: 230px;
+}
 .width-float:last-child{
     margin-bottom: 0px;
 }
@@ -250,6 +253,8 @@ select.input-lg{
 .width-float>button{
     height: 46px;
     float: right;
+    width: 22%;
+    text-align: center;
 }
 form>h2{
     color:#536273;

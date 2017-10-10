@@ -13,7 +13,7 @@
                             <span class="material-icons input-icon">description</span>
                     </div>
                     <div class="form-group">
-                            <input type="text" name="desc_location" class="form-control input-withicon input-lg" [ngModel]="Params.address" (ngModelChange)="Params.address = $event" placeholder="Address">
+                            <input ngui-auto-complete [source]="observableSource.bind(this)" list-formatter="formatted_address" name="desc_location" class="form-control input-withicon input-lg" [ngModel]="Params.address" (ngModelChange)="Params.address = $event" (valueChanged)="AddressChanged($event)" placeholder="Address">
                             <span class="material-icons input-icon">location_on</span>
                     </div>
                     
@@ -50,10 +50,9 @@
 
         <div class="col-xs-12 col-md-6 map">
             <agm-map class="search_map" (mapClick)="mapClicked($event)" [latitude]="lat" [longitude]="lng">
-               
-                <div *ngFor="let item of Activities; let i = index">
-                    <agm-marker [markerDraggable]="true" [latitude]="item.lat" [longitude]="item.lng"></agm-marker> 
-                </div>
+                <agm-marker [markerDraggable]="true" [latitude]="lat" [longitude]="lng"></agm-marker> 
+                <agm-marker *ngFor="let item of Activities; let i = index" [markerDraggable]="false" [latitude]="item.lat" [longitude]="item.lng"></agm-marker> 
+                
 
             </agm-map>
         </div>

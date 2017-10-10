@@ -359,6 +359,10 @@ import { CheckboxModel } from '../models/checkbox.model';
             return result;
         }
 
+        GetAddrFromGoogle(keyword:string){
+            return this.httpService.GoogleGet(keyword);
+        }
+
         GetActivityAllCategories():Map<string,string[]>{
             return new Map<string,string[]>(
                 [

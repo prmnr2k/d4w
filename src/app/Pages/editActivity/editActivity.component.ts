@@ -9,6 +9,7 @@ import { CreateActivityModel } from '../../models/createActivity.model';
 import { Base64ImageModel } from '../../models/base64image.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { UserModel } from '../../models/user.model';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     moduleId:module.id,
@@ -98,5 +99,24 @@ export class EditActivityComponent{
     }
     DeleteDate(index:number){
         this.Activity.calendar.splice(index,1);
+    }
+
+    observableSource = (keyword: any) :Observable<any[]> => {
+        if(keyword){
+            return this.service.GetAddrFromGoogle(keyword);
+        }
+        else{
+            return Observable.of([]);
+        }
+    }
+    AddressChanged($event){
+        if($event.formatted_address){
+            this.Activity.address = $event.formatted_address;
+            if($event.geometry && $event.geometry.location){
+                this.Activity.lat = $event.geometry.location.lat;
+                this.Activity.lng = $event.geometry.location.lng;
+            }
+        }
+        else $event = "";
     }
 }

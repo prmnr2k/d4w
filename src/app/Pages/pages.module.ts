@@ -19,6 +19,7 @@ import { NotFoundComponent } from './notfound/notfound.component';
 import { EditActivityComponent } from './editActivity/editActivity.component';
 import { ModalComponent } from '../components/modal.component';
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 
 @NgModule({
     imports:      [ 
@@ -28,7 +29,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4'
         }),
-        BsDatepickerModule.forRoot()
+        BsDatepickerModule.forRoot(),
+        NguiAutoCompleteModule
     ],
     declarations: [
         LoginComponent, IndexComponent,UnauthorizedComponent,

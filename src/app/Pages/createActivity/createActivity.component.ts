@@ -9,6 +9,8 @@ import { CreateActivityModel } from '../../models/createActivity.model';
 import { UserModel } from '../../models/user.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { CheckboxModel } from '../../models/checkbox.model';
+import { Observable } from 'rxjs/Rx';
+import { Http } from '@angular/http';
 
 @Component({
     moduleId:module.id,
@@ -18,6 +20,8 @@ import { CheckboxModel } from '../../models/checkbox.model';
 })
 
 export class CreateActivityComponent{
+    
+
     Activity:CreateActivityModel = new CreateActivityModel();
     lastChangeClnd:number=null;
     Start:Date = new Date();
@@ -32,7 +36,8 @@ export class CreateActivityComponent{
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private service: MainService)
+        private service: MainService,
+        private http: Http)
     {
     }
     ngOnInit() {
@@ -170,6 +175,26 @@ export class CreateActivityComponent{
             elem.value = 10000;
         this.Activity.num_of_bookings = elem.value;
     }
+
+    observableSource = (keyword: any) :Observable<any[]> => {
+        if(keyword){
+            return this.service.GetAddrFromGoogle(keyword);
+        }
+        else{
+            return Observable.of([]);
+        }
+    }
+    AddressChanged($event){
+        if($event.formatted_address){
+            this.Activity.address = $event.formatted_address;
+            if($event.geometry && $event.geometry.location){
+                this.Activity.lat = $event.geometry.location.lat;
+                this.Activity.lng = $event.geometry.location.lng;
+            }
+        }
+        else $event = "";
+    }
+
 
    
 }

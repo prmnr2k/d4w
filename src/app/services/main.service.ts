@@ -358,10 +358,12 @@ import { CheckboxModel } from '../models/checkbox.model';
             console.log(result);
             return result;
         }
+
         GetActivityAllCategories():Map<string,string[]>{
             return new Map<string,string[]>(
                 [
-                    ["Sport Freestyle",
+                    [
+                        "Sport Freestyle",
                         [
                             "Skateboard",
                             "Roller ligne",

@@ -46,14 +46,16 @@
                         <textarea name="description" class="form-control input-lg" [ngModel]="Activity.description" (ngModelChange)="Activity.description = $event"></textarea>
                     </div>
                     <br>
+                    
                     <div class="form-group  form-group-makeinline">
                         <label>Dates</label>
                         <div class="width-float" *ngFor="let item of Activity.calendar; let i = index">
-                            <input  type="text" class="form-control input-lg width-float" bsDatepicker [bsConfig]="bsConfig" name="begin" [ngModel]="item" (ngModelChange)="ActivityCalendarChanged(i,$event)">
-                            <button class="btn btn-pink btn-lg mrg" type="button" (click)="DeleteDate(i)">Delete date</button>
+                                <input  type="text" class="form-control input-lg width-float" bsDatepicker [bsConfig]="bsConfig" name="begin{{i}}" [ngModel]="item" (ngModelChange)="ActivityCalendarChanged(i,$event)">
+                                <button class="btn btn-pink btn-lg mrg" type="button" (click)="DeleteDate(i)">Delete</button>
                         </div>
-                        <button class="btn btn-success btn-lg mrg-top20" type="button" (click)="NewDate()">Add one more date</button>
+                        <button class="btn btn-success btn-lg mrg-top20 width-230" type="button" (click)="NewDate()">Add one more date</button>
                     </div>
+                    
                     <br>
                     
                     <div class="col-md-12">

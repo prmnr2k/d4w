@@ -411,7 +411,7 @@ export class ActivityComponent implements OnInit{
 
     private setRate(){
         if(this.canRate()){
-            console.log(this.service.getTok());
+            console.log(this.service.getToken());
             if(this.isLoggedIn&&this.MyBooking.id>0){
 
             this.service.UnRateActivity(this.ParamsRate.activity_id)

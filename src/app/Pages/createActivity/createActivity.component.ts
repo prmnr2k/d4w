@@ -8,6 +8,7 @@ import { ActivityModel } from '../../models/activity.model';
 import { CreateActivityModel } from '../../models/createActivity.model';
 import { UserModel } from '../../models/user.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { CheckboxModel } from '../../models/checkbox.model';
 
 @Component({
     moduleId:module.id,
@@ -25,6 +26,8 @@ export class CreateActivityComponent{
     isCreateErr = false;
     ErrMsg = '';
     bsConfig:Partial<BsDatepickerConfig>;
+    Categories: Map<string,string[]> = new Map();
+    CategoriesHigh: string[] = [];
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -36,10 +39,18 @@ export class CreateActivityComponent{
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.Activity.calendar = [];
         this.NewDate();
+        this.CategoriesHigh = [];
+        this.Categories = this.service.GetActivityAllCategories();
+        this.CategoriesHigh = this.service.GetActivityFirstLevelCategories();
+        console.log(this.Categories.get(this.CategoriesHigh[0]));
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
-                this.Activity.lat = res.lat;
-                this.Activity.lng = res.lng;
+                this.Activity.lat = 48.8916733;
+                this.Activity.lng = 2.3016161;
+                if(res.lat && res.lng){
+                    this.Activity.lat = res.lat;
+                    this.Activity.lng = res.lng;
+                }
             })
 
     }

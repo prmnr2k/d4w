@@ -27,7 +27,7 @@
                         <input type="number" class="form-control input-lg" name="price"  [ngModel]="Activity.price"  min="0" (ngModelChange)="Activity.price = $event">
                     </div><br>
                     <div class="form-group">
-                        <label>Number of possible bookings per day</label>
+                        <label>Number of possible bookings per date</label>
                         <input type="number" class="form-control input-lg" name="booking" #book [ngModel]="Activity.num_of_bookings"  [min]="0" [max]="10000" (blur)="ChangeBookings(book)" >
                     </div>
                     <br>

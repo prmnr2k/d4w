@@ -18,6 +18,7 @@ import { CreateMessageModel } from '../models/createMessage.model';
 import { CreateUserModel } from '../models/createUser.model';
 import { CalendarModel } from '../models/calendar.model';
 import { RateModel } from '../models/rate.model';
+import { CheckboxModel } from '../models/checkbox.model';
 
 
     @Injectable()
@@ -40,57 +41,6 @@ import { RateModel } from '../models/rate.model';
         }
         
 
-        ChangePage(page:string){
-            this.onPageChange$.next(page);
-        }
-
-
-        ParamsToUrlSearchParams(params:any):string{
-            let options = new URLSearchParams();
-
-            for(let key in params){
-                let prop:any = params[key];
-                if(prop){
-                    if( prop instanceof Array){
-                        for(let i in prop){
-                            if(prop[i])
-                                options.append(key+"[]",prop[i]);
-                        }
-                    }
-                    else
-                        options.set(key,params[key]);
-                }
-            }
-            console.log(options.toString());
-            return options.toString();
-        }
-
-        /*GetCheckedCheckboxes(input:CheckboxModel[]): string[]
-        {
-            let result: string[]= [];
-            let checked:CheckboxModel[]=input.filter(x=>x.checked);
-            for(let i of checked)
-                result.push(i.value);
-            return result;
-        }
-        GetCheckboxesFromChecked(input:string[],output:CheckboxModel[]):CheckboxModel[]
-        {
-            output.find(x=> true).checked = false;
-            for(let i of input){
-                output.find(x=> x.value == i).checked = true;
-            }
-            return output;
-        }
-
-        GetCheckboxNamesFromCheckboxModel(input:string[],cb:CheckboxModel[]){
-            let result:string[]= [];
-            for(let i of input){
-                let res = cb.find(x=> x.value == i);
-                if(res && res.name)
-                    result.push(res.name);
-            }
-            return result;
-        }*/
 
         /* Authentication BLOCK START */
         IsLogedIn():boolean{
@@ -100,7 +50,7 @@ import { RateModel } from '../models/rate.model';
                 result = true;
             return result;
         }
-        getTok()
+        getToken()
         {
             return this.httpService.GetToken();
         }
@@ -191,6 +141,17 @@ import { RateModel } from '../models/rate.model';
             for(let item of calendar)
                 result.push(item.date);
             return result;
+        }
+
+        RateActivity(params:any){
+            return this.httpService.PostData('/activities/rate',JSON.stringify(params));
+        }
+        UnRateActivity(params:any)
+        {
+            return this.httpService.PostData('/activities/unrate',JSON.stringify(params));
+        }
+        GetRate(id:number){
+            return this.httpService.GetData('/activities/get_my_rate/'+id,"");
         }
         /* ACTIVITIES BLOCK END */
 
@@ -328,15 +289,301 @@ import { RateModel } from '../models/rate.model';
         }
         /* COMMENTS BLOCK END */
 
-        RateActivity(params:any){
-            return this.httpService.PostData('/activities/rate',JSON.stringify(params));
+        /* DATA ACCESS BLOCK START */
+
+        ChangePage(page:string){
+            this.onPageChange$.next(page);
         }
-        UnRateActivity(params:any)
+
+
+        ParamsToUrlSearchParams(params:any):string{
+            let options = new URLSearchParams();
+
+            for(let key in params){
+                let prop:any = params[key];
+                if(prop){
+                    if( prop instanceof Array){
+                        for(let i in prop){
+                            if(prop[i])
+                                options.append(key+"[]",prop[i]);
+                        }
+                    }
+                    else
+                        options.set(key,params[key]);
+                }
+            }
+            console.log(options.toString());
+            return options.toString();
+        }
+
+        
+        GetCheckedCheckBoxesValue(input:CheckboxModel[]): string[]
         {
-            return this.httpService.PostData('/activities/unrate',JSON.stringify(params));
+            let result: string[]= [];
+            let checked:CheckboxModel[]=input.filter(x=>x.checked);
+            for(let i of checked)
+                result.push(i.value);
+            return result;
         }
-        GetRate(id:number){
-            return this.httpService.GetData('/activities/get_my_rate/'+id,"");
+
+        GetCheckBoxValueFromStringArr(input:string[],output:CheckboxModel[]):CheckboxModel[]
+        {
+            output.find(x=> true).checked = false;
+            for(let i of input){
+                output.find(x=> x.value == i).checked = true;
+            }
+            return output;
         }
+
+        /*GetCheckBoxModelFromString(name:string): CheckboxModel{
+            return new CheckboxModel(name);
+        }*/
+        
+        GetCheckBoxListFromArray(arr:string[]):CheckboxModel[]{
+            let result:CheckboxModel[] = [];
+            for(let i of arr){
+                result.push(new CheckboxModel(i,i));
+            }
+            console.log(result);
+            return result;
+        }
+
+        GetActivityFirstLevelCategories(): string[]{
+            let result: string[] = [], iter;
+            let categories = this.GetActivityAllCategories();
+            let keys = categories.keys();
+            while(iter = keys.next().value){
+                result.push(iter);
+            }
+            console.log(result);
+            return result;
+        }
+        GetActivityAllCategories():Map<string,string[]>{
+            return new Map<string,string[]>(
+                [
+                    ["Sport Freestyle",
+                        [
+                            "Skateboard",
+                            "Roller ligne",
+                            "Roller 4 roues",
+                            "Trotinette",
+                            "Bmx"
+                        ]
+                    ],
+                    [
+                        "Sport outdoor",
+                        [
+                            "Cyclisme cyclotourisme",
+                            "Cyclisme club",
+                            "VTT (rando et terrain de pratique )",
+                            "Accro branche",
+                            "Tremplin",
+                            "Roller",
+                            "Ski à Roulette",
+                        ]
+                    ],
+                    [
+                        "Sport de précision" ,
+                        [
+                            "Pétanque",
+                            "Echec",
+                            "Tir à l’arc",
+                            "Tir à la sportif",
+                            "Golf"                    
+                        ]
+                    ],
+                    [   
+                        "Course à pied",
+                        [
+                            "Loisir",
+                            "Trail"
+                        ]
+                    ],
+                    [
+                        "Sport zen et pour tous",
+                        [
+                            "Randonnée pedestre",
+                            "Marche nordique"  
+                        ]
+                    ],
+                    [
+                        "Sport détente",
+                        [
+                            "Yoga",
+                            "Pilat",
+                            "Methode f..."
+                        ]
+                    ],
+                    [
+                        "Sport Fitness",
+                        [
+                            "Salle de fitness",
+                            "Gym suedoise",
+                            "Cross Fit"
+                        ]
+                    ],
+                    [
+                        "Sport aquatique en bassin",
+                        [
+                            "Natation détente et loisir",
+                            "Natation club",
+                            "Apnée",
+                            "Plongée",
+                            "Natation synchro",
+                            "Aquagym",
+                            "Nage avec Palmes"
+                            
+                        ]
+                    ],
+                    [
+                        "Sport aquatique en mer",
+                        [
+                            "Plongée",
+                            "Snorkeling",
+                            "pêche sous marine",
+                            "Pêche en étan",
+                            "Pêche en haute mer",
+                            "windsurf",
+                            "kite surf",
+                            "kayak en mer",
+                            "Paddle", 
+                            "pirogue",
+                            "nage avec Palmes"
+                        ]
+                    ],
+                    [
+                        "Sport aquatique bassin ou Lac",
+                        [
+                            "Ski nautique",
+                            "Planche à voile",
+                            "Voile",
+                            "Kayak"
+                        ]
+                    ],
+                    [
+                        "Sport de plage équipe",
+                        [
+                            "Beach volley",
+                            "Beach soccer",
+                            "Surf",
+                            "Bodyboard"                   
+                        ]
+                    ],
+                    [
+                        "Sport en eau vive",
+                        [
+                            "Kayak",
+                            "Kanoe",
+                            "Canyoning"
+                        ]
+                    ],
+                    [
+                        "Sport de montagne été",
+                        [
+                            "Alpinisme",
+                            "VTT descente",
+                            "VTT électrique",
+                            "Cyclotourisme",
+                            "Pêche",
+                            "Parapente",
+                            "Escalade",
+                            "Via ferrata",
+                            "Randonnée haute montagne",
+                            "Ski/snowbard",
+                            "Ski sur herbe"
+                        ]
+                    ],
+                    [
+                        "Sport Combat",
+                        [
+                            "Judo",
+                            "Karaté",
+                            "Kung-fu",
+                            "Jujitsu",
+                            "Mue Taï",
+                            "Kick boxing",
+                            "Boxe française/savate",
+                            "Boxe"                    
+                        ]
+                    ],
+                    [
+                        "Sport aérien ou sensation forte",
+                        [
+                            "Saut en parachute",
+                            "Parapente"                   
+                        ]
+                    ],
+                    [
+                        "Sport à voile de mer ou en bassin(lac)",
+                        [
+                            "Char à voile",
+                            "Planche à Voile",
+                            "Kite surf",
+                            "wind surf"
+                            
+                        ]
+                    ],
+                    [
+                        "Sport équipe ou de ballon",
+                        [
+                            "Volley (club et terrain)",
+                            "Handball (club et terrain)",
+                            "Basket (Club et terrain",
+                            "Foot (terrain libre)",
+                            "Hockey sur Gazon",
+                            "Football (Five)",
+                            "Football (Club)",
+                            "Quidditch",
+                            "Beach soccer"
+                        ]
+                    ],
+                    [
+                        "Sports Loisirs et/ou compétitifs individuel et/ou en équipe",
+                        [
+                            "Billard",
+                            "Bowling",
+                            "Escrime",
+                            "Tennis",
+                            "Badminton",
+                            "Squash"                    
+                        ]
+                    ],
+                    [
+                        "Sensation forte",
+                        [
+                            "Saut à l’élastique ou bunjjy"
+                        ]
+                    ],
+                    [
+                        "Sport Equestre",
+                        [
+                            "Equitation",
+                            "Voltige",
+                            "Dressage",,
+                            "Saut d’obstacle"                    
+                        ]
+                    ],
+                    [
+                        "Sport avec animaux",
+                        [
+                            "Dressage aigle",
+                            "Dressage chien"                    
+                        ]
+                    ],
+                    [
+                        "Sport à moteur",
+                        [
+                            "Karting",
+                            "Moto cross",
+                            "Buggy",
+                            "Quad",
+                            "Jet ski"                    
+                        ]
+                    ]
+                ]
+            );
+        }
+
+        /* DATA ACCESS BLOCK END */
 
     }

@@ -10,6 +10,7 @@ import { TokenModel } from '../models/token.model';
 @Injectable()
 export class HttpService
 {
+    GoogleMapUrl: string = "https://maps.googleapis.com/maps/api/geocode/json?address=";
     serverUrl: string = "https://sportrotter-api.herokuapp.com";
     public headers:Headers = new Headers([]);
     public token: TokenModel = new TokenModel('');
@@ -64,5 +65,12 @@ export class HttpService
         return this.http.delete(this.serverUrl + method,{headers:this.headers})
             .map((resp:Response)=>resp.json())
             .catch((error:any) =>{return Observable.throw(error);});
+    }
+
+    GoogleGet(keyword:string){
+        return this.http.get(this.GoogleMapUrl + keyword).map(res => {
+            let json = res.json();
+            return json.results;
+          })
     }
 }

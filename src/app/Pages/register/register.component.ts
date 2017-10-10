@@ -7,6 +7,7 @@ import { CreateUserModel } from '../../models/createUser.model';
 import { UserModel } from '../../models/user.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { TokenModel } from '../../models/token.model';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     moduleId:module.id,
@@ -89,6 +90,21 @@ export class RegisterComponent implements OnInit{
             }
         }
         myReader.readAsDataURL(file);
+    }
+
+    observableSource = (keyword: any) :Observable<any[]> => {
+        if(keyword){
+            return this.mainService.GetAddrFromGoogle(keyword);
+        }
+        else{
+            return Observable.of([]);
+        }
+    }
+    AddressChanged($event){
+        if($event.formatted_address){
+            this.RegisterUser.address = $event.formatted_address;
+        }
+        else $event = "";
     }
 
 }

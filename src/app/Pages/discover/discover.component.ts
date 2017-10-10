@@ -9,6 +9,7 @@ import { MainService } from '../../services/main.service';
 import { UserModel } from '../../models/user.model';
 import { Base64ImageModel } from '../../models/base64image.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     moduleId:module.id,
@@ -95,5 +96,21 @@ export class DiscoverComponent implements OnInit{
         }
     }
     SomeErr(err:any){
+    }
+
+
+    observableSource = (keyword: any) :Observable<any[]> => {
+        if(keyword){
+            return this.service.GetAddrFromGoogle(keyword);
+        }
+        else{
+            return Observable.of([]);
+        }
+    }
+    AddressChanged($event){
+        if($event.formatted_address){
+            this.Params.address = $event.formatted_address;
+        }
+        else $event = "";
     }
 }

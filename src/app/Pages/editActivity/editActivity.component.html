@@ -30,7 +30,7 @@
                     <br>
                     <div class="form-group">
                         <label>Address</label>
-                        <input type="text" class="form-control input-lg" name="address" [ngModel]="Activity.address" (ngModelChange)="Activity.address = $event">
+                        <input ngui-auto-complete [source]="observableSource.bind(this)" list-formatter="formatted_address" (customSelected)="AddressSelected($event)" class="form-control input-lg" name="address" [ngModel]="Activity.address" (valueChanged)="AddressChanged($event)">
                     </div>
                     <br>
                     <div class="form-group">

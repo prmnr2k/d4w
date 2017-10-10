@@ -211,11 +211,6 @@ td img{
 
 
 
-
-
-
-
-
 /* Loading */
 
 .loading{
@@ -784,6 +779,41 @@ h1{
 .btn.focus, .btn:focus, .btn:hover {
     color: #333;
     text-decoration: none;
+}
+
+
+.file_upload{
+    font-size: 16px;              /* example */
+    height: 35px;
+    line-height: 30px;            /* the same as height */
+    margin-top: 15px;
+}
+.file_upload .button{
+    display: block;
+    cursor: pointer;             /* example */
+}
+.file_upload .button{
+    background-color:#3EE1AB;
+    color: white;
+    float: left;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: black;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    width: 250px;                  /* example */
+    height: 100%;
+    text-align: center;           /* example */
+}
+.file_upload .button:hover{
+    background-color:#3EE1AB;
+    color: black;
+}
+
+.file_upload input[type=file]{
+    position: absolute;
+    top: 0;
+    opacity: 0
 }
 
 

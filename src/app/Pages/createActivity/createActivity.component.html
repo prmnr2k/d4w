@@ -19,8 +19,15 @@
                     </div><br>
                     <div class="form-group">
                         <label>Picture</label>
-                        <img [src]="Activity.image">
-                        <input type="file"  (change)="changeListener($event)">
+                        
+                        
+                        <img *ngIf="Activity.image" [src]="Activity.image">
+
+                        <label class="file_upload">
+                            <span class="button">Browse</span>
+                            <input type="file" (change)="changeListener($event)">
+                        </label>
+                        <!--<input type="file" (change)="changeListener($event)">-->
                     </div><br>
                     <div class="form-group">
                         <label>Price</label>

@@ -581,7 +581,13 @@ import { CheckboxModel } from '../models/checkbox.model';
                             "Quad",
                             "Jet ski"                    
                         ]
-                    ]
+                    ],
+                    [
+                        "A la montagne",
+                        [
+                           ""               
+                        ]
+                    ]               
                 ]
             );
         }

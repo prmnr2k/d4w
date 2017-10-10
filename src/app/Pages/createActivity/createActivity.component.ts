@@ -11,6 +11,8 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { CheckboxModel } from '../../models/checkbox.model';
 import { Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
+import { CategoryModel } from '../../models/category.model';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     moduleId:module.id,
@@ -20,8 +22,6 @@ import { Http } from '@angular/http';
 })
 
 export class CreateActivityComponent{
-    
-
     Activity:CreateActivityModel = new CreateActivityModel();
     lastChangeClnd:number=null;
     Start:Date = new Date();
@@ -31,23 +31,19 @@ export class CreateActivityComponent{
     isCreateErr = false;
     ErrMsg = '';
     bsConfig:Partial<BsDatepickerConfig>;
-    Categories: Map<string,string[]> = new Map();
-    CategoriesHigh: string[] = [];
+    Categories: CategoryModel[] =[];
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private service: MainService,
-        private http: Http)
+        private _sanitizer: DomSanitizer)
     {
     }
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.Activity.calendar = [];
         this.NewDate();
-        this.CategoriesHigh = [];
-        this.Categories = this.service.GetActivityAllCategories();
-        this.CategoriesHigh = this.service.GetActivityFirstLevelCategories();
-        console.log(this.Categories.get(this.CategoriesHigh[0]));
+        this.Categories = this.service.GetCategoriesAsArrayCategory();
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
                 this.Activity.lat = 48.8916733;
@@ -193,6 +189,16 @@ export class CreateActivityComponent{
             }
         }
         else $event = "";
+    }
+
+    autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
+        let html = `<span>${data.parent} : <b>${data.name}</b></span>`;
+        return this._sanitizer.bypassSecurityTrustHtml(html);
+    }
+    CategoryChanged($event:CategoryModel){
+        this.Activity.category = $event.parent;
+        this.Activity.sub_category = $event.value;
+        console.log(this.Activity);
     }
 
 

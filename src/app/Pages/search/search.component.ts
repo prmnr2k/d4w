@@ -12,6 +12,8 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { NgForm} from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
+import { CategoryModel } from '../../models/category.model';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     moduleId:module.id,
@@ -34,15 +36,19 @@ export class SearchComponent implements OnInit {
         from_date:null,
         to_date:null,
         user_id: '',
-        radius: null
+        radius: null,
+        category: '',
+        sub_category: ''
     }
     lat:number = 48.8916733;
     lng:number = 2.3016161;
     isAdvanced:boolean = false;
     bsConfig:Partial<BsDatepickerConfig>;
+    Categories:CategoryModel[] = [];
     constructor(private router: Router,
         private service: MainService,
-        private params: ActivatedRoute){}
+        private params: ActivatedRoute,
+        private _sanitizer: DomSanitizer){}
 
     ngOnInit(){
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
@@ -51,6 +57,7 @@ export class SearchComponent implements OnInit {
                 this.lat = res.lat;
                 this.lng = res.lng;
             })
+        this.Categories = this.service.GetAllCategoriesAsArrayCategory();
         this.GetAllActivities();
     }
     mapClicked($event: any) {
@@ -120,6 +127,17 @@ export class SearchComponent implements OnInit {
             }
         }
         else $event = "";
+    }
+
+    autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
+        let html =  `<span><b>${data.name}</b></span>`;
+        if(data.parent)html = `<span>${data.parent} : <b>${data.name}</b></span>`;
+        return this._sanitizer.bypassSecurityTrustHtml(html);
+    }
+    CategoryChanged($event:CategoryModel){
+        this.Params.category = $event.parent?$event.parent:$event.value;
+        this.Params.sub_category = $event.parent?$event.value:null;
+        console.log(this.Params);
     }
 
 }

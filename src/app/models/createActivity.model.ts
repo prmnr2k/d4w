@@ -10,7 +10,10 @@ export class CreateActivityModel{
         public calendar?: Date[],
         public rate?:number,
         public lat?: number,
-        public lng?:number
+        public lng?:number,
+        public category?: string,
+        public sub_category?: string
+
     ){
 
     }

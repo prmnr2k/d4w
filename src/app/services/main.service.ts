@@ -19,6 +19,7 @@ import { CreateUserModel } from '../models/createUser.model';
 import { CalendarModel } from '../models/calendar.model';
 import { RateModel } from '../models/rate.model';
 import { CheckboxModel } from '../models/checkbox.model';
+import { CategoryModel } from '../models/category.model';
 
 
     @Injectable()
@@ -116,6 +117,7 @@ import { CheckboxModel } from '../models/checkbox.model';
         }    
         
         UpdateActivity(id:number,params:CreateActivityModel){
+            console.log(params);
             return this.httpService.PutData('/activities/update/'+id,JSON.stringify(params));
         }
 
@@ -132,7 +134,9 @@ import { CheckboxModel } from '../models/checkbox.model';
                 detailed_address:act.detailed_address,
                 description:act.description,
                 calendar:this.CalendarArrToDateArr(act.calendar),
-                rate:act.rate
+                rate:act.rate,
+                category:act.category,
+                sub_category:act.sub_category
             };
             return res;
         }
@@ -381,7 +385,7 @@ import { CheckboxModel } from '../models/checkbox.model';
                         [
                             "Cyclisme cyclotourisme",
                             "Cyclisme club",
-                            "VTT (rando et terrain de pratique )",
+                            "VTT (rando et terrain de pratique)",
                             "Accro branche",
                             "Tremplin",
                             "Roller",
@@ -534,7 +538,7 @@ import { CheckboxModel } from '../models/checkbox.model';
                         [
                             "Volley (club et terrain)",
                             "Handball (club et terrain)",
-                            "Basket (Club et terrain",
+                            "Basket (Club et terrain)",
                             "Foot (terrain libre)",
                             "Hockey sur Gazon",
                             "Football (Five)",
@@ -590,6 +594,42 @@ import { CheckboxModel } from '../models/checkbox.model';
             );
         }
 
+        GetCategoriesAsArrayCategory():CategoryModel[]{
+            let result:CategoryModel[] = [],
+            iter,
+            categories = this.GetActivityAllCategories();
+
+            let keys = categories.keys();
+            while(iter = keys.next().value){
+                for(let item of categories.get(iter)){
+                    result.push({
+                        value:iter + ":" + item,
+                        name:item,
+                        parent:iter
+                    });
+                }
+            }
+            return result;
+        }
+
+        GetAllCategoriesAsArrayCategory():CategoryModel[]{
+            let result:CategoryModel[] = [],
+            iter;
+            let categories = this.GetActivityFirstLevelCategories();
+            result.push({
+                value: '',
+                name: '',
+                parent: ''
+            })
+            for(let item of categories){
+                result.push({
+                    value: item,
+                    name: item,
+                    parent: ''
+                })
+            }
+            return result.concat(this.GetCategoriesAsArrayCategory());
+        }
         /* DATA ACCESS BLOCK END */
 
     }

@@ -20,7 +20,9 @@ export class ActivityModel{
         public bearing?:number,
         public user_name?:string,
         public user_image_id?:number,
-        public user_description?:string
+        public user_description?:string,
+        public category?: string,
+        public sub_category?: string
 
     ){}
 }

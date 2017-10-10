@@ -10,6 +10,8 @@ import { Base64ImageModel } from '../../models/base64image.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { UserModel } from '../../models/user.model';
 import { Observable } from 'rxjs/Rx';
+import { CategoryModel } from '../../models/category.model';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     moduleId:module.id,
@@ -25,10 +27,13 @@ export class EditActivityComponent{
     isLoading = true;
     actId = 0;
     bsConfig:Partial<BsDatepickerConfig>;
+    Categories: CategoryModel[] =[];
+    MyCategory:CategoryModel = new CategoryModel();
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private service: MainService)
+        private service: MainService,
+        private _sanitizer: DomSanitizer)
     {
     }
 
@@ -37,6 +42,7 @@ export class EditActivityComponent{
         this.isLoading = true;
         this.activatedRoute.params.forEach((params:Params) => {
             this.actId = params["id"];
+            this.Categories = this.service.GetCategoriesAsArrayCategory();
             this.service.GetActivity(this.actId)
                 .subscribe((act:ActivityModel)=>{
                     this.AfterGettingActivity(act);
@@ -51,6 +57,9 @@ export class EditActivityComponent{
 
     AfterGettingActivity(act:ActivityModel){
         this.Activity = this.service.ActivityModelToCreateActivityModel(act);
+        if(this.Activity.sub_category){
+            this.MyCategory = this.Categories.find(obj=>obj.value == this.Activity.sub_category);
+        }
         if(act.image_id)
         {
             this.service.GetImageById(act.image_id)
@@ -66,7 +75,6 @@ export class EditActivityComponent{
     {
         scrollTo(0,0);
         this.isLoading = true;
-        console.log(this.Activity);
         this.service.UpdateActivity(this.actId,this.Activity)
         .subscribe((res:ActivityModel)=>{
             this.router.navigate(['/activity',res.id]);
@@ -118,5 +126,17 @@ export class EditActivityComponent{
             }
         }
         else $event = "";
+    }
+
+    autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
+        let html = `<span>${data.parent} : <b>${data.name}</b></span>`;
+        return this._sanitizer.bypassSecurityTrustHtml(html);
+    }
+    CategoryChanged($event:CategoryModel){
+        this.MyCategory = $event;
+        console.log(this.MyCategory);
+        this.Activity.category = this.MyCategory.parent;
+        this.Activity.sub_category = this.MyCategory.value;
+        console.log(this.Activity);
     }
 }

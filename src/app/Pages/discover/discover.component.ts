@@ -10,6 +10,8 @@ import { UserModel } from '../../models/user.model';
 import { Base64ImageModel } from '../../models/base64image.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { Observable } from 'rxjs/Rx';
+import { CategoryModel } from '../../models/category.model';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     moduleId:module.id,
@@ -32,13 +34,17 @@ export class DiscoverComponent implements OnInit{
         from_date:null,
         to_date:null,
         title:'',
-        description:''
+        description:'',
+        category: '',
+        sub_category: ''
     };
     bsConfig:Partial<BsDatepickerConfig>;
+    Categories:CategoryModel[] = [];
     constructor(private router: Router,
         private route: ActivatedRoute,
         private service: MainService,
-        private params: ActivatedRoute){}
+        private params: ActivatedRoute,
+        private _sanitizer: DomSanitizer){}
 
     ngOnInit(){
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
@@ -49,6 +55,8 @@ export class DiscoverComponent implements OnInit{
             this.Params.from_date = params['from_date'];
             
          });
+         this.Categories = this.service.GetAllCategoriesAsArrayCategory();
+         console.log(this.Categories);
         this.GetAllActivities();
     }
 
@@ -112,5 +120,16 @@ export class DiscoverComponent implements OnInit{
             this.Params.address = $event.formatted_address;
         }
         else $event = "";
+    }
+
+    autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
+        let html =  `<span><b>${data.name}</b></span>`;
+        if(data.parent)html = `<span>${data.parent} : <b>${data.name}</b></span>`;
+        return this._sanitizer.bypassSecurityTrustHtml(html);
+    }
+    CategoryChanged($event:CategoryModel){
+        this.Params.category = $event.parent?$event.parent:$event.value;
+        this.Params.sub_category = $event.parent?$event.value:null;
+        console.log(this.Params);
     }
 }

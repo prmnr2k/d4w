@@ -7,6 +7,9 @@
                     <div class="h123  h1-first-index">
                         <h1 class="middle-text grey-span topmarg30">Edit activity</h1>
                     </div>
+                    <div *ngIf="isEditErr" class="h123 h1-first">
+                        <h2 class="error-msg">{{ErrMsg}}</h2>
+                    </div>
                 </div>
                 <form (ngSubmit)="OnEditActivityButtonClick()">
                     <div class="col-sm-6 col-sm-push-2 marg-auto">
@@ -21,11 +24,11 @@
                     </div><br>
                     <div class="form-group">
                         <label>Price</label>
-                        <input type="number" class="form-control input-lg" name="price"  [ngModel]="Activity.price" (ngModelChange)="Activity.price = $event">
+                        <input type="number" required class="form-control input-lg" name="price" [min]="0" [max]="100000" [ngModel]="Activity.price" (ngModelChange)="Activity.price = $event">
                     </div><br>
                     <div class="form-group">
                         <label>Number of possible bookings per date</label>
-                        <input type="number" class="form-control input-lg" name="booking" [ngModel]="Activity.num_of_bookings" (ngModelChange)="Activity.num_of_bookings = $event">
+                        <input type="number" required class="form-control input-lg" name="booking" [min]="0" [max]="10000" [ngModel]="Activity.num_of_bookings" (ngModelChange)="Activity.num_of_bookings = $event">
                     </div>
                     <br>
                     <div class="form-group">

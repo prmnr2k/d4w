@@ -11,6 +11,7 @@ import { Base64ImageModel } from '../../models/base64image.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { NgForm} from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     moduleId:module.id,
@@ -81,5 +82,20 @@ export class IndexComponent implements OnInit{
     openSearch(){
        console.log(`search`);
        this.router.navigate(['/discover',{address:this.ParamsSearch.address,title:this.ParamsSearch.title,from_date:this.ParamsSearch.from_date}]);
+    }
+
+    observableSource = (keyword: any) :Observable<any[]> => {
+        if(keyword){
+            return this.service.GetAddrFromGoogle(keyword);
+        }
+        else{
+            return Observable.of([]);
+        }
+    }
+    AddressChanged($event){
+        if($event.formatted_address){
+            this.ParamsSearch.address = $event.formatted_address;
+        }
+        else $event = "";
     }
 }

@@ -80,14 +80,14 @@ export class CreateActivityComponent{
             return false;
         }
 
-        if(!this.Activity.price || this.Activity.price < 0){
+        if(!this.Activity.price || this.Activity.price < 0 || this.Activity.price > 100000){
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
             this.ErrMsg += "Price";*/
             return false;
         }
 
-        if(!this.Activity.num_of_bookings || this.Activity.num_of_bookings < 0){
+        if(!this.Activity.num_of_bookings || this.Activity.num_of_bookings < 0 || this.Activity.num_of_bookings > 10000){
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
             this.ErrMsg += "Number of possible bookings per day";*/
@@ -139,9 +139,11 @@ export class CreateActivityComponent{
         .subscribe((res:ActivityModel)=>{
             this.router.navigate(['/activity',res.id]);
         },
-    (err:any)=>{
-        this.isLoading=false;
-    });
+        (err:any)=>{
+            this.ErrMsg = err.body;
+            this.isCreateErr = true;
+            this.isLoading=false;
+        });
     }
     changeListener($event: any) : void {
         this.readThis($event.target);
@@ -184,8 +186,8 @@ export class CreateActivityComponent{
     }
 
     ChangeBookings(elem){
-        if(elem.value > 10000)
-            elem.value = 10000;
+        /*if(elem.value > 10000)
+            elem.value = 10000;*/
         this.Activity.num_of_bookings = elem.value;
     }
 

@@ -29,6 +29,9 @@ export class EditActivityComponent{
     bsConfig:Partial<BsDatepickerConfig>;
     Categories: CategoryModel[] =[];
     MyCategory:CategoryModel = new CategoryModel();
+    ErrMsg = '';
+    isEditErr = false;
+
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -75,6 +78,12 @@ export class EditActivityComponent{
     {
         scrollTo(0,0);
         this.isLoading = true;
+        this.isEditErr = false;
+        if(!this.CheckActivity()){
+            this.isEditErr = true;
+            this.isLoading = false;
+            return;
+        }
         this.service.UpdateActivity(this.actId,this.Activity)
         .subscribe((res:ActivityModel)=>{
             this.router.navigate(['/activity',res.id]);
@@ -82,7 +91,9 @@ export class EditActivityComponent{
             this.AfterGettingActivity(res);*/
         },
     (err:any)=>{
-        console.log(err);
+        this.ErrMsg = err.body;
+        this.isEditErr = true;
+        this.isLoading=false;
     });
     }
     changeListener($event: any) : void {
@@ -138,5 +149,66 @@ export class EditActivityComponent{
         this.Activity.category = this.MyCategory.parent;
         this.Activity.sub_category = this.MyCategory.value;
         console.log(this.Activity);
+    }
+    CheckActivity():boolean{
+        //this.ErrMsg = "Input correct data: "
+        this.ErrMsg = "Fill in all fields"
+        let len = this.ErrMsg.length + 1;
+        this.ErrMsg += "!";
+        if(!this.Activity.title){
+            //this.ErrMsg += "Title"
+            return false;
+        }
+
+        if(!this.Activity.image){
+            /*if(len < this.ErrMsg.length)
+                this.ErrMsg += ",";
+            this.ErrMsg += "Picture";*/
+            return false;
+        }
+
+        if(!this.Activity.price || this.Activity.price < 0 || this.Activity.price > 100000){
+            /*if(len < this.ErrMsg.length)
+                this.ErrMsg += ",";
+            this.ErrMsg += "Price";*/
+            return false;
+        }
+
+        if(!this.Activity.num_of_bookings || this.Activity.num_of_bookings < 0 || this.Activity.num_of_bookings > 10000){
+            /*if(len < this.ErrMsg.length)
+                this.ErrMsg += ",";
+            this.ErrMsg += "Number of possible bookings per day";*/
+            return false;
+        }
+
+        if(!this.Activity.address){
+           /* if(len < this.ErrMsg.length)
+                this.ErrMsg += ",";
+            this.ErrMsg += "Address";*/
+            return false;
+        }
+
+        if(!this.Activity.detailed_address){
+            /*if(len < this.ErrMsg.length)
+                this.ErrMsg += ",";
+            this.ErrMsg += "Detailed address";*/
+            return false;
+        }
+
+        if(!this.Activity.description){
+            /*if(len < this.ErrMsg.length)
+                this.ErrMsg += ",";
+            this.ErrMsg += "Description";*/
+            return false;
+        }
+
+        if(!this.Activity.lat && !this.Activity.lng){
+            /*if(len < this.ErrMsg.length)
+                this.ErrMsg += ",";
+            this.ErrMsg += "Mark on the map";*/
+            return false;
+        }
+        //this.ErrMsg += "!";
+        return this.ErrMsg.length == len;
     }
 }

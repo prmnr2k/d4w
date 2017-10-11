@@ -139,5 +139,10 @@ export class SearchComponent implements OnInit {
         this.Params.sub_category = $event.parent?$event.value:null;
         console.log(this.Params);
     }
+    markerClick(item:ActivityModel){
+            console.log(`click`,item.id);
+            this.router.navigate(['/activity/',item.id]);
+    }
+
 
 }

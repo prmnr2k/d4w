@@ -32,6 +32,8 @@ export class CreateActivityComponent{
     ErrMsg = '';
     bsConfig:Partial<BsDatepickerConfig>;
     Categories: CategoryModel[] =[];
+    mapLat:number;
+    mapLng:number;
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
@@ -46,11 +48,16 @@ export class CreateActivityComponent{
         this.Categories = this.service.GetCategoriesAsArrayCategory();
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
+                this.mapLat = 48.8916733;
+                this.mapLng = 2.3016161;
                 this.Activity.lat = 48.8916733;
                 this.Activity.lng = 2.3016161;
                 if(res.lat && res.lng){
                     this.Activity.lat = res.lat;
                     this.Activity.lng = res.lng;
+
+                    this.mapLat = res.lat;
+                    this.mapLng = res.lng;
                 }
             })
 
@@ -149,10 +156,20 @@ export class CreateActivityComponent{
         }
         myReader.readAsDataURL(file);
     }
+
     mapClicked($event: any) {
         this.Activity.lat = $event.coords.lat;
         this.Activity.lng = $event.coords.lng;
+        console.log(`mapClick`);
+        console.log(this.Activity.lat, this.Activity.lng);
     }
+    mapMarkerDrag($event:any){
+        this.Activity.lat = $event.coords.lat;
+        this.Activity.lng = $event.coords.lng;
+        console.log(`markerDrag`);
+        console.log(this.Activity.lat, this.Activity.lng);
+    }
+
     NewDate(){
         this.Activity.calendar.push(new Date());
         
@@ -186,6 +203,12 @@ export class CreateActivityComponent{
             if($event.geometry && $event.geometry.location){
                 this.Activity.lat = $event.geometry.location.lat;
                 this.Activity.lng = $event.geometry.location.lng;
+                this.mapLat =  $event.geometry.location.lat;
+                this.mapLng =  $event.geometry.location.lng;
+                
+                console.log(`addressChange`);
+                console.log(this.Activity.lat, this.Activity.lng);
+
             }
         }
         else $event = "";

@@ -69,8 +69,8 @@
                     <br>
                     
                     <div class="col-md-12">
-                        <agm-map (mapClick)="mapClicked($event)" [latitude]="Activity?.lat" [longitude]="Activity?.lng">
-                            <agm-marker [markerDraggable]="true" [latitude]="Activity?.lat" [longitude]="Activity?.lng"></agm-marker>
+                        <agm-map (mapClick)="mapClicked($event)" [latitude]="mapLat" [longitude]="mapLng">
+                            <agm-marker (dragEnd)="mapMarkerDrag($event)" [markerDraggable]="true" [latitude]="Activity?.lat" [longitude]="Activity?.lng"></agm-marker>
                         </agm-map>
                     </div>
                     <div class="row"><div class="col-md-12 text-center"><button class="btn btn-success btn-lg mrg-top20" type="submit">Create activity</button></div></div>

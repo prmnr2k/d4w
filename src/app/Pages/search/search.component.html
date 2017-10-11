@@ -13,7 +13,7 @@
                             <span class="material-icons input-icon">description</span>
                     </div>
                     <div class="form-group">
-                            <input ngui-auto-complete [source]="observableSource.bind(this)" [auto-select-first-item]="true" [select-on-blur]="true" list-formatter="formatted_address" name="desc_location" class="form-control input-withicon input-lg" [ngModel]="Params.address" (ngModelChange)="Params.address = $event" (valueChanged)="AddressChanged($event)" placeholder="Address">
+                            <input ngui-auto-complete autocomplete="off" [source]="observableSource.bind(this)" [auto-select-first-item]="true" [select-on-blur]="true" list-formatter="formatted_address" name="desc_location" class="form-control input-withicon input-lg" [ngModel]="Params.address" (ngModelChange)="Params.address = $event" (valueChanged)="AddressChanged($event)" placeholder="Address">
                             <span class="material-icons input-icon">location_on</span>
                     </div>
                     

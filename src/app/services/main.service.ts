@@ -593,7 +593,49 @@ import { CategoryModel } from '../models/category.model';
                     [
                         "A la montagne",
                         [
-                           ""               
+                            "Ski alpin (ski seul)",
+                            "Ski compétition (club)",
+                            "Ski alpin (ski seul)",
+                            "Ski compétition (club)",
+                            "Ski freestyle",
+                            "Snow freestyle",
+                            "Ski de bosse",
+                            "Saut a ski loisir",
+                            "Saut a ski club",
+                            "Biathlon loisir",
+                            "Biathlon club",
+                            "Snowboard ou surf des neiges",
+                            "Télémark"            
+                        ]
+                    ],
+                    [
+                        "Sport de glisse divers",
+                        [
+                            "Ski joering",
+                            "Snowscoot",
+                            "VTT sur neige",
+                            "Snow kite",
+                            "Ski de randonnée group",
+                            "Ski de randonnée club",
+                            "Surf de randonnée group",
+                            "Surf de randonnée club",
+                            "Trek",
+                            "Luge de loisir",
+                            "Luge sur piste bobsleigh"           
+                        ]
+                    ],
+                    [
+                        "En ville",
+                        [
+                            "Ski alpin",
+                            "Snowboard indoor",
+                            "Ski nordique indoor",
+                            "Patinoire (liste patinoire alentour)",
+                            "Patinage loisir",
+                            "Patinage artistique (club)",
+                            "Patinage de vitesse",
+                            "Curling",
+                            "Hockey su glace (club)"
                         ]
                     ]               
                 ]

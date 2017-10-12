@@ -40,6 +40,7 @@ export class DiscoverComponent implements OnInit{
     };
     bsConfig:Partial<BsDatepickerConfig>;
     Categories:CategoryModel[] = [];
+    MyCategory: CategoryModel = new CategoryModel();
     constructor(private router: Router,
         private route: ActivatedRoute,
         private service: MainService,
@@ -53,10 +54,15 @@ export class DiscoverComponent implements OnInit{
             this.Params.address = params['address'];
             this.Params.title = params['title'];
             this.Params.from_date = params['from_date'];
+            this.Params.category = params['category'];
+            this.Params.sub_category = params['sub_category'];
             
-         });
-         this.Categories = this.service.GetAllCategoriesAsArrayCategory();
-         console.log(this.Categories);
+            this.Categories = this.service.GetAllCategoriesAsArrayCategory();
+
+            if(this.Params.category || this.Params.sub_category){
+                this.MyCategory = this.Categories.find(obj=>obj.value == (this.Params.sub_category?this.Params.sub_category : this.Params.category));
+            }
+        });
         this.GetAllActivities();
     }
 

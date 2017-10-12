@@ -12,6 +12,8 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 import { NgForm} from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
+import { CategoryModel } from '../../models/category.model';
+import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     moduleId:module.id,
@@ -34,17 +36,21 @@ export class IndexComponent implements OnInit{
         from_date:null
     }
     ParamsSearch = {
-        title: ``,
-        address: ``,
-        from_date:``
+        address: '',
+        category: '',
+        sub_category: '',
+        from_date:''
     }
+    Categories:CategoryModel[] = [];
     constructor(private router: Router,
         private service: MainService,
-        private params: ActivatedRoute){}
+        private params: ActivatedRoute,
+        private _sanitizer: DomSanitizer){}
 
 
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
+        this.Categories = this.service.GetAllCategoriesAsArrayCategory();
         this.GetFourActivities();
         
     }
@@ -81,7 +87,7 @@ export class IndexComponent implements OnInit{
 
     openSearch(){
        console.log(`search`);
-       this.router.navigate(['/discover',{address:this.ParamsSearch.address,title:this.ParamsSearch.title,from_date:this.ParamsSearch.from_date}]);
+       this.router.navigate(['/discover',this.ParamsSearch]);
     }
 
     observableSource = (keyword: any) :Observable<any[]> => {
@@ -97,5 +103,16 @@ export class IndexComponent implements OnInit{
             this.ParamsSearch.address = $event.formatted_address;
         }
         else $event = "";
+    }
+
+    autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
+        let html =  `<span><b>${data.name}</b></span>`;
+        if(data.parent)html = `<span>${data.parent} : <b>${data.name}</b></span>`;
+        return this._sanitizer.bypassSecurityTrustHtml(html);
+    }
+    CategoryChanged($event:CategoryModel){
+        this.ParamsSearch.category = $event.parent?$event.parent:$event.value;
+        this.ParamsSearch.sub_category = $event.parent?$event.value:'';
+        console.log(this.Params);
     }
 }

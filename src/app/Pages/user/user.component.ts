@@ -1,4 +1,4 @@
-import { Component,OnInit }      from '@angular/core';
+import { Component,OnInit,AfterViewChecked,ElementRef, ViewChild }      from '@angular/core';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { RouterModule } from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
@@ -20,7 +20,7 @@ import { ChatModel } from '../../models/chat.model';
     providers: [HttpService]
 })
 
-export class UserComponent implements OnInit{
+export class UserComponent implements OnInit,AfterViewChecked{
     isLoading = true;
     User:UserModel = new UserModel();
     isMe = false;
@@ -51,7 +51,7 @@ export class UserComponent implements OnInit{
     constructor(private router: Router,
         private service: MainService,
         private activatedRoute: ActivatedRoute){}
-
+    @ViewChild('scrollMe') private myScrollContainer: ElementRef;
     ngOnInit(){
         this.activatedRoute.params.forEach((params:Params) => {
             this.isLoading = true;
@@ -80,8 +80,16 @@ export class UserComponent implements OnInit{
                 });
             }
         });
+        this.scrollToBottom();
     }
-
+    ngAfterViewChecked() {        
+        this.scrollToBottom();        
+    } 
+    scrollToBottom(): void {
+        try {
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        } catch(err) { }                 
+    }
     SetMenuItem(item:string){
         this.MenuItem = item;
     }

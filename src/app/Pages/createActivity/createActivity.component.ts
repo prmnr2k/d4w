@@ -14,6 +14,10 @@ import { Http } from '@angular/http';
 import { CategoryModel } from '../../models/category.model';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
+import { MapsAPILoader } from '@agm/core';
+import {} from '@types/googlemaps';
+import { ViewChild, ElementRef, NgZone } from '@angular/core';
+
 @Component({
     moduleId:module.id,
     selector: 'createActivity',
@@ -21,7 +25,7 @@ import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
     providers: [HttpService]
 })
 
-export class CreateActivityComponent{
+export class CreateActivityComponent implements OnInit {
     Activity:CreateActivityModel = new CreateActivityModel();
     lastChangeClnd:number=null;
     Start:Date = new Date();
@@ -34,11 +38,16 @@ export class CreateActivityComponent{
     Categories: CategoryModel[] =[];
     mapLat:number;
     mapLng:number;
+    
+    @ViewChild('searchg') public searchElement: ElementRef;
+
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private service: MainService,
-        private _sanitizer: DomSanitizer)
+        private _sanitizer: DomSanitizer,
+        private mapsAPILoader: MapsAPILoader, 
+        private ngZone: NgZone)
     {
     }
     ngOnInit() {
@@ -52,14 +61,42 @@ export class CreateActivityComponent{
                 this.mapLng = 2.3016161;
                 this.Activity.lat = 48.8916733;
                 this.Activity.lng = 2.3016161;
+                this.Activity.public_lat = 48.8916733;
+                this.Activity.public_lng = 2.3016161;
                 if(res.lat && res.lng){
                     this.Activity.lat = res.lat;
                     this.Activity.lng = res.lng;
-
+                    this.Activity.public_lat = res.lat;
+                    this.Activity.public_lng = res.lng;
                     this.mapLat = res.lat;
                     this.mapLng = res.lng;
                 }
             })
+            this.CreateAutocompleteMap();
+    }
+    CreateAutocompleteMap(){
+        this.mapsAPILoader.load().then(
+            () => {
+             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
+             console.log(autocomplete);
+              autocomplete.addListener("place_changed", () => {
+               this.ngZone.run(() => {
+               let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
+               if(place.geometry === undefined || place.geometry === null ){
+                return;
+               }
+               else {
+                this.mapLat = autocomplete.getPlace().geometry.location.toJSON().lat;
+                this.mapLng = autocomplete.getPlace().geometry.location.toJSON().lng;
+                this.Activity.lat = this.mapLat;
+                this.Activity.lng = this.mapLng;
+                this.Activity.address = autocomplete.getPlace().formatted_address;
+               }
+              });
+              });
+            }
+               );
+
 
     }
 
@@ -192,7 +229,7 @@ export class CreateActivityComponent{
             elem.value = 10000;*/
         this.Activity.num_of_bookings = elem.value;
     }
-
+/*
     observableSource = (keyword: any) :Observable<any[]> => {
         if(keyword){
             return this.service.GetAddrFromGoogle(keyword);
@@ -216,7 +253,7 @@ export class CreateActivityComponent{
             }
         }
         else $event = "";
-    }
+    }*/
 
     autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
         let html = `<span>${data.parent} : <b>${data.name}</b></span>`;

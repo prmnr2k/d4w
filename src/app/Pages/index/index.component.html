@@ -3,16 +3,16 @@
         <h1>Envie de dépenser votre énergie</h1>
         <form class="form-inline" action="search.html" method="get">
             <div class="form-group index-search">
-                <input ngui-auto-complete [source]="observableSource.bind(this)" list-formatter="formatted_address" name="location" [ngModel]="ParamsSearch.address" (valueChanged)="AddressChanged($event)" class="form-control input-withicon input-lg" placeholder="Emplacement..">
+                <input type="text" placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control input-withicon input-lg" #searchg>
                 <span class="material-icons input-icon">location_on</span>
             </div>
             <div class="form-group index-search">
-                <input ngui-auto-complete [min-chars]="2" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories"  [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
+                <input ngui-auto-complete autocomplete="off" [min-chars]="2" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories"  [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
                 
-                <span class="material-icons input-icon">favorite</span>
+                <span class="material-icons input-icon">loyalty</span>
             </div>
             <div class="form-group form-group-makeinline">
-                <input type="text" name="today" [bsConfig]="bsConfig" [ngModel]="ParamsSearch.from_date" (ngModelChange)="ParamsSearch.from_date= $event" class="form-control input-withicon input-lg" bsDatepicker >
+                <input type="text" name="today" [bsConfig]="bsConfig" [ngModel]="ParamsSearch.from_date" (ngModelChange)="ParamsSearch.from_date= $event" class="form-control input-withicon input-lg" bsDatepicker placeholder="From date" >
                 <span class="material-icons input-icon">today</span>
             </div>
             <div class="form-group form-group-makeinline">

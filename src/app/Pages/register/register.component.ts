@@ -94,7 +94,7 @@ export class RegisterComponent implements OnInit{
 
     observableSource = (keyword: any) :Observable<any[]> => {
         if(keyword){
-            return this.mainService.GetAddrFromGoogle(keyword);
+            return this.mainService.GetAddr(keyword);
         }
         else{
             return Observable.of([]);

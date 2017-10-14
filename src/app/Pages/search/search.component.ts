@@ -1,10 +1,10 @@
 import { Component,OnInit,NgModule }      from '@angular/core';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { RouterModule } from '@angular/router';
-import {Subscription} from 'rxjs/Subscription';
-import { HttpService} from '../../services/http.service';
+import { Subscription } from 'rxjs/Subscription';
+import { HttpService } from '../../services/http.service';
 
-import {MainService} from "./../../services/main.service";
+import { MainService } from "./../../services/main.service";
 import { ActivityModel } from '../../models/activity.model';
 import { UserModel } from '../../models/user.model';
 import { Base64ImageModel } from '../../models/base64image.model';
@@ -15,7 +15,9 @@ import { Observable } from 'rxjs/Rx';
 import { CategoryModel } from '../../models/category.model';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
-
+import { MapsAPILoader } from '@agm/core';
+import {} from '@types/googlemaps';
+import { ViewChild, ElementRef, NgZone } from '@angular/core';
 
 @Component({
     moduleId:module.id,
@@ -34,11 +36,12 @@ export class SearchComponent implements OnInit {
     Params = {
         title: '',
         description: '',
-        address: '',
+        public_lat:null,
+        public_lng:null,
         from_date:null,
         to_date:null,
         user_id: '',
-        radius: null,
+        radius: 15,
         category: '',
         sub_category: ''
     }
@@ -47,10 +50,15 @@ export class SearchComponent implements OnInit {
     isAdvanced:boolean = false;
     bsConfig:Partial<BsDatepickerConfig>;
     Categories:CategoryModel[] = [];
+
+    @ViewChild('searchg') public searchElement: ElementRef;
+
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute,
-        private _sanitizer: DomSanitizer){}
+        private _sanitizer: DomSanitizer,
+        private mapsAPILoader: MapsAPILoader, 
+        private ngZone: NgZone){}
 
     ngOnInit(){
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
@@ -59,9 +67,40 @@ export class SearchComponent implements OnInit {
                 this.lat = res.lat;
                 this.lng = res.lng;
             })
-        this.Categories = this.service.GetAllCategoriesAsArrayCategory();
+        this.Categories = this.service.GetAllCategoriesAsArrayCategory();    
+        this.CreateAutocompleteMap();
         this.GetAllActivities();
     }
+
+    CreateAutocompleteMap(){
+        this.mapsAPILoader.load().then(
+            () => {
+               
+             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
+            
+              autocomplete.addListener("place_changed", () => {
+               this.ngZone.run(() => {
+               let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
+               if(place.geometry === undefined || place.geometry === null ){
+                
+                return;
+               }
+               else {
+                //this.Params.address = autocomplete.getPlace().formatted_address;
+                this.Params.public_lat=autocomplete.getPlace().geometry.location.toJSON().lat;
+                this.Params.public_lng=autocomplete.getPlace().geometry.location.toJSON().lng;
+                this.lat = autocomplete.getPlace().geometry.location.toJSON().lat;
+                this.lng = autocomplete.getPlace().geometry.location.toJSON().lng;
+               }
+              });
+              });
+            }
+               );
+
+
+    }
+
+
     mapClicked($event: any) {
         this.lat = $event.coords.lat;
         this.lng = $event.coords.lng;
@@ -70,17 +109,18 @@ export class SearchComponent implements OnInit {
         console.log(this.lat);
         console.log(this.lng);
  
-        
       }
 
       GetAllActivities(){
         this.isLoading = true;
+
         console.log(this.Params);
+   
         this.service.GetAllActivities(this.Params)
         .subscribe((res:ActivityModel[])=>{
             console.log(res);
-            this.Activities = res;
-            for(let item of this.Activities){
+            let activ:ActivityModel[] = res;
+            for(let item of activ){
                 if(item.image_id){
                     this.service.GetImageById(item.image_id)
                         .subscribe((image:Base64ImageModel)=>{
@@ -98,9 +138,16 @@ export class SearchComponent implements OnInit {
                                 })
                         }
                     })
+                   
             } 
+            this.ActivityRev(activ);
             this.isLoading = false;
         });
+       
+    }
+    ActivityRev(act:ActivityModel[]){
+        this.Activities = [];
+        for(let item of act) if(item.user_name&&item.title)this.Activities.push(item);
     }
 
     FromDateChanged($event){
@@ -110,28 +157,6 @@ export class SearchComponent implements OnInit {
             this.Params.from_date = $event;
         }
     }
-
-    observableSource = (keyword: any) :Observable<any[]> => {
-        console.log(`source: `, keyword);
-        if(keyword){
-            return this.service.GetAddrFromGoogle(keyword);
-        }
-        else{
-            return Observable.of([]);
-        }
-    }
-    AddressChanged($event){
-        console.log(`address changed`,$event);
-        if($event.formatted_address){
-            this.Params.address = $event.formatted_address;
-            if($event.geometry && $event.geometry.location){
-                this.lat = $event.geometry.location.lat;
-                this.lng = $event.geometry.location.lng;
-            }
-        }
-        else $event = "";
-    }
-
     autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
         console.log(`autocompleListFormatter`);
         let html =  `<span><b>${data.name}</b></span>`;
@@ -139,14 +164,18 @@ export class SearchComponent implements OnInit {
         return this._sanitizer.bypassSecurityTrustHtml(html);
     }
     CategoryChanged($event:CategoryModel){
+        if($event.parent){
         this.Params.category = $event.parent?$event.parent:$event.value;
-        this.Params.sub_category = $event.parent?$event.value:null;
+        this.Params.sub_category = $event.parent?$event.value:null;}
+        else {
+            this.Params.category = "";
+            this.Params.sub_category = "";}
+        
         console.log(this.Params);
     }
     markerClick(item:ActivityModel){
             console.log(`click`,item.id);
             this.router.navigate(['/activity/',item.id]);
     }
-
 
 }

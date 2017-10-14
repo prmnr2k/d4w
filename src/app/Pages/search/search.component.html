@@ -12,11 +12,12 @@
                             <input type="text" name="desc_descr" class="form-control input-withicon input-lg" [ngModel]="Params.description" (ngModelChange)="Params.description = $event" placeholder="Description">
                             <span class="material-icons input-icon">description</span>
                     </div>
+
                     <div class="form-group">
-                            <input ngui-auto-complete autocomplete="off" [source]="observableSource.bind(this)" [auto-select-first-item]="true" [select-on-blur]="true" list-formatter="formatted_address" name="desc_location" class="form-control input-withicon input-lg" [ngModel]="Params.address" (ngModelChange)="Params.address = $event" (valueChanged)="AddressChanged($event)" placeholder="Address">
-                            <span class="material-icons input-icon">location_on</span>
+                        <input type="text" class="form-control input-withicon input-lg" placeholder="Search for Location"  name="addr" autocorrect="off" autocapitalize="off" spellcheck="off" #searchg>
+                        <span class="material-icons input-icon">room</span>
                     </div>
-                    
+                   
                     
                     <div class="form-group" *ngIf="isAdvanced">
                         <input type="text" name="desc_toll1" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
@@ -33,7 +34,8 @@
                         <span  class="material-icons input-icon">today</span>
                     </div>
                     <div class="form-group" *ngIf="isAdvanced">
-                        <input ngui-auto-complete autocomplete="off" [min-chars]="2" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories"  [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
+                        <input ngui-auto-complete autocomplete="off" [min-chars]="2" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
+                        <span  class="material-icons input-icon">loyalty</span>
                     </div>
 
 
@@ -43,25 +45,20 @@
                        <a class="read-more" data-text="hide advanced search" data-textdefault="show advanced search" (click)="isAdvanced=!isAdvanced">{{isAdvanced?"hide":"show"}} advanced search</a>
                     </div>
                 </form> 
-            
+                
             </div>
         </div>
 
         <div class="col-xs-12 col-md-6 map">
-            <agm-map class="search_map" [latitude]="lat" [longitude]="lng">
-              
-                <div *ngFor="let item of Activities; let i = index">
-                    <agm-marker  [markerDraggable]="false" [title]="item.title" (markerClick)="markerClick(item)" [latitude]="item.lat" [longitude]="item.lng"></agm-marker> 
-                </div>
-
+            <agm-map class="search_map" [latitude]="lat" [longitude]="lng">            
+                    <agm-marker *ngFor="let item of Activities; let i = index" [markerDraggable]="false" [title]="item.title" (markerClick)="markerClick(item)" [latitude]="item.public_lat" [longitude]="item.public_lng"></agm-marker> 
             </agm-map>
         </div>
 
         <div class="col-sm-10 marg-auto left-side">
             <div class="cards" *ngIf="!isLoading && Activities.length > 0">
-                    
                 <div class="container-fluid">
-                    <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">
+                    <div *ngFor="let item of Activities"  class="col-xs-12 col-sm-6 pull-left">
                         <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
                             <h3 class="cardname">{{item.title}}</h3>
                             <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>

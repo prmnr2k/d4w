@@ -15,6 +15,10 @@ import { Observable } from 'rxjs/Rx';
 import { CategoryModel } from '../../models/category.model';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
+import { MapsAPILoader } from '@agm/core';
+import {} from '@types/googlemaps';
+import { ViewChild, ElementRef, NgZone } from '@angular/core';
+
 @Component({
     moduleId:module.id,
     selector: "index",
@@ -42,17 +46,43 @@ export class IndexComponent implements OnInit{
         from_date:''
     }
     Categories:CategoryModel[] = [];
+    @ViewChild('searchg') public searchElement: ElementRef;
     constructor(private router: Router,
         private service: MainService,
         private params: ActivatedRoute,
-        private _sanitizer: DomSanitizer){}
+        private _sanitizer: DomSanitizer,
+        private mapsAPILoader: MapsAPILoader, 
+        private ngZone: NgZone){}
 
 
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.Categories = this.service.GetAllCategoriesAsArrayCategory();
+        this.CreateAutocompleteMap();
         this.GetFourActivities();
         
+    }
+
+    CreateAutocompleteMap(){
+        this.mapsAPILoader.load().then(
+            () => {
+             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
+             console.log(autocomplete);
+              autocomplete.addListener("place_changed", () => {
+               this.ngZone.run(() => {
+               let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
+               if(place.geometry === undefined || place.geometry === null ){
+                return;
+               }
+               else {
+                   this.ParamsSearch.address = autocomplete.getPlace().formatted_address;
+               }
+              });
+              });
+            }
+               );
+
+
     }
     GetFourActivities(){
         this.isLoading = true;
@@ -92,7 +122,7 @@ export class IndexComponent implements OnInit{
 
     observableSource = (keyword: any) :Observable<any[]> => {
         if(keyword){
-            return this.service.GetAddrFromGoogle(keyword);
+            return this.service.GetAddr(keyword);
         }
         else{
             return Observable.of([]);

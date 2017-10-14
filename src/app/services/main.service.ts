@@ -363,7 +363,7 @@ import { CategoryModel } from '../models/category.model';
             return result;
         }
 
-        GetAddrFromGoogle(keyword:string){
+        GetAddr(keyword:string){
             console.log(`start getaddr`);
             return this.httpService.GoogleGet(keyword);
         }

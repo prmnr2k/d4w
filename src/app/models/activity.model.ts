@@ -15,6 +15,8 @@ export class ActivityModel{
         public calendar?:CalendarModel[],
         public rate?:number,
         public lat?: number,
+        public public_lat?: number,
+        public public_lng?: number,
         public lng?:number,
         public dostance?:number,
         public bearing?:number,

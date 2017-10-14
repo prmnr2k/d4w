@@ -23,7 +23,8 @@ import {JsonpModule} from '@angular/http';
         HttpModule,
         FormsModule,
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4'
+            apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4',
+            libraries: ["places"]
         }),
         BsDatepickerModule.forRoot()
     ],

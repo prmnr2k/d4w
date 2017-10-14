@@ -13,6 +13,10 @@ import { Observable } from 'rxjs/Rx';
 import { CategoryModel } from '../../models/category.model';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
+import { MapsAPILoader } from '@agm/core';
+import {} from '@types/googlemaps';
+import { ViewChild, ElementRef, NgZone } from '@angular/core';
+
 @Component({
     moduleId:module.id,
     selector: "discover",
@@ -41,11 +45,14 @@ export class DiscoverComponent implements OnInit{
     bsConfig:Partial<BsDatepickerConfig>;
     Categories:CategoryModel[] = [];
     MyCategory: CategoryModel = new CategoryModel();
+    @ViewChild('searchg') public searchElement: ElementRef;
     constructor(private router: Router,
         private route: ActivatedRoute,
         private service: MainService,
         private params: ActivatedRoute,
-        private _sanitizer: DomSanitizer){}
+        private _sanitizer: DomSanitizer,
+        private mapsAPILoader: MapsAPILoader, 
+        private ngZone: NgZone){}
 
     ngOnInit(){
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
@@ -63,10 +70,31 @@ export class DiscoverComponent implements OnInit{
                 this.MyCategory = this.Categories.find(obj=>obj.value == (this.Params.sub_category?this.Params.sub_category : this.Params.category));
             }
         });
+        this.CreateAutocompleteMap();
         this.GetAllActivities();
     }
 
+    CreateAutocompleteMap(){
+        this.mapsAPILoader.load().then(
+            () => {
+             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
+             console.log(autocomplete);
+              autocomplete.addListener("place_changed", () => {
+               this.ngZone.run(() => {
+               let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
+               if(place.geometry === undefined || place.geometry === null ){
+                return;
+               }
+               else {
+                   this.Params.address = autocomplete.getPlace().formatted_address;
+               }
+              });
+              });
+            }
+               );
 
+
+    }
     GetAllActivities(){
         this.isLoading = true;
         
@@ -74,8 +102,8 @@ export class DiscoverComponent implements OnInit{
         console.log(this.Params);
         this.service.GetAllActivities(this.Params)
         .subscribe((res:ActivityModel[])=>{
-            this.Activities = res;
-            for(let item of this.Activities){
+            let activ:ActivityModel[] = res;
+            for(let item of activ){
                 if(item.image_id){
                     this.service.GetImageById(item.image_id)
                         .subscribe((image:Base64ImageModel)=>{
@@ -94,7 +122,7 @@ export class DiscoverComponent implements OnInit{
                         }
                     })
             }
-            
+            this.ActivityRev(activ);
             this.isLoading = false;
         },
     (err:any)=>{
@@ -102,6 +130,11 @@ export class DiscoverComponent implements OnInit{
     });
 }
 
+    ActivityRev(act:ActivityModel[]){
+        this.Activities = [];
+        for(let item of act) if(item.user_name&&item.title)this.Activities.push(item);
+    }
+    
     FromDateChanged($event){
         let date:Date = new Date($event);
         if(date){
@@ -113,29 +146,22 @@ export class DiscoverComponent implements OnInit{
     }
 
 
-    observableSource = (keyword: any) :Observable<any[]> => {
-        if(keyword){
-            return this.service.GetAddrFromGoogle(keyword);
-        }
-        else{
-            return Observable.of([]);
-        }
-    }
-    AddressChanged($event){
-        if($event.formatted_address){
-            this.Params.address = $event.formatted_address;
-        }
-        else $event = "";
-    }
+
 
     autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
+        console.log(`autocompleListFormatter`);
         let html =  `<span><b>${data.name}</b></span>`;
         if(data.parent)html = `<span>${data.parent} : <b>${data.name}</b></span>`;
         return this._sanitizer.bypassSecurityTrustHtml(html);
     }
     CategoryChanged($event:CategoryModel){
+        if($event.parent){
         this.Params.category = $event.parent?$event.parent:$event.value;
-        this.Params.sub_category = $event.parent?$event.value:null;
+        this.Params.sub_category = $event.parent?$event.value:null;}
+        else {
+            this.Params.category = "";
+            this.Params.sub_category = "";}
+        
         console.log(this.Params);
     }
 }

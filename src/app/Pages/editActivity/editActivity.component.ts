@@ -13,6 +13,10 @@ import { Observable } from 'rxjs/Rx';
 import { CategoryModel } from '../../models/category.model';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
+import { MapsAPILoader } from '@agm/core';
+import {} from '@types/googlemaps';
+import { ViewChild, ElementRef, NgZone } from '@angular/core';
+
 @Component({
     moduleId:module.id,
     selector: 'editActivity',
@@ -20,7 +24,7 @@ import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
     providers: [HttpService]
 })
 
-export class EditActivityComponent{
+export class EditActivityComponent implements OnInit {
     Activity:CreateActivityModel = new CreateActivityModel();
     Start:Date = new Date();
     Finish:Date = new Date();
@@ -32,11 +36,15 @@ export class EditActivityComponent{
     ErrMsg = '';
     isEditErr = false;
 
+    @ViewChild('searchg') public searchElement: ElementRef;
+
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private service: MainService,
-        private _sanitizer: DomSanitizer)
+        private _sanitizer: DomSanitizer,
+        private mapsAPILoader: MapsAPILoader, 
+        private ngZone: NgZone)
     {
     }
 
@@ -52,12 +60,37 @@ export class EditActivityComponent{
                 })
             this.service.GetMe()
                 .subscribe((res:UserModel)=>{
+                    this.Activity.public_lat = res.lat;
+                    this.Activity.public_lng = res.lng;
                     this.Activity.lat = res.lat;
                     this.Activity.lng = res.lng;
                 })
         });
+        this.CreateAutocompleteMap();
     }
+    CreateAutocompleteMap(){
+        this.mapsAPILoader.load().then(
+            () => {
+             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
+             console.log(autocomplete);
+              autocomplete.addListener("place_changed", () => {
+               this.ngZone.run(() => {
+               let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
+               if(place.geometry === undefined || place.geometry === null ){
+                return;
+               }
+               else {
+                this.Activity.public_lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
+                this.Activity.public_lng = autocomplete.getPlace().geometry.location.toJSON().lng;
+                this.Activity.address = autocomplete.getPlace().formatted_address;
+               }
+              });
+              });
+            }
+               );
 
+
+    }
     AfterGettingActivity(act:ActivityModel){
         this.Activity = this.service.ActivityModelToCreateActivityModel(act);
         if(this.Activity.sub_category){
@@ -120,24 +153,7 @@ export class EditActivityComponent{
         this.Activity.calendar.splice(index,1);
     }
 
-    observableSource = (keyword: any) :Observable<any[]> => {
-        if(keyword){
-            return this.service.GetAddrFromGoogle(keyword);
-        }
-        else{
-            return Observable.of([]);
-        }
-    }
-    AddressChanged($event){
-        if($event.formatted_address){
-            this.Activity.address = $event.formatted_address;
-            if($event.geometry && $event.geometry.location){
-                this.Activity.lat = $event.geometry.location.lat;
-                this.Activity.lng = $event.geometry.location.lng;
-            }
-        }
-        else $event = "";
-    }
+    
 
     autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
         let html = `<span>${data.parent} : <b>${data.name}</b></span>`;
@@ -150,6 +166,7 @@ export class EditActivityComponent{
         this.Activity.sub_category = this.MyCategory.value;
         console.log(this.Activity);
     }
+
     CheckActivity():boolean{
         //this.ErrMsg = "Input correct data: "
         this.ErrMsg = "Fill in all fields"

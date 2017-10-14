@@ -11,6 +11,8 @@ export class CreateActivityModel{
         public rate?:number,
         public lat?: number,
         public lng?:number,
+        public public_lat?: number,
+        public public_lng?:number,
         public category?: string,
         public sub_category?: string
 

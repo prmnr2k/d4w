@@ -49,8 +49,16 @@
                     <br>
                     <div class="form-group">
                         <label>Address</label>
-                        <input ngui-auto-complete autocomplete="off" [source]="observableSource.bind(this)" list-formatter="formatted_address" (customSelected)="AddressSelected($event)" class="form-control input-lg" name="address" [ngModel]="Activity.address" (valueChanged)="AddressChanged($event)">
+                        <input type="text" placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #searchg>
                     </div>
+
+                    <div class="col-md-12">
+                        <agm-map [latitude]="Activity?.lat" [longitude]="Activity?.lng">
+                            <agm-marker [markerDraggable]="false" [latitude]="Activity?.lat" [longitude]="Activity?.lng"></agm-marker>
+                        </agm-map>
+                    </div>
+        
+
                     <br>
                     <div class="form-group">
                         <label>Detailed address</label>
@@ -74,11 +82,7 @@
                     
                     <br>
                     
-                    <div class="col-md-12">
-                        <agm-map (mapClick)="mapClicked($event)" [latitude]="mapLat" [longitude]="mapLng">
-                            <agm-marker (dragEnd)="mapMarkerDrag($event)" [markerDraggable]="true" [latitude]="Activity?.lat" [longitude]="Activity?.lng"></agm-marker>
-                        </agm-map>
-                    </div>
+                    
                     <div class="row"><div class="col-md-12 text-center"><button class="btn btn-success btn-lg mrg-top20" type="submit">Create activity</button></div></div>
                     </div>
                 </form>

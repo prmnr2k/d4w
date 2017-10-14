@@ -6,15 +6,17 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { TokenModel } from '../models/token.model';
+import {Jsonp} from '@angular/http';
 
 @Injectable()
 export class HttpService
 {
     GoogleMapUrl: string = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+    GoogleMapPlaceUrl: string = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=";
     serverUrl: string = "https://sportrotter-api.herokuapp.com";
     public headers:Headers = new Headers([]);
     public token: TokenModel = new TokenModel('');
-    constructor(private http: Http){
+    constructor(private http: Http, private _jsonp: Jsonp){
         if(!this.headers.has('Content-Type'))
             this.headers.append('Content-Type','application/json');
     }
@@ -67,9 +69,25 @@ export class HttpService
             .catch((error:any) =>{return Observable.throw(error);});
     }
 
-    GoogleGet(keyword:string){
-        return this.http.get(this.GoogleMapUrl + keyword).map(res => {
+    GoogleGetPlace(keyword:string){
+
+       /* let headers = new Headers();
+       
+        headers.append('X-Auth-Token', this.token.token);
+        return this.http.get(this.GoogleMapUrl + keyword+"&types=(cities)&key=AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4",{headers:headers}).map(response => response.json());
+        */
+        return this._jsonp.get(this.GoogleMapUrl + keyword + `&types=(cities)&key=AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4`).map(res => {
+            return res.json().results;
+            });
+         
+    }
+
+    GoogleGet(keyword:string)
+    {
+        return this.http.get(this.GoogleMapUrl+keyword+`&types=(cities)&key=AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4`).map(res => {
+            console.log(`res ok ok`);
             let json = res.json();
+            console.log(`googlegetAUTO `,json.results);
             return json.results;
           })
     }

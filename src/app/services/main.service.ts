@@ -364,6 +364,7 @@ import { CategoryModel } from '../models/category.model';
         }
 
         GetAddrFromGoogle(keyword:string){
+            console.log(`start getaddr`);
             return this.httpService.GoogleGet(keyword);
         }
 

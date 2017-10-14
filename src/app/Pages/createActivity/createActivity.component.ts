@@ -65,7 +65,7 @@ export class CreateActivityComponent{
 
     CheckActivity():boolean{
         //this.ErrMsg = "Input correct data: "
-        this.ErrMsg = "Fill in all fields"
+        this.ErrMsg = "Fill in all fields";
         let len = this.ErrMsg.length + 1;
         this.ErrMsg += "!";
         if(!this.Activity.title){
@@ -84,6 +84,7 @@ export class CreateActivityComponent{
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
             this.ErrMsg += "Price";*/
+            this.ErrMsg = "Uncorrect price!";
             return false;
         }
 
@@ -91,6 +92,7 @@ export class CreateActivityComponent{
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
             this.ErrMsg += "Number of possible bookings per day";*/
+            this.ErrMsg = "Uncorrect number of possible bookings!";
             return false;
         }
 

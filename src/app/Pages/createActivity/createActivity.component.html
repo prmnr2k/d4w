@@ -30,10 +30,16 @@
                     <div class="form-group">
                         <label>Price</label>
                         <input type="number" required class="form-control input-lg" name="price"  [ngModel]="Activity.price"  min="0" [max]="100000" (ngModelChange)="Activity.price = $event">
+                        <div *ngIf="!Activity.price||Activity.price<0" class="alert alert-danger">
+                            Uncorrect price!
+                          </div>
                     </div><br>
                     <div class="form-group">
                         <label>Number of possible bookings per date</label>
                         <input type="number" required class="form-control input-lg" name="booking" #book [ngModel]="Activity.num_of_bookings"  [min]="0" [max]="10000" (blur)="ChangeBookings(book)" >
+                        <div *ngIf="!Activity.num_of_bookings||Activity.num_of_bookings<0" class="alert alert-danger">
+                            Uncorrect number of possible bookings!
+                          </div>
                     </div>
                     <br>
                     <div class="form-group">

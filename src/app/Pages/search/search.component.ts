@@ -15,6 +15,8 @@ import { Observable } from 'rxjs/Rx';
 import { CategoryModel } from '../../models/category.model';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 
+
+
 @Component({
     moduleId:module.id,
     selector: "search",
@@ -110,6 +112,7 @@ export class SearchComponent implements OnInit {
     }
 
     observableSource = (keyword: any) :Observable<any[]> => {
+        console.log(`source: `, keyword);
         if(keyword){
             return this.service.GetAddrFromGoogle(keyword);
         }
@@ -118,7 +121,7 @@ export class SearchComponent implements OnInit {
         }
     }
     AddressChanged($event){
-        console.log($event);
+        console.log(`address changed`,$event);
         if($event.formatted_address){
             this.Params.address = $event.formatted_address;
             if($event.geometry && $event.geometry.location){
@@ -130,6 +133,7 @@ export class SearchComponent implements OnInit {
     }
 
     autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
+        console.log(`autocompleListFormatter`);
         let html =  `<span><b>${data.name}</b></span>`;
         if(data.parent)html = `<span>${data.parent} : <b>${data.name}</b></span>`;
         return this._sanitizer.bypassSecurityTrustHtml(html);

@@ -12,12 +12,14 @@ import { PageModule } from './Pages/pages.module';
 import { ModalComponent } from './components/modal.component';
 import { AgmCoreModule } from '@agm/core';
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import {JsonpModule} from '@angular/http';
 
 @NgModule({
     imports:      [ 
         BrowserModule,
         RouterModule.forRoot(routs),
         PageModule,
+        JsonpModule,
         HttpModule,
         FormsModule,
         AgmCoreModule.forRoot({

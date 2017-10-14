@@ -247,7 +247,7 @@
                                         <p [innerHTML]="item.body"></p>
                                     </div>
                                     
-                                    <div class="delete_button" *ngIf="isLoggedIn && Me && Me.id == item.user_id">
+                                    <div class="delete_button" *ngIf="isLoggedIn && Me && (Me.id == item.user_id||Me.id == Activity.user_id)">
                                         <button (click)="OnDeleteComment(item)" ></button>
                                     </div>
                                     

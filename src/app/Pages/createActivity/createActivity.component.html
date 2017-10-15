@@ -15,7 +15,7 @@
                     <div class="col-sm-6 col-sm-push-2 marg-auto">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control input-lg" name="title" [ngModel]="Activity.title" (ngModelChange)="Activity.title = $event">
+                        <input type="text" class="form-control input-lg" name="title"  maxlength="30" [ngModel]="Activity.title" (ngModelChange)="Activity.title = $event">
                     </div>
                     <br>
                     <div class="form-group">

@@ -7,7 +7,7 @@
                 <span class="material-icons input-icon">location_on</span>
             </div>
             <div class="form-group index-search">
-                <input ngui-auto-complete autocomplete="off" [min-chars]="2" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories"  [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
+                <input ngui-auto-complete autocomplete="off" [max-num-list]="5" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories"  [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
                 
                 <span class="material-icons input-icon">loyalty</span>
             </div>
@@ -39,7 +39,7 @@
     <div *ngIf="!isLoading && Activities.length > 0">
         <div class="row">
             <div *ngIf="Activities.length >0 " class="card col-md-8 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[0].id] + ')'}">
-                <h3 class="cardname">{{Activities[0].title}}</h3>
+                <h3 class="cardname word-wrap">{{Activities[0].title.slice(0,150)}}</h3>
                 <h3 class="carddate">{{Activities[0].calendar[0].date | date: "dd MMM"}}</h3>
                 <div class="avatar">
                     <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[0].user_id]?Images['user'+Activities[0].user_id]:'./app/images/man.jpg'">
@@ -49,7 +49,7 @@
                 <a [routerLink]="['/activity',Activities[0].id]"><span class="spanlink"></span></a>
             </div>
             <div *ngIf="Activities.length > 1" class="card col-md-4 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[1].id] + ')'}">
-                <h3 class="cardname">{{Activities[1].title}}</h3>
+                <h3 class="cardname word-wrap">{{Activities[1].title.slice(0,150)}}</h3>
                 <h3 class="carddate">{{Activities[1].calendar[0].date | date: "dd MMM"}}</h3>
                 <div class="avatar">
                     <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[1].user_id]?Images['user'+Activities[1].user_id]:'./app/images/man.jpg'">
@@ -62,7 +62,7 @@
         
         <div class="row">
             <div *ngIf="Activities.length >2 " class="card col-md-4 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[2].id] + ')'}">
-                <h3 class="cardname">{{Activities[2].title}}</h3>
+                <h3 class="cardname word-wrap">{{Activities[2].title.slice(0,150)}}</h3>
                 <h3 class="carddate">{{Activities[2].calendar[0].date | date: "dd MMM"}}</h3>
                 <div class="avatar">
                     <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[2].user_id]?Images['user'+Activities[2].user_id]:'./app/images/man.jpg'">
@@ -72,7 +72,7 @@
                 <a [routerLink]="['/activity',Activities[2].id]"><span class="spanlink"></span></a>
             </div>
             <div *ngIf="Activities.length > 3" class="card col-md-8 bg_cover" [ngStyle]="{'background':'url(' + Images['act'+Activities[3].id] + ')'}">
-                <h3 class="cardname">{{Activities[3].title}}</h3>
+                <h3 class="cardname word-wrap">{{Activities[3].title.slice(0,150)}}</h3>
                 <h3 class="carddate">{{Activities[3].calendar[0].date | date: "dd MMM"}}</h3>
                 <div class="avatar">
                     <img class="profile-logo" alt="logo" [src]="Images['user'+Activities[3].user_id]?Images['user'+Activities[3].user_id]:'./app/images/man.jpg'">

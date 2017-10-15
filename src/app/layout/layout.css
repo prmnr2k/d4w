@@ -335,6 +335,7 @@ h1{
   font-size: 22px;
   color: #ffffff;
   margin: 0;
+  margin-right: 15px;
   z-index: 2;
 }
 
@@ -946,6 +947,7 @@ input:required:invalid{
 }
 .word-wrap{
     word-wrap: break-word;
+    word-break: break-all; 
 }
 
 @media (min-width: 1200px){

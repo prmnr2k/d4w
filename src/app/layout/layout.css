@@ -944,6 +944,9 @@ input:required:invalid{
     width: auto;
     margin-top: 10px;
 }
+.word-wrap{
+    word-wrap: break-word;
+}
 
 @media (min-width: 1200px){
     .container {

@@ -11,6 +11,7 @@ import {MainService} from "./services/main.service";
 })
 export class AppComponent implements OnInit{
   isLoggedIn:boolean = false;
+  isProf:boolean = false;
   //me: UserModel = new UserModel(null,"","","","",null,null); 
   constructor(
       private mainService: MainService){}
@@ -18,10 +19,17 @@ export class AppComponent implements OnInit{
       this.mainService.onAuthChange$.subscribe(bool => {
               this.isLoggedIn = bool;
               if(this.isLoggedIn)
-                  this.mainService.GetMe();
+                  this.mainService.GetMe().subscribe(it =>{
+                      console.log(`get me: `,it.user_type);
+                      if (it.user_type===`professional`) this.isProf = true;
+                    }
+                  );
       });
 
       this.mainService.TryToLoginWithToken();
+
+
+
   }
 
   Logout(){

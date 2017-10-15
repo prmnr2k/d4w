@@ -1,8 +1,8 @@
 <div class="row loading" *ngIf="isLoading"></div>
 <div *ngIf="!isLoading" class="hero center-block" [ngStyle]="{'background':'url(' + ActivityImg + ') center no-repeat'}">
     <div class="row middle">
-        <div class="h123 h1-first">
-                <h1>{{Activity.title}}</h1>
+        <div class="h123 h1-first word-wrap">
+                <h1>{{Activity.title.slice(0,100)}}</h1>
         </div>
     </div>
 </div>
@@ -13,7 +13,7 @@
                 <div class="round-card" [ngClass]="{'height333': MyBooking.id > 0,'height265':!(MyBooking.id > 0)}">
                     <div class="avatar pull-left">
                         <img class="profile-logo" alt="logo" [src]="UserLogo?UserLogo:'./app/images/man.jpg'" style="center">
-                        <span class="profile-text">{{Activity.user_name?Activity.user_name.slice(0,6):'Author'}}</span>
+                        <span class="profile-text">{{Users[Activity.user_id]?.name?Users[Activity.user_id]?.name:'Author'}}</span>
                         <a [routerLink]="['/users',Activity?Activity.user_id:'0']"><span class="spanlink"></span></a>
                     </div>
                     <div class="about-org">

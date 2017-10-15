@@ -8,7 +8,7 @@
     <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
     <li *ngIf="!isLoggedIn"><a routerLink="/registration">Registration</a></li>
     <li *ngIf="isLoggedIn"><a (click)="Logout()">Logout</a></li>
-    <li *ngIf="isLoggedIn"><a routerLink="/create_activity">Create activity</a></li>
+    <li *ngIf="isLoggedIn&&isProf"><a routerLink="/create_activity">Create activity</a></li>
   </ul>
 </nav>
 <router-outlet></router-outlet>

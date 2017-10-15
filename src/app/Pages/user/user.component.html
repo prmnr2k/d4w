@@ -304,7 +304,7 @@
             <div class="container-fluid">
                 <div *ngFor="let item of Activities" class="col-xs-12 col-sm-6 pull-left">
                     <div class="card bg_cover" [ngStyle]="{'background':'url(' + ActImages[item.id] + ')'}">
-                        <h3 class="cardname">{{item.title}}</h3>
+                        <h3 class="cardname">{{item.title.slice(0,30)}}</h3>
                         <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
                         <div class="avatar">
                             <img class="profile-logo" alt="logo" [src]="Logo?Logo:'./app/images/man.jpg'">

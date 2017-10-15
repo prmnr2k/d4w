@@ -51,6 +51,8 @@ export class EditActivityComponent implements OnInit {
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.isLoading = true;
+
+       
         this.activatedRoute.params.forEach((params:Params) => {
             this.actId = params["id"];
             this.Categories = this.service.GetCategoriesAsArrayCategory();

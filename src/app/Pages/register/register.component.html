@@ -24,6 +24,10 @@
               <input type="password" class="form-control input-lg" name="password" required  minlength="6" [ngModel]="RegisterUser.password" (ngModelChange)="RegisterUser.password = $event">
             </div>
             <div class="form-group">
+              <label>Short Name</label>
+              <input type="text" class="form-control input-lg" maxlength="6" name="user_short_name" [ngModel]="RegisterUser.short_name" (ngModelChange)="RegisterUser.short_name = $event">
+            </div>
+            <div class="form-group">
               <label>Name</label>
               <input type="text" class="form-control input-lg" name="user_name" [ngModel]="RegisterUser.name" (ngModelChange)="RegisterUser.name = $event">
             </div>

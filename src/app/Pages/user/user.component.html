@@ -308,7 +308,7 @@
                         <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
                         <div class="avatar">
                             <img class="profile-logo" alt="logo" [src]="Logo?Logo:'./app/images/man.jpg'">
-                            <span class="profile-text">{{User.name?User.name:'Author'}}</span>
+                            <span class="profile-text">{{User.short_name?User.short_name:User.name.slice(0,6)}}</span>
                         </div>
                         <span class="cardshadow"></span>
                         <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>

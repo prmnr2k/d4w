@@ -45,6 +45,8 @@ export class DiscoverComponent implements OnInit{
     bsConfig:Partial<BsDatepickerConfig>;
     Categories:CategoryModel[] = [];
     MyCategory: CategoryModel = new CategoryModel();
+    lengthShortName:number = 6;
+    
     @ViewChild('searchg') public searchElement: ElementRef;
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -163,5 +165,8 @@ export class DiscoverComponent implements OnInit{
             this.Params.sub_category = "";}
         
         console.log(this.Params);
+    }
+    getShortNames(name:string){
+        return this.service.GetShortName(name,this.lengthShortName);
     }
 }

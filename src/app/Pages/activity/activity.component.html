@@ -13,10 +13,11 @@
                 <div class="round-card" [ngClass]="{'height333': MyBooking.id > 0,'height265':!(MyBooking.id > 0)}">
                     <div class="avatar pull-left">
                         <img class="profile-logo" alt="logo" [src]="UserLogo?UserLogo:'./app/images/man.jpg'" style="center">
-                        <span class="profile-text">{{Users[Activity.user_id]?.name?Users[Activity.user_id]?.name:'Author'}}</span>
+                        <span class="profile-text">{{Activity.user_name?getShortNames(Activity.user_name):'Author'}}</span>
                         <a [routerLink]="['/users',Activity?Activity.user_id:'0']"><span class="spanlink"></span></a>
                     </div>
                     <div class="about-org">
+                        <h3 class="word-wrap">{{Activity.user_name.slice(0,50)}}</h3>
                         <p [innerHTML]="Activity.user_description"></p>
                     </div>
                 </div>
@@ -242,7 +243,7 @@
                             <div class="comment word-break" *ngFor="let item of Comments">
                                 <div class="avatar pull-left">
                                     <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
-                                    <span class="profile-text">{{item.user_name?item.user_name.slice(0,6): 'Author'}}</span>
+                                    <span class="profile-text">{{item.user_name?getShortNames(item.user_name): 'Author'}}</span>
                                     <a [routerLink]="['/users',item.user_id]"><span class="spanlink"></span></a>
                                 </div>
                                 <div class="commentbody-rating-date">
@@ -276,7 +277,7 @@
                     <div class="comment border-bottom-hr" *ngFor="let item of DateBookings">
                         <div class="avatar pull-left">
                             <img class="profile-logo" alt="logo" [src]="Images[item.user_id]?Images[item.user_id]:'./app/images/man.jpg'" style="center">
-                            <span class="profile-text">{{item.user_name?item.user_name.slice(0,6): 'Author'}}</span>
+                            <span class="profile-text">{{item.user_name?getShortNames(item.user_name): 'Author'}}</span>
                             <a [routerLink]="['/users',item.user_id]"><span class="spanlink"></span></a>
                         </div>
                         <div class="commentbody-rating-date">

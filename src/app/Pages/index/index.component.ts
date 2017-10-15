@@ -31,7 +31,7 @@ export class IndexComponent implements OnInit{
     Activities: ActivityModel[] = [];
     Users: UserModel[] = [];
     Images: string[] = [];
-    
+    lengthShortName:number = 6;
     bsConfig:Partial<BsDatepickerConfig>;
     Params = {
         limit:4,
@@ -92,7 +92,9 @@ export class IndexComponent implements OnInit{
         .subscribe((res:ActivityModel[])=>{
             console.log(res);
             this.Activities = res;
+            //this.getShortNames();
             for(let item of this.Activities){
+                //this.getShortNames(item.user_name);
                 if(item.image_id){
                     this.service.GetImageById(item.image_id)
                         .subscribe((image:Base64ImageModel)=>{
@@ -113,6 +115,10 @@ export class IndexComponent implements OnInit{
             } 
             this.isLoading = false;
         });
+    }
+
+    getShortNames(name:string){
+        return this.service.GetShortName(name,this.lengthShortName);
     }
 
     openSearch(){

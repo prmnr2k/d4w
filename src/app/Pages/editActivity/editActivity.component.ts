@@ -47,7 +47,7 @@ export class EditActivityComponent implements OnInit{
         private mapsAPILoader: MapsAPILoader, 
         private ngZone: NgZone)
     {
-        this.CreateAutocompleteMap();
+       
     }
 
     ngOnInit() {
@@ -55,7 +55,7 @@ export class EditActivityComponent implements OnInit{
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.isLoading = true;
         this.activatedRoute.params.forEach((params:Params) => {
-            this.CreateAutocompleteMap();
+            
             this.actId = params["id"];
           
             this.Categories = this.service.GetCategoriesAsArrayCategory();
@@ -78,9 +78,9 @@ export class EditActivityComponent implements OnInit{
         this.mapsAPILoader.load().then(
             () => {
                 let flag: boolean = true;
-                while(flag){
+                
                 let autocomplete = new google.maps.places.Autocomplete(this.searchg.nativeElement, {types:[`(cities)`]});
-                if(autocomplete)flag=false;
+               
              console.log('ALLRIGHT ',autocomplete);
              
               autocomplete.addListener("place_changed", () => {
@@ -93,14 +93,14 @@ export class EditActivityComponent implements OnInit{
                 this.Activity.public_lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
                 this.Activity.public_lng = autocomplete.getPlace().geometry.location.toJSON().lng;
                 this.Activity.address = autocomplete.getPlace().formatted_address;
-                this.Activity.detailed_address = this.Activity.address;
+                
 
                 this.Activity.lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
                 this.Activity.lng = autocomplete.getPlace().geometry.location.toJSON().lng;
                }
               });
               });
-            }
+            
               } );
 
 
@@ -122,7 +122,7 @@ export class EditActivityComponent implements OnInit{
         this.Start = this.Activity.calendar[0];
         this.Finish = this.Activity.calendar[1]?this.Activity.calendar[1] : new Date();
         this.isLoading = false;
-        this.CreateAutocompleteMap();
+        
         console.log(`this activity after`,this.Activity);
     }
     OnEditActivityButtonClick()

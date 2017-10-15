@@ -161,6 +161,21 @@ import { CategoryModel } from '../models/category.model';
         GetRate(id:number){
             return this.httpService.GetData('/activities/get_my_rate/'+id,"");
         }
+        GetShortName(name:string,num:number){
+            let shortname:string = "";
+            if(name){
+                let mas:string[] = name.split(" ");
+                if(mas.length>1){
+                    for(let item of mas) shortname+=item[0]+" ";
+                    shortname = shortname.slice(0,num);
+                }
+                else {
+                    shortname = name.slice(0,num);
+                    if(name.length>num) shortname+="..";
+                }
+            }
+            return shortname;
+        }
         /* ACTIVITIES BLOCK END */
 
         /* BOOKINGS BLOCK START */

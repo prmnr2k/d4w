@@ -50,7 +50,7 @@ export class SearchComponent implements OnInit {
     isAdvanced:boolean = false;
     bsConfig:Partial<BsDatepickerConfig>;
     Categories:CategoryModel[] = [];
-
+    lengthShortName:number = 6;
     @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(private router: Router,
@@ -188,6 +188,10 @@ export class SearchComponent implements OnInit {
     markerClick(item:ActivityModel){
             console.log(`click`,item.id);
             this.router.navigate(['/activity/',item.id]);
+    }
+
+    getShortNames(name:string){
+        return this.service.GetShortName(name,this.lengthShortName);
     }
 
 }

@@ -3,7 +3,6 @@ export class CreateUserModel{
         public email?: string,
         public password?: string,
         public name?: string,
-        public short_name?: string,
         public image?: string,
         public date_of_birth?: Date,
         public gender?:string,

@@ -40,6 +40,7 @@ export class ActivityComponent implements OnInit{
     MyBooking:BookingModel = new BookingModel();
     BookingDate:Date = new Date();
     isInPast:boolean = true;
+    lengthShortName:number = 6;
    // ParamsRate: RateModel = new RateModel();
     Comment = {
         title: '',
@@ -525,5 +526,9 @@ export class ActivityComponent implements OnInit{
                 "background-color": color
             };
         }
+
+    getShortNames(name:string){
+        return this.service.GetShortName(name,this.lengthShortName);
+    }
 
 }

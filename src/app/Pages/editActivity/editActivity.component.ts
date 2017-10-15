@@ -24,7 +24,7 @@ import { ViewChild, ElementRef, NgZone } from '@angular/core';
     providers: [HttpService]
 })
 
-export class EditActivityComponent implements OnInit {
+export class EditActivityComponent implements OnInit{
     Activity:CreateActivityModel = new CreateActivityModel();
     Start:Date = new Date();
     Finish:Date = new Date();
@@ -34,7 +34,8 @@ export class EditActivityComponent implements OnInit {
     Categories: CategoryModel[] =[];
     MyCategory:CategoryModel = new CategoryModel();
     ErrMsg = '';
-    isEditErr = false;
+    isEditErr: boolean = false;
+    LoadAddress: boolean = false;
 
     @ViewChild('searchg') public searchg: ElementRef;
 
@@ -56,16 +57,16 @@ export class EditActivityComponent implements OnInit {
         this.activatedRoute.params.forEach((params:Params) => {
            
             this.actId = params["id"];
+          
             this.Categories = this.service.GetCategoriesAsArrayCategory();
             this.service.GetActivity(this.actId)
                 .subscribe((act:ActivityModel)=>{
                     this.AfterGettingActivity(act);
-                    this.CreateAutocompleteMap();
+                    
                 })
             this.service.GetMe()
-                .subscribe((res:UserModel)=>{
-
-                   
+                .subscribe((res:UserModel)=>{   
+                            
                 })   
         
         });
@@ -76,8 +77,12 @@ export class EditActivityComponent implements OnInit {
     CreateAutocompleteMap(){
         this.mapsAPILoader.load().then(
             () => {
-             let autocomplete = new google.maps.places.Autocomplete(this.searchg.nativeElement, {types:[`(cities)`]});
+                let flag: boolean = true;
+                while(flag){
+                let autocomplete = new google.maps.places.Autocomplete(this.searchg.nativeElement, {types:[`(cities)`]});
+                if(autocomplete)flag=false;
              console.log('ALLRIGHT ',autocomplete);
+             
               autocomplete.addListener("place_changed", () => {
                this.ngZone.run(() => {
                let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
@@ -96,7 +101,7 @@ export class EditActivityComponent implements OnInit {
               });
               });
             }
-               );
+              } );
 
 
     }
@@ -117,6 +122,7 @@ export class EditActivityComponent implements OnInit {
         this.Start = this.Activity.calendar[0];
         this.Finish = this.Activity.calendar[1]?this.Activity.calendar[1] : new Date();
         this.isLoading = false;
+        this.CreateAutocompleteMap();
         console.log(`this activity after`,this.Activity);
     }
     OnEditActivityButtonClick()

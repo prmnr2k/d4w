@@ -47,7 +47,7 @@ export class EditActivityComponent implements OnInit{
         private mapsAPILoader: MapsAPILoader, 
         private ngZone: NgZone)
     {
-        //this.CreateAutocompleteMap();
+        this.CreateAutocompleteMap();
     }
 
     ngOnInit() {
@@ -55,14 +55,14 @@ export class EditActivityComponent implements OnInit{
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.isLoading = true;
         this.activatedRoute.params.forEach((params:Params) => {
-           
+            this.CreateAutocompleteMap();
             this.actId = params["id"];
           
             this.Categories = this.service.GetCategoriesAsArrayCategory();
             this.service.GetActivity(this.actId)
                 .subscribe((act:ActivityModel)=>{
                     this.AfterGettingActivity(act);
-                    
+                    this.CreateAutocompleteMap();
                 })
             this.service.GetMe()
                 .subscribe((res:UserModel)=>{   

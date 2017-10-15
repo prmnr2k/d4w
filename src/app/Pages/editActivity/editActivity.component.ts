@@ -36,7 +36,7 @@ export class EditActivityComponent implements OnInit {
     ErrMsg = '';
     isEditErr = false;
 
-    @ViewChild('searchg') public searchElement: ElementRef;
+    @ViewChild('searchg') public searchg: ElementRef;
 
     constructor(
         private router: Router,
@@ -46,36 +46,38 @@ export class EditActivityComponent implements OnInit {
         private mapsAPILoader: MapsAPILoader, 
         private ngZone: NgZone)
     {
+        //this.CreateAutocompleteMap();
     }
 
     ngOnInit() {
+       
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.isLoading = true;
-
-       
         this.activatedRoute.params.forEach((params:Params) => {
+           
             this.actId = params["id"];
             this.Categories = this.service.GetCategoriesAsArrayCategory();
             this.service.GetActivity(this.actId)
                 .subscribe((act:ActivityModel)=>{
                     this.AfterGettingActivity(act);
+                    this.CreateAutocompleteMap();
                 })
             this.service.GetMe()
                 .subscribe((res:UserModel)=>{
-                    this.Activity.public_lat = res.lat;
-                    this.Activity.public_lng = res.lng;
-                    this.Activity.lat = res.lat;
-                    this.Activity.lng = res.lng;
+
+                   
                 })   
-        this.CreateAutocompleteMap();
+        
         });
-       
+        
     }
+
+
     CreateAutocompleteMap(){
         this.mapsAPILoader.load().then(
             () => {
-             let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
-             console.log(autocomplete);
+             let autocomplete = new google.maps.places.Autocomplete(this.searchg.nativeElement, {types:[`(cities)`]});
+             console.log('ALLRIGHT ',autocomplete);
               autocomplete.addListener("place_changed", () => {
                this.ngZone.run(() => {
                let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
@@ -86,6 +88,10 @@ export class EditActivityComponent implements OnInit {
                 this.Activity.public_lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
                 this.Activity.public_lng = autocomplete.getPlace().geometry.location.toJSON().lng;
                 this.Activity.address = autocomplete.getPlace().formatted_address;
+                this.Activity.detailed_address = this.Activity.address;
+
+                this.Activity.lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
+                this.Activity.lng = autocomplete.getPlace().geometry.location.toJSON().lng;
                }
               });
               });
@@ -94,8 +100,10 @@ export class EditActivityComponent implements OnInit {
 
 
     }
+
     AfterGettingActivity(act:ActivityModel){
         this.Activity = this.service.ActivityModelToCreateActivityModel(act);
+
         if(this.Activity.sub_category){
             this.MyCategory = this.Categories.find(obj=>obj.value == this.Activity.sub_category);
         }
@@ -109,6 +117,7 @@ export class EditActivityComponent implements OnInit {
         this.Start = this.Activity.calendar[0];
         this.Finish = this.Activity.calendar[1]?this.Activity.calendar[1] : new Date();
         this.isLoading = false;
+        console.log(`this activity after`,this.Activity);
     }
     OnEditActivityButtonClick()
     {
@@ -122,6 +131,8 @@ export class EditActivityComponent implements OnInit {
         }
         this.service.UpdateActivity(this.actId,this.Activity)
         .subscribe((res:ActivityModel)=>{
+            console.log(`---> `,res,this.Activity);
+            
             this.router.navigate(['/activity',res.id]);
             /*console.log(res);
             this.AfterGettingActivity(res);*/

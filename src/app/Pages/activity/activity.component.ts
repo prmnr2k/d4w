@@ -154,7 +154,7 @@ export class ActivityComponent implements OnInit{
         let today: Date = new Date();
         for (var item of this.Activity.calendar) {
             let cur: Date = new Date(item.date);
-            if (today<=cur) {return this.isInPast = false;   }
+            if (today<cur) {return this.isInPast = false;   }
         }
     }
 

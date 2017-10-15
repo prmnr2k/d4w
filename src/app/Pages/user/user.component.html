@@ -242,7 +242,7 @@
                             </div>
                             <div *ngIf="MesLoading" class="loading max-height200"></div>
                             <div *ngIf="!MesLoading">
-                                <div class="chat-history" #scrollMe style="overflow: scroll; height: xyz;">
+                                <div class="chat-history" #scrollMe style="overflow-x: hidden; height: xyz;">
                                     <h3 *ngIf="!MesLoading && Messages.length == 0" class="h-center">There is no messages!</h3>
                                     <div *ngFor="let item of Messages" class="message_item" [ngClass]="{'my_message':item.from_id == User.id}">
                                         <p class="message_body">{{item.body}}</p>

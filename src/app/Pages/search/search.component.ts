@@ -141,13 +141,25 @@ export class SearchComponent implements OnInit {
                    
             } 
             this.ActivityRev(activ);
+
+           // if(!this.Params.public_lat){
+                
+            //}
+
             this.isLoading = false;
         });
        
     }
     ActivityRev(act:ActivityModel[]){
         this.Activities = [];
+        
         for(let item of act) if(item.user_name&&item.title)this.Activities.push(item);
+
+        if(this.Activities.length>0){
+        this.lat = this.Activities[0].public_lat;
+        this.lng = this.Activities[0].public_lng;
+        }
+      
     }
 
     FromDateChanged($event){

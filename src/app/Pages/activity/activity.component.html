@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="booking" *ngIf="isLoggedIn">
-                    <div *ngIf="Me.id == Activity.user_id" class="round-card">
+                    <div *ngIf="Me.id == Activity.user_id && !isInPast"  class="round-card">
                         <h3>Activity information</h3>
                         <form>
                             <div class="form-group  form-group-makeinline">
@@ -69,7 +69,7 @@
                             <button type="button" class="btn btn-pink btn-lg" (click)="DeleteActivity()">Delete Activity</button>
                         </div>
                     </div>
-                    <div *ngIf="!MyBooking.id && Me.id != Activity.user_id" class="round-card">
+                    <div *ngIf="!MyBooking.id && Me.id != Activity.user_id && !isInPast" class="round-card">
                         <h3>Reserve</h3>
                         <div *ngIf="isBookingErr">
                             <h4 class="error-msg">Incorrect number of participants! Available places is <b>{{Available}}</b></h4>
@@ -95,7 +95,15 @@
                             </div>
                         </form>
                     </div>
-                    <div *ngIf="MyBooking.id > 0 && Me.id != Activity.user_id" class="round-card">
+
+                    <div *ngIf="isInPast" class="round-card">
+                        <h4 class="error-msg">Activity in past!</h4>
+                        <div class="form-group form-group-makeinline">
+                            <span>See more activities in  <a [routerLink]="['/search']">Search Page</a></span>
+                        </div>
+                    </div>
+
+                    <div *ngIf="MyBooking.id > 0 && Me.id != Activity.user_id && !isInPast" class="round-card">
                         <h3>Update my booking</h3>
                         <div *ngIf="isBookingErr">
                             <h4 class="error-msg"> Available places is <b>{{Available}}</b></h4>

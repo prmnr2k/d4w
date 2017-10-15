@@ -39,6 +39,7 @@ export class ActivityComponent implements OnInit{
     Me:UserModel = new UserModel();
     MyBooking:BookingModel = new BookingModel();
     BookingDate:Date = new Date();
+    isInPast:boolean = true;
    // ParamsRate: RateModel = new RateModel();
     Comment = {
         title: '',
@@ -114,6 +115,7 @@ export class ActivityComponent implements OnInit{
                 })
         });
 
+      
         
     }
 
@@ -126,6 +128,7 @@ export class ActivityComponent implements OnInit{
                 this.ParamsRate.activity_id=act.id;
               
                 this.Activity = act;
+                this.inPast();
                 this.Booking.date = this.Activity.calendar[0].date;
                 console.log(this.Booking.date);
                 if(this.Activity.image_id){
@@ -147,6 +150,13 @@ export class ActivityComponent implements OnInit{
             });
     }
 
+    inPast(){
+        let today: Date = new Date();
+        for (var item of this.Activity.calendar) {
+            let cur: Date = new Date(item.date);
+            if (today<=cur) {return this.isInPast = false;   }
+        }
+    }
 
     GetComments(){
         this.service.GetAllComments({activity_id:this.Activity.id})
@@ -190,7 +200,8 @@ export class ActivityComponent implements OnInit{
     CreateBooking(){
         this.isBookingErr = false;
         this.Booking.activity_id = this.Activity.id;
-        if(this.Booking.num_of_participants > this.Activity.num_of_bookings){
+        
+        if(!this.isInPast&&this.Booking.num_of_participants > this.Activity.num_of_bookings){
             this.isBookingErr = true;
             this.Booking.num_of_participants = this.Activity.num_of_bookings;
             return;

@@ -66,9 +66,10 @@ export class EditActivityComponent implements OnInit {
                     this.Activity.public_lng = res.lng;
                     this.Activity.lat = res.lat;
                     this.Activity.lng = res.lng;
-                })
-        });
+                })   
         this.CreateAutocompleteMap();
+        });
+       
     }
     CreateAutocompleteMap(){
         this.mapsAPILoader.load().then(

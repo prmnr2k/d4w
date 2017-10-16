@@ -153,6 +153,7 @@ export class ActivityComponent implements OnInit{
 
     inPast(){
         let today: Date = new Date();
+        today.setDate(today.getDate()-1);
         for (var item of this.Activity.calendar) {
             let cur: Date = new Date(item.date);
             if (today<cur) {return this.isInPast = false;   }
@@ -520,7 +521,7 @@ export class ActivityComponent implements OnInit{
         else if(this.TotalRate.rate>=3)color=`#67b548`;
         else if(this.TotalRate.rate>=2)color=`#89cf6d`;
         else if(this.TotalRate.rate>=1)color=`#b05153`;
-        else if(this.TotalRate.rate==0)color=`#FF00FF`;
+        else if(this.TotalRate.rate==0)color=`#67b548`;
             return {
                 
                 "background-color": color

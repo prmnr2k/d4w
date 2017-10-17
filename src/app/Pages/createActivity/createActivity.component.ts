@@ -53,16 +53,20 @@ export class CreateActivityComponent implements OnInit {
     ngOnInit() {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.Activity.calendar = [];
+
+        this.mapLat = 48.8916733;
+        this.mapLng = 2.3016161;
+        this.Activity.lat = 48.8916733;
+        this.Activity.lng = 2.3016161;
+        this.Activity.public_lat = 48.8916733;
+        this.Activity.public_lng = 2.3016161;
+
         this.NewDate();
         this.Categories = this.service.GetCategoriesAsArrayCategory();
+        
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
-                this.mapLat = 48.8916733;
-                this.mapLng = 2.3016161;
-                this.Activity.lat = 48.8916733;
-                this.Activity.lng = 2.3016161;
-                this.Activity.public_lat = 48.8916733;
-                this.Activity.public_lng = 2.3016161;
+                
                 if(res.lat && res.lng){
                     this.Activity.lat = res.lat;
                     this.Activity.lng = res.lng;

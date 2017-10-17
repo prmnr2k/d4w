@@ -19,11 +19,11 @@
                             
                         </div>
                         <div class="form-group">
-                                <input ngui-auto-complete autocomplete="off" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
+                                <input ngui-auto-complete autocomplete="off" [ngModel]="MyCategory" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
                                 <span  class="material-icons input-icon">loyalty</span>
                             </div>
                         <div class="form-group index-search">
-                            <input type="text" placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control input-withicon input-lg" #searchg>
+                            <input type="text" placeholder="Search for Location" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control input-withicon input-lg" #searchg [value]="Params.address">
                             <span class="material-icons input-icon">location_on</span>
                         </div>
                         <div class="form-group">
@@ -52,7 +52,7 @@
                                 <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
                                 <div class="avatar">
                                     <img class="profile-logo" alt="logo" [src]="Images['user'+item.user_id]?Images['user'+item.user_id]:'./app/images/man.jpg'">
-                                    <span class="profile-text">{{Users[item.user_id]?.name?getShortNames(Users[item.user_id]?.name):'Author'}}</span>
+                                    <span class="profile-text">{{item.user_name?getShortNames(item.user_name):'Author'}}</span>
                                 </div>
                                 <span class="cardshadow"></span>
                                 <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
@@ -67,7 +67,7 @@
                                 <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
                                 <div class="avatar">
                                     <img class="profile-logo" alt="logo" [src]="Images['user'+item.user_id]?Images['user'+item.user_id]:'./app/images/man.jpg'">
-                                    <span class="profile-text">{{Users[item.user_id]?.name?getShortNames(Users[item.user_id]?.name):'Author'}}</span>
+                                    <span class="profile-text">{{item.user_name?getShortNames(item.user_name):'Author'}}</span>
                                 </div>
                                 <span class="cardshadow"></span>
                                 <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>

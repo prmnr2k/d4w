@@ -131,34 +131,46 @@
                         </form>
                         <div class="form-group form-group-makeinline">
                             <button type="button" class="btn btn-pink btn-lg" (click)="Unsubscribe()">Unsubscribe</button>
-                            <button type="button" class="btn btn-primary btn-lg" (click)="modal1.show()">Send message</button>
+                            <button type="button" class="btn btn-primary btn-lg" (click)="ReadMessages(modal1)">Send message</button>
+                            
                             <modal #modal1>
-                              <div class="app-modal-header">
-                                Send message to <b>{{Activity.user_name}}</b>
-                              </div>
-                              <div class="app-modal-body">
-                                <div *ngIf="MessOk">
-                                    <h4 class="ok-msg"> Your message was send to <b>{{Activity.user_name}}</b></h4>
+                                <div class="app-modal-header">
+                                    Chat with <b>{{Activity.user_name}}</b>
                                 </div>
-                                <div *ngIf="MessErr">
-                                    <h4 class="error-msg">Input correct title and body!</h4>
-                                </div>
-                                <div *ngIf="MesLoading" class="loading max-height200"></div>
-                                <form *ngIf="!MesLoading" (ngSubmit)="SendMessage()">
-                                    <div class="form-group">
-                                        <label>Body</label>
-                                        <textarea name="description" class="form-control input-lg" [ngModel]="Message.body" (ngModelChange)="Message.body = $event"></textarea>
+                                <div class="app-modal-body">
+                                    <div *ngIf="MessOk">
+                                        <h4 class="ok-msg"> Your message was send to 
+                                            <b>{{Activity.user_name}}</b>
+                                        </h4>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12 text-center">
-                                            <button class="btn btn-success btn-lg" type="submit">Send message</button>
+                                    <div *ngIf="MessErr">
+                                        <h4 class="error-msg">Input body!</h4>
+                                    </div>
+                                    <div *ngIf="MesLoading" class="loading max-height200"></div>
+                                    <div *ngIf="!MesLoading">
+                                        <div class="chat-history" #scrollMe style="overflow-x: hidden; height: xyz;">
+                                            <h3 *ngIf="!MesLoading && Messages.length == 0" class="h-center">There is no messages!</h3>
+                                            <div *ngFor="let item of Messages" class="message_item" [ngClass]="{'my_message':item.from_id != Activity.user_id}">
+                                                <p class="message_body">{{item.body}}</p>
+                                                <p class="message_date">{{item.updated_at | date:'HH:mm, dd/MM/yyyy'}}</p>
+                                            </div>
                                         </div>
+                                        <form  (ngSubmit)="SendMessage()">
+                                            <div class="form-group">
+                                                <textarea name="description" class="form-control input-lg" [ngModel]="Message.body" (ngModelChange)="Message.body = $event"></textarea>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn btn-success btn-lg" type="submit">Send message</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
-                                 </form>
-                              </div>
-                              <div class="app-modal-footer">
-                                <button type="button" class="btn btn-primary" (click)="modal1.hide()">Cancel</button>
-                              </div>
+        
+                                </div>
+                                <div class="app-modal-footer">
+                                    <button type="button" class="btn btn-primary" (click)="modal1.hide()">Cancel</button>
+                                </div>
                             </modal>
                         </div>
                     </div>

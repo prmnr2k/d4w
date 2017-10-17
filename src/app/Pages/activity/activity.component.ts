@@ -41,6 +41,7 @@ export class ActivityComponent implements OnInit{
     BookingDate:Date = new Date();
     isInPast:boolean = true;
     lengthShortName:number = 6;
+    Messages:MessageModel[] = [];
    // ParamsRate: RateModel = new RateModel();
     Comment = {
         title: '',
@@ -333,11 +334,7 @@ export class ActivityComponent implements OnInit{
         this.service.CreateMessage(this.Message)
             .subscribe((mes:MessageModel)=>{
                 this.Message.body = "";
-                this.MessOk = true;
-                this.MessLoading = false;
-                setTimeout(()=>{
-                    this.MessOk = false;
-                },5000);
+                this.GetMessages();
             },
         (err:any)=>{
             this.MessErr = true;
@@ -530,6 +527,26 @@ export class ActivityComponent implements OnInit{
 
     getShortNames(name:string){
         return this.service.GetShortName(name,this.lengthShortName);
+    }
+
+
+    GetMessages(){
+        this.MessLoading = true;
+        this.service.GetChatHistory({user_id:this.Activity.user_id})
+        .subscribe((res:MessageModel[])=>{
+            this.Messages = res;
+        },
+        (err)=>{
+            this.Messages = [];
+            this.MessLoading = false;
+        });
+    }
+
+    ReadMessages(modal:any){
+        this.MessLoading = true;
+        modal.show();
+        this.GetMessages();
+        
     }
 
 }

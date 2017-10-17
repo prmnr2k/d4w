@@ -221,7 +221,7 @@
                             <tr *ngFor="let item of ChatList">
                                 <td [ngClass]="{'unread':item.has_unread}">{{item.last_date| date: 'dd/MM/yyyy'}}</td>
                                 <td [ngClass]="{'unread':item.has_unread}">{{item.last_date| date: 'HH:mm'}}</td>
-                                <td [ngClass]="{'unread':item.has_unread}">{{item.name}}</td>
+                                <td [ngClass]="{'unread':item.has_unread}">{{item.name?getShortNames(item.name,10):'Author'}}</td>
                                 
                                 <td><a class="read-more" (click)="ReadMessages(item,modal1)">show</a></td>
                             </tr>
@@ -308,7 +308,7 @@
                         <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
                         <div class="avatar">
                             <img class="profile-logo" alt="logo" [src]="Logo?Logo:'./app/images/man.jpg'">
-                            <span class="profile-text">{{User.short_name?User.short_name:User.name.slice(0,6)}}</span>
+                            <span class="profile-text">{{User.name?getShortNames(User.name,5):'Author'}}</span>
                         </div>
                         <span class="cardshadow"></span>
                         <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>

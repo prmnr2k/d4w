@@ -134,13 +134,14 @@ import { CategoryModel } from '../models/category.model';
                 detailed_address:act.detailed_address,
                 lat:act.lat,
                 lng:act.lng,
-                public_lat:act.public_lat,
-                public_lng:act.public_lng,
+                public_lat:act.public_lat?act.public_lat:act.lat,
+                public_lng:act.public_lng?act.public_lng:act.lng,
                 description:act.description,
                 calendar:this.CalendarArrToDateArr(act.calendar),
                 rate:act.rate,
                 category:act.category,
                 sub_category:act.sub_category
+                
             };
             return res;
         }
@@ -166,12 +167,15 @@ import { CategoryModel } from '../models/category.model';
             if(name){
                 let mas:string[] = name.split(" ");
                 if(mas.length>1){
-                    for(let item of mas) shortname+=item[0]+" ";
+                    for(let item of mas) {
+                        item = item.toUpperCase();
+                        shortname+=item[0]+".";
+                    }
                     shortname = shortname.slice(0,num);
                 }
                 else {
                     shortname = name.slice(0,num);
-                    if(name.length>num) shortname+="..";
+                    if(name.length>num) shortname+="...";
                 }
             }
             return shortname;

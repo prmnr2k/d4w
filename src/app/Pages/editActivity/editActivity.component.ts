@@ -37,7 +37,7 @@ export class EditActivityComponent implements OnInit{
     isEditErr: boolean = false;
     LoadAddress: boolean = false;
 
-    @ViewChild('searchg') public searchg: ElementRef;
+    @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(
         private router: Router,
@@ -79,31 +79,36 @@ export class EditActivityComponent implements OnInit{
             () => {
                 let flag: boolean = true;
                 
-                let autocomplete = new google.maps.places.Autocomplete(this.searchg.nativeElement, {types:[`(cities)`]});
-               
-             console.log('ALLRIGHT ',autocomplete);
+                let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
              
-              autocomplete.addListener("place_changed", () => {
-               this.ngZone.run(() => {
-               let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
-               if(place.geometry === undefined || place.geometry === null ){
-                return;
-               }
-               else {
-                this.Activity.public_lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
-                this.Activity.public_lng = autocomplete.getPlace().geometry.location.toJSON().lng;
-                this.Activity.address = autocomplete.getPlace().formatted_address;
-                
-
-                this.Activity.lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
-                this.Activity.lng = autocomplete.getPlace().geometry.location.toJSON().lng;
-               }
-              });
-              });
+                autocomplete.addListener("place_changed", () => {
+                    this.ngZone.run(() => {
+                        let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
+                        if(place.geometry === undefined || place.geometry === null )
+                        {
+                            return;
+                        }
+                        else 
+                        {
+                            console.log(this.Activity.address);
+                            console.log(place.formatted_address);
+                            this.Activity.address = place.formatted_address;
+                            this.Activity.public_lat  = place.geometry.location.lat();
+                            this.Activity.public_lng = place.geometry.location.lng();
+                            this.Activity.lat  = place.geometry.location.lat();
+                            this.Activity.lng = place.geometry.location.lng();
+                            console.log('new value');
+                            console.log(this.Activity.address);
+                            console.log(place.formatted_address);
+                            /*this.Activity.public_lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
+                            this.Activity.public_lng = autocomplete.getPlace().geometry.location.toJSON().lng;
+                            this.Activity.lat  = autocomplete.getPlace().geometry.location.toJSON().lat;
+                            this.Activity.lng = autocomplete.getPlace().geometry.location.toJSON().lng;*/
+                        }
+                    });
+                });
             
-              } );
-
-
+            });
     }
 
     AfterGettingActivity(act:ActivityModel){

@@ -352,4 +352,8 @@ export class UserComponent implements OnInit,AfterViewChecked{
         });
     }
 
+    getShortNames(name:string, length :number){
+        return this.service.GetShortName(name,length);
+    }
+
 }

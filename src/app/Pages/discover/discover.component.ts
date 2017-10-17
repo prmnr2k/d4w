@@ -45,7 +45,7 @@ export class DiscoverComponent implements OnInit{
     bsConfig:Partial<BsDatepickerConfig>;
     Categories:CategoryModel[] = [];
     MyCategory: CategoryModel = new CategoryModel();
-    lengthShortName:number = 6;
+    lengthShortName:number = 5;
     
     @ViewChild('searchg') public searchElement: ElementRef;
     constructor(private router: Router,
@@ -59,12 +59,29 @@ export class DiscoverComponent implements OnInit{
     ngOnInit(){
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         let sub:any = this.route.params.subscribe(params => {
-            this.Params.limit = +params['limit']; // (+) converts string 'id' to a number
-            this.Params.address = params['address'];
-            this.Params.title = params['title'];
-            this.Params.from_date = params['from_date'];
-            this.Params.category = params['category'];
-            this.Params.sub_category = params['sub_category'];
+            //this.Params.limit = +params['limit']; // (+) converts string 'id' to a number
+            if(params['address'])
+                this.Params.address = params['address'];
+            else 
+                this.Params.address = '';
+            if(params['title'])
+                this.Params.title = params['title'];
+            else 
+                this.Params.title = '';
+            if(params['from_date'])
+                this.Params.from_date = params['from_date'];
+            else 
+                this.Params.from_date = null;
+            if(params['category'])
+                this.Params.category = params['category'];
+            else 
+                this.Params.category = '';
+            if(params['sub_category'])
+                this.Params.sub_category = params['sub_category'];
+            else 
+                this.Params.sub_category = '';
+
+            console.log(this.Params);
             
             this.Categories = this.service.GetAllCategoriesAsArrayCategory();
 
@@ -94,9 +111,8 @@ export class DiscoverComponent implements OnInit{
               });
             }
                );
-
-
     }
+
     GetAllActivities(){
         this.isLoading = true;
         
@@ -151,9 +167,9 @@ export class DiscoverComponent implements OnInit{
 
 
     autocompleListFormatter = (data: CategoryModel) : SafeHtml => {
-        console.log(`autocompleListFormatter`);
         let html =  `<span><b>${data.name}</b></span>`;
-        if(data.parent)html = `<span>${data.parent} : <b>${data.name}</b></span>`;
+        if(data.parent)
+            html = `<span>${data.parent} : <b>${data.name}</b></span>`;
         return this._sanitizer.bypassSecurityTrustHtml(html);
     }
     CategoryChanged($event:CategoryModel){

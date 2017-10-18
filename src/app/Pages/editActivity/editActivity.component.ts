@@ -16,7 +16,7 @@ import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { MapsAPILoader } from '@agm/core';
 import {} from '@types/googlemaps';
 import { ViewChild, ElementRef, NgZone } from '@angular/core';
-
+import { NavigationExtras } from '@angular/router';
 @Component({
     moduleId:module.id,
     selector: 'editActivity',
@@ -36,16 +36,17 @@ export class EditActivityComponent implements OnInit{
     ErrMsg = '';
     isEditErr: boolean = false;
     LoadAddress: boolean = false;
-
-    @ViewChild('searchg') public searchElement: ElementRef;
+    needReload = false;
+    @ViewChild('searchg', { read: ElementRef }) searchElement: ElementRef;
 
     constructor(
+        private mapsAPILoader: MapsAPILoader, 
+        private ngZone: NgZone,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private service: MainService,
-        private _sanitizer: DomSanitizer,
-        private mapsAPILoader: MapsAPILoader, 
-        private ngZone: NgZone)
+        private _sanitizer: DomSanitizer
+        )
     {
        
     }
@@ -54,10 +55,19 @@ export class EditActivityComponent implements OnInit{
        
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.isLoading = true;
+
         this.activatedRoute.params.forEach((params:Params) => {
-            
+
+            console.log(location.search);
+           
+            if(location.search != '?reload=true' ) {
+                this.router.navigate(['/edit_act',params["id"]],{ queryParams: { reload: true } });
+                location.reload();
+            }
+
             this.actId = params["id"];
-          
+            this.Activity.lat = null;
+            this.Activity.lng = null;
             this.Categories = this.service.GetCategoriesAsArrayCategory();
             this.service.GetActivity(this.actId)
                 .subscribe((act:ActivityModel)=>{
@@ -77,7 +87,6 @@ export class EditActivityComponent implements OnInit{
     CreateAutocompleteMap(){
         this.mapsAPILoader.load().then(
             () => {
-                let flag: boolean = true;
                 
                 let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
              
@@ -95,8 +104,8 @@ export class EditActivityComponent implements OnInit{
                             this.Activity.address = place.formatted_address;
                             this.Activity.public_lat  = place.geometry.location.lat();
                             this.Activity.public_lng = place.geometry.location.lng();
-                            this.Activity.lat  = place.geometry.location.lat();
-                            this.Activity.lng = place.geometry.location.lng();
+                           // this.Activity.lat  = place.geometry.location.lat();
+                           // this.Activity.lng = place.geometry.location.lng();
                             console.log('new value');
                             console.log(this.Activity.address);
                             console.log(place.formatted_address);
@@ -168,8 +177,8 @@ export class EditActivityComponent implements OnInit{
         myReader.readAsDataURL(file);
     }
     mapClicked($event: any) {
-        this.Activity.lat = $event.coords.lat;
-        this.Activity.lng = $event.coords.lng;
+        //this.Activity.lat = $event.coords.lat;
+       // this.Activity.lng = $event.coords.lng;
     }
     NewDate(){
         this.Activity.calendar.push(new Date());
@@ -244,7 +253,7 @@ export class EditActivityComponent implements OnInit{
             return false;
         }
 
-        if(!this.Activity.lat && !this.Activity.lng){
+        if(!this.Activity.public_lat && !this.Activity.public_lng){
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
             this.ErrMsg += "Mark on the map";*/

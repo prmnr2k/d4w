@@ -15,6 +15,7 @@ import { BookingModel } from '../../models/booking.model';
 import { CreateMessageModel } from '../../models/createMessage.model';
 import { MessageModel } from '../../models/message.model';
 import { RateModel } from '../../models/rate.model';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
     moduleId:module.id,

@@ -36,8 +36,8 @@ export class CreateActivityComponent implements OnInit {
     ErrMsg = '';
     bsConfig:Partial<BsDatepickerConfig>;
     Categories: CategoryModel[] =[];
-    mapLat:number;
-    mapLng:number;
+    //mapLat:number;
+    //mapLng:number;
     
     @ViewChild('searchg') public searchElement: ElementRef;
 
@@ -54,10 +54,10 @@ export class CreateActivityComponent implements OnInit {
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.Activity.calendar = [];
 
-        this.mapLat = 48.8916733;
-        this.mapLng = 2.3016161;
-        this.Activity.lat = 48.8916733;
-        this.Activity.lng = 2.3016161;
+        //this.mapLat = 48.8916733;
+        //this.mapLng = 2.3016161;
+        //this.Activity.lat = 48.8916733;
+        //this.Activity.lng = 2.3016161;
         this.Activity.public_lat = 48.8916733;
         this.Activity.public_lng = 2.3016161;
 
@@ -68,12 +68,12 @@ export class CreateActivityComponent implements OnInit {
             .subscribe((res:UserModel)=>{
                 
                 if(res.lat && res.lng){
-                    this.Activity.lat = res.lat;
-                    this.Activity.lng = res.lng;
+                    //this.Activity.lat = res.lat;
+                    //this.Activity.lng = res.lng;
                     this.Activity.public_lat = res.lat;
                     this.Activity.public_lng = res.lng;
-                    this.mapLat = res.lat;
-                    this.mapLng = res.lng;
+                    //this.mapLat = res.lat;
+                    //this.mapLng = res.lng;
                 }
             })
             this.CreateAutocompleteMap();
@@ -90,10 +90,10 @@ export class CreateActivityComponent implements OnInit {
                 return;
                }
                else {
-                this.mapLat = autocomplete.getPlace().geometry.location.toJSON().lat;
-                this.mapLng = autocomplete.getPlace().geometry.location.toJSON().lng;
-                this.Activity.lat = this.mapLat;
-                this.Activity.lng = this.mapLng;
+                this.Activity.public_lat = autocomplete.getPlace().geometry.location.toJSON().lat;
+                this.Activity.public_lng = autocomplete.getPlace().geometry.location.toJSON().lng;
+                //this.Activity.lat = this.mapLat;
+                //this.Activity.lng = this.mapLng;
                 this.Activity.address = autocomplete.getPlace().formatted_address;
                }
               });
@@ -158,7 +158,7 @@ export class CreateActivityComponent implements OnInit {
             return false;
         }
 
-        if(!this.Activity.lat && !this.Activity.lng){
+        if(!this.Activity.public_lat && !this.Activity.public_lng){
             /*if(len < this.ErrMsg.length)
                 this.ErrMsg += ",";
             this.ErrMsg += "Mark on the map";*/

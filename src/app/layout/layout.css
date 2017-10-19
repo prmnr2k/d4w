@@ -490,9 +490,19 @@ h1{
 }
 
 .map {
-    
     margin-bottom: 30px;
     margin-top: 30px;
+}
+.map-fixed{
+    margin-top: 5px;
+    top: 15px;
+    position: fixed;
+    z-index: 999;
+    width: 100px;
+}
+.map-upload{
+    position: fixed;
+    top:180px;
 }
 .container700{
     width:735px;
@@ -896,7 +906,8 @@ agm-map {
 }
 
 .search_map{
-    height: 1500px;
+    height: 900px;
+   
 }
 
 .mrg-top20{

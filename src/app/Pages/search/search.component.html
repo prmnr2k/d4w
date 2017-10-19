@@ -1,5 +1,6 @@
 <div class="container-fluid center-block container1440">
     <div class="row">
+
         <div class="col-xs-12 col-md-7 left-side" id="filters-cards">
             <div class="controls controls-inline">
 
@@ -19,7 +20,7 @@
                     </div>
                    
                     
-                    <div class="form-group" *ngIf="isAdvanced">
+                    <div class="form-group">
                         <input type="text" name="desc_toll1" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
                         <span class="material-icons input-icon">toll</span>
                     </div>
@@ -48,32 +49,30 @@
                 
             </div>
             <div class="col-sm-12 ">
-            <div class="cards" *ngIf="!isLoading && Activities.length > 0">
-                <div class="container-fluid">
-                    <div *ngFor="let item of Activities"  class="col-xs-12 col-sm-6 pull-left">
-                        <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
-                            <h3 class="cardname word-wrap">{{item.title.slice(0,100)}}</h3>
-                            <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
-                            <div class="avatar">
-                                <img class="profile-logo" alt="logo" [src]="Images['user'+item.user_id]?Images['user'+item.user_id]:'./app/images/man.jpg'">
-                                <span class="profile-text">{{Users[item.user_id]?.name?getShortNames(Users[item.user_id]?.name):'Author'}}</span>
+                <div class="cards" *ngIf="!isLoading && Activities.length > 0">
+                    <div class="container-fluid">
+                        <div *ngFor="let item of Activities"  class="col-xs-12 col-sm-6 pull-left">
+                            <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
+                                <h3 class="cardname word-wrap">{{item.title.slice(0,100)}}</h3>
+                                <h3 class="carddate">{{item.calendar[0].date | date: "dd MMM"}}</h3>
+                                <div class="avatar">
+                                    <img class="profile-logo" alt="logo" [src]="Images['user'+item.user_id]?Images['user'+item.user_id]:'./app/images/man.jpg'">
+                                    <span class="profile-text">{{Users[item.user_id]?.name?getShortNames(Users[item.user_id]?.name):'Author'}}</span>
+                                </div>
+                                <span class="cardshadow"></span>
+                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
                             </div>
-                            <span class="cardshadow"></span>
-                            <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
 
-        <div class="col-xs-12 col-md-5 map">
-            <agm-map class="search_map" [latitude]="lat" [longitude]="lng">            
+        <div class="col-xs-12 col-md-5 map" [class.map-fixed]="isMapFixed">
+            <agm-map class="search_map" [latitude]="lat" [longitude]="lng" [style.width]="isMapFixed==true?'500px':'auto'">>            
                     <agm-marker *ngFor="let item of Activities; let i = index" [markerDraggable]="false" [title]="item.title" (markerClick)="markerClick(item)" [latitude]="item.public_lat" [longitude]="item.public_lng"></agm-marker> 
             </agm-map>
         </div>
-
-        
     </div>
 </div>
 <!-- jQuery CDN -->

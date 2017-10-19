@@ -51,6 +51,8 @@ export class SearchComponent implements OnInit {
     bsConfig:Partial<BsDatepickerConfig>;
     Categories:CategoryModel[] = [];
     lengthShortName:number = 6;
+    isMapFixed:boolean = false;
+    
     @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(private router: Router,
@@ -70,6 +72,15 @@ export class SearchComponent implements OnInit {
         this.Categories = this.service.GetAllCategoriesAsArrayCategory();    
         this.CreateAutocompleteMap();
         this.GetAllActivities();
+
+        window.addEventListener(`scroll`, (e) => {
+            if (window.pageYOffset > 180&&window.pageYOffset<document.documentElement.scrollHeight-document.documentElement.clientHeight-250) {
+                this.isMapFixed = true;
+            } else {
+                this.isMapFixed = false;
+            }
+        });
+        
     }
 
     CreateAutocompleteMap(){

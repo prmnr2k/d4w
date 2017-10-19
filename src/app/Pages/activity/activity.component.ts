@@ -519,7 +519,7 @@ export class ActivityComponent implements OnInit{
         else if(this.TotalRate.rate>=3)color=`#67b548`;
         else if(this.TotalRate.rate>=2)color=`#89cf6d`;
         else if(this.TotalRate.rate>=1)color=`#b05153`;
-        else if(this.TotalRate.rate==0)color=`#67b548`;
+        else if(this.TotalRate.rate==0)color=`#3EE1AB`;
             return {
                 
                 "background-color": color

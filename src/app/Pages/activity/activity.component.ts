@@ -213,6 +213,7 @@ export class ActivityComponent implements OnInit{
         this.service.CreateBooking(this.Booking)
             .subscribe((book:BookingModel)=>{
                 this.GetBookings();
+                this.SendMessage('I am booking '+this.Activity.title+' activity!');
             },
         (err:any)=>{
             console.log(err);
@@ -221,6 +222,9 @@ export class ActivityComponent implements OnInit{
                 this.isBookingErr = false;
             },5000)
         })
+
+       
+
     }
 
     UpdateBooking(){
@@ -319,11 +323,13 @@ export class ActivityComponent implements OnInit{
         this.MyBooking.num_of_participants = $event;
     }
 
-    SendMessage(){
+    SendMessage(msg?:string){
+       
         this.MessLoading = true;
         this.MessErr = false;
         this.MessOk = false;
         this.Message.to_id = this.Activity.user_id;
+        if(msg) this.Message.body = msg;
         if(!this.Message.body){
             this.MessErr = true;
             this.MessLoading = false;

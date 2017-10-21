@@ -46,10 +46,11 @@ export class DiscoverComponent implements OnInit{
     Categories:CategoryModel[] = [];
     MyCategory: CategoryModel = new CategoryModel();
     lengthShortName:number = 5;
-    lat:number = 48.8916733;
-    lng:number = 2.3016161;
+    //lat:number = 48.8916733;
+    //lng:number = 2.3016161;
 
     @ViewChild('searchg') public searchElement: ElementRef;
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private service: MainService,
@@ -59,6 +60,16 @@ export class DiscoverComponent implements OnInit{
         private ngZone: NgZone){}
 
     ngOnInit(){
+        
+        /*
+        this.service.GetMe()
+        .subscribe((res:UserModel)=>{
+            if(res.lat&&res.lng){
+                this.lat = res.lat;
+                this.lng = res.lng;
+                }
+        });*/
+
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         let sub:any = this.route.params.subscribe(params => {
             //this.Params.limit = +params['limit']; // (+) converts string 'id' to a number
@@ -93,11 +104,7 @@ export class DiscoverComponent implements OnInit{
         });
         this.CreateAutocompleteMap();
         this.GetAllActivities();
-        this.service.GetMe()
-        .subscribe((res:UserModel)=>{
-            this.lat = res.lat;
-            this.lng = res.lng;
-        })
+        
     }
 
     CreateAutocompleteMap(){
@@ -128,6 +135,14 @@ export class DiscoverComponent implements OnInit{
         this.service.GetAllActivities(this.Params)
         .subscribe((res:ActivityModel[])=>{
             let activ:ActivityModel[] = res;
+            /*if(res.length>0){
+                this.lat = res[0].public_lat;
+                this.lng = res[0].public_lng;
+                }
+                else{
+                    this.lat = 48.8916733;
+                    this.lng = 2.3016161;
+                }*/
             for(let item of activ){
                 if(item.image_id){
                     this.service.GetImageById(item.image_id)
@@ -153,6 +168,8 @@ export class DiscoverComponent implements OnInit{
     (err:any)=>{
         this.SomeErr(err);
     });
+
+    
 }
 
     ActivityRev(act:ActivityModel[]){

@@ -495,10 +495,12 @@ h1{
 }
 .map-fixed{
     margin-top: 5px;
-    top: 15px;
+    top: 5px;
     position: fixed;
+    right: 0;
     z-index: 999;
     width: 100px;
+    height: 90%;
 }
 .map-upload{
     position: fixed;
@@ -905,12 +907,30 @@ agm-map {
     margin-bottom: 30px;
 }
 
-.search_map{
-    height: 900px;
-   
-}
+
+.search-map-300{
+    height: 275px;
+    
+ }
+ .search-map-500{
+    height: 475px;
+    
+ }
+ 
+ .search-map-700{
+    height: 675px;
+    
+ }
+ .search-map-900{
+    height: 875px;
+    
+ }
+ .search-map-1100{
+    height: 1075px;
+    
+ }
 .discover-map{
-    height: 450px;
+    height: 800px;
 }
 
 .mrg-top20{

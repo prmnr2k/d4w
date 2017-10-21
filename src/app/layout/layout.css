@@ -909,6 +909,9 @@ agm-map {
     height: 900px;
    
 }
+.discover-map{
+    height: 450px;
+}
 
 .mrg-top20{
     margin-top:20px;

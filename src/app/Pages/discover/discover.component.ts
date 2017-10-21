@@ -32,7 +32,7 @@ export class DiscoverComponent implements OnInit{
     Start:Date;
     Finish:Date;
     Params = {
-        limit:10,
+        limit:100,
         offset:0,
         address:'',
         from_date:null,
@@ -46,7 +46,9 @@ export class DiscoverComponent implements OnInit{
     Categories:CategoryModel[] = [];
     MyCategory: CategoryModel = new CategoryModel();
     lengthShortName:number = 5;
-    
+    lat:number = 48.8916733;
+    lng:number = 2.3016161;
+
     @ViewChild('searchg') public searchElement: ElementRef;
     constructor(private router: Router,
         private route: ActivatedRoute,
@@ -91,6 +93,11 @@ export class DiscoverComponent implements OnInit{
         });
         this.CreateAutocompleteMap();
         this.GetAllActivities();
+        this.service.GetMe()
+        .subscribe((res:UserModel)=>{
+            this.lat = res.lat;
+            this.lng = res.lng;
+        })
     }
 
     CreateAutocompleteMap(){
@@ -185,4 +192,8 @@ export class DiscoverComponent implements OnInit{
     getShortNames(name:string){
         return this.service.GetShortName(name,this.lengthShortName);
     }
+    markerClick(item:ActivityModel){
+        console.log(`click`,item.id);
+        this.router.navigate(['/activity/',item.id]);
+}
 }

@@ -497,10 +497,12 @@ h1{
     margin-top: 5px;
     top: 5px;
     position: fixed;
-    right: 0;
+    right: 20px;
     z-index: 999;
-    width: 100px;
     height: 90%;
+}
+.agm-map-w{
+    width: 400px;
 }
 .map-upload{
     position: fixed;
@@ -908,27 +910,6 @@ agm-map {
 }
 
 
-.search-map-300{
-    height: 275px;
-    
- }
- .search-map-500{
-    height: 475px;
-    
- }
- 
- .search-map-700{
-    height: 675px;
-    
- }
- .search-map-900{
-    height: 875px;
-    
- }
- .search-map-1100{
-    height: 1075px;
-    
- }
 .discover-map{
     height: 800px;
 }

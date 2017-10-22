@@ -52,7 +52,8 @@ export class SearchComponent implements OnInit {
     Categories:CategoryModel[] = [];
     lengthShortName:number = 6;
     isMapFixed:boolean = false;
-    mapSize:number=100;
+    hSize:number=100;
+    wSize:number=100;
     @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(private router: Router,
@@ -80,8 +81,8 @@ export class SearchComponent implements OnInit {
                 this.isMapFixed = false;
             }
         });
-        this.mapSize = document.documentElement.clientHeight;
-        console.log(`mapSize = `,this.mapSize);
+        this.hSize = document.documentElement.clientHeight-25;
+        this.wSize = document.getElementById("card_div").clientWidth;
     }
 
     CreateAutocompleteMap(){

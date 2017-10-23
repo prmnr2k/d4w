@@ -69,7 +69,7 @@
         </div>
 
         <div class="col-xs-12 col-md-5 map" [class.map-fixed]="isMapFixed">
-            <agm-map [style.height]="hSize + 'px'" [latitude]="lat" [longitude]="lng" [style.width]="wSize + 'px'">            
+            <agm-map [style.height]="hSize + 'px'" [latitude]="lat" [longitude]="lng" [style.width]="wSize + 'px'" [zoom]="3">            
                     <agm-marker *ngFor="let item of Activities; let i = index" [markerDraggable]="false" [title]="item.title" (markerClick)="markerClick(item)" [latitude]="item.public_lat" [longitude]="item.public_lng"></agm-marker> 
             </agm-map>
         </div>

@@ -82,7 +82,10 @@ export class SearchComponent implements OnInit {
             }
         });
         this.hSize = document.documentElement.clientHeight-25;
-        this.wSize = document.getElementById("card_div").clientWidth;
+        this.wSize = (document.getElementById("card_div").clientWidth-50)*0.8;
+
+        console.log(`card_div = `,this.wSize);
+
     }
 
     CreateAutocompleteMap(){
@@ -172,6 +175,7 @@ export class SearchComponent implements OnInit {
         this.lat = this.Activities[0].public_lat;
         this.lng = this.Activities[0].public_lng;
         }
+        
       
     }
 

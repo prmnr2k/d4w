@@ -216,4 +216,10 @@ export class SearchComponent implements OnInit {
         return this.service.GetShortName(name,this.lengthShortName);
     }
 
+
+    change_coords(i:number){
+        if(i%3==0)i=-i;
+        if(i%2==0)return 0.001*(i%20);
+        else return -0.001*(i%20);
+    }
 }

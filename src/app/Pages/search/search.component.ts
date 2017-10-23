@@ -54,6 +54,7 @@ export class SearchComponent implements OnInit {
     isMapFixed:boolean = false;
     hSize:number=100;
     wSize:number=100;
+    mapBut:boolean = false;
     @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(private router: Router,
@@ -75,12 +76,16 @@ export class SearchComponent implements OnInit {
         this.GetAllActivities();
 
         window.addEventListener(`scroll`, (e) => {
-            if (window.pageYOffset > 300&&window.pageYOffset<document.documentElement.scrollHeight-document.documentElement.clientHeight-250) {
+            if (window.pageYOffset > 300) {
                 this.isMapFixed = true;
+                if(window.pageYOffset<document.documentElement.scrollHeight-document.documentElement.clientHeight-253) this.mapBut = true;
+                else this.mapBut = false;
             } else {
                 this.isMapFixed = false;
             }
+            
         });
+
         this.hSize = document.documentElement.clientHeight-25;
         this.wSize = (document.getElementById("card_div").clientWidth-50)*0.8;
 
@@ -198,8 +203,8 @@ export class SearchComponent implements OnInit {
         this.Params.sub_category = $event.parent?$event.value:null;}
         else {
             this.Params.category = "";
-            this.Params.sub_category = "";}
-        
+            this.Params.sub_category = "";
+        }
         console.log(this.Params);
     }
     markerClick(item:ActivityModel){

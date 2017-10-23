@@ -35,7 +35,7 @@
                         <span  class="material-icons input-icon">today</span>
                     </div>
                     <div class="form-group" *ngIf="isAdvanced">
-                        <input ngui-auto-complete autocomplete="off" [max-num-list]="10" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
+                        <input ngui-auto-complete autocomplete="off" [max-num-list]="7" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
                         <span  class="material-icons input-icon">loyalty</span>
                     </div>
 
@@ -48,8 +48,11 @@
                 </form> 
                 
             </div>
+           
             <div class="col-sm-12" id="card_div">
+               
                 <div class="cards" *ngIf="!isLoading && Activities.length > 0">
+                        <h3 class="find_activ">Activities</h3>
                     <div class="container-fluid">
                         <div *ngFor="let item of Activities"  class="col-xs-12 col-sm-6 pull-left">
                             <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
@@ -68,7 +71,7 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-md-5 map" [class.map-fixed]="isMapFixed">
+        <div class="col-xs-12 col-md-5 map" [class.map-fixed]="isMapFixed&&mapBut" [class.map-but]="!mapBut">
             <agm-map [style.height]="hSize + 'px'" [latitude]="lat" [longitude]="lng" [style.width]="wSize + 'px'" [zoom]="3">            
                     <agm-marker *ngFor="let item of Activities; let i = index" [markerDraggable]="false" [title]="item.title" (markerClick)="markerClick(item)" [latitude]="item.public_lat" [longitude]="item.public_lng"></agm-marker> 
             </agm-map>

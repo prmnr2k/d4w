@@ -54,7 +54,7 @@ export class SearchComponent implements OnInit {
     isMapFixed:boolean = false;
     hSize:number=100;
     wSize:number=100;
-    mapBut:boolean = false;
+    mapBut:boolean = true;
     @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(private router: Router,

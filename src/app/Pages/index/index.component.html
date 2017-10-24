@@ -7,7 +7,7 @@
                 <span class="material-icons input-icon">location_on</span>
             </div>
             <div class="form-group index-search">
-                <input ngui-auto-complete autocomplete="off" [max-num-list]="5" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories"  [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Category">
+                <input ngui-auto-complete autocomplete="off" [max-num-list]="5" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories"  [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Sport">
                 
                 <span class="material-icons input-icon">loyalty</span>
             </div>
@@ -26,11 +26,18 @@
 
 <div class="container center-block container1440">
     <div class="row middle">
-        <div class="h123 h1-first-index">
-            <h1>Le Plus Populaire</h1>
+        <div id="slideshow">
+                <div class="slide-wrapper">
+                    <div class="slide"><img class="slide-logo" alt="logo" [src]="'./app/images/man.jpg'"></div>
+                    <div class="slide"><h1 class="slide-number">2</h1></div>
+                    <div class="slide"><h1 class="slide-number">3</h1></div>
+                    <div class="slide"><h1 class="slide-number">4</h1></div>
+                    <div class="slide"><h1 class="slide-number">5</h1></div>
+                </div>
         </div>
-    </div>
-    <div class="row middle">
+        <div class="h123 h1-first-index">
+                <h1>Le Plus Populaire</h1>
+            </div>
         <div class="h123">   
             <h2 class="middle-text-2">Profitez de la vie avec les autres autour de vous</h2>
         </div>

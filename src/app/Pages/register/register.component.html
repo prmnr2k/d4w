@@ -11,7 +11,8 @@
     <div class="row loading" *ngIf="isLoading"></div>
     <div class="row" *ngIf="!isLoading">
       <div class="col-md-8 marg-auto">
-        <h2 class="text-center">Je suis {{(RegisterUser.user_type == 'professional')?'prestataire':'client'}}</h2><br>
+       <!-- <h2 class="text-center">Je suis {{(RegisterUser.user_type == 'professional')?'prestataire':'client'}}</h2><br>-->
+       <br>
         <form (ngSubmit)="Register()">
         <div class="row">
           <div class="col-sm-4 col-sm-push-2">
@@ -29,9 +30,20 @@
             </div>
             <div class="form-group">
               <label>Logo image</label>
-              <img [src]='RegisterUser.image'>
+              <img *ngIf="RegisterUser.image" [src]='RegisterUser.image'>
               <input type="file" accept="image/*" name="logo_img" (change)="changeListener('user_logo',$event)">
             </div>
+          <!--
+            <div class="form-group">
+                <label>Logo image</label>
+                <img *ngIf="RegisterUser.image" [src]="RegisterUser.image">
+                <label class="file_upload">
+                    <span class="button">Browse image</span>
+                    <input type="file" accept="image/*" name="logo_img" (change)="changeListener('user_logo',$event)">
+                </label>
+                
+            </div><br>
+          -->
           </div>
           <div class="col-sm-8 col-sm-push-2">
             <div class="form-group">

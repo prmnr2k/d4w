@@ -125,6 +125,8 @@ the terms above.
 
 @angular/http@4.4.3 MIT
 
+angular2-social-login@3.1.1 ISC
+
 script-loader@0.7.1 MIT
 Copyright JS Foundation and other contributors
 

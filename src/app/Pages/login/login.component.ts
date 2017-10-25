@@ -5,6 +5,8 @@ import { HttpService} from '../../services/http.service';
 import {MainService} from "./../../services/main.service";
 import { TokenModel } from '../../models/token.model';
 
+import { AuthService } from "angular2-social-login";
+
 @Component({
     moduleId:module.id,
     selector: "login",
@@ -19,11 +21,16 @@ export class LoginComponent implements OnInit{
     }
     isLoginErr = false;
     isLoading = true;
+
+    public user;
+    sub: any;
+    
     ngOnInit(): void {
         this.isLoading = false;
     }
     constructor(private router: Router,
-        private mainService: MainService){}
+        private mainService: MainService,
+        public _auth: AuthService){}
 
     OnLoginButtonClick()
     {
@@ -43,4 +50,11 @@ export class LoginComponent implements OnInit{
         
         
     }
+
+    signIn(provider){
+        this.sub = this._auth.login(provider).subscribe(
+          (data) => {
+            console.log(data);this.user=data;}
+        )
+      }
 }

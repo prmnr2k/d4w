@@ -66,8 +66,8 @@ export class EditActivityComponent implements OnInit{
             }
 
             this.actId = params["id"];
-            this.Activity.lat = null;
-            this.Activity.lng = null;
+            //this.Activity.lat = null;
+            //this.Activity.lng = null;
             this.Categories = this.service.GetCategoriesAsArrayCategory();
             this.service.GetActivity(this.actId)
                 .subscribe((act:ActivityModel)=>{

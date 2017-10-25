@@ -203,14 +203,14 @@ export class CreateActivityComponent implements OnInit {
     }
 
     mapClicked($event: any) {
-        this.Activity.lat = $event.coords.lat;
-        this.Activity.lng = $event.coords.lng;
+       // this.Activity.lat = $event.coords.lat;
+       // this.Activity.lng = $event.coords.lng;
         console.log(`mapClick`);
         console.log(this.Activity.lat, this.Activity.lng);
     }
     mapMarkerDrag($event:any){
-        this.Activity.lat = $event.coords.lat;
-        this.Activity.lng = $event.coords.lng;
+        //this.Activity.lat = $event.coords.lat;
+        //this.Activity.lng = $event.coords.lng;
         console.log(`markerDrag`);
         console.log(this.Activity.lat, this.Activity.lng);
     }

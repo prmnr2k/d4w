@@ -31,6 +31,7 @@
       </form>
 
       <button (click)="signIn('google')">google</button>
+      <button (click)="logout()">logout</button>
       <div *ngIf="user">
         <table>
           <tr>
@@ -55,7 +56,7 @@
           </tr>
         </table>
       </div>
-      
+
 
 
     </div>

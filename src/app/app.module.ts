@@ -35,7 +35,7 @@ let providers = {
         RouterModule.forRoot(routs),
         PageModule,
         Angular2SocialLoginModule,
-        JsonpModule,
+        JsonpModule ,
         HttpModule,
         FormsModule,
         AgmCoreModule.forRoot({

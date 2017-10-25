@@ -54,7 +54,8 @@ export class SearchComponent implements OnInit {
     isMapFixed:boolean = false;
     hSize:number=100;
     wSize:number=100;
-    mapBut:boolean = true;
+    hCards:number=100;
+    mapBut:boolean = false;
     @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(private router: Router,
@@ -75,19 +76,32 @@ export class SearchComponent implements OnInit {
         this.CreateAutocompleteMap();
         this.GetAllActivities();
 
+        
+        // высота и ширина карты
+        this.hSize = document.documentElement.clientHeight-25;
+        this.wSize = (document.getElementById("card_div").clientWidth-50)*0.8;
+
         window.addEventListener(`scroll`, (e) => {
-            if (window.pageYOffset > 300) {
-                this.isMapFixed = true;
-                if(window.pageYOffset<document.documentElement.scrollHeight-document.documentElement.clientHeight-253) this.mapBut = true;
-                else this.mapBut = false;
+
+            if (window.pageYOffset > 320 && this.hSize <  document.getElementById("card_div").clientHeight) {
+
+                if(window.pageYOffset+this.hSize>document.documentElement.scrollHeight-253)
+               {
+                this.mapBut = true;
+                this.isMapFixed = false;
+               }
+                else{ 
+                    this.mapBut = false;
+                    this.isMapFixed = true;
+                }
             } else {
+                this.mapBut = false;
                 this.isMapFixed = false;
             }
             
         });
 
-        this.hSize = document.documentElement.clientHeight-25;
-        this.wSize = (document.getElementById("card_div").clientWidth-50)*0.8;
+       
 
         console.log(`card_div = `,this.wSize);
 
@@ -162,10 +176,6 @@ export class SearchComponent implements OnInit {
                    
             } 
             this.ActivityRev(activ);
-
-           // if(!this.Params.public_lat){
-                
-            //}
 
             this.isLoading = false;
         });

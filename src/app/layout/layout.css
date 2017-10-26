@@ -545,10 +545,12 @@ h1{
 .find_activ{
     margin: 40px;
     margin-bottom: 60px;
-    padding: 15px;
+    padding-top: 15px;
+    padding-bottom: 10px;
     border-radius: 8px;
-    border: 1px #EB6996 solid;
+    border-bottom: 1px #EB6996 solid;
     color: #EB6996;
+    text-decoration-line: underline;
     text-align: center;
 }
 .read-more:focus {

@@ -21,19 +21,21 @@
                    
                     
                     <div class="form-group">
-                        <input type="text" name="desc_toll1" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
+                        <input type="number" required min="0" name="desc_toll1" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
                         <span class="material-icons input-icon">toll</span>
                     </div>
 
                     <div class="form-group" *ngIf="isAdvanced">
-                        <input type="text" name="start" class="form-control input-withicon input-lg" bsDatepicker [bsConfig]="bsConfig" [ngModel]="Params.from_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.from_date = $event" placeholder="Date from">
-                        <span  class="material-icons input-icon">today</span>
+                      
+                       
+                        <input class="form-control input-withicon input-lg" (onShown)="showDP = !showDP" (onHidden)="showDP = !showDP" bsDaterangepicker [(bsValue)]="bsRangeValue" [bsConfig]="bsConfig" (ngModelChange)="bsRangeValue = $event">           
+                            <span  class="material-icons input-icon">today</span>
                     </div>
-
+                    <!--
                     <div class="form-group" *ngIf="isAdvanced">
                         <input type="text" name="finish" class="form-control input-withicon input-lg" bsDatepicker [bsConfig]="bsConfig" [ngModel]="Params.to_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.to_date = $event" placeholder="Date to">
                         <span  class="material-icons input-icon">today</span>
-                    </div>
+                    </div>-->
                     <div class="form-group" *ngIf="isAdvanced">
                         <input ngui-auto-complete autocomplete="off" [max-num-list]="7" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Sport">
                         <span  class="material-icons input-icon">loyalty</span>
@@ -52,7 +54,7 @@
             <div class="col-sm-12" id="card_div">
                
                 <div class="cards" *ngIf="!isLoading && Activities.length > 0">
-                        <h3 class="find_activ">Activities</h3>
+                        <h3 class="find_activ">Results: {{Activities.length}}</h3>
                     <div class="container-fluid">
                         <div *ngFor="let item of Activities"  class="col-xs-12 col-sm-6 pull-left">
                             <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">
@@ -63,7 +65,7 @@
                                     <span class="profile-text">{{Users[item.user_id]?.name?getShortNames(Users[item.user_id]?.name):'Author'}}</span>
                                 </div>
                                 <span class="cardshadow"></span>
-                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
+                                <a *ngIf="!showDP" [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
                             </div>
                         </div>
                     </div>

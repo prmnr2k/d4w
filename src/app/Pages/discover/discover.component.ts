@@ -32,7 +32,7 @@ export class DiscoverComponent implements OnInit{
     Start:Date;
     Finish:Date;
     Params = {
-        limit:100,
+        limit:20,
         offset:0,
         address:'',
         from_date:null,
@@ -46,8 +46,18 @@ export class DiscoverComponent implements OnInit{
     Categories:CategoryModel[] = [];
     MyCategory: CategoryModel = new CategoryModel();
     lengthShortName:number = 5;
+    showDP:boolean = false;
     //lat:number = 48.8916733;
     //lng:number = 2.3016161;
+    _bsRangeValue: any = [this.prevWeek(new Date()), this.nextWeek(new Date())];
+    get bsRangeValue(): any {
+      return this._bsRangeValue;
+    }
+   
+    set bsRangeValue(v: any) {
+      this._bsRangeValue = v;
+    }
+
 
     @ViewChild('searchg') public searchElement: ElementRef;
 
@@ -81,10 +91,16 @@ export class DiscoverComponent implements OnInit{
                 this.Params.title = params['title'];
             else 
                 this.Params.title = '';
-            if(params['from_date'])
-                this.Params.from_date = params['from_date'];
-            else 
+            if(params['from_date']&&params['to_date']){
+                this.bsRangeValue=[new Date(params['from_date']), new Date(params['to_date'])]; 
+                this.Params.from_date = this.bsRangeValue[0];
+                this.Params.to_date = this.bsRangeValue[1];
+                console.log('parametrs get', this.bsRangeValue);
+            }
+            else {
                 this.Params.from_date = null;
+                this.Params.to_date = null;
+            }
             if(params['category'])
                 this.Params.category = params['category'];
             else 
@@ -129,7 +145,8 @@ export class DiscoverComponent implements OnInit{
 
     GetAllActivities(){
         this.isLoading = true;
-        
+        this.Params.from_date = this.bsRangeValue[0];
+        this.Params.to_date = this.bsRangeValue[1];
         //this.Params.dates = [this.Start, this.Finish];
         console.log(this.Params);
         this.service.GetAllActivities(this.Params)
@@ -212,5 +229,16 @@ export class DiscoverComponent implements OnInit{
     markerClick(item:ActivityModel){
         console.log(`click`,item.id);
         this.router.navigate(['/activity/',item.id]);
-}
+    }
+    nextWeek(date:Date){
+        let nextDay = new Date(date);
+        nextDay.setDate(date.getDate()+10);
+        return nextDay;
+    }
+    prevWeek(date:Date){
+        let nextDay = new Date(date);
+        nextDay.setDate(date.getDate()-10);
+        return nextDay;
+    }
+
 }

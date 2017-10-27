@@ -43,9 +43,18 @@ export class IndexComponent implements OnInit{
         address: '',
         category: '',
         sub_category: '',
-        from_date:''
+        from_date:'',
+        to_date:''
     }
     Categories:CategoryModel[] = [];
+    _bsRangeValue: any = [this.prevWeek(new Date()), this.nextWeek(new Date())];
+    get bsRangeValue(): any {
+      return this._bsRangeValue;
+    }
+   
+    set bsRangeValue(v: any) {
+      this._bsRangeValue = v;
+    }
     @ViewChild('searchg') public searchElement: ElementRef;
     constructor(private router: Router,
         private service: MainService,
@@ -123,6 +132,8 @@ export class IndexComponent implements OnInit{
 
     openSearch(){
        console.log(`search`);
+       this.ParamsSearch.from_date = this.bsRangeValue[0];
+       this.ParamsSearch.to_date = this.bsRangeValue[1];
        this.router.navigate(['/discover',this.ParamsSearch]);
     }
 
@@ -150,5 +161,15 @@ export class IndexComponent implements OnInit{
         this.ParamsSearch.category = $event.parent?$event.parent:$event.value;
         this.ParamsSearch.sub_category = $event.parent?$event.value:'';
         console.log(this.Params);
+    }
+    nextWeek(date:Date){
+        let nextDay = new Date(date);
+        nextDay.setDate(date.getDate()+10);
+        return nextDay;
+    }
+    prevWeek(date:Date){
+        let nextDay = new Date(date);
+        nextDay.setDate(date.getDate()-10);
+        return nextDay;
     }
 }

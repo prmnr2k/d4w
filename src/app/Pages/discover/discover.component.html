@@ -27,13 +27,14 @@
                             <span class="material-icons input-icon">location_on</span>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="start" class="form-control input-withicon input-lg" bsDatepicker [bsConfig]="bsConfig" [ngModel]="Params.from_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.from_date = $event" placeholder="From..">
-                            <span  class="material-icons input-icon">today</span>
+                            <input class="form-control input-withicon input-lg" (onShown)="showDP = !showDP" (onHidden)="showDP = !showDP" bsDaterangepicker [(bsValue)]="bsRangeValue" [bsConfig]="bsConfig" (ngModelChange)="bsRangeValue = $event" [value]="(Params.from_date|date:'MM/yyyy')">           
+                            <span  class="material-icons input-icon">today</span>     
                         </div>
+                        <!--
                         <div class="form-group">
                             <input type="text" name="finish" class="form-control input-withicon input-lg" bsDatepicker [bsConfig]="bsConfig" [ngModel]="Params.to_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.to_date = $event" [minDate]="Params.from_date" placeholder="To..">
                             <span class="material-icons input-icon">today</span>
-                        </div>
+                        </div>-->
                         <div class="form-group form-group-makeinline">
                             <button type="submit" class="btn btn-success input-withicon btn-lg">Appliquer</button>
                             <span class="material-icons input-icon white-span">search</span>
@@ -60,7 +61,7 @@
                                     <span class="profile-text">{{item.user_name?getShortNames(item.user_name):'Author'}}</span>
                                 </div>
                                 <span class="cardshadow"></span>
-                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
+                                <a *ngIf="!showDP" [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
                             </div>
                         </div>
                     </div>
@@ -75,7 +76,7 @@
                                     <span class="profile-text">{{item.user_name?getShortNames(item.user_name):'Author'}}</span>
                                 </div>
                                 <span class="cardshadow"></span>
-                                <a [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
+                                <a *ngIf="!showDP" [routerLink]="['/activity',item.id]"><span class="spanlink"></span></a>
                             </div>
                         </div>
                     </div>

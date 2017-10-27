@@ -257,7 +257,6 @@ export class SearchComponent implements OnInit {
         nextDay.setDate(date.getDate()+10);
         return nextDay;
     }
-  
    
     
 }

@@ -19,27 +19,36 @@
                         <span class="material-icons input-icon">room</span>
                     </div>
                    
-                    
+                    <div class="form-group">
+                            <input ngui-auto-complete autocomplete="off" [max-num-list]="7" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Sport">
+                            <span  class="material-icons input-icon">loyalty</span>
+                        </div>
+                    <!--
                     <div class="form-group">
                         <input type="number" required min="0" name="desc_toll1" class="form-control input-withicon input-lg" [ngModel]="Params.radius" (ngModelChange)="Params.radius = $event" placeholder="Radius">
                         <span class="material-icons input-icon">toll</span>
                     </div>
-
+                    -->
                     <div class="form-group" *ngIf="isAdvanced">
-                      
-                       
-                        <input class="form-control input-withicon input-lg" (onShown)="showDP = !showDP" (onHidden)="showDP = !showDP" bsDaterangepicker [(bsValue)]="bsRangeValue" [bsConfig]="bsConfig" (ngModelChange)="bsRangeValue = $event">           
-                            <span  class="material-icons input-icon">today</span>
+                    
+                        <input class="form-control input-withicon input-lg" (onShown)="showDP = !showDP" (onHidden)="showDP = !showDP" bsDaterangepicker [(bsValue)]="bsRangeValue" [bsConfig]="bsConfig" (ngModelChange)="bsRangeValue = $event" [value]="(Params.from_date|date:'MM/yyyy')">           
+                            <span  class="material-icons input-icon">today</span>        
                     </div>
+
+                    <br>
+                    <div class="form-group" *ngIf="isAdvanced">
+                        
+                        <span class="distance">Distance: {{Params.radius}} km </span>
+                        <input type="range" class="cntr" id="range" #rangepanel min="0" value="50" max="1000" numeric step="5" (input)="Params.radius = rangepanel.value" />
+                    </div>
+                    
                     <!--
                     <div class="form-group" *ngIf="isAdvanced">
                         <input type="text" name="finish" class="form-control input-withicon input-lg" bsDatepicker [bsConfig]="bsConfig" [ngModel]="Params.to_date | date:'yyyy-MM-dd'" (ngModelChange)="Params.to_date = $event" placeholder="Date to">
                         <span  class="material-icons input-icon">today</span>
                     </div>-->
-                    <div class="form-group" *ngIf="isAdvanced">
-                        <input ngui-auto-complete autocomplete="off" [max-num-list]="7" [auto-select-first-item]="true" [select-on-blur]="true" [source]="Categories" [list-formatter]="autocompleListFormatter" value-property-name="value" display-property-name="name" class="form-control input-withicon input-lg" name="category" (valueChanged)="CategoryChanged($event)" placeholder="Sport">
-                        <span  class="material-icons input-icon">loyalty</span>
-                    </div>
+
+                    
 
 
                     <div class="form-group form-group-makeinline">
@@ -108,6 +117,8 @@
         }else{
             $(this).text($text = $this.data("textdefault"));
         }
-    })
+    });
+
+
 </script>
 

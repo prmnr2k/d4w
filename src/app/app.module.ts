@@ -14,7 +14,7 @@ import { AgmCoreModule } from '@agm/core';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import {JsonpModule} from '@angular/http';
 import { Angular2SocialLoginModule } from "angular2-social-login";
-
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
 
 let providers = {
     "google": {
@@ -38,6 +38,7 @@ let providers = {
         JsonpModule ,
         HttpModule,
         FormsModule,
+        MatButtonModule, MatCheckboxModule,
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyDZ1KosRinYSwWsttFqM68orCse2Lx-vA4',
             libraries: ["places"]

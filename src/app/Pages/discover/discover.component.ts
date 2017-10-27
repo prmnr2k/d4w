@@ -60,7 +60,7 @@ export class DiscoverComponent implements OnInit{
         private ngZone: NgZone){}
 
     ngOnInit(){
-        
+        window.scrollTo(0, 0);
         /*
         this.service.GetMe()
         .subscribe((res:UserModel)=>{

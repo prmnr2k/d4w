@@ -77,6 +77,9 @@ export class SearchComponent implements OnInit {
         private ngZone: NgZone){}
 
     ngOnInit(){
+
+        window.scrollTo(0, 0);
+        
         this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
         this.service.GetMe()
             .subscribe((res:UserModel)=>{
@@ -86,7 +89,7 @@ export class SearchComponent implements OnInit {
         this.Categories = this.service.GetAllCategoriesAsArrayCategory();    
         this.CreateAutocompleteMap();
         this.GetAllActivities();
-
+        
         
         // высота и ширина карты
         this.hSize = document.documentElement.clientHeight-25;
@@ -111,8 +114,6 @@ export class SearchComponent implements OnInit {
             }
             
         });
-
-       
 
         console.log(`card_div = `,this.wSize);
 

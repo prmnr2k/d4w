@@ -1,43 +1,14 @@
-<nav class="container-fluid header">
-  <h1><a class="sportrotter" routerLink="/">Sporanga</a></h1>
-  <ul class="list-inline">
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/discover">Discover</a></li>
-    <li ><a routerLink="/search">Search</a></li>
-    <li *ngIf="isLoggedIn"><a routerLink="/users/me">My profile</a></li>
-    <li *ngIf="!isLoggedIn"><a routerLink="/login">Login</a></li>
-    <li *ngIf="!isLoggedIn"><a routerLink="/registration">Registration</a></li>
-    <li *ngIf="isLoggedIn"><a (click)="Logout()">Logout</a></li>
-    <li *ngIf="isLoggedIn&&isProf"><a routerLink="/create_activity">Create activity</a></li>
-  </ul>
-</nav>
-<router-outlet></router-outlet>
-<div class="footer">
-    <div class="container center-block">
-        <div class="row">
-            <div class="col-sm-3">
-                <h2 class="sportrotter">Sporanga</h2>
-            </div>
-            <div class="col-sm-4">
-                <h2>About</h2>
-                <ul class="list-inline">
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Site map</a></li>
-                </ul>
-            </div>
-            <div class="col-sm-5">
-                <h2>Latest Activities</h2>
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label for="email-subscribe" class="sr-only">Email</label>
-                        <input type="email" class="form-control input-withicon input-lg" id="email-subscribe" placeholder="Email">
-                        <span class="material-icons input-icon">email</span>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-lg">Subscribe</button>
-                </form>
-                <p>No spam, for sure.</p>
-            </div>
+<div class="wrapper">
+    <div class="sidebar" data-color="red" data-image="">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(/assets/img/sidebar-5.jpg)"></div>
+    </div>
+
+    <div class="main-panel">
+        <navbar-cmp></navbar-cmp>
+        <router-outlet></router-outlet>
+        <div *ngIf="isMap('maps')">
+            <footer-cmp></footer-cmp>
         </div>
     </div>
 </div>

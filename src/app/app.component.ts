@@ -1,39 +1,26 @@
-import { Component,OnInit,NgModule }      from '@angular/core';
-import { Router, ActivatedRoute, Params } from "@angular/router";
-import { HttpService} from './services/http.service';
-import { UserModel } from './models/user.model';
-
-import {MainService} from "./services/main.service";
+import { Component, OnInit } from '@angular/core';
+import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
-  isLoggedIn:boolean = false;
-  isProf:boolean = false;
-  //me: UserModel = new UserModel(null,"","","","",null,null); 
-  constructor(
-      private mainService: MainService){}
-  ngOnInit(){
-      this.mainService.onAuthChange$.subscribe(bool => {
-              this.isLoggedIn = bool;
-              if(this.isLoggedIn)
-                  this.mainService.GetMe().subscribe(it =>{
-                      console.log(`get me: `,it.user_type);
-                      if (it.user_type===`professional`) this.isProf = true;
-                    }
-                  );
-      });
+export class AppComponent implements OnInit {
 
-      this.mainService.TryToLoginWithToken();
+     constructor(public location: Location) {}
 
+    ngOnInit(){
+    }
 
-
-  }
-
-  Logout(){
-      //console.log();
-      this.mainService.Logout();
-  }
+    isMap(path){
+      var titlee = this.location.prepareExternalUrl(this.location.path());
+      titlee = titlee.slice( 1 );
+      if(path == titlee){
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
 }

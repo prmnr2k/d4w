@@ -1,7 +1,7 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.4.0",
-    "name": "lbd-free-angular-cli"
+    "name": "d4w-dashboard"
   },
   "apps": [
     {
@@ -9,7 +9,9 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "app/images",
+        {"glob": "**/*","input": "../images/","output": "./images/"}
       ],
       "index": "index.html",
       "main": "main.ts",

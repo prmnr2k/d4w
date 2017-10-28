@@ -3,9 +3,8 @@
     <div class="logo">
         <a class="simple-text">
             <div class="logo-img">
-                <img src="/assets/img/angular2-logo-white.png"/>
+                <img src="/assets/img/logo.jpg"/>
             </div>
-            D4W
         </a>
     </div>
     <ul class="nav responsive-nav">
@@ -15,7 +14,7 @@
 				<p class="hidden-lg hidden-md">Dashboard</p>
             </a>
         </li>
-        <li class="dropdown" *ngIf="isMobileMenu()">
+        <!--<li class="dropdown" *ngIf="isMobileMenu()">
               <a class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-globe"></i>
                     <b class="caret hidden-sm hidden-xs"></b>
@@ -38,8 +37,8 @@
                 <i class="fa fa-search"></i>
 				<p class="hidden-lg hidden-md">Search</p>
             </a>
-        </li>
-        <li *ngIf="isMobileMenu()">
+        </li>-->
+        <!--<li *ngIf="isMobileMenu()">
            <a href="">
                <p>Account</p>
             </a>
@@ -61,15 +60,25 @@
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
               </ul>
+        </li>-->
+        <li *ngIf="!isLoggedIn && isMobileMenu()">
+            <a routerLink="/login">
+                <p>Sign in</p><!-- Логин -->
+            </a>
         </li>
-        <li *ngIf="isMobileMenu()">
-            <a>
-                <p>Log out</p>
+        <li *ngIf="!isLoggedIn && isMobileMenu()">
+            <a routerLink="/registration">
+                <p>Sign up</p><!-- Рега -->
+            </a>
+        </li>
+        <li *ngIf="isLoggedIn && isMobileMenu()">
+            <a (click)="Logout()">
+                <p>Log out</p><!-- Логаут -->
             </a>
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
-            <a  [routerLink]="[menuItem.path]">
+            <a  *ngIf="!menuItem.isLoggedIn || isLoggedIn" [routerLink]="[menuItem.path]">
                 <i class="{{menuItem.icon}}"></i>
                 <p>{{menuItem.title}}</p>
             </a>

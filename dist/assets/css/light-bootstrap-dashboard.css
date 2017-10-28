@@ -259,15 +259,17 @@ input:focus {
       line-height: 30px; }
   .sidebar .logo-img,
   .bootstrap-navbar .logo-img {
-    width: 30px;
-    display: inline-block;
-    max-height: 30px;
-    margin-right: 10px; }
+    width: 90px!important;
+    display: inline-block!important;
+    max-height: 30px!important;
+    margin-right: 10px!important;
+   }
     .sidebar .logo-img img,
     .bootstrap-navbar .logo-img img {
-      width: 35px;
-      top: 11px;
-      position: absolute; }
+      width: 90px!important;
+      top: 15px!important;
+      position: absolute!important;
+     }
   .sidebar .logo-tim,
   .bootstrap-navbar .logo-tim {
     border-radius: 50%;
@@ -2930,3 +2932,77 @@ input:focus {
     overflow-y: hidden;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     -webkit-overflow-scrolling: touch; } }
+.error-msg{
+  font-size: 24px;
+  color:red;
+  text-align: center;
+}
+.ok-msg{
+    font-size: 24px;
+    color:rgba(0,255,0,1);
+    text-align: center;
+}
+.pointer-curs{
+  cursor: pointer;
+}
+.ameties-cb{
+  margin-left:5px;
+  float:left;
+  width: 45%;
+  text-align: justify;
+}
+.pad10{
+  padding:10px;
+}
+.card-h4{
+  margin:5px 0px;
+  text-align: center;
+}
+input[type='time']{
+  float: right;
+  width: 65%;
+}
+
+.fsize30{
+  font-size:30px;
+  padding: 0px;
+  margin-top: 10px;
+}
+.images-preview{
+  width:18%;
+  float:left;
+  margin:5px;
+}
+.file_upload{
+  font-size: 16px;              /* example */
+  height: 35px;
+  line-height: 30px;            /* the same as height */
+  margin-top: 15px;
+}
+.file_upload .button{
+  display: block;
+  cursor: pointer;             /* example */
+}
+.file_upload .button{
+  background-color:#3EE1AB;
+  color: white;
+  float: left;
+  border-radius: 8px;
+  border-width: 2px;
+  border-color: black;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 250px;                  /* example */
+  height: 100%;
+  text-align: center;           /* example */
+}
+.file_upload .button:hover{
+  background-color:#3EE1AB;
+  color: black;
+}
+
+.file_upload input[type=file]{
+  position: absolute;
+  top: 0;
+  opacity: 0
+}

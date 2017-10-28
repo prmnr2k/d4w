@@ -20,6 +20,12 @@ import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
+import { MainService } from './core/services/main.service';
+import { HttpService } from './core/services/http.service';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
+import { PageAccessGuard } from './page.guard';
 
 @NgModule({
   declarations: [
@@ -31,7 +37,10 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-    UpgradeComponent
+    UpgradeComponent,
+    LoginComponent,
+    RegistrationComponent, 
+    EditCoworkingComponent
 
   ],
   imports: [
@@ -45,7 +54,7 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
     AppRoutingModule,
     LbdModule
   ],
-  providers: [],
+  providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

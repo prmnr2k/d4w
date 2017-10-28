@@ -11,17 +11,23 @@ import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { UpgradeComponent } from './upgrade/upgrade.component';
+import { LoginComponent } from './login/login.component';
+import { RegistrationComponent } from './registration/registration.component';
+import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
+import { PageAccessGuard } from './page.guard';
 
 const routes: Routes =[
-    { path: 'dashboard',      component: HomeComponent },
-    { path: 'user',           component: UserComponent },
-    { path: 'table',          component: TablesComponent },
+    { path: 'user',           component: UserComponent},
+    { path: 'table',          component: TablesComponent, canActivate: [PageAccessGuard] },
     { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
+    { path: 'icons',          component: IconsComponent},
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
-    { path: '',          redirectTo: 'dashboard', pathMatch: 'full' }
+    { path: 'upgrade',        component: UpgradeComponent},
+    { path: '',          redirectTo: 'table', pathMatch: 'full'},
+    { path: 'login', component: LoginComponent , canActivate: [PageAccessGuard] },
+    { path: 'registration', component: RegistrationComponent, canActivate: [PageAccessGuard] },
+    { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [PageAccessGuard] }
 ];
 
 @NgModule({
@@ -32,5 +38,6 @@ const routes: Routes =[
   ],
   exports: [
   ],
+  providers: []
 })
 export class AppRoutingModule { }

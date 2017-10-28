@@ -1,6 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { MainService } from '../../core/services/main.service';
+import { Router } from '@angular/router';
 
 @Component({
     // moduleId: module.id,
@@ -9,17 +11,25 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 })
 
 export class NavbarComponent implements OnInit{
-    private listTitles: any[];
+    public listTitles: any[];
     location: Location;
-    private toggleButton: any;
-    private sidebarVisible: boolean;
+    public toggleButton: any;
+    public sidebarVisible: boolean;
+    public isLoggedIn = false;
 
-    constructor(location: Location,  private element: ElementRef) {
+    constructor(location: Location,  private element: ElementRef, private service: MainService, private router: Router) {
       this.location = location;
           this.sidebarVisible = false;
     }
 
     ngOnInit(){
+        this.isLoggedIn = this.service.IsLogedIn();
+        this.service.onAuthChange$
+            .subscribe((res:boolean)=>{
+                this.isLoggedIn = res;
+                if(!this.isLoggedIn)
+                    this.router.navigate(['/login']);
+            });
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
@@ -59,5 +69,12 @@ export class NavbarComponent implements OnInit{
           }
       }
       return 'Dashboard';
+    }
+
+    Logout(){
+        this.service.Logout()
+            .subscribe(()=>{
+                this.router.navigate(['/login']);
+            })
     }
 }

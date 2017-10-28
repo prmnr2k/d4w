@@ -20,6 +20,7 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
+        "assets/css/light-bootstrap-dashboard.css",
         "assets/sass/light-bootstrap-dashboard.scss"
       ],
       "scripts": [

@@ -11,7 +11,7 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li>
+                <!--<li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-dashboard"></i>
                         <p class="hidden-lg hidden-md">{{getTitle()}}</p>
@@ -40,11 +40,11 @@
                         <i class="fa fa-search"></i>
                         <p class="hidden-lg hidden-md">Search</p>
                     </a>
-                </li>
+                </li>-->
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li>
+                <!--<li>
                     <a href="#">
                         <p>Account</p>
                     </a>
@@ -65,10 +65,20 @@
                         <li class="divider"></li>
                         <li><a href="#">Separated link</a></li>
                     </ul>
+                </li>-->
+                <li *ngIf="!isLoggedIn" class="pointer-curs">
+                    <a routerLink="/login">
+                        <p>Sign in</p><!-- Логин -->
+                    </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <p>Log out</p>
+                <li *ngIf="!isLoggedIn" class="pointer-curs">
+                    <a routerLink="/registration">
+                        <p>Sign up</p><!-- Рега -->
+                    </a>
+                </li>
+                <li *ngIf="isLoggedIn" class="pointer-curs">
+                    <a (click)="Logout()">
+                        <p>Log out</p><!-- Логаут -->
                     </a>
                 </li>
                 <li class="separator hidden-lg hidden-md"></li>

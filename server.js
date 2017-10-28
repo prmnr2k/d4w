@@ -12,4 +12,7 @@ app.use(express.static(root));
 app.get('*', function(req, res) {
   res.sendfile('./dist/index.html')
 })
-app.listen(process.env.PORT || 5000)
+var port = process.env.PORT || 8000
+server.listen(port, function() {
+  console.log("App is running on port " + port);
+});

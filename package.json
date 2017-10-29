@@ -1,6 +1,6 @@
 {
   "name": "d4w-dashboard",
-  "version": "1.4.0",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
       "ng": "ng",

@@ -26,6 +26,7 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
 import { PageAccessGuard } from './page.guard';
+import { LoadingModule } from './shared/loading/loading.module';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { PageAccessGuard } from './page.guard';
     SidebarModule,
     RouterModule,
     AppRoutingModule,
-    LbdModule
+    LbdModule,
+    LoadingModule
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

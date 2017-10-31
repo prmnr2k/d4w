@@ -14,6 +14,7 @@ import { CheckboxModel } from '../models/checkbox.model';
 import { CreateCoworkingModel } from '../models/createCoworking.model';
 import { AmetiesModel } from '../models/ameties.model';
 import { CoworkingModel } from '../models/coworking.model';
+import { WorkingDayModel } from '../models/workingDay.model';
 
 @Injectable()
 export class MainService{
@@ -105,7 +106,7 @@ export class MainService{
     }
 
     UpdateCoworking(id:number,data:CreateCoworkingModel){
-        return this.http.PutData(' /coworkings/update/'+id,JSON.stringify(data));
+        return this.http.PutData('/coworkings/update/'+id,JSON.stringify(data));
     }
 
     GetAllCoworking(params:any){
@@ -115,17 +116,19 @@ export class MainService{
 
     CoworkingModelToCreateCoworkingModel(input:CoworkingModel){
         let result = new CreateCoworkingModel();
-        result.email = input.email;
-        result.full_name = input.full_name;
-        result.short_name = input.short_name;
-        result.address = input.address;
-        result.description = input.description;
-        result.contacts = input.contacts;
-        result.additional_info = input.additional_info;
-        result.price = input.price;
-        result.capacity = input.capacity;
-        result.working_days = input.working_days;
-        result.amenties = input.amenties;
+        if(input){
+            result.email = input.email?input.email:'';
+            result.full_name = input.full_name?input.full_name:'';
+            result.short_name = input.short_name?input.short_name:'';
+            result.address = input.address?input.address:'';
+            result.description = input.description?input.description:'';
+            result.contacts = input.contacts?input.contacts:'';
+            result.additional_info = input.additional_info?input.additional_info:'';
+            result.price = input.price?input.price:0;
+            result.capacity = input.capacity?input.capacity:0;
+            result.working_days = input.working_days?input.working_days:[new WorkingDayModel('Monday','09:00','22:00')];
+            result.amenties = input.amenties?input.amenties:[];
+        }
         result.images = [];
 
 
@@ -209,10 +212,12 @@ export class MainService{
     }
 
     public SetCheckedCB(cb:CheckboxModel[], amets:AmetiesModel[]){
-        for(let item of amets){
-            let index = cb.findIndex(x=>x.value == item.name);
-            if(cb[index]){
-                cb[index].checked = true;
+        if(amets){
+            for(let item of amets){
+                let index = cb.findIndex(x=>x.value == item.name);
+                if(cb[index]){
+                    cb[index].checked = true;
+                }
             }
         }
         return cb;

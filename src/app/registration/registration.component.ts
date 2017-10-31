@@ -12,8 +12,9 @@ import { TokenModel } from '../core/models/token.model';
   templateUrl: './registration.component.html'
 })
 export class RegistrationComponent implements OnInit {
-    isLoginErr = false;
+    RegistrationErr = false;
     isLoading = true;
+    RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
     Days:string[] = [];
     AmetiesCB: CheckboxModel[] = []; 
@@ -25,6 +26,7 @@ export class RegistrationComponent implements OnInit {
         this.AmetiesCB = this.service.GetAllAmenties();
         this.Coworking.images = [];
         this.Coworking.working_days = [new WorkingDayModel(this.Days[0])];
+        this.isLoading = false;
     }
 
     DeleteImage(i:number){
@@ -40,8 +42,16 @@ export class RegistrationComponent implements OnInit {
 
 
     CreateCoworking(){
+        
+        this.isLoading = true;
+        this.RegistrationErr = false;
         this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
-        console.log(this.Coworking);
+        if(!this.CheckCwrk()){
+            this.RegistrationErr = true;
+            this.isLoading = false;
+            
+            return;
+        }
         this.service.CreateCoworking(this.Coworking)
             .subscribe((res:CoworkingModel)=>{
                 console.log(res);
@@ -53,12 +63,49 @@ export class RegistrationComponent implements OnInit {
                     }
                     ,
                     (err:any)=>{
-                        this.isLoginErr = true;
+                        this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
+                        this.RegistrationErr = true;
                         this.isLoading = false;
                     });
+            },
+            (err)=>{
+                this.RegErrMsg = "Cant create coworking: " + err.body;
+                this.RegistrationErr = true;
+                this.isLoading = false;
             })
     }
 
+    CheckCwrk(){
+        if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){
+            this.RegErrMsg = "Input all fields!";
+            return false;
+        }
+        if(!this.Coworking.password || !this.Coworking.password_confirmation)
+        {
+            this.RegErrMsg = "Input password and password confirmation!";
+            return false;
+        }
+        if(this.Coworking.password != this.Coworking.password_confirmation)
+        {
+            this.RegErrMsg = "Passwords are not matched!";
+            return false;
+        }
+        if(this.Coworking.price < 0){
+            this.RegErrMsg = "Input positive value for price!";
+            return false;
+        }
+        if(this.Coworking.capacity < 0){
+            this.RegErrMsg = "Input positive value for capacity!";
+            return false;
+        }
+        if(!this.Coworking.working_days || this.Coworking.working_days.length == 0 || this.Coworking.working_days.filter(x=> !x.begin_work || !x.end_work).length > 0){
+            this.RegErrMsg = "Input working days!";
+            return false;
+        }
+        
+        
+        return true;
+    }
     changeListener($event: any) : void {
         console.log($event);
         this.readThis($event.target);

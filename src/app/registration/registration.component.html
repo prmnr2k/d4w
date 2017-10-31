@@ -1,6 +1,10 @@
 <div class="main-content" >
         <div class="container-fluid">
-            <div class="row">
+            <loading-cmp *ngIf="isLoading"></loading-cmp>
+            <div class="row"  *ngIf="!isLoading">
+                <div class="col-md-12" *ngIf="RegistrationErr">
+                    <h2 class="error-msg">{{RegErrMsg}}</h2>
+                </div>
                 <div class="col-md-8">
                     <div class="card">
                         <div class="header">

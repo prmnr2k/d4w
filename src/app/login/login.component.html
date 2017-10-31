@@ -2,7 +2,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <div class="card">
+                <loading-cmp *ngIf="isLoading"></loading-cmp>
+                <div *ngIf="!isLoading" class="card">
                     <div class="header">
                         <h4 class="title">Sign In</h4>
                     </div>

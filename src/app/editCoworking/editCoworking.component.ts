@@ -14,8 +14,9 @@ import { Base64ImageModel } from '../core/models/base64image.model';
   templateUrl: './editCoworking.component.html'
 })
 export class EditCoworkingComponent implements OnInit {
-    isLoginErr = false;
+    RegistrationErr = false;
     isLoading = true;
+    RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
     Days:string[] = [];
     AmetiesCB: CheckboxModel[] = []; 
@@ -28,26 +29,33 @@ export class EditCoworkingComponent implements OnInit {
         this.service.GetMe()
             .subscribe((user:UserModel)=>{
                 this.Me = user;
+                console.log(this.Me);
                 this.service.GetAllCoworking({creator_id:this.Me.id})
                     .subscribe((cwr:CoworkingModel[])=>{
-                        console.log(cwr[0]);
-                        this.Coworking = this.service.CoworkingModelToCreateCoworkingModel(cwr[0]);
-                        this.Days = this.service.GetAllDays();
-                        this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),this.Coworking.amenties);
-                        this.CoworkingId = cwr[0].id;
-                        this.Coworking.first_name = this.Me.first_name;
-                        this.Coworking.last_name = this.Me.last_name;
-                        this.Coworking.email = this.Me.email;
-                        this.Coworking.phone = this.Me.phone;
-                        for(let i of cwr[0].images){
-                            this.service.GetImageById(i.id)
-                                .subscribe((img:Base64ImageModel)=>{
-                                    this.Coworking.images.push(img.base64);
-                                })
-                        }
+                        console.log(cwr);
+                        this.InitByCoworking(cwr[0]);
+                        
+                        this.isLoading = false;
                     })
             })
         
+    }
+
+    InitByCoworking(cwrk:CoworkingModel){
+        this.Coworking = this.service.CoworkingModelToCreateCoworkingModel(cwrk);
+        this.Days = this.service.GetAllDays();
+        this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),this.Coworking.amenties);
+        this.CoworkingId = cwrk.id?cwrk.id:0;
+        this.Coworking.first_name = this.Me.first_name?this.Me.first_name:'';
+        this.Coworking.last_name = this.Me.last_name?this.Me.last_name:'';
+        this.Coworking.email = this.Me.email?this.Me.email:'';
+        this.Coworking.phone = this.Me.phone?this.Me.phone:'';
+        for(let i of cwrk.images){
+            this.service.GetImageById(i.id)
+                .subscribe((img:Base64ImageModel)=>{
+                    this.Coworking.images.push(img.base64);
+                })
+        }
     }
 
     DeleteImage(i:number){
@@ -63,23 +71,47 @@ export class EditCoworkingComponent implements OnInit {
 
 
     UpdateCoworking(){
+        this.isLoading = true;
+        this.RegistrationErr = false;
         this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
-        console.log(this.Coworking);
+        if(!this.CheckCwrk()){
+            this.RegistrationErr = true;
+            this.isLoading = false;
+            
+            return;
+        }
         this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
             .subscribe((res:CoworkingModel)=>{
-                console.log(res);
-                this.service.UserLogin(this.Coworking.email,this.Coworking.password)
-                    .subscribe((res:TokenModel)=>{
-                        console.log(res);
-                        this.service.BaseInitAfterLogin(res);
-                        this.router.navigate(['/']);
-                    }
-                    ,
-                    (err:any)=>{
-                        this.isLoginErr = true;
-                        this.isLoading = false;
-                    });
-            })
+                this.InitByCoworking(res);
+                this.isLoading = false;
+            },
+            (err:any)=>{
+                this.RegErrMsg = "Cant update coworking: " + err.body;
+                this.RegistrationErr = true;
+                this.isLoading = false;
+            });
+    }
+
+    CheckCwrk(){
+        if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){
+            this.RegErrMsg = "Input all fields!";
+            return false;
+        }
+        if(this.Coworking.price < 0){
+            this.RegErrMsg = "Input positive value for price!";
+            return false;
+        }
+        if(this.Coworking.capacity < 0){
+            this.RegErrMsg = "Input positive value for capacity!";
+            return false;
+        }
+        if(!this.Coworking.working_days || this.Coworking.working_days.length == 0 || this.Coworking.working_days.filter(x=> !x.begin_work || !x.end_work).length > 0){
+            this.RegErrMsg = "Input working days!";
+            return false;
+        }
+        
+        
+        return true;
     }
 
     changeListener($event: any) : void {

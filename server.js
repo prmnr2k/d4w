@@ -1,4 +1,4 @@
-//const fallback = require('express-history-api-fallback');
+const fallback = require('express-history-api-fallback');
 const express = require('express');
 const app = express();
 // Run the app by serving the static files
@@ -13,6 +13,6 @@ app.get('*', function(req, res) {
   res.sendfile('./dist/index.html')
 })
 var port = process.env.PORT || 8000
-app.listen(process.env.PORT || 3000, function(){
+app.listen(port, function(){
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });

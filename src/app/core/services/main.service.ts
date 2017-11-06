@@ -107,6 +107,10 @@ export class MainService{
     GetUserById(id:number){
         return this.http.GetData('/users/get/'+id,"");
     }
+    GetMyAccess(){
+        return this.http.GetData('/access/get_my_access',"");
+        
+    }
 
     /* USERS BLOCK END */
 
@@ -119,8 +123,11 @@ export class MainService{
         return this.http.PutData('/coworkings/update/'+id,JSON.stringify(data));
     }
 
-    GetAllCoworking(params:any){
+    GetAllCoworking(params?:any){
         return this.http.GetData('/coworkings/get_all',this.ParamsToUrlSearchParams(params));
+    }
+    GetCoworkingById(id:number){
+        return this.http.GetData('/coworkings/get/'+id,"");
     }
 
 

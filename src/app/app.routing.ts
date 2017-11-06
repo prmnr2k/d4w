@@ -34,7 +34,8 @@ const routes: Routes =[
     { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [PageAccessGuard] },
     { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] },
     { path: 'all_coworkings', component:AllCoworkings},
-    { path: 'my_coworkings', component:MyCoworkings,canActivate: [PageAccessGuard]}
+    { path: 'my_coworkings', component:MyCoworkings,canActivate: [PageAccessGuard]},
+    { path: 'coworking/:id', component:Coworking,canActivate: [PageAccessGuard]}
 ];
 
 @NgModule({

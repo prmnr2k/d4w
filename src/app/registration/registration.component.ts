@@ -51,6 +51,7 @@ export class RegistrationComponent implements OnInit {
             
             return;
         }
+        console.log(this.Coworking);
         this.service.CreateCoworking(this.Coworking)
             .subscribe((res:CoworkingModel)=>{
                 console.log(res);

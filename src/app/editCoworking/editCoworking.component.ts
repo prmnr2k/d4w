@@ -29,7 +29,6 @@ export class EditCoworkingComponent implements OnInit {
         this.service.GetMe()
             .subscribe((user:UserModel)=>{
                 this.Me = user;
-                console.log(this.Me);
                 this.service.GetAllCoworking({creator_id:this.Me.id})
                     .subscribe((cwr:CoworkingModel[])=>{
                         console.log(cwr);

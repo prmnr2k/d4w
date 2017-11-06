@@ -36,6 +36,7 @@ export class UserRegistrationComponent implements OnInit {
             
             return;
         }
+        console.log(this.User)
         this.service.CreateUser(this.User)
             .subscribe((res:UserModel)=>{
                 console.log(res);
@@ -77,12 +78,11 @@ export class UserRegistrationComponent implements OnInit {
         return true;
     }
     changeListener($event: any) : void {
-        console.log($event);
         this.readThis($event.target);
     }
 
     readThis(inputValue: any): void {
-        for(let f of inputValue.file){
+        for(let f of inputValue.files){
             let file:File = f;
             if(!file) return;
             let myReader:FileReader = new FileReader();

@@ -150,7 +150,7 @@ export class MainService{
 
     /* BOOKINGS BLOCK START */
     GetBookingsByCwr(id:number){
-        return this.http.GetData('/bookings/get_bookings/'+id,'');
+        return this.http.GetData('/coworkings/get_bookings/'+id,'');
     }
 
     /* BOOKING BLOCK END */

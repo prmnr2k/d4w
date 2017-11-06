@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
 import { CoworkingModel } from '../core/models/coworking.model';
@@ -19,7 +19,6 @@ export class RegistrationComponent implements OnInit {
     Days:string[] = [];
     AmetiesCB: CheckboxModel[] = []; 
     constructor(private service: MainService, private router: Router) { }
-
     ngOnInit() 
     {
         this.Days = this.service.GetAllDays();
@@ -107,7 +106,6 @@ export class RegistrationComponent implements OnInit {
         return true;
     }
     changeListener($event: any) : void {
-        console.log($event);
         this.readThis($event.target);
     }
 

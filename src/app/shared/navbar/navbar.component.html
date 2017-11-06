@@ -73,7 +73,12 @@
                 </li>
                 <li *ngIf="!isLoggedIn" class="pointer-curs">
                     <a routerLink="/registration">
-                        <p>Sign up</p><!-- Рега -->
+                        <p>Sign up as coworking</p><!-- Рега для коворкинга-->
+                    </a>
+                </li>
+                <li *ngIf="!isLoggedIn" class="pointer-curs">
+                    <a routerLink="/userRegistration">
+                        <p>Sign up as user</p><!-- Рега для пользователя-->
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn" class="pointer-curs">

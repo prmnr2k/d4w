@@ -1,0 +1,89 @@
+<div class="main-content" >
+        <div class="container-fluid">
+            <loading-cmp *ngIf="isLoading"></loading-cmp>
+            <div class="row"  *ngIf="!isLoading">
+                <div class="col-md-12" *ngIf="RegistrationErr">
+                    <h2 class="error-msg">{{RegErrMsg}}</h2>
+                </div>
+                <div class="col-md-8  col-md-offset-2">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Create your profile</h4>
+                        </div>
+                        <div class="content">
+                            <form (ngSubmit)="CreateUser()">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" name="fname" [ngModel]="User.first_name" (ngModelChange)="User.first_name = $event">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" name="lname" [ngModel]="User.last_name" (ngModelChange)="User.last_name = $event">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" name="email" [ngModel]="User.email" (ngModelChange)="User.email = $event">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input type="text" class="form-control" name="phone" [ngModel]="User.phone" (ngModelChange)="User.phone = $event">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control" name="password1" [ngModel]="User.password" (ngModelChange)="User.password = $event">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Password confirmation</label>
+                                            <input type="password" class="form-control" name="password2" [ngModel]="User.password_confirmation" (ngModelChange)="User.password_confirmation = $event">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <input type="text" class="form-control" name="address" [ngModel]="User.address" (ngModelChange)="User.address = $event">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-12">
+                                            <img class="images-preview pointer-curs" *ngIf="User.image" alt="Delete"[src]="User.image" (click)="DeleteImage()">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="file_upload">
+                                                <span class="button">Browse image</span>
+                                                <input type="file" (change)="changeListener($event)">
+                                            </label>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            <button type="submit" class="btn btn-info btn-fill pull-right">Register</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

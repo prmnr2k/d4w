@@ -1,4 +1,4 @@
-//const fallback = require('express-history-api-fallback');
+const fallback = require('express-history-api-fallback');
 const express = require('express');
 const app = express();
 // Run the app by serving the static files

@@ -15,6 +15,9 @@ import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
 import { PageAccessGuard } from './page.guard';
+import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
+import { MyCoworkings } from "./myCoworkings/myCoworkings.component";
+import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
 
 const routes: Routes =[
@@ -29,7 +32,9 @@ const routes: Routes =[
     { path: 'login', component: LoginComponent , canActivate: [PageAccessGuard] },
     { path: 'registration', component: RegistrationComponent, canActivate: [PageAccessGuard] },
     { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [PageAccessGuard] },
-    { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] }
+    { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] },
+    { path: 'all_coworkings', component:AllCoworkings},
+    { path: 'my_coworkings', component:MyCoworkings,canActivate: [PageAccessGuard]}
 ];
 
 @NgModule({

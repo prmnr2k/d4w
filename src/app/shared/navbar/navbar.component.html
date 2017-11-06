@@ -82,6 +82,11 @@
                     </a>
                 </li>
                 <li *ngIf="isLoggedIn" class="pointer-curs">
+                    <a routerLink="/my_coworkings">
+                        <p>My Coworkings</p>
+                    </a>
+                </li>
+                <li *ngIf="isLoggedIn" class="pointer-curs">
                     <a (click)="Logout()">
                         <p>Log out</p><!-- Логаут -->
                     </a>

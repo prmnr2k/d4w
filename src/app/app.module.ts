@@ -28,6 +28,9 @@ import { EditCoworkingComponent } from './editCoworking/editCoworking.component'
 import { PageAccessGuard } from './page.guard';
 import { LoadingModule } from './shared/loading/loading.module';
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
+import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
+import { MyCoworkings } from "./myCoworkings/myCoworkings.component";
+import { Coworking } from "./pageCoworking/pageCoworking.component";
 
 @NgModule({
   declarations: [
@@ -43,8 +46,10 @@ import { UserRegistrationComponent } from "app/userRegistration/userRegistration
     LoginComponent,
     RegistrationComponent, 
     EditCoworkingComponent,
-    UserRegistrationComponent
-
+    UserRegistrationComponent,
+    AllCoworkings,
+    MyCoworkings,
+    Coworking
   ],
   imports: [
     BrowserModule,

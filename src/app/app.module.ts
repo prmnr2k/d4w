@@ -27,6 +27,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
 import { PageAccessGuard } from './page.guard';
 import { LoadingModule } from './shared/loading/loading.module';
+import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { LoadingModule } from './shared/loading/loading.module';
     UpgradeComponent,
     LoginComponent,
     RegistrationComponent, 
-    EditCoworkingComponent
+    EditCoworkingComponent,
+    UserRegistrationComponent
 
   ],
   imports: [

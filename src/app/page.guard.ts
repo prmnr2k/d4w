@@ -14,7 +14,7 @@ export class PageAccessGuard implements CanActivate{
         console.log(state);
         
         console.log(router.routeConfig.path);
-        if(router.routeConfig.path == "login" || router.routeConfig.path == "registration")
+        if(router.routeConfig.path == "login" || router.routeConfig.path == "registration" || router.routeConfig.path == "userRegistration")
             return !this.service.IsLogedIn();
         else{
              if(this.service.IsLogedIn()){

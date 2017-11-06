@@ -33,18 +33,21 @@ export class TablesComponent implements OnInit {
                 this.Me = user;
                 this.service.GetAllCoworking({creator_id:this.Me.id})
                     .subscribe((cwr:CoworkingModel[])=>{
-                        this.Coworking = cwr[0];
-
-                        this.service.GetBookingsByCwr(this.Coworking.id)
-                            .subscribe((res:BookingModel[])=>{
-                                this.Bookings = res;
-                                for(let book of this.Bookings){
-                                    this.service.GetUserById(book.user_id)
-                                        .subscribe((usr:UserModel)=>{
-                                            this.Users[usr.id] = usr;
-                                        })
-                                }
-                            })
+                        if(cwr.length)
+                        {
+                            this.Coworking = cwr[0];
+                            
+                            this.service.GetBookingsByCwr(this.Coworking.id)
+                                .subscribe((res:BookingModel[])=>{
+                                    this.Bookings = res;
+                                    for(let book of this.Bookings){
+                                        this.service.GetUserById(book.user_id)
+                                            .subscribe((usr:UserModel)=>{
+                                                this.Users[usr.id] = usr;
+                                            })
+                                    }
+                                })
+                        }
                     })
             })
         

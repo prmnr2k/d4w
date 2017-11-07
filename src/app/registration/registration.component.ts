@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl } from '@angular/forms';
 
 import { CoworkingModel } from '../core/models/coworking.model';
 import { CreateCoworkingModel } from '../core/models/createCoworking.model';
@@ -20,7 +20,12 @@ export class RegistrationComponent implements OnInit {
     RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
     Days:string[] = [];
-    AmetiesCB: CheckboxModel[] = []; 
+    AmetiesCB: CheckboxModel[] = [];
+
+    
+
+
+
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {
@@ -29,6 +34,9 @@ export class RegistrationComponent implements OnInit {
         this.Coworking.images = [];
         this.Coworking.working_days = [new WorkingDayModel(this.Days[0])];
         this.isLoading = false;
+
+      
+
     }
 
     DeleteImage(i:number){
@@ -84,11 +92,13 @@ export class RegistrationComponent implements OnInit {
 
     @ViewChild('submitFormCwrc') form: NgForm
 
-
+   
 
 
     testSubmitForm(){
+        
         console.log(this.form);
+        
     }
 
 

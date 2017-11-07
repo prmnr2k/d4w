@@ -16,6 +16,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
 import { PageAccessGuard } from './page.guard';
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
+import { EditUserComponent } from "app/editUser/editUser.component";
 
 const routes: Routes =[
     { path: 'user',           component: UserComponent},
@@ -29,6 +30,7 @@ const routes: Routes =[
     { path: 'login', component: LoginComponent , canActivate: [PageAccessGuard] },
     { path: 'registration', component: RegistrationComponent, canActivate: [PageAccessGuard] },
     { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [PageAccessGuard] },
+    { path: 'user_profile', component: EditUserComponent, canActivate: [PageAccessGuard] },
     { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] }
 ];
 

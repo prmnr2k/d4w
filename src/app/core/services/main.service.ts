@@ -95,9 +95,8 @@ export class MainService{
      CreateUser(data: CreateUserModel){
         return this.http.PostData('/users/create',JSON.stringify(data));
     }
-
-    UpdateUser(id:number,data: CreateUserModel){
-        return this.http.PutData('/users/update_me/'+id,JSON.stringify(data));
+    UpdateMe(data: CreateUserModel){
+        return this.http.PutData('/users/update_me',JSON.stringify(data));
     }
 
     GetMe(){
@@ -106,6 +105,22 @@ export class MainService{
 
     GetUserById(id:number){
         return this.http.GetData('/users/get/'+id,"");
+    }
+
+    UserModelToCreateUserModel(input:UserModel){
+        let result = new CreateUserModel();
+        if(input){
+            result.first_name = input.first_name?input.first_name:'';
+            result.last_name = input.last_name?input.last_name:'';
+            result.phone = input.phone?input.phone:'';
+            result.email = input.email?input.email:'';
+            result.address = input.address?input.address:'';
+            result.image = '';
+        }
+
+
+        return result;
+
     }
 
     /* USERS BLOCK END */

@@ -29,7 +29,7 @@ import { PageAccessGuard } from './page.guard';
 import { LoadingModule } from './shared/loading/loading.module';
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
 import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
-import { MyCoworkings } from "./myCoworkings/myCoworkings.component";
+import { MyBookings } from "./myBookings/myBookings.component";
 import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
@@ -51,7 +51,7 @@ import { EditUserComponent } from "app/editUser/editUser.component";
     EditCoworkingComponent,
     UserRegistrationComponent,
     AllCoworkings,
-    MyCoworkings,
+    MyBookings,
     Coworking,
     EditUserComponent
 

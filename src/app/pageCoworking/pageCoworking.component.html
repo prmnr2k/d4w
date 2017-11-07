@@ -17,36 +17,39 @@
                         <h4 class="title"> {{Coworking.id}}  coworking</h4>
                     </div>
                     <div class="content">
-                        <form *ngIf="meRole=='user'" (ngSubmit)="BookingCoworking()">
+                        <form (ngSubmit)="BookingCoworking()">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                   
-                                    <div class="col-md-5">
-                                        <label>From Time</label>
-                                        <input type="time"  class="form-control" [ngModel]="fromTime" [value]="fromTime" name="timeFrom" (ngModelChange)="fromTime = $event">
+                            <div *ngIf="meRole=='user'">
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    
+                                        <div class="col-md-5">
+                                            <label>From Time</label>
+                                            <input type="time"  class="form-control" [ngModel]="fromTime" [value]="fromTime" name="timeFrom" (ngModelChange)="fromTime = $event">
+                                        </div>
+                                        
+                                        <div class="col-md-2"></div>
+
+                                        <div class="col-md-5">
+                                            <label>To Time</label>
+                                            <input type="time"  class="form-control" [ngModel]="toTime" [min]="fromTime" [value]="fromTime" name="timeTo" (ngModelChange)="toTime = $event">
+                                        </div>
+                                        </div>    
+                                    </div> 
+
+                                    <div class="col-xs-12 col-12 col-md-4">
+                                            <input type="text"
+                                                    class="form-control"
+                                                    #dp="bsDatepicker"
+                                                    bsDatepicker [(bsValue)]="bsValue">
                                     </div>
                                     
-                                    <div class="col-md-2"></div>
-
-                                    <div class="col-md-5">
-                                        <label>To Time</label>
-                                        <input type="time"  class="form-control" [ngModel]="toTime" [min]="fromTime" [value]="fromTime" name="timeTo" (ngModelChange)="toTime = $event">
+                                    <div class="col-xs-12 col-12 col-md-3">
+                                    <button type="submit" class="btn btn-info btn-fill">Book coworking</button>
                                     </div>
-                                    </div>    
-                                </div> 
 
-                                <div class="col-xs-12 col-12 col-md-4">
-                                        <input type="text"
-                                                class="form-control"
-                                                #dp="bsDatepicker"
-                                                bsDatepicker [(bsValue)]="bsValue">
-                                </div>
-                                
-                                <div class="col-xs-12 col-12 col-md-3">
-                                <button type="submit" class="btn btn-info btn-fill">Book coworking</button>
-                                </div>
-                            
+                                </div> <!-- meRole == user -->
 
                             <div class="row">
                                 <div class="col-md-12">

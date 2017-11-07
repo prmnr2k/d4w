@@ -33,9 +33,10 @@ export class AllCoworkings implements OnInit {
               this.service.GetImageById(item.images[0].id)
               .subscribe((image:Base64ImageModel)=>{
                   this.Images['act'+item.id] = image.base64;
-              });}}}
-            );
-          this.isLoading = false;
+              });}}
+              this.isLoading = false; 
+            });
+          
   
     }
 

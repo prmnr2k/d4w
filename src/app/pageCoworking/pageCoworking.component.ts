@@ -75,7 +75,7 @@ export class Coworking implements OnInit {
     subscribe( (any) =>{
       console.log(`i booking!!`,any);
       this.BookingErr = false;
-      this.router.navigate(['/my_coworkings']);
+      this.router.navigate(['/my_bookings']);
       this.BookingOk = true;
     },
     (err)=>{

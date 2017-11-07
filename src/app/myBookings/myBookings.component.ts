@@ -12,9 +12,9 @@ import { Base64ImageModel } from '../core/models/base64image.model';
 
 @Component({
   selector: 'my-coworkings',
-  templateUrl: './myCoworkings.component.html'
+  templateUrl: './myBookings.component.html'
 })
-export class MyCoworkings implements OnInit {
+export class MyBookings implements OnInit {
    
     RegistrationErr = false;
     isLoading = true;
@@ -34,8 +34,10 @@ export class MyCoworkings implements OnInit {
           this.service.GetCoworkingById(i.coworking_id)
           .subscribe((cwr:CoworkingModel)=>{
             this.Coworkings.push(cwr);
+           
           });
         }
+        this.isLoading = false;
         console.log(`my-coworkings: `,this.Coworkings);
       });
     }

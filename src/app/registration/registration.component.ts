@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -11,7 +11,8 @@ import { TokenModel } from '../core/models/token.model';
 
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html'
+  templateUrl: './registration.component.html',
+  styleUrls: ['./st-form.css']
 })
 export class RegistrationComponent implements OnInit {
     RegistrationErr = false;
@@ -77,9 +78,32 @@ export class RegistrationComponent implements OnInit {
             })
     }
 
-    testSubmitForm(form: NgForm){
-        console.log(form);
+
+
+
+
+    @ViewChild('submitFormCwrc') form: NgForm
+
+
+
+
+    testSubmitForm(){
+        console.log(this.form);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     CheckCwrk(){
         if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){

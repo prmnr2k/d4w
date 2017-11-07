@@ -31,6 +31,7 @@ import { UserRegistrationComponent } from "app/userRegistration/userRegistration
 import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
 import { MyCoworkings } from "./myCoworkings/myCoworkings.component";
 import { Coworking } from "./pageCoworking/pageCoworking.component";
+import { BsDatepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { Coworking } from "./pageCoworking/pageCoworking.component";
     RouterModule,
     AppRoutingModule,
     LbdModule,
-    LoadingModule
+    LoadingModule,
+    BsDatepickerModule.forRoot()
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

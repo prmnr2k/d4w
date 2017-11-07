@@ -15,14 +15,32 @@ import { Base64ImageModel } from '../core/models/base64image.model';
 })
 export class MyCoworkings implements OnInit {
    
+    RegistrationErr = false;
+    isLoading = true;
+    Coworkings:CoworkingModel[] = [];
+    Images:string[] = [];
+
     constructor(private service: MainService, private router: Router) { }
 
     ngOnInit() 
     {
-       
-        
+      this.service.GetMyBookings()
+      .subscribe((cwr:CoworkingModel[])=>{
+
+        this.Coworkings = cwr;
+        console.log(`my-cwr: `,this.Coworkings);
+      });
+      
+      //users/get_my_bookings    
     }
 
+    UnBooking(id:number){
+      this.service.UnBooking(id)
+      .subscribe((any)=>{
+        console.log(`unbook `,id);
+      });
+    
+    }
     
 
 }

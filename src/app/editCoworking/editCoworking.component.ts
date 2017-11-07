@@ -6,9 +6,8 @@ import { CreateCoworkingModel } from '../core/models/createCoworking.model';
 import { CheckboxModel } from '../core/models/checkbox.model';
 import { WorkingDayModel } from '../core/models/workingDay.model';
 import { TokenModel } from '../core/models/token.model';
+import { UserModel } from '../core/models/user.model';
 import { Base64ImageModel } from '../core/models/base64image.model';
-import { CreateUserModel } from '../core/models/createUser.model';
-import { UserModel } from 'app/core/models/user.model';
 
 @Component({
   selector: 'app-edit-coworking',
@@ -32,6 +31,7 @@ export class EditCoworkingComponent implements OnInit {
                 this.Me = user;
                 this.service.GetAllCoworking({creator_id:this.Me.id})
                     .subscribe((cwr:CoworkingModel[])=>{
+                        console.log(cwr);
                         this.InitByCoworking(cwr[0]);
                         
                         this.isLoading = false;
@@ -49,11 +49,9 @@ export class EditCoworkingComponent implements OnInit {
         this.Coworking.last_name = this.Me.last_name?this.Me.last_name:'';
         this.Coworking.email = this.Me.email?this.Me.email:'';
         this.Coworking.phone = this.Me.phone?this.Me.phone:'';
-        
         for(let i of cwrk.images){
             this.service.GetImageById(i.id)
                 .subscribe((img:Base64ImageModel)=>{
-                    
                     this.Coworking.images.push(img.base64);
                 })
         }

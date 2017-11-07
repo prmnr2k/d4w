@@ -26,6 +26,8 @@ export class MyBookings implements OnInit {
 
     ngOnInit() 
     {
+      this.Coworkings = [];
+      this.Bookings = [];
       this.service.GetMyBookings()
       .subscribe((bk:BookingModel[])=>{
       this.Bookings = bk;
@@ -34,7 +36,6 @@ export class MyBookings implements OnInit {
           this.service.GetCoworkingById(i.coworking_id)
           .subscribe((cwr:CoworkingModel)=>{
             this.Coworkings.push(cwr);
-           
           });
         }
         this.isLoading = false;
@@ -51,6 +52,6 @@ export class MyBookings implements OnInit {
       });
     
     }
-    
+   
 
 }

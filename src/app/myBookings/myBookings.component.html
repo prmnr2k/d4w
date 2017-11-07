@@ -13,7 +13,8 @@
               </thead>
               <tbody>
                     <tr *ngFor="let item of Bookings;let i = index">
-                            <td> <a [routerLink]="['/coworking',item.coworking_id]">Open</a></td>
+                            <td> <a [routerLink]="['/coworking',Coworkings[i]?Coworkings[i].id:'1']">Open</a></td>
+                            
                             <td>{{Coworkings[i]?Coworkings[i].full_name:'name'}}</td>
                             <td>{{Coworkings[i]?Coworkings[i].address:'address'}}</td>
                             <td>{{item.begin_date| date: "d MMM y :: H:mm:ss"}}</td>

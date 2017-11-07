@@ -2,81 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c33172a-d599-4f88-ab2b-c3f0bfc6a8db" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/3rdpartylicenses.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/css/animate.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/css/bootstrap.min.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/css/demo.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/css/light-bootstrap-dashboard.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/css/light-bootstrap-dashboard.css.map" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/css/pe-icon-7-stroke.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/fonts/Pe-icon-7-stroke.eot" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/fonts/Pe-icon-7-stroke.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/fonts/Pe-icon-7-stroke.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/fonts/Pe-icon-7-stroke.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/angular-red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/angular2-logo-white.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/angular2-logo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/default-avatar.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-0.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-6.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/face-7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/faces/tim_vector.jpe" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/full-screen-image-3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/loader-preview.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/loading-bubbles.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/logo.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/mask.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/new_logo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/opt_lbd_angular_thumbnail.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/sidebar-1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/sidebar-2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/sidebar-3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/sidebar-4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/sidebar-5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/img/tim_80x80.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_alerts.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_buttons.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_cards.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_chartist.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_checkbox-radio-switch.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_dropdown.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_footers.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_inputs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_misc.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_mixins.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_navbars.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_responsive.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_sidebar-and-main-panel.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_tables.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_typography.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/_variables.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_buttons.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_cards.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_chartist.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_icons.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_inputs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_labels.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_morphing-buttons.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_navbars.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_social-buttons.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_tabs.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_transparency.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/lbd/mixins/_vendor-prefixes.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/assets/sass/light-bootstrap-dashboard.scss" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/favicon.ico" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/inline.5ec17e7b7182e3e5dea2.bundle.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/main.aeddb2bf5ad83d712c00.bundle.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/polyfills.9d2fb0be7d24b119ebd1.bundle.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/scripts.22da471ffe844d58c92c.bundle.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/styles.6899968d258b2ccedb1d.bundle.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/dist/vendor.c4fcbc9ffff2bdf039b2.bundle.js" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app/core/services/main.service.ts" afterPath="$PROJECT_DIR$/src/app/core/services/main.service.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -93,8 +19,8 @@
       <file leaf-file-name="main.service.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/core/services/main.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="455">
+              <caret line="236" column="0" lean-forward="true" selection-start-line="236" selection-start-column="0" selection-end-line="236" selection-end-column="0" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
               </folding>
@@ -106,6 +32,13 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/app/core/services/main.service.ts" />
+      </list>
+    </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
@@ -189,6 +122,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.tslint" value="E:\d4w\node_modules\tslint" />
+    <property name="settings.editor.selected.configurable" value="settings.typescriptcompiler" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -212,21 +146,21 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1510039442905</updated>
-      <workItem from="1510039448709" duration="808000" />
+      <workItem from="1510039448709" duration="1501000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="808000" />
+    <option name="totallyTimeSpent" value="1501000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -238,7 +172,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -256,8 +189,8 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/app/core/services/main.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="455">
+          <caret line="236" column="0" lean-forward="true" selection-start-line="236" selection-start-column="0" selection-end-line="236" selection-end-column="0" />
           <folding>
             <element signature="e#0#43#0" expanded="true" />
           </folding>

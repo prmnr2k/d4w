@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+
 import { CoworkingModel } from '../core/models/coworking.model';
 import { CreateCoworkingModel } from '../core/models/createCoworking.model';
 import { CheckboxModel } from '../core/models/checkbox.model';
@@ -69,10 +71,14 @@ export class RegistrationComponent implements OnInit {
                     });
             },
             (err)=>{
-                this.RegErrMsg = "Cant create coworking: " + err.body;
+                this.RegErrMsg = "Can`t create coworking: " + err.body;
                 this.RegistrationErr = true;
                 this.isLoading = false;
             })
+    }
+
+    testSubmitForm(form: NgForm){
+        console.log(form);
     }
 
     CheckCwrk(){

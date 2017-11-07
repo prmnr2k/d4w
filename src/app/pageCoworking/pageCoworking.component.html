@@ -1,78 +1,53 @@
 <!--<p>Cowork = {{CoworkingId}}</p>
 <p *ngIf="meRole=='user'">Booking it!</p>-->
 
-
 <div class="main-content" >
     <div class="container-fluid">
         <loading-cmp *ngIf="isLoading"></loading-cmp>
         <div class="row"  *ngIf="!isLoading">
-            <div class="col-md-12" *ngIf="RegistrationErr">
-                <h2 class="error-msg">{{RegErrMsg}}</h2>
+            <div class="col-md-12" *ngIf="BookingErr">
+                <h2 class="error-msg">Incorrect Date or Time!</h2>
             </div>
+            <div class="col-md-12" *ngIf="BookingOk">
+                    <h2 class="succes-msg">Bokking Success!</h2>
+                </div>
             <div class="col-md-8">
                 <div class="card">
                     <div class="header">
                         <h4 class="title"> {{Coworking.id}}  coworking</h4>
                     </div>
                     <div class="content">
-                        <form (ngSubmit)="BookingCoworking()">
+                        <form *ngIf="meRole=='user'" (ngSubmit)="BookingCoworking()">
 
-                
-
-                              
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <select >
-                                                    <option *ngFor="let day of Coworking.working_days" [value]="day.day">{{day.day}}</option>
-                                                </select>
-                                            </div>
-                                            
-                                           <div class="form-group">
-                                                <label>From</label>
-                                                <input type="time" >
-                                            </div>
-                                            <div class="form-group">
-                                                    <label>To</label>
-                                                    <input type="time">
-                                                </div>
-                                            <!--<div class="form-group">
-                                                <label>To</label>
-                                                <input type="time" [ngModel]="item.end_work" [min]="item.begin_work" [value]="item.begin_work" (ngModelChange)="item.end_work = $event">
-                                            </div>-->
-                                             
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                    
-                                        <div class="col-xs-12 col-12 col-md-4 form-group">
-                                                <input type="text"
-                                                       class="form-control"
-                                                       #dp="bsDatepicker"
-                                                       bsDatepicker [(bsValue)]="bsValue">
-                                              </div>
-                                    <!--
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label>From</label>
-                                                <input type="time" [ngModel]="item.begin_work" (ngModelChange)="item.begin_work = $event">
-                                            </div>
-                                            <div class="form-group">
-                                                <label>To</label>
-                                                <input type="time" [ngModel]="item.end_work" [min]="item.begin_work" [value]="item.begin_work" (ngModelChange)="item.end_work = $event">
-                                            </div>
-                                        </div>
-                                        
-                                    -->
+                                    <div class="col-md-5">
+                                        <label>From Time</label>
+                                        <input type="time"  class="form-control" [ngModel]="fromTime" [value]="fromTime" name="timeFrom" (ngModelChange)="fromTime = $event">
+                                    </div>
+                                    
+                                    <div class="col-md-2"></div>
 
+                                    <div class="col-md-5">
+                                        <label>To Time</label>
+                                        <input type="time"  class="form-control" [ngModel]="toTime" [min]="fromTime" [value]="fromTime" name="timeTo" (ngModelChange)="toTime = $event">
+                                    </div>
+                                    </div>    
+                                </div> 
 
+                                <div class="col-xs-12 col-12 col-md-4">
+                                        <input type="text"
+                                                class="form-control"
+                                                #dp="bsDatepicker"
+                                                bsDatepicker [(bsValue)]="bsValue">
+                                </div>
+                                
+                                <div class="col-xs-12 col-12 col-md-3">
+                                <button type="submit" class="btn btn-info btn-fill">Book coworking</button>
+                                </div>
+                            
 
-
-
-
-
-
-
-
-                            <button type="submit" class="btn btn-info btn-fill">Book coworking</button>
-                            <br><br>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -84,8 +59,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="col-md-12">
@@ -94,9 +67,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            
-                           
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -104,12 +74,6 @@
             </div>
 
             <div class="col-md-4  card">
-                <div class="row pad10">
-                    <h4 class="card-h4">Ameties</h4>
-                    <div class="ameties-cb" *ngFor="let item of AmetiesCB">
-                        <label *ngIf="item.checked">{{item.name}}</label>
-                    </div>
-                </div>
 
                 <div class="row pad10">
                     <h4 class="card-h4">Working days</h4>
@@ -122,14 +86,17 @@
                         <div class="col-md-5">
                                 <label>From</label>
                                 <span>{{item.begin_work}}</span>
-                            
                                 <label>To</label>
                                 <span>{{item.end_work}}</span>
-                            
                         </div>
-                        
                     </div>
-                    
+                </div>
+
+                <div class="row pad10">
+                        <h4 class="card-h4">Ameties</h4>
+                        <div class="ameties-cb" *ngFor="let item of AmetiesCB">
+                            <label *ngIf="item.checked">{{item.name}}</label>
+                        </div>
                 </div>
 
             </div>

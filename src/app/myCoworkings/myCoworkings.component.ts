@@ -7,6 +7,7 @@ import { CheckboxModel } from '../core/models/checkbox.model';
 import { WorkingDayModel } from '../core/models/workingDay.model';
 import { TokenModel } from '../core/models/token.model';
 import { UserModel } from '../core/models/user.model';
+import { BookingModel} from '../core/models/booking.model';
 import { Base64ImageModel } from '../core/models/base64image.model';
 
 @Component({
@@ -17,6 +18,7 @@ export class MyCoworkings implements OnInit {
    
     RegistrationErr = false;
     isLoading = true;
+    Bookings:BookingModel[] = [];
     Coworkings:CoworkingModel[] = [];
     Images:string[] = [];
 
@@ -25,19 +27,25 @@ export class MyCoworkings implements OnInit {
     ngOnInit() 
     {
       this.service.GetMyBookings()
-      .subscribe((cwr:CoworkingModel[])=>{
-
-        this.Coworkings = cwr;
-        console.log(`my-cwr: `,this.Coworkings);
+      .subscribe((bk:BookingModel[])=>{
+      this.Bookings = bk;
+      console.log(`my-bookings: `,this.Bookings);
+        for(let i of bk){
+          this.service.GetCoworkingById(i.coworking_id)
+          .subscribe((cwr:CoworkingModel)=>{
+            this.Coworkings.push(cwr);
+          });
+        }
+        console.log(`my-coworkings: `,this.Coworkings);
       });
-      
-      //users/get_my_bookings    
     }
+
 
     UnBooking(id:number){
       this.service.UnBooking(id)
       .subscribe((any)=>{
         console.log(`unbook `,id);
+        location.reload();
       });
     
     }

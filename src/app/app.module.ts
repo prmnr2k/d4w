@@ -32,6 +32,7 @@ import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
 import { MyCoworkings } from "./myCoworkings/myCoworkings.component";
 import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
 
 @NgModule({
@@ -66,7 +67,8 @@ import { EditUserComponent } from "app/editUser/editUser.component";
     AppRoutingModule,
     LbdModule,
     LoadingModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

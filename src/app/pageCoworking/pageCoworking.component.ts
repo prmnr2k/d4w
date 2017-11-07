@@ -16,11 +16,8 @@ import { Base64ImageModel } from '../core/models/base64image.model';
 })
 export class Coworking implements OnInit {
 
- 
-  bsValue: Date = new Date();
-
-
-  RegistrationErr = false;
+  BookingErr = false;
+  BookingOk = false;
   isLoading = true;
   RegErrMsg = '';
   Coworking:CoworkingModel = new CoworkingModel();
@@ -31,6 +28,9 @@ export class Coworking implements OnInit {
   CoworkingId:number = 0;
   Images:Base64ImageModel[] = [];
   Booking:BookingModel = new BookingModel();
+  bsValue: Date = new Date();
+  toTime:string = '00:00';
+  fromTime:string = '00:00';
   constructor(private service: MainService, private router: Router, 
   private activatedRoute: ActivatedRoute) { }
 
@@ -43,39 +43,49 @@ export class Coworking implements OnInit {
     
     this.service.GetCoworkingById(this.CoworkingId)
     .subscribe((cwr:CoworkingModel)=>{
-      this.Coworking = cwr;
-      this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),cwr.amenties);
-      for(let item of cwr.images){
-      this.service.GetImageById(item.id)
-      .subscribe((img:Base64ImageModel)=>{
-        this.Images.push(img);
-
-      });
-      
-    }
-
-        this.service.GetMyAccess()
-        .subscribe((res)=>{
-          this.meRole = res.role;
-          console.log(`role:`,this.meRole);
-        });
-        this.isLoading = false;
-  });       
-  this.Days = this.service.GetAllDays();   
- 
+        this.Coworking = cwr;
+        this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),cwr.amenties);
+        for(let item of cwr.images){
+        this.service.GetImageById(item.id)
+        .subscribe((img:Base64ImageModel)=>{
+          this.Images.push(img);
+          });
+        }
+          this.service.GetMyAccess()
+          .subscribe((res)=>{
+            this.meRole = res.role;
+            console.log(`role:`,this.meRole);
+          });
+          this.isLoading = false;
+    });       
+    this.Days = this.service.GetAllDays();   
+    this.Booking.begin_date = `2017-11-08T13:00`;
+    this.Booking.end_date = `2017-11-08T15:00`;
   }
 
   BookingCoworking(){
-    
+  
     this.Booking.coworking_id = this.Coworking.id;
-    this.Booking.begin_date = `2017-11-08T13:00`;
-    this.Booking.end_date = `2017-11-08T15:00`;
     this.Booking.visitors_count = 1;
+    this.Booking.begin_date = this.bsValue.getFullYear()+`-`+this.incr(this.bsValue.getMonth())+`-`+this.bsValue.getDate()+'T'+this.fromTime;
+    this.Booking.end_date = this.bsValue.getFullYear()+`-`+this.incr(this.bsValue.getMonth())+`-`+this.bsValue.getDate()+'T'+this.toTime;
     console.log(`this Book = `,this.Booking);
+    
    this.service.BookingCreate(this.Booking).
     subscribe( (any) =>{
       console.log(`i booking!!`,any);
-    });
+      this.BookingErr = false;
+      this.router.navigate(['/my_coworkings']);
+      this.BookingOk = true;
+    },
+    (err)=>{
+      this.BookingErr = true;
+      this.BookingOk = false;
+  });
+  }
+
+  incr(n:number){
+    return n+1;
   }
 
 }

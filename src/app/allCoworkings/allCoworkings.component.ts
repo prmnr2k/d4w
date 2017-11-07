@@ -39,6 +39,4 @@ export class AllCoworkings implements OnInit {
   
     }
 
-    
-
 }

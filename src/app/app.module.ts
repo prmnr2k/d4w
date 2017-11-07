@@ -32,6 +32,7 @@ import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
 import { MyCoworkings } from "./myCoworkings/myCoworkings.component";
 import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import { EditUserComponent } from "app/editUser/editUser.component";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     UserRegistrationComponent,
     AllCoworkings,
     MyCoworkings,
-    Coworking
+    Coworking,
+    EditUserComponent
+
   ],
   imports: [
     BrowserModule,

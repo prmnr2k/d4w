@@ -14,9 +14,10 @@ export const ROUTES: RouteInfo[] = [
     //{ path: 'dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '', isLoggedIn: false },
     { path: 'coworking_profile', title: 'Coworking Profile',  icon:'pe-7s-user', class: '', isLoggedIn: true },
     { path: 'table', title: 'Coworking stat',  icon:'pe-7s-note2', class: '', isLoggedIn: true },
-    { path: 'all_coworkings', title: 'Avaliable Coworkings',  icon:'pe-7s-box1', class: '', isLoggedIn: true }
+    { path: 'all_coworkings', title: 'Avaliable Coworkings',  icon:'pe-7s-box1', class: '', isLoggedIn: true },
+    { path: 'user_profile', title: 'User Profile',  icon:'pe-7s-user', class: '', isLoggedIn: true },
     //{ path: 'typography', title: 'Typography',  icon:'pe-7s-news-paper', class: '' },
-    //{ path: 'icons', title: 'Icons',  icon:'pe-7s-science', class: '', isLoggedIn: false }
+    //{ path: 'icons', title: 'Icons',  icon:'pe-7s-science', class: '', isLoggedIn: false },
     //{ path: 'maps', title: 'Maps',  icon:'pe-7s-map-marker', class: '' },
     //{ path: 'notifications', title: 'Notifications',  icon:'pe-7s-bell', class: '', isLoggedIn: true }
 ];
@@ -45,6 +46,9 @@ export class SidebarComponent implements OnInit {
       if ($(window).width() > 991) {
           return false;
       }
+      /*if(window.innerWidth >991){
+          return false;
+      }*/
       return true;
   }
 

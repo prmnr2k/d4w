@@ -11,7 +11,11 @@
         "assets",
         "favicon.ico",
         "app/images",
-        {"glob": "**/*","input": "../images/","output": "./images/"}
+        {
+  "glob": "**/*",
+  "input": "../images/",
+  "output": "./images/"
+}
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -24,16 +28,16 @@
         "assets/sass/light-bootstrap-dashboard.scss"
       ],
       "scripts": [
-          "../node_modules/jquery/dist/jquery.js",
-          "../node_modules/bootstrap/dist/js/bootstrap.js",
-          "../node_modules/bootstrap-notify/bootstrap-notify.js",
-          "../node_modules/chartist/dist/chartist.js"
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.js",
+        "../node_modules/bootstrap-notify/bootstrap-notify.js",
+        "../node_modules/chartist/dist/chartist.js"
       ],
-        "environmentSource": "environments/environment.ts",
-        "environments": {
-            "dev": "environments/environment.ts",
-            "prod": "environments/environment.prod.ts"
-        }
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
     }
   ],
   "e2e": {
@@ -57,7 +61,11 @@
     }
   },
   "defaults": {
-      "styleExt": "scss",
-      "component": {}
+    "styleExt": "scss",
+    "component": {
+    }
+  },
+  "warnings": {
+    "typescriptMismatch": false
   }
 }

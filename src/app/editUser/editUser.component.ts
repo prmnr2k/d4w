@@ -3,61 +3,68 @@ import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
 import { CheckboxModel } from '../core/models/checkbox.model';
 import { TokenModel } from '../core/models/token.model';
+import { UserModel } from '../core/models/user.model';
+import { Base64ImageModel } from '../core/models/base64image.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
-import { UserModel } from "app/core/models/user.model";
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './userRegistration.component.html'
+  selector: 'app-edit-user',
+  templateUrl: './editUser.component.html'
 })
-export class UserRegistrationComponent implements OnInit {
+export class EditUserComponent implements OnInit {
     RegistrationErr = false;
     isLoading = true;
     RegErrMsg = '';
     User = new CreateUserModel();
+    UserId:number = 0;
     constructor(private service: MainService, private router: Router) { }
 
     ngOnInit() 
     {
-        this.isLoading = false;
+        this.service.GetMe()
+            .subscribe((user:UserModel)=>{
+                    this.InitByUser(user);
+                    
+                    this.isLoading = false;
+            })
+        
     }
 
-    DeleteImage(i:number){
-        this.User.image = null;
+    InitByUser(usr:UserModel){
+        this.User = this.service.UserModelToCreateUserModel(usr);
+        this.UserId = usr.id?usr.id:0;
+        if(usr.image_id){
+            this.service.GetImageById(usr.image_id)
+                .subscribe((res:Base64ImageModel)=>{
+                    this.User.image = res.base64;
+                });
+        }
     }
-    CreateUser(){
-        
+
+
+
+    UpdateUser(){
         this.isLoading = true;
         this.RegistrationErr = false;
         if(!this.CheckUsr()){
-            scroll(1, 1);
             this.RegistrationErr = true;
             this.isLoading = false;
             
             return;
         }
-
-        this.service.CreateUser(this.User)
+        this.service.UpdateMe(this.User)
             .subscribe((res:UserModel)=>{
+                console.log('ok!');
                 console.log(res);
-                this.service.UserLogin(this.User.email,this.User.password)
-                    .subscribe((res:TokenModel)=>{
-                        console.log(res);
-                        this.service.BaseInitAfterLogin(res);
-                        this.router.navigate(['/']);
-                    }
-                    ,
-                    (err:any)=>{
-                        this.RegErrMsg = "You were registered but sign in is failed. Try to login by yourself!";
-                        this.RegistrationErr = true;
-                        this.isLoading = false;
-                    });
+                this.InitByUser(res);
+                this.isLoading = false;
             },
-            (err)=>{
-                this.RegErrMsg = "Cannot create profile: " + err.body;
+            (err:any)=>{
+                console.log(err);
+                this.RegErrMsg = "Cannot update profile: " + err.body;
                 this.RegistrationErr = true;
                 this.isLoading = false;
-            })
+            });
     }
 
     CheckUsr(){
@@ -65,19 +72,12 @@ export class UserRegistrationComponent implements OnInit {
             this.RegErrMsg = "Input all fields!";
             return false;
         }
-        if(!this.User.password || !this.User.password_confirmation)
-        {
-            this.RegErrMsg = "Input password and password confirmation!";
-            return false;
-        }
-        if(this.User.password != this.User.password_confirmation)
-        {
-            this.RegErrMsg = "Passwords are not matched!";
-            return false;
-        }
+       
         return true;
     }
+
     changeListener($event: any) : void {
+        console.log($event);
         this.readThis($event.target);
     }
 

@@ -36,7 +36,7 @@ export class UserRegistrationComponent implements OnInit {
             
             return;
         }
-        console.log(this.User);
+
         this.service.CreateUser(this.User)
             .subscribe((res:UserModel)=>{
                 console.log(res);

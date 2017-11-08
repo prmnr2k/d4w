@@ -28,6 +28,11 @@ import { EditCoworkingComponent } from './editCoworking/editCoworking.component'
 import { PageAccessGuard } from './page.guard';
 import { LoadingModule } from './shared/loading/loading.module';
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
+import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
+import { MyBookings } from "./myBookings/myBookings.component";
+import { Coworking } from "./pageCoworking/pageCoworking.component";
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
 import { PasswordValidationDirective } from './registration/pass.validator.directive';
 
@@ -49,8 +54,11 @@ import { PasswordValidationDirective } from './registration/pass.validator.direc
     EditCoworkingComponent,
     UserRegistrationComponent,
     EditUserComponent,
-    PasswordValidationDirective
-
+    PasswordValidationDirective,
+    AllCoworkings,
+    MyBookings,
+    Coworking,
+    EditUserComponent
 
   ],
   imports: [
@@ -63,7 +71,9 @@ import { PasswordValidationDirective } from './registration/pass.validator.direc
     RouterModule,
     AppRoutingModule,
     LbdModule,
-    LoadingModule
+    LoadingModule,
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

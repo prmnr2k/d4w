@@ -41,7 +41,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Phone</label>
-                                            <input autocomplete="off" type="number"  class="form-control" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event">
+                                            <input autocomplete="off" type="text" pattern="^[+]?[0-9]{3,}$" #phone="ngModel"  class="form-control" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event">
+                                            <p *ngIf="phone.invalid && phone.touched" class="red-error">Введите корректный телефон</p>
                                         </div>
                                     </div>
                                 </div>

@@ -24,7 +24,10 @@ export class TablesComponent implements OnInit {
     Me:UserModel = new UserModel();
     Bookings:BookingModel[] = [];
     Users:UserModel[] = [];
+
     constructor(private service: MainService, private router: Router) { }
+    
+    
 
     ngOnInit() 
     {
@@ -40,17 +43,58 @@ export class TablesComponent implements OnInit {
                             this.service.GetBookingsByCwr(this.Coworking.id)
                                 .subscribe((res:BookingModel[])=>{
                                     this.Bookings = res;
+                                   
+                                    console.log(this.Bookings);
                                     for(let book of this.Bookings){
                                         this.service.GetUserById(book.user_id)
                                             .subscribe((usr:UserModel)=>{
                                                 this.Users[usr.id] = usr;
+                                                
                                             })
                                     }
                                 })
+                                
                         }
                     })
             })
-        
+        let my_data:any = {
+            booking_id : 1
+        }
+        /*this.service.ValidateBooking(my_data).subscribe((response: Response)=>{
+            console.log(response);
+        });
+
+            /*this.Bookings = [
+                {
+                    id: 1,
+                    coworking_id: 37,
+                    user_id: 1,
+                    begin_work: "11.00",
+                    end_work: "11.00",
+                    date: null,
+                    created_at: null,
+                    updated_at: null
+                }
+            ]
+            this.Users = [
+                {
+                    id: 1,
+                    email: "qwe@qwe.com",
+                    first_name: "qwe",
+                    last_name: "qwe",
+                    phone: "6464646464",
+                    image_id: 123,
+                    address: "qwe",
+                    coworking_id: 37,
+                    created_at: null,
+                    updated_at: null  
+                }
+    
+            ];
+           console.log(this.Users[0]);
+               */
+            
+
     }
 
 }

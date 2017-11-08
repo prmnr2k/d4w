@@ -1,6 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
+import { NgForm, FormControl } from '@angular/forms';
+
 import { CoworkingModel } from '../core/models/coworking.model';
 import { CreateCoworkingModel } from '../core/models/createCoworking.model';
 import { CheckboxModel } from '../core/models/checkbox.model';
@@ -9,7 +11,8 @@ import { TokenModel } from '../core/models/token.model';
 
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html'
+  templateUrl: './registration.component.html',
+  styleUrls: ['./st-form.css']
 })
 export class RegistrationComponent implements OnInit {
     RegistrationErr = false;
@@ -17,7 +20,12 @@ export class RegistrationComponent implements OnInit {
     RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
     Days:string[] = [];
-    AmetiesCB: CheckboxModel[] = []; 
+    AmetiesCB: CheckboxModel[] = [];
+
+    
+
+
+
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {
@@ -26,8 +34,7 @@ export class RegistrationComponent implements OnInit {
         this.Coworking.images = [];
         this.Coworking.working_days = [new WorkingDayModel(this.Days[0])];
         this.isLoading = false;
-        let date = new Date();
-        
+
     }
 
     DeleteImage(i:number){
@@ -71,11 +78,40 @@ export class RegistrationComponent implements OnInit {
                     });
             },
             (err)=>{
-                this.RegErrMsg = "Cant create coworking: " + err.body;
+                this.RegErrMsg = "Can`t create coworking: " + err.body;
                 this.RegistrationErr = true;
                 this.isLoading = false;
             })
     }
+
+
+
+
+
+    @ViewChild('submitFormCwrc') form: NgForm
+
+   
+
+
+    testSubmitForm(){
+        
+        console.log(this.form);
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     CheckCwrk(){
         if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){

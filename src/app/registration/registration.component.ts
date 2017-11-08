@@ -26,6 +26,8 @@ export class RegistrationComponent implements OnInit {
         this.Coworking.images = [];
         this.Coworking.working_days = [new WorkingDayModel(this.Days[0])];
         this.isLoading = false;
+        let date = new Date();
+        
     }
 
     DeleteImage(i:number){

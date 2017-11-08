@@ -34,6 +34,9 @@ import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
+import { PasswordValidationDirective } from './registration/pass.validator.directive';
+
+
 
 @NgModule({
   declarations: [
@@ -50,6 +53,8 @@ import { EditUserComponent } from "app/editUser/editUser.component";
     RegistrationComponent, 
     EditCoworkingComponent,
     UserRegistrationComponent,
+    EditUserComponent,
+    PasswordValidationDirective,
     AllCoworkings,
     MyBookings,
     Coworking,

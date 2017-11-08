@@ -32,6 +32,7 @@ export class Coworking implements OnInit {
   bsValue: Date = new Date();
   toTime:string = '00:00';
   fromTime:string = '00:00';
+  receptionSend:boolean = false;
   constructor(private service: MainService, private router: Router, 
   private activatedRoute: ActivatedRoute) { }
 
@@ -89,6 +90,18 @@ export class Coworking implements OnInit {
 
   incr(n:number){
     return n+1;
+  }
+
+  receptionCoworking(){
+    if(! this.receptionSend){
+      console.log(`i want reception Cowork!`);
+      this.service.RequestReception(this.Coworking.id)
+      .subscribe((any)=>{
+        console.log(`request send!`);
+      });
+    }
+
+    this.receptionSend = true;
   }
 
 }

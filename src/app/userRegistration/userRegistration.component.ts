@@ -54,21 +54,16 @@ export class UserRegistrationComponent implements OnInit {
                     });
             },
             (err:any)=>{
-                console.log(err);
                 if(err.status == 422){
                     let body:any = JSON.parse(err._body); 
-
                     this.RegErrMsg = this.service.CheckErrMessage(body);
-                    console.log(this.RegErrMsg);
-                    this.RegistrationErr = true;
-                    this.isLoading = false;
+                    
                 }
                 else {
                     this.RegErrMsg = "Cannot create profile: " + err.body;
-                    this.RegistrationErr = true;
-                    this.isLoading = false;
                 }
-                
+                this.RegistrationErr = true;
+                this.isLoading = false;
             })
     }
 

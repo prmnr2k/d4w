@@ -199,14 +199,19 @@ export class MainService{
 
 
     /* RECEPTIONIST BLOCK START */
+    
     RequestReception(id:number){
-        return this.http.PostData('/bookings/create',JSON.stringify({'coworking_id':id}));
+        return this.http.PostData('/access/request_access',JSON.stringify({'coworking_id':id}));
     }
     RequestAccess(id:number){
-        return this.http.PostData('/bookings/create',JSON.stringify({'request_id':id}));
+        return this.http.PostData('/access/request_access',JSON.stringify({'request_id':id}));
     }
-
-
+    RequestAccessEmail(id:number,email:string){
+        return this.http.PostData('/access/grant_reception_access',JSON.stringify({'request_id':id,'email':email}));
+    }
+    RemoveAccess(id:number){
+        return this.http.PostData('/access/remove_user_access',JSON.stringify({'user_id':id}));
+    }
 
     /* RECEPTIONIST BLOCK END */
 
@@ -345,6 +350,14 @@ export class MainService{
         }
         return cb;
     }
+
+    public ValidateBooking(booking_id:any){
+
+        return this.http.PostData('/bookings/validate_booking',JSON.stringify(booking_id));
+     
+ 
+    }
+
     /* DATA BLOCK END */
 
 }

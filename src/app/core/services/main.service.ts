@@ -16,7 +16,7 @@ import { AmetiesModel } from '../models/ameties.model';
 import { CoworkingModel } from '../models/coworking.model';
 import { WorkingDayModel } from '../models/workingDay.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
-
+import { BookingModel } from "../models/booking.model";
 @Injectable()
 export class MainService{
     public onAuthChange$: Subject<boolean>;
@@ -106,6 +106,10 @@ export class MainService{
     GetUserById(id:number){
         return this.http.GetData('/users/get/'+id,"");
     }
+    GetMyAccess(){
+        return this.http.GetData('/access/get_my_access',"");
+        
+    }
 
     UserModelToCreateUserModel(input:UserModel){
         let result = new CreateUserModel();
@@ -134,8 +138,11 @@ export class MainService{
         return this.http.PutData('/coworkings/update/'+id,JSON.stringify(data));
     }
 
-    GetAllCoworking(params:any){
+    GetAllCoworking(params?:any){
         return this.http.GetData('/coworkings/get_all',this.ParamsToUrlSearchParams(params));
+    }
+    GetCoworkingById(id:number){
+        return this.http.GetData('/coworkings/get/'+id,"");
     }
 
 
@@ -167,6 +174,17 @@ export class MainService{
     GetBookingsByCwr(id:number){
         return this.http.GetData('/coworkings/get_bookings/'+id,'');
     }
+    BookingCreate(book:BookingModel){
+        return this.http.PostData('/bookings/create',JSON.stringify(book));
+    }
+    GetMyBookings(){
+        return  this.http.GetData('/users/get_my_bookings','');
+    }
+    
+    UnBooking(id:number){
+        return this.http.DeleteData('/bookings/delete/'+id);
+    }
+
 
     /* BOOKING BLOCK END */
 

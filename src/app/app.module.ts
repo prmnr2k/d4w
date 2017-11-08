@@ -28,6 +28,11 @@ import { EditCoworkingComponent } from './editCoworking/editCoworking.component'
 import { PageAccessGuard } from './page.guard';
 import { LoadingModule } from './shared/loading/loading.module';
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
+import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
+import { MyBookings } from "./myBookings/myBookings.component";
+import { Coworking } from "./pageCoworking/pageCoworking.component";
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
 
 @NgModule({
@@ -45,6 +50,9 @@ import { EditUserComponent } from "app/editUser/editUser.component";
     RegistrationComponent, 
     EditCoworkingComponent,
     UserRegistrationComponent,
+    AllCoworkings,
+    MyBookings,
+    Coworking,
     EditUserComponent
 
   ],
@@ -58,7 +66,9 @@ import { EditUserComponent } from "app/editUser/editUser.component";
     RouterModule,
     AppRoutingModule,
     LbdModule,
-    LoadingModule
+    LoadingModule,
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

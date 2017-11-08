@@ -198,6 +198,21 @@ export class MainService{
     /* BOOKING BLOCK END */
 
 
+    /* RECEPTIONIST BLOCK START */
+    RequestReception(id:number){
+        return this.http.PostData('/bookings/create',JSON.stringify({'coworking_id':id}));
+    }
+    RequestAccess(id:number){
+        return this.http.PostData('/bookings/create',JSON.stringify({'request_id':id}));
+    }
+
+
+
+    /* RECEPTIONIST BLOCK END */
+
+
+
+
     /* DATA BLOCK START */
 
 

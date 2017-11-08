@@ -30,12 +30,12 @@ export class MyBookings implements OnInit {
       this.Bookings = [];
       this.service.GetMyBookings()
       .subscribe((bk:BookingModel[])=>{
-      this.Bookings = bk;
       console.log(`my-bookings: `,this.Bookings);
         for(let i of bk){
           this.service.GetCoworkingById(i.coworking_id)
           .subscribe((cwr:CoworkingModel)=>{
             this.Coworkings.push(cwr);
+            this.Bookings.push(i);
           });
         }
         this.isLoading = false;

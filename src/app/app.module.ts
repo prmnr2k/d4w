@@ -29,6 +29,9 @@ import { PageAccessGuard } from './page.guard';
 import { LoadingModule } from './shared/loading/loading.module';
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
 import { EditUserComponent } from "app/editUser/editUser.component";
+import { PasswordValidationDirective } from './registration/pass.validator.directive';
+
+
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import { EditUserComponent } from "app/editUser/editUser.component";
     RegistrationComponent, 
     EditCoworkingComponent,
     UserRegistrationComponent,
-    EditUserComponent
+    EditUserComponent,
+    PasswordValidationDirective
+
 
   ],
   imports: [

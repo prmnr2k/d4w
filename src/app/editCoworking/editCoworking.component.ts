@@ -76,7 +76,6 @@ export class EditCoworkingComponent implements OnInit {
         if(!this.CheckCwrk()){
             this.RegistrationErr = true;
             this.isLoading = false;
-            
             return;
         }
         this.service.UpdateCoworking(this.CoworkingId,this.Coworking)

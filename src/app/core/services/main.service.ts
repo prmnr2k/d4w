@@ -173,6 +173,62 @@ export class MainService{
 
     /* DATA BLOCK START */
 
+
+    CheckErrMessage(body:any):string{
+        let RegErrMsg = '';
+        if(body.email) {
+            for(let i of body.email) {
+                console.log(i);
+                if(i == "INVALID")
+                    RegErrMsg += "Email contains invalid symbols! ";
+                if(i == "ALREADY_TAKEN")
+                    RegErrMsg += "Email is already registered! ";
+                if(i == "EMPTY_FIELD")
+                    RegErrMsg += "Please input email! ";
+                if(i == "TOO_LONG")
+                    RegErrMsg += "Email is too long! ";
+            }
+        }
+        if(body.phone) {
+            for(let i of body.phone) {
+                if(i == "INVALID")
+                    RegErrMsg += "Phone contains invalid symbols! ";
+            }
+        }
+        if(body.password) {
+            for(let i of body.password) {
+                if(i == "TOO_SHORT")
+                    RegErrMsg += "Password is too short. Password must contain more than 6 symbols! ";
+                if(i == "TOO_LONG")
+                    RegErrMsg += "Password is too long! ";
+                if(i == "EMPTY_FIELD")
+                    RegErrMsg += "Please input password! ";
+            }
+        }
+        if(body.password_confirmation) {
+            for(let i of body.password_confirmation) {
+                if(i == "NOT_MACHED")
+                    RegErrMsg += "Confirmed passwrod must be the same as password! ";
+                if(i == "EMPTY_FIELD")
+                    RegErrMsg += "Please confirm password! ";
+            }
+        }
+        if(body.capacity) {
+            for(let i of body.capacity) {
+                if(i == "LIMIT_REACHED")
+                    RegErrMsg += "Limit of places reached! ";
+            }
+        }
+        if(body.images) {
+            for(let i of body.images) {
+                if(i == "LIMIT_REACHED")
+                    RegErrMsg += "Limit of images reached! ";
+            }
+        }
+        return RegErrMsg;
+    }
+
+
     ParamsToUrlSearchParams(params:any):string{
         let options = new URLSearchParams();
 

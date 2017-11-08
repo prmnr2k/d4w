@@ -61,6 +61,7 @@ export class EditUserComponent implements OnInit {
             },
             (err:any)=>{
                 console.log(err);
+                
                 this.RegErrMsg = "Cannot update profile: " + err.body;
                 this.RegistrationErr = true;
                 this.isLoading = false;
@@ -68,8 +69,19 @@ export class EditUserComponent implements OnInit {
     }
 
     CheckUsr(){
+        let emailRegexp = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}$');
+        let phoneRegexp = new RegExp('^[+]?[0-9]{3,}$');
         if(!this.User.email || !this.User.phone || !this.User.address){
             this.RegErrMsg = "Input all fields!";
+            return false;
+        }
+        if(!(emailRegexp.test(this.User.email))) {
+            this.RegErrMsg = "Invalid email!";
+            return false;
+        }
+
+        if(!(phoneRegexp.test(this.User.phone))) {
+            this.RegErrMsg = "Invalid phone number!";
             return false;
         }
        

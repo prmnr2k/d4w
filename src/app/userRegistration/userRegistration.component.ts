@@ -53,10 +53,22 @@ export class UserRegistrationComponent implements OnInit {
                         this.isLoading = false;
                     });
             },
-            (err)=>{
-                this.RegErrMsg = "Cannot create profile: " + err.body;
-                this.RegistrationErr = true;
-                this.isLoading = false;
+            (err:any)=>{
+                console.log(err);
+                if(err.status == 422){
+                    let body:any = JSON.parse(err._body); 
+
+                    this.RegErrMsg = this.service.CheckErrMessage(body);
+                    console.log(this.RegErrMsg);
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                }
+                else {
+                    this.RegErrMsg = "Cannot create profile: " + err.body;
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                }
+                
             })
     }
 
@@ -73,6 +85,11 @@ export class UserRegistrationComponent implements OnInit {
         if(this.User.password != this.User.password_confirmation)
         {
             this.RegErrMsg = "Passwords are not matched!";
+            return false;
+        }
+        if(this.User.password.length < 6)
+        {
+            this.RegErrMsg = "Password must include more than 6 symbols";
             return false;
         }
         return true;

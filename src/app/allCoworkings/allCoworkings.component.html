@@ -1,0 +1,23 @@
+<div class="main-content" >
+    <div class="container-fluid">
+        <loading-cmp *ngIf="isLoading"></loading-cmp>
+        <div class="row"  *ngIf="!isLoading">
+            <div class="col-md-12" *ngIf="RegistrationErr">
+                <h2 class="error-msg">{{RegErrMsg}}</h2>
+            </div>
+            <div class="container-fluid">
+                    <div *ngFor="let item of Coworkings"  class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pull-left">
+                        <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">           
+                                <h3 class="cardname card-info-bg">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</h3>
+                                <h3 class="cardprice card-info-bg">Price: {{item.price}}$</h3>
+                                <h3 class="cardcapacity card-info-bg">Capacity: {{item.capacity}}</h3>
+                                <h3 class="cardaddress card-info-bg">Address: {{item.address}}</h3>
+                                <h3 class="carddates card-info-bg"><span *ngFor="let day of item.working_days;let j = index">| {{day.day.slice(0,2)}}</span> |</h3>
+                            <span class="cardshadow"></span>
+                            <a [routerLink]="['/coworking',item.id]"><span class="spanlink"></span></a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

@@ -163,6 +163,84 @@
                         
                     </div>
                 </div>
+
+                <div class="col-md-12">
+                      
+                        <h4 class="card-h4">Workers coworking</h4>
+                                       
+                                
+                                     <div class="col-md-5 pull-left">
+                                            <h5>Request</h5>
+                                            <div class="content table-responsive table-full-width">
+                                                    <table class="table table-hover table-striped">
+                                                          <thead>
+                                                              <tr>
+                                                                  <th>ID</th>
+                                                                  <th>User iD</th>
+                                                                  <th>Coworking</th>
+                                                                  <th>Add</th>
+                                                                  <th>Delete</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                              <tr *ngFor="let item of coworkingWorkersRequest">
+                                                                  <td>{{item.id}}</td>
+                                                                  <td>{{item.user_id}}</td>
+                                                                  <td>{{item.coworking_id}}</td>
+                                                                  <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="AddWorker(item.id)">
+                                                                        <i class="pe-7s-plus"></i> </a>
+                                                                  </td>
+                                                                  <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="DeleteWorker(item.user_id)">
+                                                                        <i class="pe-7s-less"></i> </a>
+                                                                  </td>
+                        
+                                                              </tr>
+                                                          </tbody>
+                                                    </table>
+                                              </div>
+                                    </div>
+
+                                    <div class="col-md-5 pull-right">
+                                            <h5>Avaliable</h5>
+                                            <div class="content table-responsive table-full-width">
+                                                    <table class="table table-hover table-striped">
+                                                          <thead>
+                                                              <tr>
+                                                                  <th>ID</th>
+                                                                  <th>E-mail</th>
+                                                                  <th>Firstname</th>
+                                                                  <th>Delete</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                              <tr *ngFor="let item of coworkingWorkers">
+                                                                    <td>{{item.id}}</td>
+                                                                    <td>{{item.email}}</td>
+                                                                    <td>{{item.first_name}}</td>
+                                                                    <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="DeleteWorker(item.id)">
+                                                                            <i class="pe-7s-less"></i> </a>
+                                                                    </td>
+                                                              </tr>
+                                                          </tbody>
+                                                    </table>
+                                              </div>
+                                    </div>
+
+                                    <br><br>
+                                    <div class="col-md-4">
+                                            <h5>Add access by E-mail</h5>
+                                                               
+                                                <form (ngSubmit)="AddWorkerEmail(email.value)" class="form-inline"> 
+                                                        <div class="form-group">                                  
+                                                    <input autocomplete="off" type="text" class="form-control" #email name="email">
+                                                    <button class="btn btn-info btn-fill " type="submit">Add</button>
+                                                    </div>
+                                                </form>
+                                           
+                                    </div>
+                                
+                        
+                </div>
             </div>
         </div>
     </div>

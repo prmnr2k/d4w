@@ -153,6 +153,12 @@ export class MainService{
     GetCoworkingById(id:number){
         return this.http.GetData('/coworkings/get/'+id,"");
     }
+    GetCoworkingWorkersRequest(id:number){
+        return this.http.GetData('/coworkings/get_access_requests/'+id,"");
+    }
+    GetCoworkingWorkers(id:number){
+        return this.http.GetData('/coworkings/get_accessed_users/'+id,"");
+    }
 
 
     CoworkingModelToCreateCoworkingModel(input:CoworkingModel){
@@ -199,20 +205,28 @@ export class MainService{
 
 
     /* RECEPTIONIST BLOCK START */
-    
+
     RequestReception(id:number){
         return this.http.PostData('/access/request_access',JSON.stringify({'coworking_id':id}));
     }
     RequestAccess(id:number){
-        return this.http.PostData('/access/request_access',JSON.stringify({'request_id':id}));
+        let params = {
+            "request_id":id
+        }
+        return this.http.PostData('/access/request_access',JSON.stringify(params));
     }
     RequestAccessEmail(id:number,email:string){
         return this.http.PostData('/access/grant_reception_access',JSON.stringify({'request_id':id,'email':email}));
     }
     RemoveAccess(id:number){
-        return this.http.PostData('/access/remove_user_access',JSON.stringify({'user_id':id}));
+        let params ={
+            "user_id":id
+        }
+        return this.http.PostData('/access/remove_user_access',JSON.stringify(params));
     }
 
+
+   
     /* RECEPTIONIST BLOCK END */
 
 

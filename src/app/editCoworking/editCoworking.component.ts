@@ -3,6 +3,7 @@ import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
 import { CoworkingModel } from '../core/models/coworking.model';
 import { CreateCoworkingModel } from '../core/models/createCoworking.model';
+import { WorkerRequestModel } from '../core/models/workerRequest.model';
 import { CheckboxModel } from '../core/models/checkbox.model';
 import { WorkingDayModel } from '../core/models/workingDay.model';
 import { TokenModel } from '../core/models/token.model';
@@ -25,6 +26,9 @@ export class EditCoworkingComponent implements OnInit {
     Me:UserModel = new UserModel();
     CoworkingId:number = 0;
     meRole:string = 'guest';
+    coworkingWorkers:UserModel[] = [];
+    coworkingWorkersRequest:WorkerRequestModel[] = [];
+    coworkingWorkersRequestUser:UserModel[] = [];
     constructor(private service: MainService, private router: Router) { }
 
     @ViewChild('submitFormCwrc') form: NgForm
@@ -36,6 +40,7 @@ export class EditCoworkingComponent implements OnInit {
                 this.Me = user;
                 this.service.GetAllCoworking({creator_id:this.Me.id})
                     .subscribe((cwr:CoworkingModel[])=>{
+                        this.CoworkingId = cwr[0].id;
                         console.log(cwr);
                         this.InitByCoworking(cwr[0]);
                         this.service.GetMyAccess()
@@ -43,9 +48,30 @@ export class EditCoworkingComponent implements OnInit {
                           this.meRole = res.role;
                           if(res.role!='creator') this.router.navigate(['/all_coworkings']);
                         });
+
+                        this.service.GetCoworkingWorkersRequest(this.CoworkingId)
+                        .subscribe((res:WorkerRequestModel[])=>{
+                            console.log(`request worker`,res);
+                            this.coworkingWorkersRequest = res;
+                           /* for(let i of res){
+                                this.service.GetUserById(i.user_id)
+                                .subscribe((res:UserModel)=>{
+                                    this.coworkingWorkersRequestUser.push(res);
+                                });
+                            }*/
+                        });
+
+                        this.service.GetCoworkingWorkers(this.CoworkingId)
+                        .subscribe((res:UserModel[])=>{
+                            console.log(`avalieble worker`,res);
+                            this.coworkingWorkers = res;
+                        });
+
                         this.isLoading = false;
                     })
-            })
+            });
+
+            
         
     }
 
@@ -179,6 +205,28 @@ export class EditCoworkingComponent implements OnInit {
             console.log(this.Coworking.working_days[index].end_work);
         }
 
+    }
+
+    AddWorker(id:number){
+        this.service.RequestAccess(id)
+        .subscribe((any)=>{
+            console.log(any,`add success!`);
+        })
+    }
+
+    DeleteWorker(id:number){
+        this.service.RemoveAccess(id)
+        .subscribe((any)=>{
+            console.log(any,`delete success!`);
+        })
+    }
+
+    AddWorkerEmail(email:string){
+        console.log(`add by email`,email);
+        /*this.service.RequestAccessEmail(this.CoworkingId,email)
+        .subscribe((any)=>{
+            console.log(any,`email add`);
+        });*/
     }
 
 }

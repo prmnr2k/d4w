@@ -61,11 +61,21 @@ export class EditUserComponent implements OnInit {
             },
             (err:any)=>{
                 console.log(err);
+                if(err.status == 422){
+                    let body:any = JSON.parse(err._body); 
+
+                    this.RegErrMsg = this.service.CheckErrMessage(body);
+                    console.log(this.RegErrMsg);
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                }
+                else {
+                    this.RegErrMsg = "Cannot update profile: " + err.body;
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                }
                 
-                this.RegErrMsg = "Cannot update profile: " + err.body;
-                this.RegistrationErr = true;
-                this.isLoading = false;
-            });
+            })
     }
 
     CheckUsr(){

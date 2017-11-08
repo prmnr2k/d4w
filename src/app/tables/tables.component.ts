@@ -24,6 +24,7 @@ export class TablesComponent implements OnInit {
     Me:UserModel = new UserModel();
     Bookings:BookingModel[] = [];
     Users:UserModel[] = [];
+    meRole:string = 'guest';
     constructor(private service: MainService, private router: Router) { }
 
     ngOnInit() 
@@ -49,6 +50,10 @@ export class TablesComponent implements OnInit {
                                 })
                         }
                     })
+                    this.service.GetMyAccess()
+                    .subscribe((res)=>{
+                      this.meRole = res.role;
+                    });
             })
         
     }

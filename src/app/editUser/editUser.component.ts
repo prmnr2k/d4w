@@ -17,6 +17,7 @@ export class EditUserComponent implements OnInit {
     RegErrMsg = '';
     User = new CreateUserModel();
     UserId:number = 0;
+    meRole:string = 'guest';
     constructor(private service: MainService, private router: Router) { }
 
     ngOnInit() 
@@ -24,7 +25,10 @@ export class EditUserComponent implements OnInit {
         this.service.GetMe()
             .subscribe((user:UserModel)=>{
                     this.InitByUser(user);
-                    
+                    this.service.GetMyAccess()
+                    .subscribe((res)=>{
+                        this.meRole = res.role;
+                    });
                     this.isLoading = false;
             })
         

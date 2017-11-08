@@ -83,7 +83,7 @@
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
-            <a  *ngIf="!menuItem.isLoggedIn || isLoggedIn || menuItem.path=='all_coworkings'" [routerLink]="[menuItem.path]">
+            <a  *ngIf="(!menuItem.isLoggedIn || isLoggedIn || menuItem.path=='all_coworkings')&&getUserStatus()>=menuItem.userStatus" [routerLink]="[menuItem.path]">
                 <i class="{{menuItem.icon}}"></i>
                 <p>{{menuItem.title}}</p>
             </a>

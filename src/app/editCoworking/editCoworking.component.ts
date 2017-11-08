@@ -22,6 +22,7 @@ export class EditCoworkingComponent implements OnInit {
     AmetiesCB: CheckboxModel[] = []; 
     Me:UserModel = new UserModel();
     CoworkingId:number = 0;
+    meRole:string = 'guest';
     constructor(private service: MainService, private router: Router) { }
 
     ngOnInit() 
@@ -33,7 +34,11 @@ export class EditCoworkingComponent implements OnInit {
                     .subscribe((cwr:CoworkingModel[])=>{
                         console.log(cwr);
                         this.InitByCoworking(cwr[0]);
-                        
+                        this.service.GetMyAccess()
+                        .subscribe((res)=>{
+                          this.meRole = res.role;
+                          if(res.role!='creator') this.router.navigate(['/all_coworkings']);
+                        });
                         this.isLoading = false;
                     })
             })

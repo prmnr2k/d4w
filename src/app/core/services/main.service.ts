@@ -110,6 +110,15 @@ export class MainService{
         return this.http.GetData('/access/get_my_access',"");
         
     }
+    GetMyAccessStatus(){
+        let status:string =`guest`;
+        this.GetMyAccess()
+        .subscribe((res)=>{
+            status = res.role;
+            return status;
+        });
+      return status;
+    }
 
     UserModelToCreateUserModel(input:UserModel){
         let result = new CreateUserModel();

@@ -24,7 +24,8 @@ export class Coworking implements OnInit {
   Days:string[] = [];
   AmetiesCB: CheckboxModel[] = []; 
   Me:UserModel = new UserModel();
-  meRole:string = null;
+  meRole:string = "guest";
+  meCowork:number = 0;
   CoworkingId:number = 0;
   Images:Base64ImageModel[] = [];
   Booking:BookingModel = new BookingModel();
@@ -54,6 +55,8 @@ export class Coworking implements OnInit {
           this.service.GetMyAccess()
           .subscribe((res)=>{
             this.meRole = res.role;
+            this.meCowork = res.coworking_id;
+            console.log('res access',res);
             console.log(`role:`,this.meRole);
           });
           this.isLoading = false;

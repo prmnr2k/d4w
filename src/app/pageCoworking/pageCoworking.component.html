@@ -18,7 +18,8 @@
                     <div class="content">
                         <form (ngSubmit)="BookingCoworking()">
 
-                            <div *ngIf="meRole=='user'" class="container-fluid">
+                            <p>Role {{meRole}}</p>
+                            <div *ngIf="meRole=='user'||(meRole=='creator'&&meCowork!=Coworking.id)" class="container-fluid">
                                     <div class="form-inline">
                                             <div class="form-group" style="margin-top:7px;">
                                                 <span class="label label-success" style="font-size:12px;">Time From</span>

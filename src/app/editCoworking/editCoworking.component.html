@@ -1,4 +1,4 @@
-<div class="main-content" >
+<div *ngIf="meRole=='creator'" class="main-content" >
         <div class="container-fluid">
             <loading-cmp *ngIf="isLoading"></loading-cmp>
             <div class="row"  *ngIf="!isLoading">

@@ -27,6 +27,7 @@ export class TablesComponent implements OnInit {
     Bookings:BookingModel[] = [];
     Users:UserModel[] = [];
     meRole:string = 'guest';
+    meCwrk:number = 0;
     Rates:RateModel[] = [];
 
     constructor(private service: MainService, private router: Router) { }
@@ -36,15 +37,19 @@ export class TablesComponent implements OnInit {
     {
 
         this.isLoading = true;
-        this.service.GetMe()
+        this.service.GetMyAccess()
+        .subscribe((res)=>{
+          this.meRole = res.role;
+          this.meCwrk = res.coworking_id;
+            this.service.GetMe()
             .subscribe((user:UserModel)=>{
                 this.Me = user;
-                this.service.GetAllCoworking({creator_id:this.Me.id})
-                    .subscribe((cwr:CoworkingModel[])=>{
+                this.service.GetCoworkingById(this.meCwrk)
+                    .subscribe((cwr:CoworkingModel)=>{
                         
-                        if(cwr.length)
+                        if(cwr)
                         {
-                            this.Coworking = cwr[0];
+                            this.Coworking = cwr;
                             
                             this.service.GetBookingsByCwr(this.Coworking.id)
                                 .subscribe((res:BookingModel[])=>{
@@ -71,12 +76,9 @@ export class TablesComponent implements OnInit {
                                 
                         }
                     })
-                    this.service.GetMyAccess()
-                    .subscribe((res)=>{
-                      this.meRole = res.role;
-                    });
+                   
             })
-        
+        });
 
         /*this.service.ValidateBooking(my_data).subscribe((response: Response)=>{
             console.log(response);

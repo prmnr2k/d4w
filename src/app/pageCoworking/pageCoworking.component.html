@@ -13,12 +13,15 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title"> {{Coworking.full_name}} coworking</h4>
+                        <h4 class="title"> {{Coworking.full_name}} coworking  <span *ngIf="(meRole=='receptionist'&&meCowork==Coworking.id)||(meRole=='creator'&&meCowork==Coworking.id)" class="label label-info" style="font-size:12px; padding:10px;">You are Admin!</span>
+                        </h4>
+                       
+                               
                     </div>
                     <div class="content">
                         <form (ngSubmit)="BookingCoworking()">
 
-                            <p>Role {{meRole}}</p>
+                           <!-- <p>Role {{meRole}} {{meCowork}}</p> -->
                             <div *ngIf="meRole=='user'||meRole=='receptionist'||(meRole=='creator'&&meCowork!=Coworking.id)" class="container-fluid">
                                     <div class="form-inline">
                                             <div class="form-group" style="margin-top:7px;">
@@ -129,7 +132,7 @@
 
             </div>
         </div>
-        <div *ngIf="meRole=='user'||meRole=='receptionist'||(meRole=='creator'&&meCowork!=Coworking.id)">
+        <div *ngIf="meRole=='user'">
                 <form class="form-inline" (ngSubmit)="receptionCoworking()">
                 <button *ngIf="!receptionSend" type="submit" class="form-control" class="btn btn-info btn-fill">Reception Coworking</button>
                
@@ -138,6 +141,7 @@
             </form>
 
         </div>
+        
     </div>
 </div>
 

@@ -29,7 +29,6 @@ export class TablesComponent implements OnInit {
     constructor(private service: MainService, private router: Router) { }
     
     
-
     ngOnInit() 
     {
         this.service.GetMe()

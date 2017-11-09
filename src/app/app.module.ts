@@ -34,7 +34,8 @@ import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
-import { PasswordValidationDirective } from './registration/pass.validator.directive';
+import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
+import { StarRatingModule } from 'angular-star-rating';
 
 
 
@@ -60,6 +61,7 @@ import { PasswordValidationDirective } from './registration/pass.validator.direc
     Coworking,
     EditUserComponent
 
+
   ],
   imports: [
     BrowserModule,
@@ -73,7 +75,8 @@ import { PasswordValidationDirective } from './registration/pass.validator.direc
     LbdModule,
     LoadingModule,
     BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot()
+    TimepickerModule.forRoot(),
+    StarRatingModule.forRoot()
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

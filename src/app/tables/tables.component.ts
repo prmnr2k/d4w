@@ -8,6 +8,8 @@ import { CoworkingModel } from '../core/models/coworking.model';
 import { Base64ImageModel } from '../core/models/base64image.model';
 import { BookingModel } from '../core/models/booking.model';
 
+import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/star-rating-struct";
+import { RateModel } from 'app/core/models/rate.model';
 
 @Component({
   selector: 'app-tables',
@@ -17,13 +19,14 @@ import { BookingModel } from '../core/models/booking.model';
 export class TablesComponent implements OnInit {
 
     isLoginErr = false;
-    isLoading = true;
+    isLoading:boolean;
     Coworking = new CoworkingModel();
     Days:string[] = [];
     AmetiesCB: CheckboxModel[] = []; 
     Me:UserModel = new UserModel();
     Bookings:BookingModel[] = [];
     Users:UserModel[] = [];
+    Rates:RateModel[] = [];
 
     constructor(private service: MainService, private router: Router) { }
     
@@ -31,11 +34,14 @@ export class TablesComponent implements OnInit {
 
     ngOnInit() 
     {
+
+        this.isLoading = true;
         this.service.GetMe()
             .subscribe((user:UserModel)=>{
                 this.Me = user;
                 this.service.GetAllCoworking({creator_id:this.Me.id})
                     .subscribe((cwr:CoworkingModel[])=>{
+                        
                         if(cwr.length)
                         {
                             this.Coworking = cwr[0];
@@ -43,12 +49,21 @@ export class TablesComponent implements OnInit {
                             this.service.GetBookingsByCwr(this.Coworking.id)
                                 .subscribe((res:BookingModel[])=>{
                                     this.Bookings = res;
-                                   
-                                    console.log(this.Bookings);
+                                    
+                                    this.service.getMyRates().subscribe((resp:RateModel[])=>{
+                                        this.Rates = [];
+                                        for(let i of resp){
+                                            this.Rates[i.user_id] = i;
+                                        }
+                                        console.log(resp);
+                                    });
                                     for(let book of this.Bookings){
+                                       
                                         this.service.GetUserById(book.user_id)
                                             .subscribe((usr:UserModel)=>{
                                                 this.Users[usr.id] = usr;
+                                                this.isLoading = false;
+                                               
                                                 
                                             })
                                     }
@@ -57,44 +72,61 @@ export class TablesComponent implements OnInit {
                         }
                     })
             })
-        let my_data:any = {
-            booking_id : 1
-        }
+        
+
         /*this.service.ValidateBooking(my_data).subscribe((response: Response)=>{
             console.log(response);
         });
 
-            /*this.Bookings = [
-                {
-                    id: 1,
-                    coworking_id: 37,
-                    user_id: 1,
-                    begin_work: "11.00",
-                    end_work: "11.00",
-                    date: null,
-                    created_at: null,
-                    updated_at: null
-                }
-            ]
-            this.Users = [
-                {
-                    id: 1,
-                    email: "qwe@qwe.com",
-                    first_name: "qwe",
-                    last_name: "qwe",
-                    phone: "6464646464",
-                    image_id: 123,
-                    address: "qwe",
-                    coworking_id: 37,
-                    created_at: null,
-                    updated_at: null  
-                }
-    
-            ];
-           console.log(this.Users[0]);
-               */
+            
+        */
             
 
     }
+
+    rateUser(id:number,score:string){
+        this.service.rateUser(id, score).subscribe((respon:any)=>{
+                console.log(respon);
+                this.Rates[id] = respon;
+        });
+    }
+
+    changeConfirmStart(index:any){
+        
+        this.service.bookingConfirmChangeStart(this.Bookings[index].id).subscribe((respon:BookingModel)=>{
+                this.Bookings[index] = respon;
+        });
+    }
+
+    changeConfirmEnd(index:any){
+        
+        this.service.bookingConfirmChangeEnd(this.Bookings[index].id).subscribe((respon:BookingModel)=>{
+                this.Bookings[index] = respon;
+                console.log(respon);
+        });
+    }
+
+
+
+
+
+    onClickResult:OnClickEvent;
+    onHoverRatingChangeResult:OnHoverRatingChangeEvent;
+    onRatingChangeResult:OnRatingChangeEven;
+ 
+    onClick = ($event:OnClickEvent) => {
+        console.log('onClick $event: ', $event);
+        this.onClickResult = $event;
+    };
+ 
+    onRatingChange = ($event:OnRatingChangeEven) => {
+        console.log('onRatingUpdated $event: ', $event);
+        this.onRatingChangeResult = $event;
+    };
+ 
+    onHoverRatingChange = ($event:OnHoverRatingChangeEvent) => {
+        console.log('onHoverRatingChange $event: ', $event);
+        this.onHoverRatingChangeResult = $event;
+    };
 
 }

@@ -127,6 +127,22 @@ export class MainService{
 
     }
 
+    public rateUser(user_id:number,score:string){
+        const data = {
+            user_id: user_id,
+            score: score
+        }
+        console.log(data);
+        return this.http.PostData('/users/rate',JSON.stringify(data));
+        
+    }
+
+    public getMyRates(){
+        
+        return this.http.GetData('/users/get_my_rates','');
+        
+    }
+
     /* USERS BLOCK END */
 
     /* Coworkings BLOCK START */
@@ -184,6 +200,28 @@ export class MainService{
     UnBooking(id:number){
         return this.http.DeleteData('/bookings/delete/'+id);
     }
+
+    public ValidateBooking(booking_id:any){
+        return this.http.PostData('/bookings/validate_booking',JSON.stringify(booking_id));
+    }
+
+    public bookingConfirmChangeStart(booking_id:number){
+        const data = {
+            booking_id: booking_id
+        }
+        return this.http.PostData('/bookings/confirm_visit',JSON.stringify(data));
+    }
+    public bookingConfirmChangeEnd(booking_id:number){
+        const data = {
+            booking_id: booking_id
+        }
+       
+        return this.http.PostData('/bookings/confirm_finish',JSON.stringify(data));
+    }
+    
+
+
+
 
 
     /* BOOKING BLOCK END */
@@ -322,12 +360,9 @@ export class MainService{
         return cb;
     }
 
-    public ValidateBooking(booking_id:any){
+    
 
-        return this.http.PostData('/bookings/validate_booking',JSON.stringify(booking_id));
-     
- 
-    }
+    
 
     /* DATA BLOCK END */
 

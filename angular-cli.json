@@ -25,7 +25,8 @@
       "prefix": "app",
       "styles": [
         "assets/css/light-bootstrap-dashboard.css",
-        "assets/sass/light-bootstrap-dashboard.scss"
+        "assets/sass/light-bootstrap-dashboard.scss",
+        "assets/sass/star-rating.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

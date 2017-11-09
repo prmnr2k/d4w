@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
     Coworking = new CreateCoworkingModel();
     Days:string[] = [];
     AmetiesCB: CheckboxModel[] = [];
-    rulesTrue:boolean = false;
+    rulesShow:boolean = false;
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {
@@ -68,7 +68,7 @@ export class RegistrationComponent implements OnInit {
                         .subscribe((res:TokenModel)=>{
                             console.log(res);
                             this.service.BaseInitAfterLogin(res);
-                            this.router.navigate(['/']);
+                            this.router.navigate(['/all_coworkings']);
                         }
                         ,
                         (err:any)=>{

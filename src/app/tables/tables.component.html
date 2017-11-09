@@ -1,4 +1,6 @@
-<div class="main-content">
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+
+<div *ngIf="!isLoading" class="main-content">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -8,25 +10,32 @@
                         <p class="category">{{Coworking?.short_name}}</p>
                     </div>
                     <div class="content table-responsive table-full-width">
-                          <table class="table table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Time</th>
-                                        <th>Username</th>
-                                        <th>Confirmed</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of Bookings">
-                                        <td>{{item.date | date:'dd.M.yyyy'}}</td>
-                                        <td>{{item.begin_work}} - {{item.end_work}}</td>
-                                        <td>{{Users[item.user_id].first_name}} {{Users[item.user_id].last_name}}</td>
-                                        <td>{{item.confirmed?'yes':'no'}}</td>
-                                    </tr>
-                                </tbody>
-                          </table>
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Username</th>
+                                    <th>Confirmed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of Bookings; let i = index">
+                                    <td>{{item.begin_date | date:'dd.M.yyyy'}}</td>
+                                    <td>{{item.begin_date | date:'H:mm'}} - {{item.end_date | date:'H:mm'}}</td>
+                                    <td>{{Users[item.user_id].first_name}} {{Users[item.user_id].last_name}}</td>
+                                    <td>
+                                        <button class="button-fisit" *ngIf="!item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmStart(i)">start</button>
+                                        <button class="button-fisit" *ngIf="item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmEnd(i)">finish</button>
 
+                                        <div *ngIf="item.is_closed" class="likeDislike">
+                                            <button class="like" (click)="rateUser(Users[item.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'yes'}"></button>
+                                            <button class="dislike"(click)="rateUser(Users[item.user_id].id,'no')"[ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'no'}"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

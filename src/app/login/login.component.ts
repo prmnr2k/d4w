@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit {
             .subscribe((res:TokenModel)=>{
                 console.log(res);
                 this.service.BaseInitAfterLogin(res);
-                this.router.navigate(['/']);
+                this.router.navigate(['/all_coworkings']);
+                location.reload();
             }
             ,
             (err:any)=>{

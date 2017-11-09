@@ -13,12 +13,16 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="header">
-                        <h4 class="title"> {{Coworking.full_name}} coworking</h4>
+                        <h4 class="title"> {{Coworking.full_name}} coworking  <span *ngIf="(meRole=='receptionist'&&meCowork==Coworking.id)||(meRole=='creator'&&meCowork==Coworking.id)" class="label label-info" style="font-size:12px; padding:10px;">You are Admin!</span>
+                        </h4>
+                       
+                               
                     </div>
                     <div class="content">
                         <form (ngSubmit)="BookingCoworking()">
 
-                            <div *ngIf="meRole=='user'" class="container-fluid">
+                           <!-- <p>Role {{meRole}} {{meCowork}}</p> -->
+                            <div *ngIf="meRole=='user'||meRole=='receptionist'||(meRole=='creator'&&meCowork!=Coworking.id)" class="container-fluid">
                                     <div class="form-inline">
                                             <div class="form-group" style="margin-top:7px;">
                                                 <span class="label label-success" style="font-size:12px;">Time From</span>
@@ -40,8 +44,9 @@
                                         </div>
                                         <hr>
                             </div> <!-- meRole == user -->
-
-
+                            
+                            
+                          
                                 <!--Old dsg
 
                                 <div class="row">
@@ -127,6 +132,16 @@
 
             </div>
         </div>
+        <div *ngIf="meRole=='user'">
+                <form class="form-inline" (ngSubmit)="receptionCoworking()">
+                <button *ngIf="!receptionSend" type="submit" class="form-control" class="btn btn-info btn-fill">Reception Coworking</button>
+               
+                <span *ngIf="receptionSend" class="label label-info" style="font-size:16px; padding:10px;">Request Sended</span>
+               
+            </form>
+
+        </div>
+        
     </div>
 </div>
 

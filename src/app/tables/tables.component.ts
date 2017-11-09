@@ -24,11 +24,11 @@ export class TablesComponent implements OnInit {
     Me:UserModel = new UserModel();
     Bookings:BookingModel[] = [];
     Users:UserModel[] = [];
+    meRole:string = 'guest';
 
     constructor(private service: MainService, private router: Router) { }
     
     
-
     ngOnInit() 
     {
         this.service.GetMe()
@@ -56,6 +56,10 @@ export class TablesComponent implements OnInit {
                                 
                         }
                     })
+                    this.service.GetMyAccess()
+                    .subscribe((res)=>{
+                      this.meRole = res.role;
+                    });
             })
         let my_data:any = {
             booking_id : 1

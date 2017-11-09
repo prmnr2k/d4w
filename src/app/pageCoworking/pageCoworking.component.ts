@@ -24,13 +24,15 @@ export class Coworking implements OnInit {
   Days:string[] = [];
   AmetiesCB: CheckboxModel[] = []; 
   Me:UserModel = new UserModel();
-  meRole:string = null;
+  meRole:string = "guest";
+  meCowork:number = 0;
   CoworkingId:number = 0;
   Images:Base64ImageModel[] = [];
   Booking:BookingModel = new BookingModel();
   bsValue: Date = new Date();
   toTime:string = '00:00';
   fromTime:string = '00:00';
+  receptionSend:boolean = false;
   constructor(private service: MainService, private router: Router, 
   private activatedRoute: ActivatedRoute) { }
 
@@ -54,6 +56,8 @@ export class Coworking implements OnInit {
           this.service.GetMyAccess()
           .subscribe((res)=>{
             this.meRole = res.role;
+            this.meCowork = res.coworking_id;
+            console.log('res access',res);
             console.log(`role:`,this.meRole);
           });
           this.isLoading = false;
@@ -86,6 +90,18 @@ export class Coworking implements OnInit {
 
   incr(n:number){
     return n+1;
+  }
+
+  receptionCoworking(){
+    if(! this.receptionSend){
+      console.log(`i want reception Cowork!`);
+      this.service.RequestReception(this.Coworking.id)
+      .subscribe((any)=>{
+        console.log(`request send!`);
+      });
+    }
+
+    this.receptionSend = true;
   }
 
 }

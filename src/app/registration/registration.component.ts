@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
     Coworking = new CreateCoworkingModel();
     Days:string[] = [];
     AmetiesCB: CheckboxModel[] = [];
-
+    rulesTrue:boolean = false;
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {

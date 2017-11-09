@@ -48,12 +48,10 @@ export class MainService{
             email: email,
             password: password
         };
-        console.log(params);
         return this.http.PostData('/auth/login',JSON.stringify(params));
     }
 
     BaseInitAfterLogin(data:TokenModel){
-        console.log(data);
         localStorage.setItem('token',data.token);
         this.http.BaseInitByToken(data.token);
         this.GetMe()
@@ -66,7 +64,6 @@ export class MainService{
     TryToLoginWithToken()
     {
         let token = localStorage.getItem('token');
-        console.log(token);
         //let token = window.localStorage.getItem('token');
         if(token)
         {
@@ -75,14 +72,17 @@ export class MainService{
 
     }
 
-    Logout(){
-        
+    ClearSession(){
         this.http.token = null;
         this.http.headers.delete('Authorization');
         this.onAuthChange$.next(false);
         localStorage.removeItem('token');
-        //window.localStorage.removeItem('token');
-        return this.http.PostData("/auth/logout","");
+    }
+    Logout(){
+        return this.http.PostData("/auth/logout","")
+            .subscribe((res:any)=>{
+                this.ClearSession();
+            });
         
     }
     /* Authentication BLOCK END */
@@ -102,6 +102,14 @@ export class MainService{
 
     GetMe(){
         return this.http.GetData('/users/get_me',"");
+    }
+
+    ChangeUserPassword(params:any){
+        return this.http.PostData('/users/change_password',JSON.stringify(params));
+    }
+
+    DeleteMe(){
+        return this.http.DeleteData('/users/delete_me');
     }
 
     GetUserById(id:number){
@@ -196,7 +204,6 @@ export class MainService{
         let RegErrMsg = '';
         if(body.email) {
             for(let i of body.email) {
-                console.log(i);
                 if(i == "INVALID")
                     RegErrMsg += "Email contains invalid symbols! ";
                 if(i == "ALREADY_TAKEN")

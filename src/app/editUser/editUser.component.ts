@@ -21,7 +21,7 @@ export class EditUserComponent implements OnInit {
     UserId:number = 0;
     constructor(private service: MainService, private router: Router) { }
 
-    @ViewChild('submitFormCwrc') form: NgForm
+    @ViewChild('submitFormUsr') form: NgForm
     
     ngOnInit() 
     {
@@ -31,6 +31,24 @@ export class EditUserComponent implements OnInit {
                     
                     this.isLoading = false;
             })
+        
+    }
+
+    DeleteUser() {
+        if(confirm("Are you sure you want to delete your profile?")) {
+            this.isLoading = true;
+            this.service.DeleteMe()
+                .subscribe((res:any)=>{
+                    console.log(res);
+                    this.service.ClearSession();
+                    this.router.navigate(['/login']);
+                    
+                },
+                (err:any)=>{
+                    console.log('delete err');
+                    console.log(err);
+                });
+        }
         
     }
 
@@ -48,34 +66,36 @@ export class EditUserComponent implements OnInit {
 
 
     UpdateUser(){
-        this.isLoading = true;
-        this.RegistrationErr = false;
-        if(!this.CheckUsr()){
-            this.RegistrationErr = true;
-            this.isLoading = false;
-            
-            return;
-        }
-        this.service.UpdateMe(this.User)
-            .subscribe((res:UserModel)=>{
-                console.log('ok!');
-                console.log(res);
-                this.InitByUser(res);
-                this.isLoading = false;
-            },
-            (err:any)=>{
-                if(err.status == 422){
-                    let body:any = JSON.parse(err._body); 
-                    this.RegErrMsg = this.service.CheckErrMessage(body);
-                    
-                }
-                else {
-                    this.RegErrMsg = "Cannot update profile: " + err.body;
-                }
+        if(this.form.valid){
+            this.isLoading = true;
+            this.RegistrationErr = false;
+            if(!this.CheckUsr()){
                 this.RegistrationErr = true;
                 this.isLoading = false;
                 
-            })
+                return;
+            }
+            this.service.UpdateMe(this.User)
+                .subscribe((res:UserModel)=>{
+                    console.log('ok!');
+                    console.log(res);
+                    this.InitByUser(res);
+                    this.isLoading = false;
+                },
+                (err:any)=>{
+                    if(err.status == 422){
+                        let body:any = JSON.parse(err._body); 
+                        this.RegErrMsg = this.service.CheckErrMessage(body);
+                        
+                    }
+                    else {
+                        this.RegErrMsg = "Cannot update profile: " + err.body;
+                    }
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                    
+                })
+        }
     }
 
     CheckUsr(){

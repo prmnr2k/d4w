@@ -20,6 +20,7 @@ import { MyBookings } from "./myBookings/myBookings.component";
 import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
 import { EditUserComponent } from "app/editUser/editUser.component";
+import { ChangePasswordComponent } from 'app/changePassword/changePassword.component';
 
 const routes: Routes =[
     { path: 'user',           component: UserComponent},
@@ -38,7 +39,8 @@ const routes: Routes =[
     { path: 'my_bookings', component:MyBookings,canActivate: [PageAccessGuard]},
     { path: 'coworking/:id', component:Coworking},
     { path: 'user_profile', component: EditUserComponent, canActivate: [PageAccessGuard] },
-    { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] }
+    { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] },
+    { path: 'change_password', component: ChangePasswordComponent, canActivate: [PageAccessGuard] }
 ];
 
 @NgModule({

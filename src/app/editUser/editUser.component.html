@@ -11,7 +11,7 @@
                             <h4 class="title">Edit profile</h4>
                         </div>
                         <div class="content">
-                            <form (ngSubmit)="UpdateUser(submitFormCwrc)" #submitFormCwrc="ngForm">
+                            <form (ngSubmit)="UpdateUser(submitFormUsr)" #submitFormUsr="ngForm">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -56,7 +56,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="col-md-12">
-                                            <img class="images-preview pointer-curs" *ngIf="User.image" alt="Delete"[src]="User.image">
+                                            <img class="images-preview pointer-curs" *ngIf="User.image" alt="Delete" [src]="User.image">
                                         </div>
                                         <div class="form-group">
                                             <label class="file_upload">
@@ -67,7 +67,8 @@
                                         
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right" [disabled]="!submitFormCwrc.valid">Update Profile</button>
+                                <button type="button" class="btn btn-info btn-fill pull-left" style = "background-color: #f44336;" (click)="DeleteUser()">Delete Profile</button>
+                                <button type="submit" class="btn btn-info btn-fill pull-right" [disabled]="!submitFormUsr.valid">Update Profile</button>
                                 <div class="clearfix"></div>
                             </form>
                         </div>

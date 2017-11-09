@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit{
 
     Logout(){
         this.service.Logout()
-            .subscribe(()=>{
+            .add(()=>{
                 this.router.navigate(['/login']);
             })
     }

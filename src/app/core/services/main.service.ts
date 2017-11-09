@@ -210,19 +210,22 @@ export class MainService{
         return this.http.PostData('/access/request_access',JSON.stringify({'coworking_id':id}));
     }
     RequestAccess(id:number){
-        let params = {
-            "request_id":id
-        }
-        return this.http.PostData('/access/request_access',JSON.stringify(params));
+        return this.http.PostData('/access/apply_request',JSON.stringify({'request_id':id}));
     }
     RequestAccessEmail(id:number,email:string){
-        return this.http.PostData('/access/grant_reception_access',JSON.stringify({'request_id':id,'email':email}));
+        let params={
+            'coworking_id':id,
+            'email':email
+        }
+        console.log('e-mail',params);
+        return this.http.PostData('/access/grant_reception_access',JSON.stringify(params));
     }
     RemoveAccess(id:number){
-        let params ={
-            "user_id":id
-        }
-        return this.http.PostData('/access/remove_user_access',JSON.stringify(params));
+        console.log(`remove_id = `,id);
+        return this.http.PostData('/access/remove_user_access',JSON.stringify({'user_id':id}));
+    }
+    RemoveAccessRequest(id:number){
+        return this.http.DeleteData('/access/remove_request/'+id);
     }
 
 

@@ -175,9 +175,9 @@
                                                     <table class="table table-hover table-striped">
                                                           <thead>
                                                               <tr>
-                                                                  <th>ID</th>
+                                                                 <!--   <th>ID</th> -->
                                                                   <th>User iD</th>
-                                                                  <th>Coworking</th>
+                                                               <!--   <th>Coworking</th> -->
                                                                   <th>User Name</th>
                                                                   <th>User Email</th>
                                                                   <th>Add</th>
@@ -186,15 +186,15 @@
                                                           </thead>
                                                           <tbody>
                                                               <tr *ngFor="let item of coworkingWorkersRequest">
-                                                                  <td>{{item.id}}</td>
+                                                                 <!--   <td>{{item.id}}</td> -->
                                                                   <td>{{item.user_id}}</td>
-                                                                  <td>{{item.coworking_id}}</td>
+                                                                 <!--   <td>{{item.coworking_id}}</td> -->
                                                                   <td>{{item.user_name}}</td>
                                                                   <td>{{item.user_email}}</td>
                                                                   <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="AddWorker(item.id)">
                                                                         <i class="pe-7s-plus"></i> </a>
                                                                   </td>
-                                                                  <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="DeleteWorker(item.user_id)">
+                                                                  <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="DeleteRequestWorker(item.id)">
                                                                         <i class="pe-7s-less"></i> </a>
                                                                   </td>
                         

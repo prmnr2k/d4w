@@ -147,10 +147,11 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn btn-info btn-fill pull-right" [disabled]="!submitFormCwrc.valid">Create coworking</button>
-
-                                <div *ngIf="rulesTrue" class="container-fluid">
-                                        
+                                <form (ngSubmit)="rulesShow = true">
+                                <button *ngIf="!rulesShow" class="btn btn-info btn-fill pull-right" [disabled]="!submitFormCwrc.valid" type="submit">Create coworking</button>
+                                </form>
+                                <div *ngIf="rulesShow" class="container-fluid">
+                                                <br>
                                                 <div class="col-md-12">
                                                     <div class="card">
                                                         <div class="header">
@@ -171,10 +172,13 @@
                                                                          sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                                     
                                                                 
-                                                                                     
-                                                            <form (ngSubmit)="rulesTrue=true"> 
-                                                                <button class="btn btn-info btn-fill " type="submit">I agree Rules</button>
+                                                                         <div class="form-inline">
+                                                            <button type="submit" [disabled]="!submitFormCwrc.valid" class="btn btn-success btn-fill">I agree Rules</button>
+
+                                                            <form class="pull-left" style="margin-right:10px;" (ngSubmit)="rulesShow = false"> 
+                                                                <button class="btn btn-danger btn-fill" type="submit">Not agree</button>
                                                             </form>
+                                                                        </div>
                                                         </div>
                                                     </div>
                                             </div>

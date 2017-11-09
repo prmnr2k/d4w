@@ -1,5 +1,5 @@
 <div class="main-content" >
-        <div *ngIf="rulesTrue" class="container-fluid">
+        <div class="container-fluid">
             <loading-cmp *ngIf="isLoading"></loading-cmp>
             <div class="row" *ngIf="!isLoading">
                 <div class="col-md-12" *ngIf="RegistrationErr">
@@ -149,6 +149,37 @@
 
                                 <button type="submit" class="btn btn-info btn-fill pull-right" [disabled]="!submitFormCwrc.valid">Create coworking</button>
 
+                                <div *ngIf="rulesTrue" class="container-fluid">
+                                        
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="header">
+                                                            <h4 class="title text-center">Rules d4w</h4>
+                                                        </div>
+                                                        <div class="content">
+                                                            
+                                                               <p class="lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                                                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                                                 velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                                                                 sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    
+                                                                 <p class="lead  text-primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                                                        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                                                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                                                         velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                                                                         sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                    
+                                                                
+                                                                                     
+                                                            <form (ngSubmit)="rulesTrue=true"> 
+                                                                <button class="btn btn-info btn-fill " type="submit">I agree Rules</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+
                                 <div class="clearfix"></div>
                             
                         </div>
@@ -195,35 +226,6 @@
             </div>
         </div>
 
-    <div *ngIf="!rulesTrue" class="container-fluid">
     
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title text-center">Rules d4w</h4>
-                    </div>
-                    <div class="content">
-                        
-                           <p class="lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                             velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                             sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                             <p class="lead  text-primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                     velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                                     sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-                            
-                                                 
-                        <form (ngSubmit)="rulesTrue=true"> 
-                            <button class="btn btn-info btn-fill " type="submit">I agree Rules</button>
-                        </form>
-                    </div>
-                </div>
-        </div>
-    </div>
     </div>
     

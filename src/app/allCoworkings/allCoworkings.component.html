@@ -5,6 +5,49 @@
             <div class="col-md-12" *ngIf="RegistrationErr">
                 <h2 class="error-msg">{{RegErrMsg}}</h2>
             </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Full name" name="fullname" [ngModel]="Params.full_name" (ngModelChange)="Params.full_name = $event">
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Description" name="description" [ngModel]="Params.description" (ngModelChange)="Params.description = $event">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Additional info" name="additional_info" [ngModel]="Params.additional_info" (ngModelChange)="Params.additional_info = $event">
+                    </div>
+                </div>
+            </div>
+            <div class="row" [hidden]="!hideElement">
+                <div class="col-md-4">
+                    <div class="form-group" > 
+                        <input type="text"
+                        placeholder="Date"
+                        class="form-control"
+                        #dp="bsDatepicker"
+                        bsDatepicker [(bsValue)]="Params.date">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="time"  placeholder="From" class="time" name="from" [ngModel]="Params.from" (ngModelChange)="Params.from = $event">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="time" placeholder="To" class="time" name="to" [ngModel]="Params.to" (ngModelChange)="Params.to = $event">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button class="col-md-3 btn btn-info btn-fill pull-right" (click)='hideElement = !hideElement' style="margin-bottom:30px; margin-right:15px">Advanced search</button >
+                <button class="col-md-3 btn btn-info btn-fill pull-right" (click)="CoworkingSearch()" style="margin-bottom:30px; margin-right:15px">Search</button >
+            </div>
             <div class="container-fluid">
                     <div *ngFor="let item of Coworkings"  class="col-xs-12 col-sm-6 col-md-6 col-lg-4 pull-left">
                         <div class="card bg_cover" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}">           
@@ -17,7 +60,7 @@
                             <a [routerLink]="['/coworking',item.id]"><span class="spanlink"></span></a>
                         </div>
                     </div>
-                </div>
+            </div>
         </div>
     </div>
 </div>

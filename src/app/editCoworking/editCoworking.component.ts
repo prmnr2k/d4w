@@ -53,12 +53,16 @@ export class EditCoworkingComponent implements OnInit {
                         .subscribe((res:WorkerRequestModel[])=>{
                             console.log(`request worker`,res);
                             this.coworkingWorkersRequest = res;
-                           /* for(let i of res){
+                            let count = 0;
+                            for(let i of res){
+                                console.log('get user by id',i.user_id);
                                 this.service.GetUserById(i.user_id)
-                                .subscribe((res:UserModel)=>{
-                                    this.coworkingWorkersRequestUser.push(res);
+                                .subscribe((user:UserModel)=>{
+                                    this.coworkingWorkersRequest[count].user_name=user.first_name;
+                                    this.coworkingWorkersRequest[count].user_email=user.email;
                                 });
-                            }*/
+                            count++;
+                            }
                         });
 
                         this.service.GetCoworkingWorkers(this.CoworkingId)
@@ -223,10 +227,10 @@ export class EditCoworkingComponent implements OnInit {
 
     AddWorkerEmail(email:string){
         console.log(`add by email`,email);
-        /*this.service.RequestAccessEmail(this.CoworkingId,email)
+        this.service.RequestAccessEmail(this.CoworkingId,email)
         .subscribe((any)=>{
             console.log(any,`email add`);
-        });*/
+        });
     }
 
 }

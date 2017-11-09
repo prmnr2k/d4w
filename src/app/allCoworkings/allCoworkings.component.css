@@ -107,3 +107,8 @@ background-color: rgba(184, 184, 184, 0.808);
       margin-right:5px;
     }
     
+    .time {
+      padding-left: 0;
+      height: 39px;
+      width: 100%;
+    }

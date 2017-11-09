@@ -13,10 +13,13 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     //{ path: 'dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '', isLoggedIn: false },
-    { path: 'coworking_profile', title: 'Coworking Profile',  icon:'pe-7s-user', class: '', isLoggedIn: true, userStatus:3 },
-    { path: 'table', title: 'Coworking stat',  icon:'pe-7s-note2', class: '', isLoggedIn: true, userStatus:2 },
+
+    { path: 'coworking_profile', title: 'Coworking Profile',  icon:'pe-7s-user', class: '', isLoggedIn: true,userStatus:3 },
+    { path: 'table', title: 'Coworking stat',  icon:'pe-7s-note2', class: '', isLoggedIn: true,userStatus:2 },
     { path: 'all_coworkings', title: 'Avaliable Coworkings',  icon:'pe-7s-box1', class: '', isLoggedIn: true, userStatus:0 },
     { path: 'user_profile', title: 'User Profile',  icon:'pe-7s-user', class: '', isLoggedIn: true, userStatus:1 },
+    { path: 'change_password', title: 'Change Password',  icon:'pe-7s-user', class: '', isLoggedIn: true, userStatus:1 },
+
     //{ path: 'typography', title: 'Typography',  icon:'pe-7s-news-paper', class: '' },
     //{ path: 'icons', title: 'Icons',  icon:'pe-7s-science', class: '', isLoggedIn: false },
     //{ path: 'maps', title: 'Maps',  icon:'pe-7s-map-marker', class: '' },
@@ -62,8 +65,9 @@ export class SidebarComponent implements OnInit {
   }
 
   Logout(){
+    
     this.service.Logout()
-        .subscribe(()=>{
+        .add(()=>{
             this.router.navigate(['/login']);
         })
     }

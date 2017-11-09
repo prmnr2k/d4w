@@ -16,7 +16,8 @@ import { AmetiesModel } from '../models/ameties.model';
 import { CoworkingModel } from '../models/coworking.model';
 import { WorkingDayModel } from '../models/workingDay.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
-import { BookingModel } from "../models/booking.model";
+import { BookingModel } from '../models/booking.model';
+
 @Injectable()
 export class MainService{
     public onAuthChange$: Subject<boolean>;
@@ -47,12 +48,10 @@ export class MainService{
             email: email,
             password: password
         };
-        console.log(params);
         return this.http.PostData('/auth/login',JSON.stringify(params));
     }
 
     BaseInitAfterLogin(data:TokenModel){
-        console.log(data);
         localStorage.setItem('token',data.token);
         this.http.BaseInitByToken(data.token);
         this.GetMe()
@@ -65,7 +64,6 @@ export class MainService{
     TryToLoginWithToken()
     {
         let token = localStorage.getItem('token');
-        console.log(token);
         //let token = window.localStorage.getItem('token');
         if(token)
         {
@@ -74,14 +72,17 @@ export class MainService{
 
     }
 
-    Logout(){
-        
+    ClearSession(){
         this.http.token = null;
         this.http.headers.delete('Authorization');
         this.onAuthChange$.next(false);
         localStorage.removeItem('token');
-        //window.localStorage.removeItem('token');
-        return this.http.PostData("/auth/logout","");
+    }
+    Logout(){
+        return this.http.PostData("/auth/logout","")
+            .subscribe((res:any)=>{
+                this.ClearSession();
+            });
         
     }
     /* Authentication BLOCK END */
@@ -92,7 +93,7 @@ export class MainService{
 
     /* USERS BLOCK START */
 
-     CreateUser(data: CreateUserModel){
+    CreateUser(data: CreateUserModel){
         return this.http.PostData('/users/create',JSON.stringify(data));
     }
     UpdateMe(data: CreateUserModel){
@@ -103,12 +104,19 @@ export class MainService{
         return this.http.GetData('/users/get_me',"");
     }
 
+    ChangeUserPassword(params:any){
+        return this.http.PostData('/users/change_password',JSON.stringify(params));
+    }
+
+    DeleteMe(){
+        return this.http.DeleteData('/users/delete_me');
+    }
+
     GetUserById(id:number){
         return this.http.GetData('/users/get/'+id,"");
     }
     GetMyAccess(){
         return this.http.GetData('/access/get_my_access',"");
-        
     }
     GetMyAccessStatus(){
         let status:string =`guest`;
@@ -150,6 +158,7 @@ export class MainService{
     GetAllCoworking(params?:any){
         return this.http.GetData('/coworkings/get_all',this.ParamsToUrlSearchParams(params));
     }
+
     GetCoworkingById(id:number){
         return this.http.GetData('/coworkings/get/'+id,"");
     }
@@ -193,13 +202,12 @@ export class MainService{
         return this.http.PostData('/bookings/create',JSON.stringify(book));
     }
     GetMyBookings(){
-        return  this.http.GetData('/users/get_my_bookings','');
-    }
-    
-    UnBooking(id:number){
-        return this.http.DeleteData('/bookings/delete/'+id);
+        return this.http.GetData('/users/get_my_bookings','');
     }
 
+    UnBooking(id:number){
+        return this.http.DeleteData('bookings/delete/'+id);
+    }
 
     /* BOOKING BLOCK END */
 
@@ -242,7 +250,6 @@ export class MainService{
         let RegErrMsg = '';
         if(body.email) {
             for(let i of body.email) {
-                console.log(i);
                 if(i == "INVALID")
                     RegErrMsg += "Email contains invalid symbols! ";
                 if(i == "ALREADY_TAKEN")
@@ -309,7 +316,6 @@ export class MainService{
                     options.set(key,params[key]);
             }
         }
-        console.log(options.toString());
         return options.toString();
     }
 

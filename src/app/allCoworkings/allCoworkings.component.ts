@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../core/services/main.service';
-import { Router } from '@angular/router';
+import { Router, Params } from '@angular/router';
 import { CoworkingModel } from '../core/models/coworking.model';
 import { CreateCoworkingModel } from '../core/models/createCoworking.model';
 import { CheckboxModel } from '../core/models/checkbox.model';
@@ -20,6 +20,17 @@ export class AllCoworkings implements OnInit {
     isLoading = true;
     Coworkings:CoworkingModel[] = [];
     Images:string[] = [];
+    Params = {
+      limit:10,
+      offset:0,
+      description:'',
+      full_name:'',
+      address:'',
+      additional_info:'',
+      begin_work:'',
+      end_work:'',
+      date:null
+    };
     constructor(private service: MainService, private router: Router) { }
 
     ngOnInit() 
@@ -29,7 +40,7 @@ export class AllCoworkings implements OnInit {
           console.log(cwr);
           this.Coworkings = cwr;
           for(let item of cwr){
-            if(item.images[0]){
+            if(item.images && item.images[0]){
               this.service.GetImageById(item.images[0].id)
               .subscribe((image:Base64ImageModel)=>{
                   this.Images['act'+item.id] = image.base64;
@@ -40,4 +51,20 @@ export class AllCoworkings implements OnInit {
   
     }
 
+    CoworkingSearch() {
+      this.service.GetAllCoworking(this.Params)
+      .subscribe((cwr:CoworkingModel[])=>{
+          console.log(cwr);
+          this.Coworkings = cwr;
+          for(let item of cwr){
+            if(item.images && item.images[0]){
+              this.service.GetImageById(item.images[0].id)
+              .subscribe((image:Base64ImageModel)=>{
+                  this.Images['act'+item.id] = image.base64;
+              });}}
+              this.isLoading = false; 
+            });
+    }
 }
+
+

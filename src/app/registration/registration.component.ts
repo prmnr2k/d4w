@@ -58,7 +58,7 @@ export class RegistrationComponent implements OnInit {
             if(!this.CheckCwrk()){
                 this.RegistrationErr = true;
                 this.isLoading = false;
-                
+                this.rulesShow = false;
                 return;
             }
             this.service.CreateCoworking(this.Coworking)
@@ -69,10 +69,12 @@ export class RegistrationComponent implements OnInit {
                             console.log(res);
                             this.service.BaseInitAfterLogin(res);
                             this.router.navigate(['/all_coworkings']);
+                            location.reload();
                         }
                         ,
                         (err:any)=>{
                             this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
+                            this.rulesShow = false;
                             this.RegistrationErr = true;
                             this.isLoading = false;
                         });

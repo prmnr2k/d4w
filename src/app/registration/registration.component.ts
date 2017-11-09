@@ -1,23 +1,33 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
+import { NgForm, FormControl } from '@angular/forms';
+
 import { CoworkingModel } from '../core/models/coworking.model';
 import { CreateCoworkingModel } from '../core/models/createCoworking.model';
 import { CheckboxModel } from '../core/models/checkbox.model';
 import { WorkingDayModel } from '../core/models/workingDay.model';
 import { TokenModel } from '../core/models/token.model';
 
+
+declare var jquery:any;
+declare var $ :any;
+
+
 @Component({
   selector: 'app-registration',
-  templateUrl: './registration.component.html'
+  templateUrl: './registration.component.html',
+  styleUrls: ['./st-form.css']
 })
+
 export class RegistrationComponent implements OnInit {
     RegistrationErr = false;
     isLoading = true;
     RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
     Days:string[] = [];
-    AmetiesCB: CheckboxModel[] = []; 
+    AmetiesCB: CheckboxModel[] = [];
+
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {
@@ -25,6 +35,7 @@ export class RegistrationComponent implements OnInit {
         this.AmetiesCB = this.service.GetAllAmenties();
         this.Coworking.images = [];
         this.Coworking.working_days = [new WorkingDayModel(this.Days[0])];
+        
         this.isLoading = false;
     }
 
@@ -39,40 +50,52 @@ export class RegistrationComponent implements OnInit {
         this.Coworking.working_days.push(new WorkingDayModel(this.Days[0]));
     }
 
-
     CreateCoworking(){
-        
-        this.isLoading = true;
-        this.RegistrationErr = false;
-        this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
-        if(!this.CheckCwrk()){
-            this.RegistrationErr = true;
-            this.isLoading = false;
-            
-            return;
-        }
-        console.log(this.Coworking);
-        this.service.CreateCoworking(this.Coworking)
-            .subscribe((res:CoworkingModel)=>{
-                console.log(res);
-                this.service.UserLogin(this.Coworking.email,this.Coworking.password)
-                    .subscribe((res:TokenModel)=>{
-                        console.log(res);
-                        this.service.BaseInitAfterLogin(res);
-                        this.router.navigate(['/']);
-                    }
-                    ,
-                    (err:any)=>{
-                        this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
-                        this.RegistrationErr = true;
-                        this.isLoading = false;
-                    });
-            },
-            (err)=>{
-                this.RegErrMsg = "Cant create coworking: " + err.body;
+        if(this.form.valid){
+            this.isLoading = true;
+            this.RegistrationErr = false;
+            this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
+            if(!this.CheckCwrk()){
                 this.RegistrationErr = true;
                 this.isLoading = false;
-            })
+                
+                return;
+            }
+            this.service.CreateCoworking(this.Coworking)
+                .subscribe((res:CoworkingModel)=>{
+                    console.log(res);
+                    this.service.UserLogin(this.Coworking.email,this.Coworking.password)
+                        .subscribe((res:TokenModel)=>{
+                            console.log(res);
+                            this.service.BaseInitAfterLogin(res);
+                            this.router.navigate(['/']);
+                        }
+                        ,
+                        (err:any)=>{
+                            this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
+                            this.RegistrationErr = true;
+                            this.isLoading = false;
+                        });
+                },
+                (err)=>{
+                    if(err.status == 422){
+                        let body:any = JSON.parse(err._body); 
+                        this.RegErrMsg = this.service.CheckErrMessage(body);
+                    }
+                    else {
+                        this.RegErrMsg = "Cannot create profile: " + err.body;
+                    }
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                })
+        }
+    }
+
+    @ViewChild('submitFormCwrc') form: NgForm
+
+    testSubmitForm(){
+        window.scrollTo( 0, 0 );
+        console.log(this.form);
     }
 
     CheckCwrk(){
@@ -102,24 +125,59 @@ export class RegistrationComponent implements OnInit {
             this.RegErrMsg = "Input working days!";
             return false;
         }
-        
+        if(!this.checkWorkingTime()){
+            this.RegErrMsg = "Input correct working time!";
+            return false;
+        }
         
         return true;
     }
+
+    checkWorkingTime(){
+        let date = new Date();
+        let begin:Date,end:Date;
+        for(let i of this.Coworking.working_days){
+            let beginArr = i.begin_work.split(":");
+            let endArr = i.end_work.split(":");
+            begin = new Date(date.setHours(+beginArr[0],+beginArr[1]));
+            end = new Date(date.setHours(+endArr[0],+endArr[1]));
+            if( begin > end ){
+                return false;
+            }
+        }
+        return true;
+    }
+
     changeListener($event: any) : void {
         this.readThis($event.target);
     }
 
     readThis(inputValue: any): void {
-        for(let f of inputValue.files){
-            let file:File = f;
-            if(!file) return;
-            let myReader:FileReader = new FileReader();
-            myReader.onloadend = (e) => {
+        for(let i in inputValue.files){
+            if(+i < 5){
+                let file:File = inputValue.files[i];
+                if(!file) break;
+                let myReader:FileReader = new FileReader();
+                myReader.onloadend = (e) => {
                     this.Coworking.images.push(myReader.result);
+                }
+                myReader.readAsDataURL(file);
             }
-            myReader.readAsDataURL(file);
         }
+    }
+
+    OnBeginWorkChanged(index:number, $event:any){
+        this.Coworking.working_days[index].begin_work = $event;
+        if(!this.Coworking.working_days[index].end_work || 
+            this.Coworking.working_days[index].end_work < this.Coworking.working_days[index].begin_work)
+        {
+            let beginArr = this.Coworking.working_days[index].begin_work.split(":");
+            let endHour = +beginArr[0] + 2;
+            
+            this.Coworking.working_days[index].end_work = endHour+ ":" + beginArr[1];
+            console.log(this.Coworking.working_days[index].end_work);
+        }
+
     }
 
 }

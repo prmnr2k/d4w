@@ -320,6 +320,14 @@ export class MainService{
         }
         return cb;
     }
+
+    public ValidateBooking(booking_id:any){
+
+        return this.http.PostData('/bookings/validate_booking',JSON.stringify(booking_id));
+     
+ 
+    }
+
     /* DATA BLOCK END */
 
 }

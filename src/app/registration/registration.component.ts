@@ -30,7 +30,6 @@ export class RegistrationComponent implements OnInit {
     rulesShow:boolean = false;
     flagForImages:boolean = true;
     imagesCount:number = 5;
-    agree:boolean = false;
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {
@@ -53,25 +52,6 @@ export class RegistrationComponent implements OnInit {
     AddNewWorkingDay(){
         this.Coworking.working_days.push(new WorkingDayModel(this.Days[0]));
     }
-
-    /*if(this.form.valid){
-        this.isLoading = true;
-        this.RegistrationErr = false;
-        this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
-        if(!this.CheckCwrk()){
-            console.log("ok");
-            this.RegistrationErr = true;
-            //this.isLoading = false;
-            this.rulesShow = false;
-            return;
-        }
-        console.log("ok2");
-        this.rulesShow = true;
-        this.isLoading = true;
-        this.RegistrationErr = false;
-        if(this.agree){
-*/
-
 
     CreateCoworking(){
         if(this.form.valid){
@@ -98,51 +78,50 @@ export class RegistrationComponent implements OnInit {
                     this.rulesShow = true;
                     this.isLoading = false;
                     this.RegistrationErr = false;
-                    if(this.agree){
-                        this.service.CreateCoworking(this.Coworking)
-                        .subscribe((res:CoworkingModel)=>{
-                            console.log(res);
-                            this.rulesShow = true;
-                            this.RegistrationErr = false;
-                            this.isLoading = false;
-                            this.service.UserLogin(this.Coworking.email,this.Coworking.password)
-                                .subscribe((res:TokenModel)=>{
-                                    console.log(res);
-                                    
-                                        this.service.BaseInitAfterLogin(res);
-                                        this.router.navigate(['/all_coworkings']);
-                                        this.isLoading = false;
-                                        location.reload();
-
-                                }
-                                ,
-                                (err:any)=>{
-                                    this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
-                                    this.rulesShow = false;
-                                    this.RegistrationErr = true;
-                                    this.isLoading = false;
-                                });
-                            
-                        },
-                        (err)=>{
-                            if(err.status == 422){
-                                let body:any = JSON.parse(err._body); 
-                                this.RegErrMsg = this.service.CheckErrMessage(body);
-                            }
-                            else {
-                                this.RegErrMsg = "Cannot create profile: " + err.body;
-                            }
-                            this.RegistrationErr = true;
-                            this.isLoading = false;
-                        })
-
-                    }
                 }
 
             });
-
-           
         }
+    }
+
+    finalCreateCoworking(){
+        this.isLoading = true;
+        this.service.CreateCoworking(this.Coworking)
+        .subscribe((res:CoworkingModel)=>{
+            console.log(res);
+            this.rulesShow = true;
+            this.RegistrationErr = false; 
+            this.service.UserLogin(this.Coworking.email,this.Coworking.password)
+                .subscribe((res:TokenModel)=>{
+                    console.log(res);
+                    
+                        this.service.BaseInitAfterLogin(res);
+                        this.router.navigate(['/all_coworkings']);
+                        this.isLoading = false;
+                        location.reload();
+
+                }
+                ,
+                (err:any)=>{
+                    this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
+                    this.rulesShow = false;
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                });
+            
+        },
+        (err)=>{
+            if(err.status == 422){
+                let body:any = JSON.parse(err._body); 
+                this.RegErrMsg = this.service.CheckErrMessage(body);
+            }
+            else {
+                this.RegErrMsg = "Cannot create profile: " + err.body;
+            }
+            this.RegistrationErr = true;
+            this.isLoading = false;
+        })
+
     }
    
 

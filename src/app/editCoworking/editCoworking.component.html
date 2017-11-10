@@ -33,8 +33,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input autocomplete="off" type="text" #email="ngModel" class="form-control" name="email" [ngModel]="Coworking.email" (ngModelChange)="Coworking.email = $event" email required>
-                                            <p *ngIf="email.invalid && email.touched" class="red-error">Input valid email!</p>
+                                            <input autocomplete="off" #emaill="ngModel" type="text" class="form-control" name="email" [ngModel]="Coworking.email" (ngModelChange)="Coworking.email = $event" email required>
+                                            <p *ngIf="emaill.invalid && emaill.touched" class="red-error">Input valid email!</p>
                                        </div>
                                     </div>
                                     <div class="col-md-6">

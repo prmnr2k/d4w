@@ -21,6 +21,7 @@ import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
 import { EditUserComponent } from "app/editUser/editUser.component";
 import { ChangePasswordComponent } from 'app/changePassword/changePassword.component';
+import { GgmapsComponent } from "app/ggmaps/ggmaps.component";
 
 const routes: Routes =[
     { path: 'user',           component: UserComponent},
@@ -40,7 +41,8 @@ const routes: Routes =[
     { path: 'coworking/:id', component:Coworking},
     { path: 'user_profile', component: EditUserComponent, canActivate: [PageAccessGuard] },
     { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] },
-    { path: 'change_password', component: ChangePasswordComponent, canActivate: [PageAccessGuard] }
+    { path: 'change_password', component: ChangePasswordComponent, canActivate: [PageAccessGuard] },
+    { path: 'ggmaps', component: GgmapsComponent, canActivate: [PageAccessGuard] }
 ];
 
 @NgModule({

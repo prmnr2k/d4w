@@ -36,8 +36,13 @@ import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
 import { PasswordValidationDirective } from './registration/pass.validator.directive';
 import { ChangePasswordComponent } from './changePassword/changePassword.component';
+import { GgmapsComponent } from './ggmaps/ggmaps.component';
+import { AgmCoreModule } from 'angular2-google-maps/core';
 
 
+const googleMapsCore = AgmCoreModule.forRoot({
+  apiKey : 'AIzaSyBB_1_ksAJ62AGdcPCnE-eQBIRTev320ys',
+});
 
 @NgModule({
   declarations: [
@@ -60,7 +65,8 @@ import { ChangePasswordComponent } from './changePassword/changePassword.compone
     MyBookings,
     Coworking,
     EditUserComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    GgmapsComponent
 
   ],
   imports: [
@@ -75,7 +81,8 @@ import { ChangePasswordComponent } from './changePassword/changePassword.compone
     LbdModule,
     LoadingModule,
     BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot()
+    TimepickerModule.forRoot(),
+    googleMapsCore
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

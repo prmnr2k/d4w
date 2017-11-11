@@ -67,19 +67,18 @@ export class RegistrationComponent implements OnInit {
             console.log(this.Coworking.email);
             this.service.checkUserByEmail(this.Coworking.email).subscribe((ressponjo:any)=>{
                 console.log(ressponjo);
-                if(ressponjo.exists == true){
+                if(ressponjo.exists){
                     console.log("susestv");
                     this.RegErrMsg = 'email is existed';
                     this.RegistrationErr = true;
                     this.isLoading = false;
                 }
-                if(ressponjo.exists == false){
+                else{
                     console.log(ressponjo.exists);
                     this.rulesShow = true;
                     this.isLoading = false;
                     this.RegistrationErr = false;
                 }
-
             });
         }
     }
@@ -94,12 +93,10 @@ export class RegistrationComponent implements OnInit {
             this.service.UserLogin(this.Coworking.email,this.Coworking.password)
                 .subscribe((res:TokenModel)=>{
                     console.log(res);
-                    
-                        this.service.BaseInitAfterLogin(res);
-                        this.router.navigate(['/all_coworkings']);
-                        this.isLoading = false;
-                        location.reload();
-
+                    this.service.BaseInitAfterLogin(res);
+                    this.router.navigate(['/all_coworkings']);
+                    this.isLoading = false;
+                    location.reload();
                 }
                 ,
                 (err:any)=>{

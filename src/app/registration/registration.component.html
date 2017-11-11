@@ -58,7 +58,6 @@
                                             required
                                             #password="ngModel" minlength="6" class="form-control" name="password" [ngModel]="Coworking.password" (ngModelChange)="Coworking.password = $event">
                                             <p *ngIf="password.invalid && password.touched" class="red-error">Password`s minimum length is 6!</p>
-
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -192,7 +191,6 @@
                             </a>
                         </div>
                         <button class="col-md-8 btn btn-info btn-fill pull-right" (click)="AddNewWorkingDay()">Add new working day</button>
-                        
                     </div>
                 </div>
 
@@ -218,12 +216,13 @@
     
                                 
                                         <div class="form-inline">
-                                        <button class="btn btn-success btn-fill" (click)="finalCreateCoworking()">I agree Rules</button>
-                
-                                        <form class="pull-left" style="margin-right:10px;" (ngSubmit)="rulesShow = false"> 
-                                            <button class="btn btn-danger btn-fill" type="submit">Not agree</button>
-                                        </form>
-                                    </div>
+                                            <form class="form-inline-item" (ngSubmit)="finalCreateCoworking()">
+                                                <button class="btn btn-success btn-fill">I agree Rules</button>
+                                            </form>
+                                            <form class="form-inline-item" class="pull-left" (ngSubmit)="rulesShow = false"> 
+                                                <button class="btn btn-danger btn-fill" type="submit">Not agree</button>
+                                            </form>
+                                        </div>
                         </div>
                     </div>
             </div>

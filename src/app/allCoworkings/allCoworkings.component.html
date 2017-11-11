@@ -23,8 +23,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-12" style="width: 100%; height: 70%; margin: 15px;">
-                <agm-map [latitude]="Coordinates.lat" [longitude]="Coordinates.long" (mapClick)="SetPoint($event)">
+            <div class="col-md-12" style="width: 100%; height: 70%; margin:10px 0">
+                <agm-map [latitude]="55.751244" [longitude]="37.618423" (mapClick)="SetPoint($event)">
                     <agm-marker [markerDraggable]="true" [latitude]="Coordinates.lat" [longitude]="Coordinates.long"></agm-marker>
                 </agm-map>
             </div>

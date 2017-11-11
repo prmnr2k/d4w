@@ -72,13 +72,18 @@
             </a>
         </li>
         <li *ngIf="isLoggedIn && isMobileMenu()">
+            <a routerLink="/my_bookings">
+                <p>My Bookings</p>
+            </a>
+        </li>
+        <li *ngIf="isLoggedIn && isMobileMenu()">
             <a (click)="Logout()">
                 <p>Log out</p><!-- Логаут -->
             </a>
         </li>
         <li class="separator hidden-lg hidden-md" *ngIf="isMobileMenu()"></li>
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}}">
-            <a  *ngIf="!menuItem.isLoggedIn || isLoggedIn" [routerLink]="[menuItem.path]">
+            <a  *ngIf="(!menuItem.isLoggedIn || isLoggedIn || menuItem.path=='all_coworkings')&&getUserStatus()>=menuItem.userStatus" [routerLink]="[menuItem.path]">
                 <i class="{{menuItem.icon}}"></i>
                 <p>{{menuItem.title}}</p>
             </a>

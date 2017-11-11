@@ -28,6 +28,16 @@ import { EditCoworkingComponent } from './editCoworking/editCoworking.component'
 import { PageAccessGuard } from './page.guard';
 import { LoadingModule } from './shared/loading/loading.module';
 import { UserRegistrationComponent } from "app/userRegistration/userRegistration.component";
+import { AllCoworkings } from "./allCoworkings/allCoworkings.component";
+import { MyBookings } from "./myBookings/myBookings.component";
+import { Coworking } from "./pageCoworking/pageCoworking.component";
+import { BsDatepickerModule } from 'ngx-bootstrap';
+import { TimepickerModule } from 'ngx-bootstrap';
+import { EditUserComponent } from "app/editUser/editUser.component";
+import { ChangePasswordComponent } from './changePassword/changePassword.component';
+import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
+
+
 
 @NgModule({
   declarations: [
@@ -43,7 +53,15 @@ import { UserRegistrationComponent } from "app/userRegistration/userRegistration
     LoginComponent,
     RegistrationComponent, 
     EditCoworkingComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    EditUserComponent,
+    PasswordValidationDirective,
+    AllCoworkings,
+    MyBookings,
+    Coworking,
+    EditUserComponent,
+    ChangePasswordComponent
+
 
   ],
   imports: [
@@ -56,7 +74,9 @@ import { UserRegistrationComponent } from "app/userRegistration/userRegistration
     RouterModule,
     AppRoutingModule,
     LbdModule,
-    LoadingModule
+    LoadingModule,
+    BsDatepickerModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

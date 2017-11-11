@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
 import { CoworkingModel } from '../core/models/coworking.model';
 import { CreateCoworkingModel } from '../core/models/createCoworking.model';
+import { WorkerRequestModel } from '../core/models/workerRequest.model';
 import { CheckboxModel } from '../core/models/checkbox.model';
 import { WorkingDayModel } from '../core/models/workingDay.model';
 import { TokenModel } from '../core/models/token.model';
 import { UserModel } from '../core/models/user.model';
 import { Base64ImageModel } from '../core/models/base64image.model';
+import { NgForm, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-coworking',
-  templateUrl: './editCoworking.component.html'
+  templateUrl: './editCoworking.component.html',
+  styleUrls: ['./st-form.css']
 })
 export class EditCoworkingComponent implements OnInit {
     RegistrationErr = false;
@@ -22,7 +25,13 @@ export class EditCoworkingComponent implements OnInit {
     AmetiesCB: CheckboxModel[] = []; 
     Me:UserModel = new UserModel();
     CoworkingId:number = 0;
+    meRole:string = 'guest';
+    coworkingWorkers:UserModel[] = [];
+    coworkingWorkersRequest:WorkerRequestModel[] = [];
+    coworkingWorkersRequestUser:UserModel[] = [];
     constructor(private service: MainService, private router: Router) { }
+
+    @ViewChild('submitFormCwrc') form: NgForm
 
     ngOnInit() 
     {
@@ -31,12 +40,44 @@ export class EditCoworkingComponent implements OnInit {
                 this.Me = user;
                 this.service.GetAllCoworking({creator_id:this.Me.id})
                     .subscribe((cwr:CoworkingModel[])=>{
+                        this.CoworkingId = cwr[0].id;
                         console.log(cwr);
                         this.InitByCoworking(cwr[0]);
-                        
+                        this.service.GetMyAccess()
+                        .subscribe((res)=>{
+                          this.meRole = res.role;
+                          if(res.role!='creator') this.router.navigate(['/all_coworkings']);
+                        });
+
+                        this.service.GetCoworkingWorkersRequest(this.CoworkingId)
+                        .subscribe((res:WorkerRequestModel[])=>{
+                            console.log(`request worker`,res);
+                            this.coworkingWorkersRequest = res;
+                            let count = 0;
+                            for(let i of res){
+                                console.log('get user by id',i.user_id);
+                                this.service.GetUserById(i.user_id)
+                                .subscribe((user:UserModel)=>{
+                                    console.log('user = ',user);
+                                    this.coworkingWorkersRequest[count].user_name = user.first_name;
+                                    this.coworkingWorkersRequest[count].user_email = user.email;
+                                    count++;
+                                });
+                            
+                            }
+                        });
+
+                        this.service.GetCoworkingWorkers(this.CoworkingId)
+                        .subscribe((res:UserModel[])=>{
+                            console.log(`avalieble worker`,res);
+                            this.coworkingWorkers = res;
+                        });
+
                         this.isLoading = false;
                     })
-            })
+            });
+
+            
         
     }
 
@@ -70,25 +111,33 @@ export class EditCoworkingComponent implements OnInit {
 
 
     UpdateCoworking(){
-        this.isLoading = true;
-        this.RegistrationErr = false;
-        this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
-        if(!this.CheckCwrk()){
-            this.RegistrationErr = true;
-            this.isLoading = false;
-            
-            return;
-        }
-        this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
-            .subscribe((res:CoworkingModel)=>{
-                this.InitByCoworking(res);
-                this.isLoading = false;
-            },
-            (err:any)=>{
-                this.RegErrMsg = "Cant update coworking: " + err.body;
+        if(this.form.valid){
+            this.isLoading = true;
+            this.RegistrationErr = false;
+            this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
+            if(!this.CheckCwrk()){
                 this.RegistrationErr = true;
                 this.isLoading = false;
-            });
+                return;
+            }
+            this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
+                .subscribe((res:CoworkingModel)=>{
+                    this.InitByCoworking(res);
+                    this.isLoading = false;
+                },
+                (err:any)=>{
+                    if(err.status == 422){
+                        let body:any = JSON.parse(err._body); 
+                        this.RegErrMsg = this.service.CheckErrMessage(body);
+                        
+                    }
+                    else {
+                        this.RegErrMsg = "Can`t update coworking: " + err.body;
+                    }
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                });
+        }
     }
 
     CheckCwrk(){
@@ -108,8 +157,26 @@ export class EditCoworkingComponent implements OnInit {
             this.RegErrMsg = "Input working days!";
             return false;
         }
+        if(!this.checkWorkingTime()){
+            this.RegErrMsg = "Input correct working time!";
+            return false;
+        }
         
-        
+        return true;
+    }
+
+    checkWorkingTime(){
+        let date = new Date();
+        let begin:Date,end:Date;
+        for(let i of this.Coworking.working_days){
+            let beginArr = i.begin_work.split(":");
+            let endArr = i.end_work.split(":");
+            begin = new Date(date.setHours(+beginArr[0],+beginArr[1]));
+            end = new Date(date.setHours(+endArr[0],+endArr[1]));
+            if( begin > end ){
+                return false;
+            }
+        }
         return true;
     }
 
@@ -119,15 +186,66 @@ export class EditCoworkingComponent implements OnInit {
     }
 
     readThis(inputValue: any): void {
-        for(let f of inputValue.files){
-            let file:File = f;
-            if(!file) return;
-            let myReader:FileReader = new FileReader();
-            myReader.onloadend = (e) => {
+        for(let i in inputValue.files){
+            if(+i < 5){
+                let file:File = inputValue.files[i];
+                if(!file) break;
+                let myReader:FileReader = new FileReader();
+                myReader.onloadend = (e) => {
                     this.Coworking.images.push(myReader.result);
+                }
+                myReader.readAsDataURL(file);
             }
-            myReader.readAsDataURL(file);
         }
+    }
+
+    OnBeginWorkChanged(index:number, $event:any){
+        this.Coworking.working_days[index].begin_work = $event;
+        if(!this.Coworking.working_days[index].end_work || 
+            this.Coworking.working_days[index].end_work < this.Coworking.working_days[index].begin_work)
+        {
+            let beginArr = this.Coworking.working_days[index].begin_work.split(":");
+            let endHour = +beginArr[0] + 2;
+            
+            this.Coworking.working_days[index].end_work = endHour+ ":" + beginArr[1];
+            console.log(this.Coworking.working_days[index].end_work);
+        }
+
+    }
+
+    AddWorker(id:number){
+        this.service.RequestAccess(id)
+        .subscribe((any)=>{
+            console.log(any,`add success!`);
+            location.reload();
+        });
+        
+    }
+
+    DeleteWorker(id:number){
+        console.log(`remove_id = `,id);
+        this.service.RemoveAccess(id)
+        .subscribe((any)=>{
+            console.log(any,`delete success!`);
+            location.reload();
+        });
+        
+    }
+    DeleteRequestWorker(id:number){
+        this.service.RemoveAccessRequest(id)
+        .subscribe((any)=>{
+            console.log(any,`delete request success!`);
+            location.reload();
+        })
+    }
+
+    AddWorkerEmail(email:string){
+        console.log(`add by email`,email);
+        this.service.RequestAccessEmail(this.CoworkingId,email)
+        .subscribe((any)=>{
+            console.log(any,`email add`);
+            location.reload();
+        });
     }
 
 }

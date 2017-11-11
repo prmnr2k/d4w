@@ -16,6 +16,7 @@ import { AmetiesModel } from '../models/ameties.model';
 import { CoworkingModel } from '../models/coworking.model';
 import { WorkingDayModel } from '../models/workingDay.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
+import { BookingModel } from '../models/booking.model';
 
 @Injectable()
 export class MainService{
@@ -47,12 +48,10 @@ export class MainService{
             email: email,
             password: password
         };
-        console.log(params);
         return this.http.PostData('/auth/login',JSON.stringify(params));
     }
 
     BaseInitAfterLogin(data:TokenModel){
-        console.log(data);
         localStorage.setItem('token',data.token);
         this.http.BaseInitByToken(data.token);
         this.GetMe()
@@ -65,7 +64,6 @@ export class MainService{
     TryToLoginWithToken()
     {
         let token = localStorage.getItem('token');
-        console.log(token);
         //let token = window.localStorage.getItem('token');
         if(token)
         {
@@ -74,14 +72,17 @@ export class MainService{
 
     }
 
-    Logout(){
-        
+    ClearSession(){
         this.http.token = null;
         this.http.headers.delete('Authorization');
         this.onAuthChange$.next(false);
         localStorage.removeItem('token');
-        //window.localStorage.removeItem('token');
-        return this.http.PostData("/auth/logout","");
+    }
+    Logout(){
+        return this.http.PostData("/auth/logout","")
+            .subscribe((res:any)=>{
+                this.ClearSession();
+            });
         
     }
     /* Authentication BLOCK END */
@@ -92,20 +93,71 @@ export class MainService{
 
     /* USERS BLOCK START */
 
-     CreateUser(data: CreateUserModel){
+    CreateUser(data: CreateUserModel){
         return this.http.PostData('/users/create',JSON.stringify(data));
     }
-
-    UpdateUser(id:number,data: CreateUserModel){
-        return this.http.PutData('/users/update_me/'+id,JSON.stringify(data));
+    UpdateMe(data: CreateUserModel){
+        return this.http.PutData('/users/update_me',JSON.stringify(data));
     }
 
     GetMe(){
         return this.http.GetData('/users/get_me',"");
     }
 
+    ChangeUserPassword(params:any){
+        return this.http.PostData('/users/change_password',JSON.stringify(params));
+    }
+
+    DeleteMe(){
+        return this.http.DeleteData('/users/delete_me');
+    }
+
     GetUserById(id:number){
         return this.http.GetData('/users/get/'+id,"");
+    }
+    GetMyAccess(){
+        return this.http.GetData('/access/get_my_access',"");
+    }
+    GetMyAccessStatus(){
+        let status:string =`guest`;
+        this.GetMyAccess()
+        .subscribe((res)=>{
+            status = res.role;
+            return status;
+        });
+      return status;
+    }
+
+    UserModelToCreateUserModel(input:UserModel){
+        let result = new CreateUserModel();
+        if(input){
+            result.first_name = input.first_name?input.first_name:'';
+            result.last_name = input.last_name?input.last_name:'';
+            result.phone = input.phone?input.phone:'';
+            result.email = input.email?input.email:'';
+            result.address = input.address?input.address:'';
+            result.image = '';
+        }
+
+
+        return result;
+
+    }
+
+    public rateUser(user_id:number,score:string){
+        const data = {
+            user_id: user_id,
+            score: score
+        }
+        console.log(data);
+        return this.http.PostData('/users/rate',JSON.stringify(data));
+        
+    }
+
+    public getMyRates(){
+        
+        return this.http.GetData('/users/get_my_rates','');
+        
     }
 
     /* USERS BLOCK END */
@@ -119,8 +171,18 @@ export class MainService{
         return this.http.PutData('/coworkings/update/'+id,JSON.stringify(data));
     }
 
-    GetAllCoworking(params:any){
+    GetAllCoworking(params?:any){
         return this.http.GetData('/coworkings/get_all',this.ParamsToUrlSearchParams(params));
+    }
+
+    GetCoworkingById(id:number){
+        return this.http.GetData('/coworkings/get/'+id,"");
+    }
+    GetCoworkingWorkersRequest(id:number){
+        return this.http.GetData('/coworkings/get_access_requests/'+id,"");
+    }
+    GetCoworkingWorkers(id:number){
+        return this.http.GetData('/coworkings/get_accessed_users/'+id,"");
     }
 
 
@@ -152,11 +214,125 @@ export class MainService{
     GetBookingsByCwr(id:number){
         return this.http.GetData('/coworkings/get_bookings/'+id,'');
     }
+    BookingCreate(book:BookingModel){
+        return this.http.PostData('/bookings/create',JSON.stringify(book));
+    }
+    GetMyBookings(){
+        return this.http.GetData('/users/get_my_bookings','');
+    }
 
+    UnBooking(id:number){
+        return this.http.DeleteData('bookings/delete/'+id);
+    }
+
+    public ValidateBooking(booking_id:any){
+        return this.http.PostData('/bookings/validate_booking',JSON.stringify(booking_id));
+    }
+
+    public bookingConfirmChangeStart(booking_id:number){
+        const data = {
+            booking_id: booking_id
+        }
+        return this.http.PostData('/bookings/confirm_visit',JSON.stringify(data));
+    }
+    public bookingConfirmChangeEnd(booking_id:number){
+        const data = {
+            booking_id: booking_id
+        }
+       
+        return this.http.PostData('/bookings/confirm_finish',JSON.stringify(data));
+    }
+    
     /* BOOKING BLOCK END */
 
 
+    /* RECEPTIONIST BLOCK START */
+
+    RequestReception(id:number){
+        return this.http.PostData('/access/request_access',JSON.stringify({'coworking_id':id}));
+    }
+    RequestAccess(id:number){
+        return this.http.PostData('/access/apply_request',JSON.stringify({'request_id':id}));
+    }
+    RequestAccessEmail(id:number,email:string){
+        let params={
+            'coworking_id':id,
+            'email':email
+        }
+        console.log('e-mail',params);
+        return this.http.PostData('/access/grant_reception_access',JSON.stringify(params));
+    }
+    RemoveAccess(id:number){
+        console.log(`remove_id = `,id);
+        return this.http.PostData('/access/remove_user_access',JSON.stringify({'user_id':id}));
+    }
+    RemoveAccessRequest(id:number){
+        return this.http.DeleteData('/access/remove_request/'+id);
+    }
+
+
+   
+    /* RECEPTIONIST BLOCK END */
+
+
+
+
     /* DATA BLOCK START */
+
+
+    CheckErrMessage(body:any):string{
+        let RegErrMsg = '';
+        if(body.email) {
+            for(let i of body.email) {
+                if(i == "INVALID")
+                    RegErrMsg += "Email contains invalid symbols! ";
+                if(i == "ALREADY_TAKEN")
+                    RegErrMsg += "Email is already registered! ";
+                if(i == "EMPTY_FIELD")
+                    RegErrMsg += "Please input email! ";
+                if(i == "TOO_LONG")
+                    RegErrMsg += "Email is too long! ";
+            }
+        }
+        if(body.phone) {
+            for(let i of body.phone) {
+                if(i == "INVALID")
+                    RegErrMsg += "Phone contains invalid symbols! ";
+            }
+        }
+        if(body.password) {
+            for(let i of body.password) {
+                if(i == "TOO_SHORT")
+                    RegErrMsg += "Password is too short. Password must contain more than 6 symbols! ";
+                if(i == "TOO_LONG")
+                    RegErrMsg += "Password is too long! ";
+                if(i == "EMPTY_FIELD")
+                    RegErrMsg += "Please input password! ";
+            }
+        }
+        if(body.password_confirmation) {
+            for(let i of body.password_confirmation) {
+                if(i == "NOT_MACHED")
+                    RegErrMsg += "Confirmed passwrod must be the same as password! ";
+                if(i == "EMPTY_FIELD")
+                    RegErrMsg += "Please confirm password! ";
+            }
+        }
+        if(body.capacity) {
+            for(let i of body.capacity) {
+                if(i == "LIMIT_REACHED")
+                    RegErrMsg += "Limit of places reached! ";
+            }
+        }
+        if(body.images) {
+            for(let i of body.images) {
+                if(i == "LIMIT_REACHED")
+                    RegErrMsg += "Limit of images reached! ";
+            }
+        }
+        return RegErrMsg;
+    }
+
 
     ParamsToUrlSearchParams(params:any):string{
         let options = new URLSearchParams();
@@ -174,7 +350,6 @@ export class MainService{
                     options.set(key,params[key]);
             }
         }
-        console.log(options.toString());
         return options.toString();
     }
 
@@ -232,6 +407,11 @@ export class MainService{
         }
         return cb;
     }
+
+    
+
+    
+
     /* DATA BLOCK END */
 
 }

@@ -18,7 +18,10 @@ export class PageAccessGuard implements CanActivate{
             return !this.service.IsLogedIn();
         else{
              if(this.service.IsLogedIn()){
-                return true;
+                 if(router.routeConfig.path==`coworking_profile`){
+                        return true;
+                 }
+                else return true;
             }
             else{
                 this.router.navigate(['/login']);

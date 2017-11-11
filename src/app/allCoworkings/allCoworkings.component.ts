@@ -33,12 +33,10 @@ export class AllCoworkings implements OnInit {
       additional_info:'',
       begin_work:'',
       end_work:'',
+      lat:55.751244,
+      lng:37.618423,
       date:null
     };
-    Coordinates = {
-      lat:55.751244,
-      long:37.618423
-    }
     constructor(private service: MainService, private router: Router) { }
 
 
@@ -79,8 +77,8 @@ export class AllCoworkings implements OnInit {
     SetPoint($event) {
       if($event && $event.coords){
         console.log($event.coords);
-        this.Coordinates.lat = $event.coords.lat;
-        this.Coordinates.long = $event.coords.lng;
+        this.Params.lat = $event.coords.lat;
+        this.Params.lng = $event.coords.lng;
       }
     }
 }

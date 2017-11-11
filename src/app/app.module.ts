@@ -34,10 +34,11 @@ import { Coworking } from "./pageCoworking/pageCoworking.component";
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
-import { PasswordValidationDirective } from './registration/pass.validator.directive';
 import { ChangePasswordComponent } from './changePassword/changePassword.component';
+
 import { AgmCoreModule } from '@agm/core'
 import { CommonModule } from '@angular/common';
+import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
 
 
 
@@ -63,6 +64,7 @@ import { CommonModule } from '@angular/common';
     Coworking,
     EditUserComponent,
     ChangePasswordComponent
+
 
   ],
   imports: [

@@ -116,7 +116,7 @@ export class RegistrationComponent implements OnInit {
             if(!file) return;
             let myReader:FileReader = new FileReader();
             myReader.onloadend = (e) => {
-                    this.Coworking.images.push(myReader.result);
+                this.Coworking.images.push(myReader.result);
             }
             myReader.readAsDataURL(file);
         }

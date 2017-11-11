@@ -23,6 +23,11 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-12" style="width: 100%; height: 70%; margin: 15px;">
+                <agm-map [latitude]="Coordinates.lat" [longitude]="Coordinates.long" (mapClick)="SetPoint($event)">
+                    <agm-marker [markerDraggable]="true" [latitude]="Coordinates.lat" [longitude]="Coordinates.long"></agm-marker>
+                </agm-map>
+            </div>
             <div class="row" [hidden]="!hideElement">
                 <div class="col-md-4">
                     <div class="form-group" > 
@@ -44,14 +49,6 @@
                     </div>
                 </div>
             </div>
-            <sebm-google-map
-                [latitude]="lat"
-                [longitude]="lng">
-            <sebm-google-map-marker
-                [latitude]="lat"
-                [longitude]="lng">
-            </sebm-google-map-marker>
-            </sebm-google-map>
             <div class="row">
                 <button class="col-md-3 btn btn-info btn-fill pull-right" (click)='hideElement = !hideElement' style="margin-bottom:30px; margin-right:15px">{{hideElement?'Hide':'Show'}} advanced search</button >
                 <button class="col-md-3 btn btn-info btn-fill pull-right" (click)="CoworkingSearch()" style="margin-bottom:30px; margin-right:15px">Search</button >

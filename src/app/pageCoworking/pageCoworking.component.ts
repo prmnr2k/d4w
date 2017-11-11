@@ -30,9 +30,14 @@ export class Coworking implements OnInit {
   Images:Base64ImageModel[] = [];
   Booking:BookingModel = new BookingModel();
   bsValue: Date = new Date();
-  toTime:string = '00:00';
+  toTime:string = '01:00';
   fromTime:string = '00:00';
+  minDate: Date;
   receptionSend:boolean = false;
+  minTime:string = '00:00';
+  maxTime:string = '00:00';
+  showTime:boolean = false;
+  ErrBookingMsg:string = "Incorrect Date or Time!";
   constructor(private service: MainService, private router: Router, 
   private activatedRoute: ActivatedRoute) { }
 
@@ -63,6 +68,8 @@ export class Coworking implements OnInit {
           this.isLoading = false;
     });       
     this.Days = this.service.GetAllDays();   
+    this.minDate = new Date();
+   // this.minDate.setDate(this.minDate.getDate() - 1);
     this.Booking.begin_date = `2017-11-08T13:00`;
     this.Booking.end_date = `2017-11-08T15:00`;
   }
@@ -83,6 +90,12 @@ export class Coworking implements OnInit {
       this.BookingOk = true;
     },
     (err)=>{
+      console.log(`error = `,err);
+      if(this.showTime){
+        if(err._body==`{"begin_date":["INVALID"]}`) this.ErrBookingMsg = `In Start Time Coworking isn't work!`;
+        if(err._body==`{"end_date":["INVALID"]}`) this.ErrBookingMsg = `In End Time Coworking isn't work!`;
+      }
+      else this.ErrBookingMsg = `In This Date Coworking isn't work!`;
       this.BookingErr = true;
       this.BookingOk = false;
   });
@@ -102,6 +115,71 @@ export class Coworking implements OnInit {
     }
 
     this.receptionSend = true;
+  }
+
+  OnBeginWorkChanged($event:any){
+    let beginArr = $event.split(":");
+    let beginHour =  +beginArr[0];
+    
+      let endHour = +beginArr[0] + 1;
+     
+      if(!this.validateMinTime(endHour+":"+beginArr[1]))  this.toTime = this.maxTime;
+     else{
+      let endHourString:string;
+      if(endHour<10) endHourString="0"+endHour; else endHourString = ''+endHour;
+      this.fromTime = $event;
+      this.toTime = endHourString + ":" + beginArr[1];
+     }
+
+  }
+
+  OnEndWorkChanged($event:any){
+  
+  // if(this.validateMinTime($event))
+    this.toTime = $event;
+ //   else this.toTime = this.maxTime;
+
+    console.log(this.toTime);
+  }
+
+  validateMinTime($event:any){
+    let endArr = $event.split(":");
+    let endHour = +endArr[0];
+    let endMin = +endArr[1];
+
+    let maxArr = this.maxTime.split(":");
+    let maxHour = +maxArr[0];
+    let maxMin = +maxArr[1];
+    
+    if(endHour<maxHour){
+      console.log('less');
+      return true;
+    }
+    else if(endHour==maxHour&&endMin<=maxMin){
+      console.log('equal',endMin,maxMin);
+      return true;
+    }
+    else {
+      console.log('no equal',endMin,maxMin);
+      this.toTime = this.maxTime;
+      return false;
+    }
+  }
+
+
+  DateChange(){
+    let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
+    this.showTime = false;
+    this.minTime = '00:00';
+    this.maxTime = '00:00';
+    for(let i of this.Coworking.working_days){
+      if(tmpDay==i.day){
+        this.showTime = true;
+        this.maxTime = i.end_work;
+        this.minTime = i.begin_work;
+        this.OnBeginWorkChanged(i.begin_work);
+      }
+    }
   }
 
 }

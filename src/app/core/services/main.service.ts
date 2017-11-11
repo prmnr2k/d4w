@@ -229,7 +229,7 @@ export class MainService{
     }
 
     UnBooking(id:number){
-        return this.http.DeleteData('bookings/delete/'+id);
+        return this.http.DeleteData('/bookings/delete/'+id);
     }
 
     public ValidateBooking(booking_id:any){

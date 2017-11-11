@@ -72,6 +72,7 @@ export class Coworking implements OnInit {
    // this.minDate.setDate(this.minDate.getDate() - 1);
     this.Booking.begin_date = `2017-11-08T13:00`;
     this.Booking.end_date = `2017-11-08T15:00`;
+    this.DateChange();
   }
 
   BookingCoworking(){

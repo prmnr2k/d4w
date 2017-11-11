@@ -24,28 +24,39 @@
                            <!-- <p>Role {{meRole}} {{meCowork}}</p> -->
                             <div *ngIf="meRole=='user'||meRole=='receptionist'||(meRole=='creator'&&meCowork!=Coworking.id)" class="container-fluid">
                                     <div class="form-inline">
-                                            <div *ngIf="!showTime" class="form-group" style="margin-top:7px;">
-                                                    <span class="label label-warning" style="font-size:12px;">Choose Correct Work Day</span>
+                                           <!-- <div *ngIf="!showTime" class="form-group" style="margin-top:10px;">
+                                                    <span class="label label-warning" style="font-size:15px;">Time To</span>
+                                            </div>-->
+                                            <div class="form-group" style="margin-top:7px;"> 
+                                                    <input type="text"
+                                                    readonly style="background-color:white; cursor: pointer;"
+                                                    class="form-control"
+                                                    [minDate]="minDate"
+                                                    #dp="bsDatepicker"
+                                                    dateDisabled = "{date:new Date(); mode:disable;}"
+                                                    bsDatepicker [(bsValue)]="bsValue"
+                                                    (bsValueChange)="DateChange()">
                                             </div>
-                                            <div *ngIf="showTime" class="form-group" style="margin-top:7px;">
+                                           
+                                            <div *ngIf="!showTime" class="form-group" style="margin-top:7px; margin-left:20px;">
+                                                    <span class="label label-success" style="font-size:12px;">Time From</span>
+                                                    <input type="time"  class="form-control"  readonly style="background-color:white; cursor: pointer;" name="timeFromHide" value="--:--">
+                                                </div>
+                                                <div *ngIf="!showTime" class="form-group" style="margin-left:20px; margin-top:7px;">
+                                                        <span class="label label-success" style="font-size:12px;">Time To</span>
+                                                        <input type="time"   class="form-control"  readonly style="background-color:white; cursor: pointer;" name="timeToHide" value="--:--">
+                                                </div>
+                                            <div *ngIf="showTime" class="form-group" style="margin-top:7px; margin-left:20px;">
                                                 <span class="label label-success" style="font-size:12px;">Time From</span>
-                                                <input type="time"  class="form-control" [ngModel]="fromTime" [max]="maxTime" [min]="minTime" name="timeFrom" (ngModelChange)="OnBeginWorkChanged($event)">
+                                                <input type="time"  class="form-control" [ngModel]="fromTime" [value]="toTime" [max]="maxTime" [min]="minTime" name="timeFrom" (ngModelChange)="OnBeginWorkChanged($event)">
                                             </div>
-                                            <div *ngIf="showTime" class="form-group" style="margin-left:20px; margin-top:57x;">
+                                            <div *ngIf="showTime" class="form-group" style="margin-left:20px; margin-top:7px;">
                                                 <span class="label label-success" style="font-size:12px;">Time To</span>
-                                                <input type="time"  class="form-control" [ngModel]="toTime" value="toTime" name="timeTo" (ngModelChange)="OnEndWorkChanged($event)">
+                                                <input type="time"  class="form-control" [ngModel]="toTime" [value]="toTime" name="timeTo" (ngModelChange)="OnEndWorkChanged($event)">
                                             </div>
-                                            <div class="form-group" style="margin-left:20px; margin-top:7px;"> 
-                                                <input type="text"
-                                                readonly style="background-color:white; cursor: pointer;"
-                                                class="form-control"
-                                                [minDate]="minDate"
-                                                #dp="bsDatepicker"
-                                                bsDatepicker [(bsValue)]="bsValue"
-                                                (bsValueChange)="DateChange()">
-                                            </div>
-                                            <div class="form-group" style="margin-left:20px; margin-top:7px;">
-                                                <button type="submit" class="btn btn-info btn-fill">Booking Coworking</button>
+                                            
+                                            <div class="form-group" style="margin-left:20px; margin-top:5px;">
+                                                <button type="submit" class="btn btn-info btn-fill" [class.btn-danger]="!showTime" [disabled]="!showTime">{{showTime?"Booking Coworking":"Select Working Day"}}</button>
                                              </div>
                                         </div>
                                         <hr>

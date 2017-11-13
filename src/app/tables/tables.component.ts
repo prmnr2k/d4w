@@ -29,7 +29,7 @@ export class TablesComponent implements OnInit {
     meRole:string = 'guest';
     meCwrk:number = 0;
     Rates:RateModel[] = [];
-
+    canAccess:boolean = false;
     constructor(private service: MainService, private router: Router) { }
     
     
@@ -41,6 +41,9 @@ export class TablesComponent implements OnInit {
         .subscribe((res)=>{
           this.meRole = res.role;
           this.meCwrk = res.coworking_id;
+          if(this.meRole=='creator'||this.meRole=='receptionist')this.canAccess = true;
+            console.log(`router`,this.router);
+          if(!this.canAccess)this.router.navigate(['/all_coworkings']);
             this.service.GetMe()
             .subscribe((user:UserModel)=>{
                 this.Me = user;

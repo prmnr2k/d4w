@@ -48,7 +48,7 @@
                                                 </div>
                                             <div *ngIf="showTime" class="form-group" style="margin-top:7px; margin-left:20px;">
                                                 <span class="label label-success" style="font-size:12px;">Time From</span>
-                                                <input type="time"  class="form-control" [ngModel]="fromTime" [value]="fromTime" [max]="maxTime" [min]="minTime" name="timeFrom" (ngModelChange)="OnBeginWorkChanged($event)">
+                                                <input type="time"  class="form-control" [ngModel]="fromTime" [value]="fromTime"  name="timeFrom" (ngModelChange)="OnBeginWorkChanged($event)">
                                             </div>
                                             <div *ngIf="showTime" class="form-group" style="margin-left:20px; margin-top:7px;">
                                                 <span class="label label-success" style="font-size:12px;">Time To</span>

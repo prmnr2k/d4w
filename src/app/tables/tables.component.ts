@@ -42,6 +42,8 @@ export class TablesComponent implements OnInit {
           this.meRole = res.role;
           this.meCwrk = res.coworking_id;
           if(this.meRole=='creator'||this.meRole=='receptionist')this.canAccess = true;
+            console.log(`router`,this.router);
+          if(!this.canAccess)this.router.navigate(['/all_coworkings']);
             this.service.GetMe()
             .subscribe((user:UserModel)=>{
                 this.Me = user;

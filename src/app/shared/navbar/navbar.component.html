@@ -81,7 +81,7 @@
                         <p>Sign up as user</p><!-- Рега для пользователя-->
                     </a>
                 </li>
-                <li *ngIf="isLoggedIn" class="pointer-curs">
+                <li *ngIf="isLoggedIn&& meRole=='user'" class="pointer-curs">
                     <a routerLink="/my_bookings">
                         <p>My Bookings</p>
                     </a>

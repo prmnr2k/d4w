@@ -6,6 +6,7 @@
                       <th></th>
                       <th>Name</th>
                       <th>Address</th>
+                      <th>Actions</th>
                       <th>Begin</th>
                       <th>End</th>
                       <th></th>
@@ -16,6 +17,7 @@
                             <td> <a [routerLink]="['/coworking',Coworkings[i]?Coworkings[i].id:'1']">Open</a></td>
                             <td>{{Coworkings[i]?Coworkings[i].full_name:'name'}}</td>
                             <td>{{Coworkings[i]?Coworkings[i].address:'address'}}</td>
+                            <td> <a [routerLink]="['/idBooking',Coworkings[i]?Coworkings[i].id:'1']">Details</a></td>
                             <td>{{item.begin_date.split("T")[0]| date: "MM/d/y"}}  {{item.begin_date.split("T")[1].split(":")[0]}}{{item.begin_date | date: ":mm"}}</td>
                             <td>{{item.end_date.split("T")[0]| date: "MM/d/y"}}  {{item.end_date.split("T")[1].split(":")[0]}}{{item.end_date | date: ":mm"}}</td>
                             <td>

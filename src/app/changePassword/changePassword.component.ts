@@ -40,9 +40,17 @@ export class ChangePasswordComponent{
                         });
                 },
                 (err:any)=>{
-                    console.log('Something went wrong!');
-                    console.log(err);
-                });
+                    if(err.status == 422){
+                        let body:any = JSON.parse(err._body); 
+                        this.RegErrMsg = this.service.CheckErrMessage(body);
+                        console.log(this.RegErrMsg);
+                    }
+                    else {
+                        this.RegErrMsg = "Something went wrong! " + err.body;
+                    }
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                })
         }
     } 
 

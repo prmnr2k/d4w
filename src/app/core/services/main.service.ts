@@ -301,6 +301,12 @@ export class MainService{
                     RegErrMsg += "Email is too long! ";
             }
         }
+        if(body.old_password) {
+            for(let i of body.old_password) {
+                if(i == "NOT_MATCHED")
+                    RegErrMsg += "Old password is incorrect! ";
+            }
+        }
         if(body.phone) {
             for(let i of body.phone) {
                 if(i == "INVALID")

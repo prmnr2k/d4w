@@ -39,6 +39,7 @@ import { ChangePasswordComponent } from './changePassword/changePassword.compone
 import { AgmCoreModule } from '@agm/core'
 import { CommonModule } from '@angular/common';
 import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
+import { IdBookingComponent } from 'app/idBooking/idBooking.component';
 
 
 
@@ -63,7 +64,8 @@ import { PasswordValidationDirective } from './shared/directives/pass.validator.
     MyBookings,
     Coworking,
     EditUserComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    IdBookingComponent
 
 
   ],

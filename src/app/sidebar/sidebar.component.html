@@ -71,7 +71,7 @@
                 <p>Sign up</p><!-- Рега -->
             </a>
         </li>
-        <li *ngIf="isLoggedIn && isMobileMenu()">
+        <li *ngIf="isLoggedIn && meRole=='user' && isMobileMenu()">
             <a routerLink="/my_bookings">
                 <p>My Bookings</p>
             </a>

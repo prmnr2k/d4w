@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit{
     public toggleButton: any;
     public sidebarVisible: boolean;
     public isLoggedIn = false;
-
+    public meRole:string = 'guest';
     constructor(location: Location,  private element: ElementRef, private service: MainService, private router: Router) {
       this.location = location;
           this.sidebarVisible = false;
@@ -29,6 +29,7 @@ export class NavbarComponent implements OnInit{
                 this.isLoggedIn = res;
                 if(!this.isLoggedIn)
                     this.router.navigate(['/login']);
+                   
             });
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;

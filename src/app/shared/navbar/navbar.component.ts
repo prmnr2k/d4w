@@ -31,6 +31,10 @@ export class NavbarComponent implements OnInit{
                     this.router.navigate(['/login']);
                    
             });
+        this.service.GetMyAccess()
+        .subscribe((meR)=>{
+            this.meRole = meR.role;
+        });
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];

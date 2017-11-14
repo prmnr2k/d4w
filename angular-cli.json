@@ -26,7 +26,8 @@
       "styles": [
         "assets/css/light-bootstrap-dashboard.css",
         "assets/sass/light-bootstrap-dashboard.scss",
-        "assets/sass/star-rating.scss"
+        "assets/sass/star-rating.scss",
+        "assets/css/new-style.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

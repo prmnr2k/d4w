@@ -22,7 +22,8 @@
                         <form (ngSubmit)="BookingCoworking()">
 
                            <!-- <p>Role {{meRole}} {{meCowork}}</p> -->
-                            <div *ngIf="meRole=='user'||meRole=='receptionist'||(meRole=='creator'&&meCowork!=Coworking.id)" class="container-fluid">
+                           <!-- <div *ngIf="meRole=='user'||meRole=='receptionist'||(meRole=='creator'&&meCowork!=Coworking.id)" class="container-fluid">-->
+                                <div *ngIf="meRole=='user'" class="container-fluid">
                                     <div class="form-inline">
                                            <!-- <div *ngIf="!showTime" class="form-group" style="margin-top:10px;">
                                                     <span class="label label-warning" style="font-size:15px;">Time To</span>

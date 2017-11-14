@@ -3097,3 +3097,9 @@ button{
 .dislike:hover:before{
   opacity: 1;
 }
+
+.for-disabled-style {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  cursor: not-allowed;
+}

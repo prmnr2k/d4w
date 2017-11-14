@@ -59,3 +59,10 @@ input.ng-touched.ng-invalid{
 .for-hover:hover:before{
     opacity: 1;
 }
+.form-inline{
+display: flex;
+justify-content: flex-start;
+}
+.form-inline .form-inline-item:first-child{
+    margin-right: 10px;
+}

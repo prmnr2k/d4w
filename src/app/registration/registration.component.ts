@@ -28,6 +28,8 @@ export class RegistrationComponent implements OnInit {
     Days:string[] = [];
     AmetiesCB: CheckboxModel[] = [];
     rulesShow:boolean = false;
+    flagForImages:boolean = true;
+    imagesCount:number = 5;
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {
@@ -35,12 +37,13 @@ export class RegistrationComponent implements OnInit {
         this.AmetiesCB = this.service.GetAllAmenties();
         this.Coworking.images = [];
         this.Coworking.working_days = [new WorkingDayModel(this.Days[0])];
-        
         this.isLoading = false;
     }
 
     DeleteImage(i:number){
         this.Coworking.images.splice(i,1);
+        this.imagesCount += 1;
+        this.flagForImages = true;
     }
     DeleteWorkingDay(i:number){
         this.Coworking.working_days.splice(i,1);
@@ -61,41 +64,66 @@ export class RegistrationComponent implements OnInit {
                 this.rulesShow = false;
                 return;
             }
-            this.service.CreateCoworking(this.Coworking)
-                .subscribe((res:CoworkingModel)=>{
-             
-                    this.service.UserLogin(this.Coworking.email,this.Coworking.password)
-                        .subscribe((res:TokenModel)=>{
-                        
-                            this.service.BaseInitAfterLogin(res);
-                            this.router.navigate(['/all_coworkings']);
-                            location.reload();
-                        }
-                        ,
-                        (err:any)=>{
-                            this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
-                            this.rulesShow = false;
-                            this.RegistrationErr = true;
-                            this.isLoading = false;
-                        });
-                },
-                (err)=>{
-                    if(err.status == 422){
-                        let body:any = JSON.parse(err._body); 
-                        this.RegErrMsg = this.service.CheckErrMessage(body);
-                    }
-                    else {
-                        this.RegErrMsg = "Cannot create profile: " + err.body;
-                    }
+
+            console.log(this.Coworking.email);
+            this.service.checkUserByEmail(this.Coworking.email).subscribe((ressponjo:any)=>{
+                console.log(ressponjo);
+                if(ressponjo.exists){
+                    console.log("susestv");
+                    this.RegErrMsg = 'email is existed';
                     this.RegistrationErr = true;
                     this.isLoading = false;
-                })
+                }
+                else{
+                    console.log(ressponjo.exists);
+                    this.rulesShow = true;
+                    this.isLoading = false;
+                    this.RegistrationErr = false;
+                }
+            });
         }
     }
 
+    finalCreateCoworking(){
+        this.isLoading = true;
+        this.service.CreateCoworking(this.Coworking)
+        .subscribe((res:CoworkingModel)=>{
+            console.log(res);
+            this.rulesShow = true;
+            this.RegistrationErr = false; 
+            this.service.UserLogin(this.Coworking.email,this.Coworking.password)
+                .subscribe((res:TokenModel)=>{
+                    console.log(res);
+                    this.service.BaseInitAfterLogin(res);
+                    this.router.navigate(['/all_coworkings']);
+                    this.isLoading = false;
+                    location.reload();
+                }
+                ,
+                (err:any)=>{
+                    this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
+                    this.rulesShow = false;
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                });
+            
+        },
+        (err)=>{
+            if(err.status == 422){
+                let body:any = JSON.parse(err._body); 
+                this.RegErrMsg = this.service.CheckErrMessage(body);
+            }
+            else {
+                this.RegErrMsg = "Cannot create profile: " + err.body;
+            }
+            this.RegistrationErr = true;
+            this.isLoading = false;
+        })
+
+    }
+   
+
     @ViewChild('submitFormCwrc') form: NgForm
-
-
 
     CheckCwrk(){
         if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){
@@ -131,6 +159,8 @@ export class RegistrationComponent implements OnInit {
         
         return true;
     }
+    
+
 
     checkWorkingTime(){
         let date = new Date();
@@ -154,15 +184,30 @@ export class RegistrationComponent implements OnInit {
     readThis(inputValue: any): void {
 
         for(let i in inputValue.files){
-            if(+i < 5){
-                let file:File = inputValue.files[i];
-                if(!file) break;
-                let myReader:FileReader = new FileReader();
-                myReader.onloadend = (e) => {
-                    this.Coworking.images.push(myReader.result);
+            if(+i <= 5){
+                this.imagesCount -= 1;
+                console.log(this.imagesCount);
+                if(this.imagesCount >= 0){
+                   
+                    let file:File = inputValue.files[i];
+                    if(!file) break;
+                    let myReader:FileReader = new FileReader();
+                    myReader.onloadend = (e) => {
+                        this.Coworking.images.push(myReader.result);
+                    }
+                    
+                    myReader.readAsDataURL(file);
                 }
-                myReader.readAsDataURL(file);
+                else{
+                    this.imagesCount = 0;
+                    this.flagForImages = false;
+                }
+                if(this.imagesCount == 0){
+                    this.flagForImages = false;
+                }
+
             }
+            
         }
     }
     OnBeginWorkChanged(index:number, $event:any){

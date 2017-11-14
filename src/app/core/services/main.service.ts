@@ -160,6 +160,13 @@ export class MainService{
         
     }
 
+    public checkUserByEmail(emailUser){
+    
+        return this.http.GetData('/users/check_email','email='+emailUser);
+
+    }
+
+
     /* USERS BLOCK END */
 
     /* Coworkings BLOCK START */

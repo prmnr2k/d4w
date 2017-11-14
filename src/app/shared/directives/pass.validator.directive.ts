@@ -20,6 +20,7 @@ import { NG_VALIDATORS, Validator, FormGroup } from "@angular/forms";
       const fieldOne = fg.value[this.password];
       
       const fieldTwo = fg.value[this.confirmation];
+
   
       if (!fieldOne || !fieldTwo || fieldOne === fieldTwo ) {
         return null;

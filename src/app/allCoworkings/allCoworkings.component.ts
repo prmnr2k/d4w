@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router, Params } from '@angular/router';
 import { CoworkingModel } from '../core/models/coworking.model';
@@ -8,6 +8,10 @@ import { WorkingDayModel } from '../core/models/workingDay.model';
 import { TokenModel } from '../core/models/token.model';
 import { UserModel } from '../core/models/user.model';
 import { Base64ImageModel } from '../core/models/base64image.model';
+import { MapsAPILoader } from "angular2-google-maps/core";
+import {} from '@types/googlemaps';
+
+declare var google: any;
 
 @Component({
   selector: 'all-coworkings',
@@ -29,9 +33,12 @@ export class AllCoworkings implements OnInit {
       additional_info:'',
       begin_work:'',
       end_work:'',
+      lat:55.751244,
+      lng:37.618423,
       date:null
     };
     constructor(private service: MainService, private router: Router) { }
+
 
     ngOnInit() 
     {
@@ -51,6 +58,7 @@ export class AllCoworkings implements OnInit {
   
     }
 
+    
     CoworkingSearch() {
       this.service.GetAllCoworking(this.Params)
       .subscribe((cwr:CoworkingModel[])=>{
@@ -65,6 +73,13 @@ export class AllCoworkings implements OnInit {
               this.isLoading = false; 
             });
     }
-}
 
+    SetPoint($event) {
+      if($event && $event.coords){
+        console.log($event.coords);
+        this.Params.lat = $event.coords.lat;
+        this.Params.lng = $event.coords.lng;
+      }
+    }
+}
 

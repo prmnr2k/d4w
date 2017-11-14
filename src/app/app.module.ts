@@ -35,6 +35,9 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
 import { EditUserComponent } from "app/editUser/editUser.component";
 import { ChangePasswordComponent } from './changePassword/changePassword.component';
+
+import { AgmCoreModule } from '@agm/core'
+import { CommonModule } from '@angular/common';
 import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
 
 
@@ -76,7 +79,11 @@ import { PasswordValidationDirective } from './shared/directives/pass.validator.
     LbdModule,
     LoadingModule,
     BsDatepickerModule.forRoot(),
-    TimepickerModule.forRoot()
+    TimepickerModule.forRoot(),
+    CommonModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBB_1_ksAJ62AGdcPCnE-eQBIRTev320ys'
+    })
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

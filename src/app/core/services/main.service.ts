@@ -421,4 +421,14 @@ export class MainService{
 
     /* DATA BLOCK END */
 
+    AsyncPost(){
+        let data =
+        {
+            message:"msg"
+        }
+        return this.http.PostData('/users/kek',JSON.stringify(data));
+    }
+
+    
+
 }

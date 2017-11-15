@@ -97,6 +97,10 @@ SOFTWARE.
 MIT
 MIT
 
+actioncable@5.1.2
+MIT
+MIT
+
 @agm/core@1.0.0-beta.2
 MIT
 The MIT License (MIT)
@@ -128,6 +132,10 @@ MIT
 @angular/http@4.4.6
 MIT
 MIT
+
+ng2-cable@2.0.7
+ISC
+ISC
 
 @angular/forms@4.4.6
 MIT

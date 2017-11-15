@@ -9,7 +9,12 @@ declare var $:any;
 })
 export class NotificationsComponent implements OnInit {
 
-  constructor() { }
+  sound = new Audio();
+  constructor() { 
+    this.sound.src = "https://wav-library.net/sounds/0-0-1-17733-20";
+    this.sound.load();
+
+  }
 
   ngOnInit() {
   }
@@ -29,5 +34,6 @@ export class NotificationsComponent implements OnInit {
               align: align
           }
       });
+     // this.sound.play();
   }
 }

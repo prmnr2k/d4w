@@ -40,7 +40,7 @@ import { AgmCoreModule } from '@agm/core'
 import { CommonModule } from '@angular/common';
 import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
 
-
+import { Ng2CableModule } from 'ng2-cable';
 
 @NgModule({
   declarations: [
@@ -83,7 +83,8 @@ import { PasswordValidationDirective } from './shared/directives/pass.validator.
     CommonModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBB_1_ksAJ62AGdcPCnE-eQBIRTev320ys'
-    })
+    }),
+    Ng2CableModule
   ],
   providers: [MainService, HttpModule, HttpService, PageAccessGuard],
   bootstrap: [AppComponent]

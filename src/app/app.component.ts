@@ -4,6 +4,7 @@ import { HttpService } from './core/services/http.service';
 import { MainService } from './core/services/main.service';
 
 import { NotificationsComponent } from '../app/notifications/notifications.component';
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,21 @@ import { NotificationsComponent } from '../app/notifications/notifications.compo
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  pushNot:NotificationsComponent = new NotificationsComponent();
+  pushNotification:NotificationsComponent = new NotificationsComponent();
   isLoggedIn:boolean = false;
-  constructor(public location: Location, private service: MainService) {}
+  title = 'app';
+  constructor(public location: Location, private service: MainService,
+              private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+               
+                  this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token=kek', 'NotificationsChannel');
+                  console.log("subscribed");
+                  this.broadcaster.on<string>('NotificationsChannel').subscribe(
+                    message => {
+                      console.log('asasasasa');
+                      console.log(message + ' DAROVA');
+                    }
+                  );
+              }
 
   ngOnInit(){
     this.service.onAuthChange$.subscribe(bool => {
@@ -33,14 +46,25 @@ export class AppComponent implements OnInit {
       let status = any.role;
       let id = any.coworking_id;
 
-      if(status=='creator'||status=='receptionist')
-      setInterval (() => {
+      if(status=='creator'||status=='receptionist'){
+      let timerId = setInterval (() => {
+
+        if(!this.isLoggedIn) clearInterval(timerId);
         console.log("Show notif");
-        this.pushNot.showNotification('status = '+status+' id: '+id,'bottom','right');
-      }, 10000);
+
+        this.service.AsyncPost()
+        .subscribe((res)=>{
+          console.log(`res async post:`,res);
+        });
+
+        this.pushNotification.showNotification('status = '+status+' id: '+id,'bottom','right');
+        
+      }, 8000);
+    }
     });
+ 
    
-    
+   
   }
 
   

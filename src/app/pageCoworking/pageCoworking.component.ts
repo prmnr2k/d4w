@@ -9,6 +9,7 @@ import { TokenModel } from '../core/models/token.model';
 import { UserModel } from '../core/models/user.model';
 import { BookingModel } from "../core/models/booking.model";
 import { Base64ImageModel } from '../core/models/base64image.model';
+//import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
   selector: 'page-coworking',
@@ -38,6 +39,7 @@ export class Coworking implements OnInit {
   maxTime:string = '00:00';
   showTime:boolean = false;
   ErrBookingMsg:string = "Incorrect Date or Time!";
+  //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(private service: MainService, private router: Router, 
   private activatedRoute: ActivatedRoute) { }
 

@@ -22,7 +22,7 @@ import { BookingModel } from '../models/booking.model';
 export class MainService{
     public onAuthChange$: Subject<boolean>;
     public me: UserModel;
-
+    //public pushNotif:NotificationsComponent = new NotificationsComponent();
     constructor(private http: HttpService, private router: Router){
         this.onAuthChange$ = new Subject();
         this.onAuthChange$.next(false);

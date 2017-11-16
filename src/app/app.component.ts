@@ -17,15 +17,33 @@ export class AppComponent implements OnInit {
   title = 'app';
   constructor(public location: Location, private service: MainService,
               private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-               
-                  this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token=kek', 'NotificationsChannel');
-                  console.log("subscribed");
-                  this.broadcaster.on<string>('NotificationsChannel').subscribe(
-                    message => {
-                      console.log('asasasasa');
-                      console.log(message + ' DAROVA');
-                    }
-                  );
+                
+                this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
+                console.log('ng2cable success');
+                this.broadcaster.on<JSON>('BookingsChannel').subscribe(
+                  message => {
+                    console.log(message['event_type']);
+                    console.log(message['booking']);
+                    if (message['event_type'] == 'created'){
+                      let name='';
+                      this.service.GetUserById(message['booking'].user_id).
+                      subscribe((any)=>{
+                        name = any.first_name;
+                        this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
+                      });
+                      
+                  }else if (message['event_type'] == 'before_start'){
+                      this.pushNotification.showNotification('Booking start after 15 min!','bottom','right');
+                  }
+                  if (message['event_type'] == 'after_start'){
+                      this.pushNotification.showNotification('Booking started 10 min ago!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',message['booking'].user_id);
+                  }
+                  else if (message['event_type'] == 'before_finish'){
+                      this.pushNotification.showNotification('Booking finish after 5 min!','bottom','right');
+                  }
+                    
+                  }
+                );
               }
 
   ngOnInit(){
@@ -39,7 +57,7 @@ export class AppComponent implements OnInit {
     });
 
     this.service.TryToLoginWithToken();
-
+/*
     this.service.GetMyAccess().
     subscribe((any)=>{
 
@@ -52,6 +70,7 @@ export class AppComponent implements OnInit {
         if(!this.isLoggedIn) clearInterval(timerId);
         console.log("Show notif");
 
+
         this.service.AsyncPost()
         .subscribe((res)=>{
           console.log(`res async post:`,res);
@@ -63,10 +82,16 @@ export class AppComponent implements OnInit {
     }
     });
  
-   
+  */ 
    
   }
 
+  SendSMS(){
+    console.log(`send sms`);
+    this.service.SendSmsClickatell('380669643799','smsFrom SnollyPc');
+    
+  }
+  
   
 
   isMap(path){

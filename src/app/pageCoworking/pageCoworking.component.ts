@@ -11,6 +11,8 @@ import { BookingModel } from "../core/models/booking.model";
 import { Base64ImageModel } from '../core/models/base64image.model';
 import { Http } from '@angular/http/src/http';
 //import { NotificationsComponent } from '../notifications/notifications.component';
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
+
 
 @Component({
   selector: 'page-coworking',
@@ -42,7 +44,9 @@ export class Coworking implements OnInit {
   ErrBookingMsg:string = "Incorrect Date or Time!";
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(private service: MainService, private router: Router, 
-  private activatedRoute: ActivatedRoute) { }
+  private activatedRoute: ActivatedRoute, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+    
+    this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
 
   ngOnInit() 
   {
@@ -187,7 +191,7 @@ export class Coworking implements OnInit {
   }
 
   SendSMS(){
-    this.service.SendSmsClickatell('380953570489','smsFrom SnollyPc');
+    this.service.SendSmsClickatell('380669643799','smsFrom SnollyPc');
     
   }
 

@@ -11,6 +11,9 @@ import { Base64ImageModel } from '../core/models/base64image.model';
 import { MapsAPILoader } from "angular2-google-maps/core";
 import {} from '@types/googlemaps';
 
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
+
+
 declare var google: any;
 
 @Component({
@@ -37,7 +40,9 @@ export class AllCoworkings implements OnInit {
       lng:37.618423,
       date:null
     };
-    constructor(private service: MainService, private router: Router) { }
+    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+      
+      this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
 
 
     ngOnInit() 

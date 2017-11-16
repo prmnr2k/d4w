@@ -429,6 +429,19 @@ export class MainService{
         return this.http.PostData('/users/kek',JSON.stringify(data));
     }
 
+   
     
+    SendSmsClickatell(num_mob:string,text:string)
+    {
+        console.log(`old send Сlickatell`);
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "https://platform.clickatell.com/messages/http/send?apiKey=2SrHPOF5S9Ws8QHc5oUG5g==&to="+num_mob+"&content="+text, true);
+          xhr.onreadystatechange = function(){
+              if (xhr.readyState == 4 && xhr.status == 200){
+                  console.log('success')
+              }
+          };
+          xhr.send();
+    }
 
 }

@@ -9,6 +9,7 @@ import { TokenModel } from '../core/models/token.model';
 import { UserModel } from '../core/models/user.model';
 import { BookingModel } from "../core/models/booking.model";
 import { Base64ImageModel } from '../core/models/base64image.model';
+import { Http } from '@angular/http/src/http';
 //import { NotificationsComponent } from '../notifications/notifications.component';
 
 @Component({
@@ -184,6 +185,12 @@ export class Coworking implements OnInit {
       }
     }
   }
+
+  SendSMS(){
+    this.service.SendSmsClickatell('380953570489','smsFrom SnollyPc');
+    
+  }
+
 
 }
 

@@ -34,6 +34,7 @@ export class HttpService
     GetToken():TokenModel{
         return this.token;
     }
+
     
     PostData(method:string,data:string)
     {
@@ -78,4 +79,5 @@ export class HttpService
             return json.results;
           })
     }
+
 }

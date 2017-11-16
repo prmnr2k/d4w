@@ -19,7 +19,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of Bookings; let i = index">
+                                <tr *ngFor="let item of c; let i = index">
                                     <td>{{item.begin_date | date:'dd.M.yyyy'}}</td>
                                     <td>{{item.begin_date | date:'H:mm'}} - {{item.end_date | date:'H:mm'}}</td>
                                     <td>{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</td>

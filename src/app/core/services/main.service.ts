@@ -192,7 +192,16 @@ export class MainService{
         return this.http.GetData('/coworkings/get_accessed_users/'+id,"");
     }
 
-
+    RateCoworking(coworking_id:number,user_id:number,score:string){
+        const data = {
+            coworking_id: coworking_id,
+            user_id: user_id,
+            score: score
+        }
+        console.log(`cowRateData`,data);
+        return this.http.PostData('/coworkings/rate',JSON.stringify(data));
+        
+    }
     CoworkingModelToCreateCoworkingModel(input:CoworkingModel){
         let result = new CreateCoworkingModel();
         if(input){
@@ -221,6 +230,19 @@ export class MainService{
     GetBookingsByCwr(id:number){
         return this.http.GetData('/coworkings/get_bookings/'+id,'');
     }
+
+    GetBookingById(id:number){
+        return this.http.GetData('/bookings/get/'+id,'');
+    }
+
+    ExtendBooking(id:number, time:string){
+        let params={
+            'booking_id':id,
+            'extend_time':time
+        }
+        return this.http.PostData('/bookings/extend_booking',JSON.stringify(params));
+    }
+
     BookingCreate(book:BookingModel){
         return this.http.PostData('/bookings/create',JSON.stringify(book));
     }

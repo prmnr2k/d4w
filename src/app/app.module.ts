@@ -40,7 +40,7 @@ import { AgmCoreModule } from '@agm/core'
 import { CommonModule } from '@angular/common';
 import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
 import { IdBookingComponent } from 'app/idBooking/idBooking.component';
-
+import {CountDown} from "ng2-date-countdown";
 
 
 @NgModule({
@@ -65,7 +65,8 @@ import { IdBookingComponent } from 'app/idBooking/idBooking.component';
     Coworking,
     EditUserComponent,
     ChangePasswordComponent,
-    IdBookingComponent
+    IdBookingComponent,
+    CountDown
 
 
   ],

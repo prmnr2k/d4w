@@ -48,7 +48,6 @@ export class HttpService
     {
         if(!this.headers.has('Content-Type'))
             this.headers.append('Content-Type','application/json');
-            console.log(this.headers);
         return this.http.get(this.serverUrl + method + "?"+ params,{headers:this.headers})
             .map((resp:Response)=>resp.json())
             .catch((error:any) =>{return Observable.throw(error);});

@@ -42,7 +42,7 @@ const routes: Routes =[
     { path: 'user_profile', component: EditUserComponent, canActivate: [PageAccessGuard] },
     { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] },
     { path: 'change_password', component: ChangePasswordComponent, canActivate: [PageAccessGuard] },
-    { path: 'id_booking', component: IdBookingComponent, canActivate: [PageAccessGuard] }
+    { path: 'booking/:id', component: IdBookingComponent, canActivate: [PageAccessGuard] }
 ];
 
 @NgModule({

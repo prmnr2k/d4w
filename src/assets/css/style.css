@@ -162,7 +162,7 @@ html, body {
     background-position: center;
     cursor: pointer;
     -webkit-transition: 0.3s;
-    transition: 0.3s; }
+    transition: 0.3s;}
     .photos-wrapp .photos .for-hover:before {
       content: "";
       display: block;

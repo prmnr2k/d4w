@@ -83,7 +83,7 @@ export class EditCoworkingComponent implements OnInit {
 
     InitByCoworking(cwrk:CoworkingModel){
         this.Coworking = this.service.CoworkingModelToCreateCoworkingModel(cwrk);
-        this.Days = this.service.GetAllDays();
+        //this.Days = this.service.GetAllDays();
         this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),this.Coworking.amenties);
         this.CoworkingId = cwrk.id?cwrk.id:0;
         this.Coworking.first_name = this.Me.first_name?this.Me.first_name:'';

@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 
 import { MainService } from './core/services/main.service';
 import { HttpService } from './core/services/http.service';
-import { PageAccessGuard } from './page.guard';
+import { AppAccessGuard } from './app.guard';
 import { LoadingModule } from './shared/loading/loading.module';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
@@ -41,7 +41,7 @@ import { LoginComponent } from 'app/login/login.component';
     //LoginModule,
     SystemModule
   ],
-  providers: [MainService, HttpModule, HttpService, PageAccessGuard],
+  providers: [MainService, HttpModule, HttpService, AppAccessGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

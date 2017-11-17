@@ -13,7 +13,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
-import { PageAccessGuard } from './../page.guard';
+import { SystemAccessGuard } from './system.guard';
 import { AllCoworkingsComponent } from './allCoworkings/allCoworkings.component';
 import { MyBookingsComponent } from "./myBookings/myBookings.component";
 import { CoworkingComponent } from "./pageCoworking/pageCoworking.component";
@@ -28,20 +28,20 @@ const routes: Routes =
     [
       { path:'', redirectTo: 'all_coworkings', pathMatch:'full' },
       { path: 'user',           component: UserComponent},
-      { path: 'table',          component: TablesComponent, canActivate: [PageAccessGuard] },
+      { path: 'table',          component: TablesComponent, canActivate: [SystemAccessGuard] },
       { path: 'typography',     component: TypographyComponent },
       { path: 'icons',          component: IconsComponent},
       { path: 'maps',           component: MapsComponent },
       { path: 'notifications',  component: NotificationsComponent },
-      { path: 'registration', component: RegistrationComponent, canActivate: [PageAccessGuard] },
-      { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [PageAccessGuard] },
-      { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] },
+      { path: 'registration', component: RegistrationComponent, canActivate: [SystemAccessGuard] },
+      { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [SystemAccessGuard] },
+      { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
       { path: 'all_coworkings', component:AllCoworkingsComponent},
-      { path: 'my_bookings', component:MyBookingsComponent,canActivate: [PageAccessGuard]},
+      { path: 'my_bookings', component:MyBookingsComponent,canActivate: [SystemAccessGuard]},
       { path: 'coworking/:id', component:CoworkingComponent},
-      { path: 'user_profile', component: EditUserComponent, canActivate: [PageAccessGuard] },
-      { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [PageAccessGuard] },
-      { path: 'change_password', component: ChangePasswordComponent, canActivate: [PageAccessGuard] }
+      { path: 'user_profile', component: EditUserComponent, canActivate: [SystemAccessGuard] },
+      { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
+      { path: 'change_password', component: ChangePasswordComponent, canActivate: [SystemAccessGuard] }
     ]
   }
 ];

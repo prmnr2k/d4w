@@ -67,7 +67,7 @@ export class CoworkingComponent implements OnInit {
           });
           this.isLoading = false;
     });       
-    this.Days = this.service.GetAllDays();   
+    //this.Days = this.service.GetAllDays();   
     this.minDate = new Date();
    // this.minDate.setDate(this.minDate.getDate() - 1);
     this.Booking.begin_date = `2017-11-08T13:00`;

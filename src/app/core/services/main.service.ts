@@ -17,6 +17,7 @@ import { CoworkingModel } from '../models/coworking.model';
 import { WorkingDayModel } from '../models/workingDay.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
 import { BookingModel } from '../models/booking.model';
+import { FrontWorkingDayModel } from '../models/frontWorkingDays.model';
 
 @Injectable()
 export class MainService{
@@ -362,14 +363,24 @@ export class MainService{
 
     public GetAllDays(){
         return [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
+            new FrontWorkingDayModel('Понедельник','Monday'),
+            new FrontWorkingDayModel('Вторник','Tuesday'),
+            new FrontWorkingDayModel('Среда','Wednesday'),
+            new FrontWorkingDayModel('Четверг','Thursday'),
+            new FrontWorkingDayModel('Пятница','Friday'),
+            new FrontWorkingDayModel('Суббота','Saturday',true),
+            new FrontWorkingDayModel('Воскресенье','Sunday',true)
         ];
+    }
+
+    public GetWorkingDaysFromFront(days:FrontWorkingDayModel[]):WorkingDayModel[]{
+        let result:WorkingDayModel[] = [];
+
+        for(let i of days){
+            if(i.checked)
+                result.push(new WorkingDayModel(i.en_name,i.start_work,i.finish_work));
+        }
+        return result;
     }
 
     public GetAllAmenties(){

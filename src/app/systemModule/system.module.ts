@@ -29,6 +29,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { SystemRoutingModule } from './system.routing';
 import { LbdModule } from 'app/systemModule/lbd/lbd.module';
 import { SystemComponent } from 'app/systemModule/system.component';
+import { SystemAccessGuard } from './system.guard';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,6 @@ import { SystemComponent } from 'app/systemModule/system.component';
     SystemRoutingModule,
     LbdModule
   ],
-  providers: []
+  providers: [ SystemAccessGuard]
 })
 export class SystemModule {}

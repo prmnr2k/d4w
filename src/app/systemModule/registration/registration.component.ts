@@ -8,6 +8,7 @@ import { CreateCoworkingModel } from '../../core/models/createCoworking.model';
 import { CheckboxModel } from '../../core/models/checkbox.model';
 import { WorkingDayModel } from '../../core/models/workingDay.model';
 import { TokenModel } from '../../core/models/token.model';
+import { FrontWorkingDayModel } from '../../core/models/frontWorkingDays.model';
 
 
 declare var jquery:any;
@@ -25,18 +26,19 @@ export class RegistrationComponent implements OnInit {
     isLoading = true;
     RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
-    Days:string[] = [];
+    Days:FrontWorkingDayModel[] = [];
     AmetiesCB: CheckboxModel[] = [];
     rulesShow:boolean = false;
     flagForImages:boolean = true;
     imagesCount:number = 5;
+    Weekends = false;
     constructor(private service: MainService, private router: Router) { }
     ngOnInit() 
     {
         this.Days = this.service.GetAllDays();
         this.AmetiesCB = this.service.GetAllAmenties();
         this.Coworking.images = [];
-        this.Coworking.working_days = [new WorkingDayModel(this.Days[0])];
+        this.Coworking.working_days = [];
         this.isLoading = false;
     }
 
@@ -45,19 +47,13 @@ export class RegistrationComponent implements OnInit {
         this.imagesCount += 1;
         this.flagForImages = true;
     }
-    DeleteWorkingDay(i:number){
-        this.Coworking.working_days.splice(i,1);
-    }
-
-    AddNewWorkingDay(){
-        this.Coworking.working_days.push(new WorkingDayModel(this.Days[0]));
-    }
 
     CreateCoworking(){
         if(this.form.valid){
             this.isLoading = true;
             this.RegistrationErr = false;
             this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
+            this.Coworking.working_days = this.service.GetWorkingDaysFromFront(this.Days);
             if(!this.CheckCwrk()){
                 this.RegistrationErr = true;
                 this.isLoading = false;
@@ -211,17 +207,26 @@ export class RegistrationComponent implements OnInit {
         }
     }
     OnBeginWorkChanged(index:number, $event:any){
-        this.Coworking.working_days[index].begin_work = $event;
-        if(!this.Coworking.working_days[index].end_work || 
-            this.Coworking.working_days[index].end_work < this.Coworking.working_days[index].begin_work)
+        this.Days[index].start_work = $event;
+        if(!this.Days[index].finish_work || 
+            this.Days[index].finish_work < this.Days[index].start_work)
         {
-            let beginArr = this.Coworking.working_days[index].begin_work.split(":");
+            let beginArr = this.Days[index].start_work.split(":");
             let endHour = +beginArr[0] + 2;
             
-            this.Coworking.working_days[index].end_work = endHour+ ":" + beginArr[1];
+            this.Days[index].finish_work = endHour+ ":" + beginArr[1];
         
         }
 
+    }
+
+    SetWorkNonStop(i,$event){
+            this.Days[i].nonstop = $event;
+            if(this.Days[i].nonstop){
+                this.Days[i].checked = true;
+                this.Days[i].start_work = "00:00";
+                this.Days[i].finish_work = "23:59";
+            }
     }
 
 }

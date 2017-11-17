@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MainService } from '../core/services/main.service';
+import { MainService } from '../../core/services/main.service';
 import { Router } from '@angular/router';
-import { CheckboxModel } from '../core/models/checkbox.model';
-import { TokenModel } from '../core/models/token.model';
+import { CheckboxModel } from '../../core/models/checkbox.model';
+import { TokenModel } from '../../core/models/token.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
 import { UserModel } from "app/core/models/user.model";
 import { NgForm, FormControl } from '@angular/forms';

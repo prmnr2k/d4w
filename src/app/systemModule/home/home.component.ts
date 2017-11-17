@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
     public emailChartType: ChartType;
     public emailChartData: any;
     public emailChartLegendItems: LegendItem[];
-
+    
     public hoursChartType: ChartType;
     public hoursChartData: any;
     public hoursChartOptions: any;

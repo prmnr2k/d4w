@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { MainService } from '../core/services/main.service';
+import { MainService } from '../../core/services/main.service';
 import { Router } from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
 
-import { CoworkingModel } from '../core/models/coworking.model';
-import { CreateCoworkingModel } from '../core/models/createCoworking.model';
-import { CheckboxModel } from '../core/models/checkbox.model';
-import { WorkingDayModel } from '../core/models/workingDay.model';
-import { TokenModel } from '../core/models/token.model';
+import { CoworkingModel } from '../../core/models/coworking.model';
+import { CreateCoworkingModel } from '../../core/models/createCoworking.model';
+import { CheckboxModel } from '../../core/models/checkbox.model';
+import { WorkingDayModel } from '../../core/models/workingDay.model';
+import { TokenModel } from '../../core/models/token.model';
 
 
 declare var jquery:any;

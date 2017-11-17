@@ -1,16 +1,15 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { MainService } from '../core/services/main.service';
+import { MainService } from '../../core/services/main.service';
 import { Router, Params } from '@angular/router';
-import { CoworkingModel } from '../core/models/coworking.model';
-import { CreateCoworkingModel } from '../core/models/createCoworking.model';
-import { CheckboxModel } from '../core/models/checkbox.model';
-import { WorkingDayModel } from '../core/models/workingDay.model';
-import { TokenModel } from '../core/models/token.model';
-import { UserModel } from '../core/models/user.model';
-import { Base64ImageModel } from '../core/models/base64image.model';
+import { CoworkingModel } from '../../core/models/coworking.model';
+import { CreateCoworkingModel } from '../../core/models/createCoworking.model';
+import { CheckboxModel } from '../../core/models/checkbox.model';
+import { WorkingDayModel } from '../../core/models/workingDay.model';
+import { TokenModel } from '../../core/models/token.model';
+import { UserModel } from '../../core/models/user.model';
+import { Base64ImageModel } from '../../core/models/base64image.model';
 import { MapsAPILoader } from "angular2-google-maps/core";
 import {} from '@types/googlemaps';
-
 declare var google: any;
 
 @Component({
@@ -18,7 +17,7 @@ declare var google: any;
   templateUrl: './allCoworkings.component.html',
   styleUrls:["./allCoworkings.component.css"]
 })
-export class AllCoworkings implements OnInit {
+export class AllCoworkingsComponent implements OnInit {
     
     RegistrationErr = false;
     isLoading = true;

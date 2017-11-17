@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateCoworkingModel } from '../core/models/createCoworking.model';
-import { CheckboxModel } from '../core/models/checkbox.model';
-import { UserModel } from '../core/models/user.model';
-import { MainService } from '../core/services/main.service';
+import { CreateCoworkingModel } from '../../core/models/createCoworking.model';
+import { CheckboxModel } from '../../core/models/checkbox.model';
+import { UserModel } from '../../core/models/user.model';
+import { MainService } from '../../core/services/main.service';
 import { Router } from '@angular/router';
-import { CoworkingModel } from '../core/models/coworking.model';
-import { Base64ImageModel } from '../core/models/base64image.model';
-import { BookingModel } from '../core/models/booking.model';
+import { CoworkingModel } from '../../core/models/coworking.model';
+import { Base64ImageModel } from '../../core/models/base64image.model';
+import { BookingModel } from '../../core/models/booking.model';
 
 import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/star-rating-struct";
 import { RateModel } from 'app/core/models/rate.model';

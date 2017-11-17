@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MainService } from '../core/services/main.service';
+import { MainService } from '../../core/services/main.service';
 import { Router } from '@angular/router';
 
 declare const $: any;

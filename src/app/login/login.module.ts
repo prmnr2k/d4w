@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+/*import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LoginComponent } from "app/login/login.component";
 import { LoadingModule } from "app/shared/loading/loading.module";
@@ -9,7 +9,7 @@ import { FormsModule } from "@angular/forms";
 
 @NgModule({
     declarations:[
-        LoginComponent,
+        LoginComponent
     ],
     imports:[
         CommonModule,
@@ -19,4 +19,4 @@ import { FormsModule } from "@angular/forms";
     ],
     providers:[]
 })
-export class LoginModule{}
+export class LoginModule{}*/

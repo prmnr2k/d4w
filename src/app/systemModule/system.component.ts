@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'system-app',
   templateUrl: './system.component.html'
 })
-export class systemComponent implements OnInit {
+export class SystemComponent implements OnInit {
 
 
   constructor() { }

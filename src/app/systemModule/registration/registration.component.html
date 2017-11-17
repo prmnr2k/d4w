@@ -1,6 +1,6 @@
 <loading-cmp *ngIf="isLoading"></loading-cmp>
 <div class="wrapp-for-forms" *ngIf="!isLoading">
-    <form (ngSubmit)="CreateCoworking(submitFormCwrc)" #submitFormCwrc="ngForm">
+    <form *ngIf="!rulesShow" (ngSubmit)="CreateCoworking(submitFormCwrc)" #submitFormCwrc="ngForm">
         <h6 class="head-form">
             <span>Регистрация</span>
         </h6>
@@ -163,29 +163,6 @@
         <h6 class="head-form">
             <span>Время работы</span>
         </h6>
-        <!--<div class="row" *ngFor="let item of Coworking.working_days;let i = index">
-            <div class="col-md-5">
-                <div class="form-group">
-                    <select [ngModel]="item.day" [name]="'sel'+i" (ngModelChange)="item.day = $event">
-                        <option *ngFor="let day of Days" [value]="day">{{day}}</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="form-group">
-                    <label>From</label>
-                    <input autocomplete="off" type="time" [name]="'from'+i" [ngModel]="item.begin_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
-                </div>
-                <div class="form-group">
-                    <label>To</label>
-                    <input autocomplete="off" type="time" [name]="'to'+i" [ngModel]="item.end_work" (ngModelChange)="item.end_work = $event">
-                </div>
-            </div>
-
-            <a *ngIf="i >= 1" class="col-md-2 fsize30 pointer-curs" (click)="DeleteWorkingDay(i)">
-                <i class="pe-7s-less"></i>
-            </a>
-        </div>-->
         <div class="setting-1">
             <div class="for-relative">
                 <p>Выходные дни</p>
@@ -237,115 +214,24 @@
         </div>
         <button class="butt-orange" [disabled]="!submitFormCwrc.valid" type="submit">Создать коворкинг</button>
     </form>
+    <div *ngIf="rulesShow" class="agreement">
+        <div class="text">
+            <h1>Rules d4w</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div class="agree-disagree-wr">
+            <form class="agree">
+                <button class="butt-orange">Я согласен</button>
+            </form>
+            <form class="disagree">
+                <button class="butt-orange disagree-butt" type="submit">Я не согласен</button>
+            </form>
+        </div>
+    </div>
 </div>
 
-<div class="main-content" >
-        <div class="container-fluid">
-            <loading-cmp *ngIf="isLoading"></loading-cmp>
-            <div class="row" *ngIf="!isLoading">
-                <div class="col-md-12" *ngIf="RegistrationErr">
-                    <h2 class="error-msg">{{RegErrMsg}}</h2>
-                </div>
-                <form (ngSubmit)="CreateCoworking(submitFormCwrc)" #submitFormCwrc="ngForm">
-                <div  *ngIf="!rulesShow" class="col-md-8">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Create coworking</h4>
-                        </div>
-                        <div class="content">
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-12 for-flex-my">
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div  *ngIf="!rulesShow" class="col-md-4  card">
-                    <div class="row pad10">
-                        <h4 class="card-h4">Working days</h4>
-                        <div class="row" *ngFor="let item of Coworking.working_days;let i = index">
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <select [ngModel]="item.day" [name]="'sel'+i" (ngModelChange)="item.day = $event">
-                                        <option *ngFor="let day of Days" [value]="day">{{day}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label>From</label>
-                                    <input autocomplete="off" type="time" [name]="'from'+i" [ngModel]="item.begin_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
-                                </div>
-                                <div class="form-group">
-                                    <label>To</label>
-                                    <input autocomplete="off" type="time" [name]="'to'+i" [ngModel]="item.end_work" (ngModelChange)="item.end_work = $event">
-                                </div>
-                            </div>
-
-                            <a *ngIf="i >= 1" class="col-md-2 fsize30 pointer-curs" (click)="DeleteWorkingDay(i)">
-                                <i class="pe-7s-less"></i>
-                            </a>
-                        </div>
-                        <button class="col-md-8 btn btn-info btn-fill pull-right" (click)="AddNewWorkingDay()">Add new working day</button>
-                    </div>
-                </div>
-
-
-                <div *ngIf="rulesShow" class="col-md-12">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title text-center">Rules d4w</h4>
-                        </div>
-                        <div class="content">
-                            
-                               <p class="lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                 velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                                 sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    
-                                 <p class="lead  text-primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-                                        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
-                                        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    
-                                
-                                        <div class="form-inline">
-                                            <form class="form-inline-item" (ngSubmit)="finalCreateCoworking()">
-                                                <button class="btn btn-success btn-fill">I agree Rules</button>
-                                            </form>
-                                            <form class="form-inline-item" class="pull-left" (ngSubmit)="rulesShow = false"> 
-                                                <button class="btn btn-danger btn-fill" type="submit">Not agree</button>
-                                            </form>
-                                        </div>
-                        </div>
-                    </div>
-            </div>
-
-
-                </form>
-            </div>
-        </div>
-
-    
-
-        
-           
     
 
 
-
-
-    </div>
     

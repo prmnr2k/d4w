@@ -35,7 +35,8 @@ export class AppComponent implements OnInit {
                   }else if (message['event_type'] == 'before_start'){
                       this.pushNotification.showNotification('Booking start after 15 min!','bottom','right');
                   }
-                  if (message['event_type'] == 'after_start'){
+                  else if (message['event_type'] == 'after_start'){
+                    if(!message['booking'].is_visit_confirmed)
                       this.pushNotification.showNotification('Booking started 10 min ago!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',message['booking'].user_id);
                   }
                   else if (message['event_type'] == 'before_finish'){

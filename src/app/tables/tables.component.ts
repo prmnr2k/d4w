@@ -36,26 +36,7 @@ export class TablesComponent implements OnInit {
     constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
         
         this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
-        /*console.log('ng2cable success');
-        this.broadcaster.on<JSON>('BookingsChannel').subscribe(
-          message => {
-            console.log(message['event_type']);
-            console.log(message['booking']);
-            if (message['event_type'] == 'created'){
-                this.pushNotification.showNotification('New booking!','bottom','right');
-
-            }else if (message['event_type'] == 'before_start'){
-                this.pushNotification.showNotification('Booking start after 15 min!','bottom','right');
-            }
-            else if (message['event_type'] == 'after_start'){
-                this.pushNotification.showNotification('Booking started 10 min ago!','bottom','right');
-            }
-            else if (message['event_type'] == 'before_finish'){
-                this.pushNotification.showNotification('Booking finish after 5 min!','bottom','right');
-            }
-            
-          }
-        );*/
+       
       }
     
     

@@ -1,0 +1,245 @@
+<div class="main-content" >
+        <div class="container-fluid">
+            <loading-cmp *ngIf="isLoading"></loading-cmp>
+            <div class="row" *ngIf="!isLoading">
+                <div class="col-md-12" *ngIf="RegistrationErr">
+                    <h2 class="error-msg">{{RegErrMsg}}</h2>
+                </div>
+                <form (ngSubmit)="CreateCoworking(submitFormCwrc)" #submitFormCwrc="ngForm">
+                <div  *ngIf="!rulesShow" class="col-md-8">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Create coworking</h4>
+                        </div>
+                        <div class="content">
+                            
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input autocomplete="off" type="text" class="form-control" #firstN="ngModel" name="fname" [ngModel]="Coworking.first_name" (ngModelChange)="Coworking.first_name = $event" required>
+                                            <p *ngIf="firstN.invalid && firstN.touched" class="red-error">First name can`t be empty!</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input autocomplete="off" type="text" class="form-control" #lastN="ngModel" name="lname" [ngModel]="Coworking.last_name" (ngModelChange)="Coworking.last_name = $event" required>
+                                            <p *ngIf="lastN.invalid && lastN.touched" class="red-error">Last name can`t be empty!</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input autocomplete="off" type="text" #email="ngModel" class="form-control" name="email" [ngModel]="Coworking.email" (ngModelChange)="Coworking.email = $event" email required>
+                                            <p *ngIf="email.invalid && email.touched" class="red-error">Input valid email!</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input autocomplete="off" type="text" pattern="^[+]?[0-9]{3,}$" #phone="ngModel"  class="form-control" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event">
+                                            <p *ngIf="phone.invalid && phone.touched" class="red-error">Input valid phone!</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ngModelGroup="passwordGroup" #passwordGroup="ngModelGroup"
+                                validateEqual
+                                password="password"
+                                confirmation="passwordConfirmation">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input  mdInput
+                                            type="password"
+                                            required
+                                            #password="ngModel" minlength="6" class="form-control" name="password" [ngModel]="Coworking.password" (ngModelChange)="Coworking.password = $event">
+                                            <p *ngIf="password.invalid && password.touched" class="red-error">Password`s minimum length is 6!</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Password confirmation</label>
+                                            <input  mdInput
+                                            type="password"
+                                            required
+                                            ngModel name="passwordConfirmation"
+                                            #passwordConfirmation="ngModel"  minlength="6" class="form-control mystyle" [ngModel]="Coworking.password_confirmation" (ngModelChange)="Coworking.password_confirmation = $event">
+                                        </div>
+                                        <p *ngIf="passwordGroup.invalid && passwordGroup.touched && passwordConfirmation.touched" class="red-error">Password have to be matched!</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Full coworking`s name</label>
+                                            <input type="text" autocomplete="off"  class="form-control" name="fullname" [ngModel]="Coworking.full_name" (ngModelChange)="Coworking.full_name = $event" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Short name</label>
+                                            <input autocomplete="off" type="text" class="form-control" name="short_name" [ngModel]="Coworking.short_name" (ngModelChange)="Coworking.short_name = $event" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Price ($/hour)</label>
+                                            <input autocomplete="off" type="number" min="0" class="form-control" name="price" [ngModel]="Coworking.price" (ngModelChange)="Coworking.price = $event">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <input autocomplete="off" type="text" class="form-control" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Contacts</label>
+                                            <input autocomplete="off" type="text"  class="form-control" name="contacts" [ngModel]="Coworking.contacts" (ngModelChange)="Coworking.contacts = $event">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Capacity</label>
+                                            <input autocomplete="off" type="number" min="0" class="form-control" name="capacity" [ngModel]="Coworking.capacity" (ngModelChange)="Coworking.capacity = $event">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description </label>
+                                            <textarea rows="5" class="form-control" name="description" [ngModel]="Coworking.description" (ngModelChange)="Coworking.description = $event"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Additional info</label>
+                                            <input autocomplete="off" type="text" class="form-control" name="additional_info" [ngModel]="Coworking.additional_info" (ngModelChange)="Coworking.additional_info = $event">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-12 for-flex-my">
+                                            <div class="for-hover" *ngFor="let img of Coworking.images; let i = index" (click)="DeleteImage(i)">
+                                                <img class="images-preview img-responsive" alt="Delete" [src]="img" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="file_upload" [ngClass]="{'for-disabled-style': !flagForImages }">
+                                                <span class="button">Browse images</span>
+                                                <input [disabled]="!flagForImages" type="file" multiple accept=".jpg, .jpeg, .png" (change)="changeListener($event)">
+                                            </label>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                               
+                                <button class="btn btn-info btn-fill pull-right" [disabled]="!submitFormCwrc.valid" type="submit">Create coworking</button>
+                             
+                                
+
+                                <div class="clearfix"></div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div  *ngIf="!rulesShow" class="col-md-4  card">
+                    <div class="row pad10">
+                        <h4 class="card-h4">Ameties</h4>
+                        <div class="ameties-cb" *ngFor="let item of AmetiesCB">
+                            <input type="checkbox" name="check" [ngModel]="item.checked" (ngModelChange)="item.checked =  $event">
+                            <label>{{item.name}}</label>
+                        </div>
+                    </div>
+                    <div class="row pad10">
+                        <h4 class="card-h4">Working days</h4>
+                        <div class="row" *ngFor="let item of Coworking.working_days;let i = index">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <select [ngModel]="item.day" [name]="'sel'+i" (ngModelChange)="item.day = $event">
+                                        <option *ngFor="let day of Days" [value]="day">{{day}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>From</label>
+                                    <input autocomplete="off" type="time" [name]="'from'+i" [ngModel]="item.begin_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
+                                </div>
+                                <div class="form-group">
+                                    <label>To</label>
+                                    <input autocomplete="off" type="time" [name]="'to'+i" [ngModel]="item.end_work" (ngModelChange)="item.end_work = $event">
+                                </div>
+                            </div>
+
+                            <a *ngIf="i >= 1" class="col-md-2 fsize30 pointer-curs" (click)="DeleteWorkingDay(i)">
+                                <i class="pe-7s-less"></i>
+                            </a>
+                        </div>
+                        <button class="col-md-8 btn btn-info btn-fill pull-right" (click)="AddNewWorkingDay()">Add new working day</button>
+                    </div>
+                </div>
+
+
+                <div *ngIf="rulesShow" class="col-md-12">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title text-center">Rules d4w</h4>
+                        </div>
+                        <div class="content">
+                            
+                               <p class="lead"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                 velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                                 sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    
+                                 <p class="lead  text-primary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                                        ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                                        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, 
+                                        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    
+                                
+                                        <div class="form-inline">
+                                            <form class="form-inline-item" (ngSubmit)="finalCreateCoworking()">
+                                                <button class="btn btn-success btn-fill">I agree Rules</button>
+                                            </form>
+                                            <form class="form-inline-item" class="pull-left" (ngSubmit)="rulesShow = false"> 
+                                                <button class="btn btn-danger btn-fill" type="submit">Not agree</button>
+                                            </form>
+                                        </div>
+                        </div>
+                    </div>
+            </div>
+
+
+                </form>
+            </div>
+        </div>
+
+    
+
+        
+           
+    
+
+
+
+
+    </div>
+    

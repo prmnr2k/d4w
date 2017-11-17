@@ -22,7 +22,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { UpgradeComponent } from './upgrade/upgrade.component';
 import { MainService } from './core/services/main.service';
 import { HttpService } from './core/services/http.service';
-import { LoginComponent } from './login/login.component';
+
 import { RegistrationComponent } from './registration/registration.component';
 import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
 import { PageAccessGuard } from './page.guard';
@@ -39,6 +39,7 @@ import { ChangePasswordComponent } from './changePassword/changePassword.compone
 import { AgmCoreModule } from '@agm/core'
 import { CommonModule } from '@angular/common';
 import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
+import { LoginModule } from 'app/login/login.module';
 
 
 
@@ -53,7 +54,6 @@ import { PasswordValidationDirective } from './shared/directives/pass.validator.
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
-    LoginComponent,
     RegistrationComponent, 
     EditCoworkingComponent,
     UserRegistrationComponent,
@@ -78,6 +78,7 @@ import { PasswordValidationDirective } from './shared/directives/pass.validator.
     AppRoutingModule,
     LbdModule,
     LoadingModule,
+    LoginModule,
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
     CommonModule,

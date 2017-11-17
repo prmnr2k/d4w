@@ -24,15 +24,15 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "assets/css/light-bootstrap-dashboard.css",
-        "assets/sass/light-bootstrap-dashboard.scss",
-        "assets/sass/star-rating.scss",
-        "assets/css/new-style.css"
+        "assets/css/bootstrap.min.css",
+        "assets/css/slick.css",
+        "assets/css/style.css",
+        "assets/css/media.css"
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.js",
-        "../node_modules/bootstrap/dist/js/bootstrap.js",
-        "../node_modules/bootstrap-notify/bootstrap-notify.js",
+        "assets/js/jquery.js",
+        "assets/js/bootstrap.min.js",
+        "assets/js/slick.min.js",
         "../node_modules/chartist/dist/chartist.js"
       ],
       "environmentSource": "environments/environment.ts",

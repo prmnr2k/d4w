@@ -6,9 +6,10 @@ import { LoginComponent } from 'app/login/login.component';
 import { PageAccessGuard } from 'app/page.guard';
 
 
-const routes: Routes =[
-    { path: '',component: LoginComponent},
-    { path: 'system', loadChildren: './systemModule/system.module#SystemModule', canActivate: [PageAccessGuard] }
+const routes: Routes = [
+    { path: '', redirectTo: 'login', canActivate: [PageAccessGuard], pathMatch:'full'},
+    { path: 'login',component: LoginComponent},
+    { path: 'system', loadChildren: './systemModule/system.module#SystemModule'}
 ];
 
 @NgModule({

@@ -1,3 +1,58 @@
+<div class="navigation">
+    <img src="img/main-logo.svg" alt="" class="img-responsive nav-logo">
+    <div class="right-side" *ngIf="!isLoggedIn">
+        <ul class="sign-menu-wr">
+            <li>
+                <a routerLink="/login">Sign in</a>
+            </li>
+            <li class="active">
+                <a routerLink="/system/registration">Sign up as coworking</a>
+            </li>
+            <li>
+                <a routerLink="/system/userRegistration">Sign up as user</a>
+            </li>
+        </ul>
+    </div>
+    <div class="right-side" *ngIf="isLoggedIn">
+            <div class="ava-and-settings">
+                <div class="ava-wr">
+                    <p>Коворкинг "Штаб"</p>
+                    <div class="ava" style="background-image: url(img/ava.png)"></div>
+                </div>
+                <div class="drop-d">
+                    <div class="settings-wr my-row">
+                        <div class="settings">
+                            <p>Настройки</p>
+                            <div class="image">
+                                <img src="img/Settings.svg" class="img-responsive" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-wr my-row" *ngIf="isLoggedIn&& meRole=='user'">
+                        <div class="settings">
+                            <p>my bookings</p>
+                            <div class="image">
+                                <img src="img/Settings.svg" class="img-responsive" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="exit-wr my-row" (click)="Logout()">
+                        <div class="settings">
+                            <p>Выход</p>
+                            <div class="image">
+                                <img src="img/exit.svg" class="img-responsive" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">

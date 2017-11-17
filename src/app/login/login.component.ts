@@ -13,6 +13,9 @@ export class LoginComponent implements OnInit {
         password: ''
     }
     constructor(private service: MainService, private router: Router) { }
+
+
+    switchForm: boolean = true;
     isLoginErr = false;
     isLoading = true;
     ngOnInit(): void {

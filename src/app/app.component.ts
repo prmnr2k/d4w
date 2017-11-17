@@ -24,24 +24,39 @@ export class AppComponent implements OnInit {
                   message => {
                     console.log(message['event_type']);
                     console.log(message['booking']);
+                    
                     if (message['event_type'] == 'created'){
+                      let name='';
+                      this.service.GetUserById(message['booking'].user_id).
+                        subscribe((any)=>{
+                          name = any.first_name;
+                          this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
+                        }); 
+                    }
+
+                    else if (message['event_type'] == 'before_start'){
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name;
-                        this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
+                        this.pushNotification.showNotification(name+' will arrive in 15 minutes!','bottom','right');
                       });
-                      
-                  }else if (message['event_type'] == 'before_start'){
-                      this.pushNotification.showNotification('Booking start after 15 min!','bottom','right');
-                  }
-                  else if (message['event_type'] == 'after_start'){
-                    if(!message['booking'].is_visit_confirmed)
-                      this.pushNotification.showNotification('Booking started 10 min ago!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',message['booking'].user_id);
-                  }
-                  else if (message['event_type'] == 'before_finish'){
-                      this.pushNotification.showNotification('Booking finish after 5 min!','bottom','right');
-                  }
+                    }
+
+                    else if (message['event_type'] == 'after_start'){
+                      if(!message['booking'].is_visit_confirmed){
+                          this.pushNotification.showNotification('User is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',message['booking'].user_id);  
+                      }
+                    }
+
+                    else if (message['event_type'] == 'before_finish'){
+                      let name='';
+                      this.service.GetUserById(message['booking'].user_id).
+                      subscribe((any)=>{
+                        name = any.first_name;
+                        this.pushNotification.showNotification(name+' will finish in 5 minutes!','bottom','right');
+                      });
+                    }
                     
                   }
                 );

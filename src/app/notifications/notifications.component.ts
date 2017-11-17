@@ -35,7 +35,7 @@ export class NotificationsComponent implements OnInit {
           }
       });
 
-      if(text=='Booking started 10 min ago!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>')
+      if(user_id)
       document.getElementById('id-but').onclick = function(){
         console.log(`old send Сlickatell`);
         var xhr = new XMLHttpRequest();
@@ -46,7 +46,7 @@ export class NotificationsComponent implements OnInit {
             }
         };
         xhr.send();
-        document.getElementById('id-but').style.color='red';
+        document.getElementById('id-but').style.color='green';
         document.getElementById('id-but').setAttribute("disabled","disabled");
       };
       this.sound.play();

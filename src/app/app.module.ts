@@ -46,24 +46,7 @@ import { LoginModule } from 'app/login/login.module';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    UserComponent,
-    TablesComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-    RegistrationComponent, 
-    EditCoworkingComponent,
-    UserRegistrationComponent,
-    EditUserComponent,
-    PasswordValidationDirective,
-    AllCoworkings,
-    MyBookings,
-    Coworking,
-    EditUserComponent,
-    ChangePasswordComponent
+    
 
 
   ],
@@ -71,12 +54,8 @@ import { LoginModule } from 'app/login/login.module';
     BrowserModule,
     FormsModule,
     HttpModule,
-    NavbarModule,
-    FooterModule,
-    SidebarModule,
     RouterModule,
     AppRoutingModule,
-    LbdModule,
     LoadingModule,
     LoginModule,
     BsDatepickerModule.forRoot(),

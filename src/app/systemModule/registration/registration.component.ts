@@ -108,10 +108,13 @@ export class RegistrationComponent implements OnInit {
             if(err.status == 422){
                 let body:any = JSON.parse(err._body); 
                 this.RegErrMsg = this.service.CheckErrMessage(body);
+                
             }
             else {
                 this.RegErrMsg = "Cannot create profile: " + err.body;
             }
+            console.log(err);
+            this.rulesShow = false;
             this.RegistrationErr = true;
             this.isLoading = false;
         })

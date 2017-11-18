@@ -96,7 +96,7 @@ html,body{
     width: 100%;
     border-radius: 50px;
     display: block;
-    margin: 20px auto;
+    margin: 20px auto !important;
     background-color: $main_color;
     padding: 12px 0;
     text-align: center;
@@ -282,10 +282,18 @@ html,body{
 
 
 
+.my--new-form-flex{
+    display: flex;
+    justify-content: center;
+}
 
 
-
-
+.styles--lists{
+    margin-bottom: 40px;
+    .to-del{
+        text-align: center;
+    }
+}
 
 
 
@@ -294,6 +302,8 @@ html,body{
 .head-my-form-groupe{
     text-align: center;
     margin-bottom: 25px;
+    font-size: 16px;
+    
 }
 .my-form-groupe{
     max-width: 580px;
@@ -504,6 +514,14 @@ html,body{
     position: relative;
     max-width: 650px;
     margin: 0 auto 50px auto;
+    &.style-edit{
+        &:before{
+            display: none;
+        }
+        .one-day{
+            justify-content: center;
+        }
+    }
     &:before{
         content: "";
         display: block;
@@ -951,20 +969,29 @@ input::-webkit-inner-spin-button {
     
     
 }
+.for-disabled-style{
+    opacity: 0.7;
+    cursor: no-drop;
+}
 .for-flex-regist-links{
     display: flex;
     .butt-orange{
-        margin-left: 5px;
+        margin-left: 5px!important;
         font-size: 12px;
         padding: 8px 0;
         &:first-child{
-            margin-left: 0;
-            margin-right: 5px;
+            margin-left: 0!important;
+            margin-right: 5px!important;
         }
     }
 }
 
-
+.error-text-style{
+    font-size: 16px;
+    color: $main_color;
+    text-align: center;
+    padding: 10px 0 25px 0;
+}
 
 .all-coworkings{
     padding: 30px 0;
@@ -1181,7 +1208,9 @@ input::-webkit-inner-spin-button {
             }
             
             .open{
-                color: $main_color;
+                a{
+                    color: $main_color;
+                }
             }
             .delete-booking{
                 width: 30px;
@@ -1198,6 +1227,37 @@ input::-webkit-inner-spin-button {
                     display: block;
                     width: 14px;
                     height: 1px;
+                    background: $main_color;
+                }
+                
+            }
+            .add-booking{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                border: 1px solid $main_color;
+                margin: 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                position: relative;
+                &:before{
+                    content: "";
+                    display: block;
+                    width: 14px;
+                    height: 1px;
+                    background: $main_color;
+                }
+                &:after{
+                    content: "";
+                    display: block;
+                    width: 1px;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%);
+                    height: 14px;
                     background: $main_color;
                 }
             }

@@ -4,7 +4,9 @@
         <h6 class="head-form">
             <span>Регистрация</span>
         </h6>
-        
+        <div *ngIf="RegistrationErr">
+                <h2 class="error-text-style">{{RegErrMsg}}</h2>
+            </div>
         <div class="avatar-img hovered" [ngStyle]="{'background-image': 'url('+Coworking.image+')'}"></div>
         <label class="file_upload">
             <span class="button">Загрузить аватар</span>
@@ -209,9 +211,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12" *ngIf="RegistrationErr">
-            <h2 class="error-msg">{{RegErrMsg}}</h2>
-        </div>
+       
         <button class="butt-orange" [disabled]="!submitFormCwrc.valid" type="submit">Создать коворкинг</button>
     </form>
     <div *ngIf="rulesShow" class="agreement">

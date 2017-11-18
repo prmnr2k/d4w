@@ -91,7 +91,7 @@ html, body {
   width: 100%;
   border-radius: 50px;
   display: block;
-  margin: 20px auto;
+  margin: 20px auto !important;
   background-color: #FF8026;
   padding: 12px 0;
   text-align: center;
@@ -257,9 +257,23 @@ html, body {
         -webkit-transform: translate(-50%) rotate(-45deg);
                 transform: translate(-50%) rotate(-45deg); }
 
+.my--new-form-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; }
+
+.styles--lists {
+  margin-bottom: 40px; }
+  .styles--lists .to-del {
+    text-align: center; }
+
 .head-my-form-groupe {
   text-align: center;
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  font-size: 16px; }
 
 .my-form-groupe {
   max-width: 580px;
@@ -428,6 +442,12 @@ html, body {
   position: relative;
   max-width: 650px;
   margin: 0 auto 50px auto; }
+  .my-form-groupe-2.style-edit:before {
+    display: none; }
+  .my-form-groupe-2.style-edit .one-day {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
   .my-form-groupe-2:before {
     content: "";
     display: block;
@@ -877,17 +897,27 @@ input::-webkit-inner-spin-button {
     .all-statistics .statistics-info .what-is-it {
       font-size: 16px; }
 
+.for-disabled-style {
+  opacity: 0.7;
+  cursor: no-drop; }
+
 .for-flex-regist-links {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex; }
   .for-flex-regist-links .butt-orange {
-    margin-left: 5px;
+    margin-left: 5px !important;
     font-size: 12px;
     padding: 8px 0; }
     .for-flex-regist-links .butt-orange:first-child {
-      margin-left: 0;
-      margin-right: 5px; }
+      margin-left: 0 !important;
+      margin-right: 5px !important; }
+
+.error-text-style {
+  font-size: 16px;
+  color: #FF8026;
+  text-align: center;
+  padding: 10px 0 25px 0; }
 
 .all-coworkings {
   padding: 30px 0; }
@@ -1072,7 +1102,7 @@ input::-webkit-inner-spin-button {
       background: #FAFAFA; }
     .all-coworkings .my-booking-user .rowfirst-child {
       padding-bottom: 15px; }
-    .all-coworkings .my-booking-user .row .open {
+    .all-coworkings .my-booking-user .row .open a {
       color: #FF8026; }
     .all-coworkings .my-booking-user .row .delete-booking {
       width: 30px;
@@ -1095,6 +1125,40 @@ input::-webkit-inner-spin-button {
         display: block;
         width: 14px;
         height: 1px;
+        background: #FF8026; }
+    .all-coworkings .my-booking-user .row .add-booking {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #FF8026;
+      margin: 0 auto;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      cursor: pointer;
+      position: relative; }
+      .all-coworkings .my-booking-user .row .add-booking:before {
+        content: "";
+        display: block;
+        width: 14px;
+        height: 1px;
+        background: #FF8026; }
+      .all-coworkings .my-booking-user .row .add-booking:after {
+        content: "";
+        display: block;
+        width: 1px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%);
+                transform: translate(-50%);
+        height: 14px;
         background: #FF8026; }
 
 .agreement .text {

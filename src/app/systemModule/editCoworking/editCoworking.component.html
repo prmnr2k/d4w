@@ -137,7 +137,7 @@
                     <h6 class="head-form">
                         <span>Время работы</span>
                     </h6>
-                    <div class="my-form-groupe-2">
+                    <div class="my-form-groupe-2 style-edit">
                         <div class="one-day" *ngFor="let item of Days;let i = index">
                                 <div class="left-side-t">
                                     <div class="add-day">
@@ -173,87 +173,97 @@
                     <button class="butt-orange" [disabled]="!submitFormCwrc.valid" type="submit">Изменить коворкинг</button>
                 </form>
                
-
-                <div class="col-md-12">
-                      
-                        <h4 class="card-h4">Workers coworking</h4>
-                                       
-                                
-                                     <div class="col-md-5 pull-left">
-                                            <h5>Request</h5>
-                                            <div class="content table-responsive table-full-width">
-                                                    <table class="table table-hover table-striped">
-                                                          <thead>
-                                                              <tr>
-                                                                 <!--   <th>ID</th> -->
-                                                                  <th>User iD</th>
-                                                               <!--   <th>Coworking</th> -->
-                                                                  <th>User Name</th>
-                                                                  <th>User Email</th>
-                                                                  <th>Add</th>
-                                                                  <th>Delete</th>
-                                                              </tr>
-                                                          </thead>
-                                                          <tbody>
-                                                              <tr *ngFor="let item of coworkingWorkersRequest">
-                                                                 <!--   <td>{{item.id}}</td> -->
-                                                                  <td>{{item.user_id}}</td>
-                                                                 <!--   <td>{{item.coworking_id}}</td> -->
-                                                                  <td>{{item.user_name}}</td>
-                                                                  <td>{{item.user_email}}</td>
-                                                                  <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="AddWorker(item.id)">
-                                                                        <i class="pe-7s-plus"></i> </a>
-                                                                  </td>
-                                                                  <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="DeleteRequestWorker(item.id)">
-                                                                        <i class="pe-7s-less"></i> </a>
-                                                                  </td>
+                <div class="all-coworkings">
+                    <h6 class="head-form">
+                        <span>Workers coworking</span>
+                    </h6>
+                 
+                    <p class="head-my-form-groupe">Request</p>
+                    <div class="search-form my-booking-user styles--lists">
+                        <div class="row">
+                            
+                            <div class="col-md-2">
+                                <p>User iD</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>User Name</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>User Email</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="to-del">Add</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="to-del">Delete</p>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let item of coworkingWorkersRequest">
                         
-                                                              </tr>
-                                                          </tbody>
-                                                    </table>
-                                              </div>
-                                    </div>
-
-                                    <div class="col-md-5 pull-right">
-                                            <h5>Avaliable</h5>
-                                            <div class="content table-responsive table-full-width">
-                                                    <table class="table table-hover table-striped">
-                                                          <thead>
-                                                              <tr>
-                                                                  <th>ID</th>
-                                                                  <th>E-mail</th>
-                                                                  <th>Firstname</th>
-                                                                  <th>Delete</th>
-                                                              </tr>
-                                                          </thead>
-                                                          <tbody>
-                                                              <tr *ngFor="let item of coworkingWorkers">
-                                                                    <td>{{item.id}}</td>
-                                                                    <td>{{item.email}}</td>
-                                                                    <td>{{item.first_name}}</td>
-                                                                    <td>  <a class="col-md-2 fsize30 pointer-curs" (click)="DeleteWorker(item.id)">
-                                                                            <i class="pe-7s-less"></i> </a>
-                                                                    </td>
-                                                              </tr>
-                                                          </tbody>
-                                                    </table>
-                                              </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                    <br><br>
-                                    <div class="col-md-4">
-                                            <h5>Add access by E-mail</h5>                          
-                                                <form (ngSubmit)="AddWorkerEmail(email.value)" class="form-inline"> 
-                                                        <div class="form-group">                                  
-                                                    <input autocomplete="off" type="text" class="form-control" #email name="email">
-                                                    <button class="btn btn-info btn-fill " type="submit">Add</button>
-                                                    </div>
-                                                </form>
-                                           
-                                    </div>
-                                
+                            <div class="col-md-2">
+                                <p>{{item.user_id}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>{{item.user_name}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>{{item.user_email}}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="add-booking" (click)="AddWorker(item.id)"></div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="delete-booking" (click)="DeleteRequestWorker(item.id)"></div>
+                            </div>
+                        </div>
                         
+                    </div>
+                    
+                    <p class="head-my-form-groupe">Avaliable</p>
+                    <div class="search-form my-booking-user styles--lists">
+                        <div class="row">
+                            
+                            <div class="col-md-1">
+                                <p>iD</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>Email</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>Firstname</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="to-del">Delete</p>
+                            </div>
+                            
+                        </div>
+                        <div class="row" *ngFor="let item of coworkingWorkers">
+                            
+                            <div class="col-md-1">
+                                <p>{{item.id}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>{{item.email}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>{{item.first_name}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="delete-booking" (click)="DeleteWorker(item.id)"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
                 </div>
-            </div>
+                <p class="head-my-form-groupe">Add access by E-mail</p>                          
+                <form (ngSubmit)="AddWorkerEmail(email.value)" class="form-inline my--new-form-flex"> 
+                    <div class="form-group">                                  
+                        <input autocomplete="off" type="text" class="input-text-style" #email name="email">
+                        <button class="butt-orange" type="submit">Add</button>
+                    </div>
+                </form>       
+                
+        </div>
     </ng-container>
     

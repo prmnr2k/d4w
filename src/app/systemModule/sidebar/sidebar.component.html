@@ -3,7 +3,7 @@
             <ul>
                 <li routerLinkActive="active" *ngFor="let menuItem of menuItems">
                     <a *ngIf="(!menuItem.isLoggedIn || isLoggedIn || menuItem.path=='all_coworkings')&&getUserStatus()>=menuItem.userStatus" [routerLink]="menuItem.path">
-                        <img src="img/avail-cow.svg" class="img-responsive" alt="">
+                        <img [src]="menuItem.icon" class="img-responsive" alt="">
                         <div class="hover-tool">
                             <p>{{menuItem.title}}</p>
                         </div>
@@ -12,10 +12,6 @@
     
             </ul>
         </div>
-        <div class="bottom">
-            <div class="gear-wrapp">
-                <img src="img/settings-work-tool.svg" class="img-responsive" alt="">
-            </div>
-        </div>
+       
     </div>
 

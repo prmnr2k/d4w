@@ -13,10 +13,10 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     //{ path: 'dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '', isLoggedIn: false },
-    { path: '/system/coworking_profile', title: 'Coworking Profile',  icon:'pe-7s-user', class: '', isLoggedIn: true , userStatus:3 },
-    { path: '/system/table', title: 'Coworking stat',  icon:'pe-7s-note2', class: '', isLoggedIn: true , userStatus:2 },
-    { path: '/system/all_coworkings', title: 'Avaliable Coworkings',  icon:'pe-7s-box1', class: '', isLoggedIn: true, userStatus:0  },
-    { path: '/system/user_profile', title: 'User Profile',  icon:'pe-7s-user', class: '', isLoggedIn: true, userStatus:1  },
+    { path: '/system/coworking_profile', title: 'Coworking Profile',  icon:'../assets/img/tune.svg', class: '', isLoggedIn: true , userStatus:3 },
+    { path: '/system/table', title: 'Coworking stat',  icon:'../assets/img/Chair.svg', class: '', isLoggedIn: true , userStatus:2 },
+    { path: '/system/all_coworkings', title: 'Avaliable Coworkings',  icon:'../assets/img/avail-cow.svg', class: '', isLoggedIn: true, userStatus:0  },
+    { path: '/system/user_profile', title: 'User Profile',  icon:'../assets/img/Tune.svg', class: '', isLoggedIn: true, userStatus:1  },
     { path: '/system/change_password', title: 'Change Password',  icon:'pe-7s-user', class: '', isLoggedIn: true, userStatus:1  }
     //{ path: 'typography', title: 'Typography',  icon:'pe-7s-news-paper', class: '' },
     //{ path: 'icons', title: 'Icons',  icon:'pe-7s-science', class: '', isLoggedIn: false },

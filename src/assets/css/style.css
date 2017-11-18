@@ -896,8 +896,7 @@ input::-webkit-inner-spin-button {
     border-radius: 4px;
     border: 1px solid #EEEEEE; }
   .all-coworkings .map {
-    height: 300px;
-    border: 1px solid red; }
+    height: 300px; }
   .all-coworkings .all-coworkings-flex {
     display: -webkit-box;
     display: -ms-flexbox;

@@ -17,7 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/system/table', title: 'Coworking stat',  icon:'../assets/img/Chair.svg', class: '', isLoggedIn: true , userStatus:2 },
     { path: '/system/all_coworkings', title: 'Avaliable Coworkings',  icon:'../assets/img/avail-cow.svg', class: '', isLoggedIn: true, userStatus:0  },
     { path: '/system/user_profile', title: 'User Profile',  icon:'../assets/img/Tune.svg', class: '', isLoggedIn: true, userStatus:1  },
-    { path: '/system/change_password', title: 'Change Password',  icon:'pe-7s-user', class: '', isLoggedIn: true, userStatus:1  }
+    { path: '/system/change_password', title: 'Change Password',  icon:'../assets/img/key.svg', class: '', isLoggedIn: true, userStatus:1  }
     //{ path: 'typography', title: 'Typography',  icon:'pe-7s-news-paper', class: '' },
     //{ path: 'icons', title: 'Icons',  icon:'pe-7s-science', class: '', isLoggedIn: false },
     //{ path: 'maps', title: 'Maps',  icon:'pe-7s-map-marker', class: '' },

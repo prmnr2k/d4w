@@ -7,7 +7,9 @@ import { UserModel } from '../../core/models/user.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
 import { NgForm, FormControl } from '@angular/forms';
-import { SystemAccessGuard } from '../system.guard';
+
+import { SystemAccessGuard } from './../system.guard';
+
 
 @Component({
   selector: 'app-change-password',

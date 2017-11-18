@@ -2,7 +2,7 @@
         <div class="top">
             <ul>
                 <li routerLinkActive="active" *ngFor="let menuItem of menuItems">
-                    <a *ngIf="(!menuItem.isLoggedIn || isLoggedIn || menuItem.path=='all_coworkings')&&getUserStatus()>=menuItem.userStatus" [routerLink]="[menuItem.path]">
+                    <a *ngIf="(!menuItem.isLoggedIn || isLoggedIn || menuItem.path=='all_coworkings')&&getUserStatus()>=menuItem.userStatus" [routerLink]="menuItem.path">
                         <img src="img/avail-cow.svg" class="img-responsive" alt="">
                         <div class="hover-tool">
                             <p>{{menuItem.title}}</p>

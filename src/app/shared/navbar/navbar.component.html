@@ -16,8 +16,8 @@
     <div class="right-side" *ngIf="isLoggedIn">
             <div class="ava-and-settings">
                 <div class="ava-wr">
-                    <p>Коворкинг "Штаб"</p>
-                    <div class="ava" style="background-image: url(img/ava.png)"></div>
+                    <p>{{Me.first_name}} {{Me.last_name}}</p>
+                    <div class="ava" [ngStyle]="{'background-image': 'url(' + Image + ')'}"></div>
                 </div>
                 <div class="drop-d">
                     <div class="settings-wr my-row">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="settings-wr my-row" *ngIf="isLoggedIn&& meRole=='user'">
                         <div class="settings">
-                            <p>my bookings</p>
+                            <p>Брони</p>
                             <div class="image">
                                 <img src="img/Settings.svg" class="img-responsive" alt="">
                             </div>

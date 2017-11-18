@@ -3,6 +3,8 @@ import { ROUTES } from '../../systemModule/sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { MainService } from '../../core/services/main.service';
 import { Router } from '@angular/router';
+import { UserModel } from 'app/core/models/user.model';
+import { Base64ImageModel } from '../../core/models/base64image.model';
 
 @Component({
     // moduleId: module.id,
@@ -17,6 +19,8 @@ export class NavbarComponent implements OnInit{
     public sidebarVisible: boolean;
     public isLoggedIn = false;
     public meRole:string = 'guest';
+    public Me:UserModel = new UserModel();
+    public Image:string = '';
     constructor(location: Location,  private element: ElementRef, private service: MainService, private router: Router) {
       this.location = location;
           this.sidebarVisible = false;
@@ -27,17 +31,38 @@ export class NavbarComponent implements OnInit{
         this.service.onAuthChange$
             .subscribe((res:boolean)=>{
                 this.isLoggedIn = res;
-                if(!this.isLoggedIn)
+                if(!this.isLoggedIn){
+                    this.Me = new UserModel();
+                    this.Image = '';
                     this.router.navigate(['/login']);
+                }
+                else{
+                    this.GetUserInfo();
+                }
                    
             });
+        this.GetUserInfo();
         this.service.GetMyAccess()
-        .subscribe((meR)=>{
-            this.meRole = meR.role;
-        });
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
-      const navbar: HTMLElement = this.element.nativeElement;
-      this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+            .subscribe((meR)=>{
+                this.meRole = meR.role;
+            });
+        this.listTitles = ROUTES.filter(listTitle => listTitle);
+        const navbar: HTMLElement = this.element.nativeElement;
+        this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
+    }
+
+    GetUserInfo()
+    {
+        this.service.GetMe()
+        .subscribe((user:UserModel)=>{
+            this.Me = user;
+            if(this.Me.image_id){
+                this.service.GetImageById(this.Me.image_id)
+                    .subscribe((img:Base64ImageModel)=>{
+                        this.Image = img.base64;
+                    })
+            } 
+        })
     }
     sidebarOpen() {
         const toggleButton = this.toggleButton;

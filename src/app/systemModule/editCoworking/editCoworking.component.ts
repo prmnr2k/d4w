@@ -138,6 +138,7 @@ export class EditCoworkingComponent implements OnInit {
                 .subscribe((res:CoworkingModel)=>{
                     this.InitByCoworking(res);
                     this.isLoading = false;
+                    this.service.onAuthChange$.next(true);
                 },
                 (err:any)=>{
                     if(err.status == 422){

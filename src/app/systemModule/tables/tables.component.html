@@ -9,11 +9,9 @@
         <input type="text"
         readonly style="background-color:white; cursor: pointer;text-align:center"
         class="form-control"
-        [minDate]="minDate"
         #dp="bsDatepicker"
-        dateDisabled = "{date:new Date(); mode:disable;}"
-        bsDatepicker [(bsValue)]="bsValue"
-        (bsValueChange)="DateChange()">
+        bsDatepicker [bsValue]="bsValue"
+        (bsValueChange)="GetBookings($event)">
     </form>
     <div class="time-line-wr">
         <div class="time-line">
@@ -116,43 +114,24 @@
             
     </div>
     <div class="all-places-book">
-        <div class="one-place" *ngFor="let item of Bookings; let i = index">
+        <div class="one-place" *ngFor="let i of WorkingPlaces">
             <div class="number">
                 <p>{{i}}</p>
             </div>
             <div class="place-info">
-                <div class="one-user-state nav-button">
-                    <div class="from">12:30</div>
+                <div *ngFor="let item of GetBookingsBySeatNumber(i)" class="one-user-state nav-button">
+                    <div class="from">{{item.begin_date | date:'HH:mm'}}</div>
                     <div class="who-is-it">
                         <div class="ava" style="background-image: url(img/ava.png)"></div>
-                        <p class="name">William Bailey</p>
+                        <p class="name">{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</p>
                     </div>
-                    <div class="to">20:00</div>
+                    <div class="to">{{item.end_date | date:'HH:mm'}}</div>
                 </div>
                 <!--
-                <div class="one-user-state nav-button">
-                    <div class="from">05:30</div>
-                    <div class="who-is-it">
-                         <div class="ava" style="background-image: url(img/ava.png)"></div>
-                        <p class="name">William Bailey</p>
-                    </div>
-                    <div class="to">12:00</div>
-                </div>
-                <div class="one-user-state nav-button ">
-                    <div class="from">00:00</div>
-                    <div class="who-is-it">
-                         <div class="ava" style="background-image: url(img/ava.png)"></div>
-                        <p class="name">William Bailey</p>
-                    </div>
-                    <div class="to">04:00</div>
-                </div>
-
                 started finished
                 -->
             </div>
         </div>
-       
-        
     </div>
     <div class="add-new-place">
         <div class="butt-for-add">
@@ -163,27 +142,6 @@
     
     </ng-container>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table class="table table-hover table-striped">
     <thead>
         <tr>

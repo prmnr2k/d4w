@@ -173,9 +173,23 @@ export class RegistrationComponent implements OnInit {
         return true;
     }
 
+    loadLogo($event:any):void{
+        let target = $event.target;
+        let file:File = target.files[0];
+        if(!file)
+            return;
+        let reader:FileReader = new FileReader();
+        reader.onload = (e) =>{
+            this.Coworking.image = reader.result;
+        }
+        reader.readAsDataURL(file);
+    }
+
     changeListener($event: any) : void {
         this.readThis($event.target);
     }
+
+
 
     readThis(inputValue: any): void {
 

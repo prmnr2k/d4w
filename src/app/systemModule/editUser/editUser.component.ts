@@ -57,6 +57,7 @@ export class EditUserComponent implements OnInit {
     }
 
     InitByUser(usr:UserModel){
+        console.log(usr);
         this.User = this.service.UserModelToCreateUserModel(usr);
         this.UserId = usr.id?usr.id:0;
         if(usr.image_id){
@@ -114,7 +115,7 @@ export class EditUserComponent implements OnInit {
             return false;
         }
 
-        if(!(phoneRegexp.test(this.User.phone))) {
+        if(this.User.phone && !(phoneRegexp.test(this.User.phone))) {
             this.RegErrMsg = "Invalid phone number!";
             return false;
         }

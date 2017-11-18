@@ -377,6 +377,18 @@ export class MainService{
             new FrontWorkingDayModel('Воскресенье','Sunday',true)
         ];
     }
+    public GetFrontDaysByWorkingDays(input:WorkingDayModel[]):FrontWorkingDayModel[]{
+        let result:FrontWorkingDayModel[] = this.GetAllDays();
+        for(let item of input){
+            let index = result.findIndex(x => x.en_name == item.day);
+            if(index > -1){
+                result[index].checked = true;
+                result[index].start_work = item.begin_work;
+                result[index].finish_work = item.end_work;
+            }
+        }
+        return result;
+    }
 
     public GetWorkingDaysFromFront(days:FrontWorkingDayModel[]):WorkingDayModel[]{
         let result:WorkingDayModel[] = [];

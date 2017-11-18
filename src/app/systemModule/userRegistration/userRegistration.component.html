@@ -1,107 +1,92 @@
-<div class="main-content" >
-        <div class="container-fluid">
-            <loading-cmp *ngIf="isLoading"></loading-cmp>
-            <div class="row"  *ngIf="!isLoading">
-                <div class="col-md-12" *ngIf="RegistrationErr">
-                    <h2 class="error-msg">{{RegErrMsg}}</h2>
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+<div class="wrapp-for-forms" *ngIf="!isLoading">
+    <form (ngSubmit)="CreateUser(submitFormCwrc)" #submitFormCwrc="ngForm">
+        <h6 class="head-form">
+            <span>Регистрация</span>
+        </h6>
+
+        <div class="avatar-img hovered" [ngStyle]="{'background-image': 'url('+User.image+')'}"></div>
+        <label class="file_upload">
+            <span class="button">Загрузить аватар</span>
+            <input accept=".jpg, .jpeg, .png" type="file" (change)="changeListener($event)">
+        </label>
+        <div class="my-form-groupe">
+            <div class="row-inputs">
+                <div class="left-side side">
+                    <p>Email</p>
                 </div>
-                <div class="col-md-8  col-md-offset-2">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Create your profile</h4>
-                        </div>
-                        <div class="content">
-                            <form (ngSubmit)="CreateUser(submitFormCwrc)" #submitFormCwrc="ngForm">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>First Name</label>
-                                            <input autocomplete="off" type="text" class="form-control" #firstN="ngModel" name="fname" [ngModel]="User.first_name" (ngModelChange)="User.first_name = $event" required>
-                                            <p *ngIf="firstN.invalid && firstN.touched" class="red-error">First name can`t be empty!</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Last Name</label>
-                                            <input autocomplete="off" type="text" class="form-control" #lastN="ngModel" name="lname" [ngModel]="User.last_name" (ngModelChange)="User.last_name = $event" required>
-                                            <p *ngIf="lastN.invalid && lastN.touched" class="red-error">Last name can`t be empty!</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input autocomplete="off" type="text" #email="ngModel" class="form-control" name="email" [ngModel]="User.email" (ngModelChange)="User.email = $event" email required>
-                                            <p *ngIf="email.invalid && email.touched" class="red-error">Input valid email!</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Phone</label>
-                                            <input autocomplete="off" type="text" pattern="^[+]?[0-9]{3,}$" #phone="ngModel"  class="form-control" name="phone" [ngModel]="User.phone" (ngModelChange)="User.phone = $event">
-                                            <p *ngIf="phone.invalid && phone.touched" class="red-error">Input valid phone!</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" ngModelGroup="passwordGroup" #passwordGroup="ngModelGroup"
-                                validateEqual
-                                password="password"
-                                confirmation="passwordConfirmation">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Password</label>
-                                            <input  mdInput
-                                            type="password"
-                                            required
-                                            #password="ngModel" minlength="6" class="form-control" name="password" [ngModel]="User.password" (ngModelChange)="User.password = $event">
-                                            <p *ngIf="password.invalid && password.touched" class="red-error">Password`s minimum length is 6!</p>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Password confirmation</label>
-                                            <input  mdInput
-                                            type="password"
-                                            required
-                                            ngModel name="passwordConfirmation"
-                                            #passwordConfirmation="ngModel"  minlength="6" class="form-control mystyle" [ngModel]="User.password_confirmation" (ngModelChange)="User.password_confirmation = $event">
-                                            <p *ngIf="passwordGroup.invalid && passwordGroup.touched && passwordConfirmation.touched" class="red-error">Password have to be matched!</p>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Address</label>
-                                            <input autocomplete="off" type="text" class="form-control" name="address" [ngModel]="User.address" (ngModelChange)="User.address = $event">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="col-md-12">
-                                            <img class="images-preview pointer-curs" *ngIf="User.image" alt="Delete"[src]="User.image">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="file_upload">
-                                                <span class="button">Browse image</span>
-                                                <input type="file" accept=".jpg, .jpeg, .png" (change)="changeListener($event)">
-                                            </label>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-info btn-fill pull-right" [disabled]="!submitFormCwrc.valid">Register</button>
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
+                <div class="right-side side">
+                    <input class="input-text-style" type="text" #email="ngModel" name="email" [ngModel]="User.email" (ngModelChange)="User.email = $event" email required>
+                    <p *ngIf="email.invalid && email.touched" class="red-error">Input valid email!</p>
+                </div>
+            </div>
+            <div class="row-inputs">
+                <div class="left-side side">
+                    <p>Фамилия</p>
+                </div>
+                <div class="right-side side">
+                    <input class="input-text-style" type="text" autocomplete="off" #lastN="ngModel" name="lname"  [ngModel]="User.last_name" (ngModelChange)="User.last_name = $event" required>
+                    <p *ngIf="lastN.invalid && lastN.touched" class="red-error">Last name can`t be empty!</p>
+                </div>
+            </div>
+            <div class="row-inputs">
+                <div class="left-side side">
+                    <p>Имя</p>
+                </div>
+                <div class="right-side side">
+                    <input autocomplete="off" class="input-text-style" type="text" #firstN="ngModel" name="fname" [ngModel]="User.first_name" (ngModelChange)="User.first_name = $event" required>
+                    <p *ngIf="firstN.invalid && firstN.touched" class="red-error">First name can`t be empty!</p>
+                </div>
+            </div>
+            <div class="row-inputs">
+                <div class="left-side side">
+                    <p>Телефон</p>
+                </div>
+                <div class="right-side side">
+                    <input class="input-text-style" type="text" pattern="^[+]?[0-9]{3,}$" #phone="ngModel" name="phone" [ngModel]="User.phone" (ngModelChange)="User.phone = $event">
+                    <p *ngIf="phone.invalid && phone.touched" class="red-error">Input valid phone!</p>
+                </div>
+            </div>
+            <div ngModelGroup="passwordGroup" #passwordGroup="ngModelGroup" validateEqual password="password" confirmation="passwordConfirmation">
+                <div class="row-inputs">
+                    <div class="left-side side">
+                        <p>Пароль</p>
                     </div>
+                    <div class="right-side side">
+                        <input class="input-text-style" mdInput
+                        type="password"
+                        required
+                        #password="ngModel" minlength="6" name="password" [ngModel]="User.password" (ngModelChange)="User.password = $event">
+                        <p *ngIf="password.invalid && password.touched" class="red-error">Password`s minimum length is 6!</p>
+                    </div>
+                </div>
+                <div class="row-inputs">
+                    <div class="left-side side">
+                        <p>Подтверждение пароля</p>
+                    </div>
+                    <div class="right-side side">
+                        <input  class="input-text-style" mdInput
+                        type="password"
+                        required
+                        ngModel name="passwordConfirmation"
+                        #passwordConfirmation="ngModel"  minlength="6" [ngModel]="User.password_confirmation" (ngModelChange)="User.password_confirmation = $event">
+                        <p *ngIf="passwordGroup.invalid && passwordGroup.touched && passwordConfirmation.touched" class="red-error">Password have to be matched!</p>
+                    </div>
+                </div>
+            </div> 
+            <div class="row-inputs">
+                <div class="left-side side">
+                    <p>Адрес:</p>
+                </div>
+                <div class="right-side side">
+                    <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="User.address" (ngModelChange)="User.address = $event">
                 </div>
             </div>
         </div>
+        <div class="col-md-12" *ngIf="RegistrationErr">
+            <h2 class="error-msg">{{RegErrMsg}}</h2>
+        </div>
+        <button class="butt-orange" type="submit" [disabled]="!submitFormCwrc.valid">Register</button>
+        <div class="clearfix"></div>
+    </form>
 </div>

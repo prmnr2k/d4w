@@ -30,6 +30,8 @@ export class TablesComponent implements OnInit {
     meCwrk:number = 0;
     Rates:RateModel[] = [];
     canAccess:boolean = false;
+    bsValue:Date= new Date();
+    
     constructor(private service: MainService, private router: Router) { }
     
     
@@ -63,8 +65,13 @@ export class TablesComponent implements OnInit {
                                         for(let i of resp){
                                             this.Rates[i.user_id] = i;
                                         }
-                                        console.log(resp);
+                                        
                                     });
+                                    console.log(this.Bookings);
+                                    if(!this.Bookings.length){
+                                        this.isLoading = false;
+                                    }
+
                                     for(let book of this.Bookings){
                                        
                                         this.service.GetUserById(book.user_id)
@@ -90,6 +97,10 @@ export class TablesComponent implements OnInit {
             
         */
             
+
+    }
+
+    DateChange(){
 
     }
 

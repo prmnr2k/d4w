@@ -48,7 +48,8 @@ export class UserRegistrationComponent implements OnInit {
                         .subscribe((res:TokenModel)=>{
                             console.log(res);
                             this.service.BaseInitAfterLogin(res);
-                            this.router.navigate(['/']);
+                            this.router.navigate(['system','all_coworkings']);
+                            location.reload();
                         }
                         ,
                         (err:any)=>{

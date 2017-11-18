@@ -10,12 +10,12 @@ export class AppAccessGuard implements CanActivate{
     constructor(private service: MainService,private router: Router){
     }
     canActivate(router:ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|boolean{
-        console.log(router);
-        console.log(state);
-        
-        console.log(router.routeConfig.path);
-        if(router.routeConfig.path == "login")
-            return !this.service.IsLogedIn();
+        if(router.routeConfig.path == "login"){
+            if(this.service.IsLogedIn()){
+                this.router.navigate(['system','all_coworkings']);
+                return false;
+            }
+        }
         
         return true;
         

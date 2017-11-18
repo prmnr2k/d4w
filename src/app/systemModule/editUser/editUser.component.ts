@@ -86,6 +86,7 @@ export class EditUserComponent implements OnInit {
                     console.log(res);
                     this.InitByUser(res);
                     this.isLoading = false;
+                    this.service.onAuthChange$.next(true);
                 },
                 (err:any)=>{
                     if(err.status == 422){
@@ -104,16 +105,16 @@ export class EditUserComponent implements OnInit {
     }
 
     CheckUsr(){
-        let emailRegexp = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}$');
+        //let emailRegexp = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}$');
         let phoneRegexp = new RegExp('^[+]?[0-9]{3,}$');
         /*if(!this.User.email || !this.User.phone || !this.User.address){
             this.RegErrMsg = "Input all fields!";
             return false;
         }*/
-        if(!(emailRegexp.test(this.User.email))) {
+        /*if(!(emailRegexp.test(this.User.email))) {
             this.RegErrMsg = "Invalid email!";
             return false;
-        }
+        }*/
 
         if(this.User.phone && !(phoneRegexp.test(this.User.phone))) {
             this.RegErrMsg = "Invalid phone number!";

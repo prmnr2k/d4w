@@ -29,6 +29,7 @@ export class CoworkingComponent implements OnInit {
   meCowork:number = 0;
   CoworkingId:number = 0;
   Images:Base64ImageModel[] = [];
+  Image:string = '';
   Booking:BookingModel = new BookingModel();
   bsValue: Date = new Date();
   toTime:string = '01:00';
@@ -53,6 +54,7 @@ export class CoworkingComponent implements OnInit {
     .subscribe((cwr:CoworkingModel)=>{
         this.Coworking = cwr;
         this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),cwr.amenties);
+        
         for(let item of cwr.images){
         this.service.GetImageById(item.id)
         .subscribe((img:Base64ImageModel)=>{

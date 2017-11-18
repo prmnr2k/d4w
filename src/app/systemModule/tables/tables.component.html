@@ -1,56 +1,213 @@
 <loading-cmp *ngIf="isLoading&&canAccess"></loading-cmp>
-<div *ngIf="meRole=='creator'||meRole=='receptionist'" class="main-content">
-    <div class="container-fluid">
-        <div class="row">
-            <div *ngIf="!isLoading" class="col-md-12">
-                <div class="card">
-                    <div class="header">
-                        <h4 class="title">{{Coworking?.full_name}}</h4>
-                        <p class="category">{{Coworking?.short_name}}</p>
-                    </div>
 
-                    <!-- DATE PICKER
-                        <div class="form-group" style="margin-top:7px;"> 
-                                                    <input type="text"
-                                                    readonly style="background-color:white; cursor: pointer;"
-                                                    class="form-control"
-                                                    [minDate]="minDate"
-                                                    #dp="bsDatepicker"
-                                                    dateDisabled = "{date:new Date(); mode:disable;}"
-                                                    bsDatepicker [(bsValue)]="bsValue"
-                                                    (bsValueChange)="DateChange()">
-                                            </div>
-                    -->
-                    <div class="content table-responsive table-full-width">
-                        <table class="table table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Username</th>
-                                    <th>Confirmed</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of Bookings; let i = index">
-                                    <td>{{item.begin_date | date:'dd.M.yyyy'}}</td>
-                                    <td>{{item.begin_date | date:'H:mm'}} - {{item.end_date | date:'H:mm'}}</td>
-                                    <td>{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</td>
-                                    <td>
-                                        <button class="button-fisit" *ngIf="!item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmStart(i)">start</button>
-                                        <button class="button-fisit" *ngIf="item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmEnd(i)">finish</button>
-
-                                        <div *ngIf="item.is_closed" class="likeDislike">
-                                            <button class="like" (click)="rateUser(Users[item.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'yes'}"></button>
-                                            <button class="dislike"(click)="rateUser(Users[item.user_id].id,'no')"[ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'no'}"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+<div class="coworking-stat-main-wrapp" *ngIf="meRole=='creator'||meRole=='receptionist'">
+    <ng-container *ngIf="!isLoading">
+    <form class="pich-the-date-for-stat">
+        <h6 class="head-form">
+            <span>Выберите дату</span>
+        </h6>
+        <input type="text"
+        readonly style="background-color:white; cursor: pointer;"
+        class="form-control"
+        [minDate]="minDate"
+        #dp="bsDatepicker"
+        dateDisabled = "{date:new Date(); mode:disable;}"
+        bsDatepicker [(bsValue)]="bsValue"
+        (bsValueChange)="DateChange()">
+    </form>
+    <div class="time-line-wr">
+        <div class="time-line">
+            <div class="time">
+                <p>00:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+            <div class="time">
+                <p>02:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>04:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>06:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>08:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+        
+            <div class="time">
+                <p>10:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>12:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>14:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>16:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+        
+            <div class="time">
+                <p>18:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>20:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>22:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
             </div>
         </div>
+      
+            
     </div>
+    <div class="all-places-book">
+        <div class="one-place" *ngFor="let item of Bookings; let i = index">
+            <div class="number">
+                <p>{{i}}</p>
+            </div>
+            <div class="place-info">
+                <div class="one-user-state nav-button">
+                    <div class="from">12:30</div>
+                    <div class="who-is-it">
+                        <div class="ava" style="background-image: url(img/ava.png)"></div>
+                        <p class="name">William Bailey</p>
+                    </div>
+                    <div class="to">20:00</div>
+                </div>
+                <!--
+                <div class="one-user-state nav-button">
+                    <div class="from">05:30</div>
+                    <div class="who-is-it">
+                         <div class="ava" style="background-image: url(img/ava.png)"></div>
+                        <p class="name">William Bailey</p>
+                    </div>
+                    <div class="to">12:00</div>
+                </div>
+                <div class="one-user-state nav-button ">
+                    <div class="from">00:00</div>
+                    <div class="who-is-it">
+                         <div class="ava" style="background-image: url(img/ava.png)"></div>
+                        <p class="name">William Bailey</p>
+                    </div>
+                    <div class="to">04:00</div>
+                </div>
+
+                started finished
+                -->
+            </div>
+        </div>
+       
+        
+    </div>
+    <div class="add-new-place">
+        <div class="butt-for-add">
+            <img src="img/Add.svg" class="img-responsive" alt="">
+            <p>Добавить место</p>
+        </div>
+    </div>
+    
+    </ng-container>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Username</th>
+            <th>Confirmed</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of Bookings; let i = index">
+            <td>{{item.begin_date | date:'dd.M.yyyy'}}</td>
+            <td>{{item.begin_date | date:'H:mm'}} - {{item.end_date | date:'H:mm'}}</td>
+            <td>{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</td>
+            <td>
+                <button class="button-fisit" *ngIf="!item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmStart(i)">start</button>
+                <button class="button-fisit" *ngIf="item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmEnd(i)">finish</button>
+
+                <div *ngIf="item.is_closed" class="likeDislike">
+                    <button class="like" (click)="rateUser(Users[item.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'yes'}"></button>
+                    <button class="dislike"(click)="rateUser(Users[item.user_id].id,'no')"[ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'no'}"></button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+                  

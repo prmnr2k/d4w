@@ -8,6 +8,19 @@
                         <h4 class="title">{{Coworking?.full_name}}</h4>
                         <p class="category">{{Coworking?.short_name}}</p>
                     </div>
+
+                    <!-- DATE PICKER
+                        <div class="form-group" style="margin-top:7px;"> 
+                                                    <input type="text"
+                                                    readonly style="background-color:white; cursor: pointer;"
+                                                    class="form-control"
+                                                    [minDate]="minDate"
+                                                    #dp="bsDatepicker"
+                                                    dateDisabled = "{date:new Date(); mode:disable;}"
+                                                    bsDatepicker [(bsValue)]="bsValue"
+                                                    (bsValueChange)="DateChange()">
+                                            </div>
+                    -->
                     <div class="content table-responsive table-full-width">
                         <table class="table table-hover table-striped">
                             <thead>

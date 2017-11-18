@@ -9,6 +9,7 @@ import { TokenModel } from '../../core/models/token.model';
 import { UserModel } from '../../core/models/user.model';
 import { BookingModel } from "../../core/models/booking.model";
 import { Base64ImageModel } from '../../core/models/base64image.model';
+import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 @Component({
   selector: 'page-coworking',
@@ -21,7 +22,7 @@ export class CoworkingComponent implements OnInit {
   isLoading = true;
   RegErrMsg = '';
   Coworking:CoworkingModel = new CoworkingModel();
-  Days:string[] = [];
+  Days:FrontWorkingDayModel[] = [];
   AmetiesCB: CheckboxModel[] = []; 
   Me:UserModel = new UserModel();
   meRole:string = "guest";
@@ -67,7 +68,7 @@ export class CoworkingComponent implements OnInit {
           });
           this.isLoading = false;
     });       
-    //this.Days = this.service.GetAllDays();   
+    this.Days = this.service.GetAllDays();   
     this.minDate = new Date();
    // this.minDate.setDate(this.minDate.getDate() - 1);
     this.Booking.begin_date = `2017-11-08T13:00`;
@@ -169,7 +170,7 @@ export class CoworkingComponent implements OnInit {
 
 
   DateChange(){
-    let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
+    let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7].en_name;
     this.showTime = false;
     this.minTime = '00:00';
     this.maxTime = '00:00';

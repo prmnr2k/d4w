@@ -10,7 +10,7 @@
                             <a class="link-to-cowork" [routerLink]="['/coworking',item.id]">
                                 <span class="spanlink"></span>
                             </a>
-                            <div class="img-cowork" [ngStyle]="{'background':'url(' + Images['act'+item.id] + ')'}"></div>
+                            <div class="img-cowork" [ngStyle]="{'background-image':'url(' + Images['act'+item.id] + ')'}"></div>
                             <div class="description">
                                 <p class="name-c">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</p>
                                 <div class="flex-price">

@@ -11,6 +11,11 @@ import { BookingModel } from "../../core/models/booking.model";
 import { Base64ImageModel } from '../../core/models/base64image.model';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
+declare var jquery:any;
+declare var $ :any;
+
+
+
 @Component({
   selector: 'page-coworking',
   templateUrl: './pageCoworking.component.html'
@@ -54,12 +59,26 @@ export class CoworkingComponent implements OnInit {
     .subscribe((cwr:CoworkingModel)=>{
         this.Coworking = cwr;
         this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),cwr.amenties);
-        
-        for(let item of cwr.images){
-        this.service.GetImageById(item.id)
-        .subscribe((img:Base64ImageModel)=>{
-          this.Images.push(img);
+        if(this.Coworking.image_id){
+          this.service.GetImageById(this.Coworking.image_id).subscribe((res:Base64ImageModel)=>{
+            this.Image = res.base64;
           });
+
+        }
+        let current = 0,total = cwr.images.length;
+
+        for(let item of cwr.images){
+          
+          this.service.GetImageById(item.id)
+            .subscribe((img:Base64ImageModel)=>{
+
+              this.Images.push(img);
+              current+=1;
+              if(current == total){
+                this.initSlider();
+              }
+
+            });
         }
           this.service.GetMyAccess()
           .subscribe((res)=>{
@@ -108,10 +127,23 @@ export class CoworkingComponent implements OnInit {
   incr(n:number){
     return n+1;
   }
+  initSlider(){
+    setTimeout(function(){
+      $('.slider-images-coworking-wr').slick({
+        dots: true,
+        arrows: true, 
+        infinite: true, 
+        speed: 300,
+        slidesToShow: 1
+    });
 
+    },300);
+    
+
+  }
   receptionCoworking(){
     if(! this.receptionSend){
-      console.log(`i want reception Cowork!`);
+    
       this.service.RequestReception(this.Coworking.id)
       .subscribe((any)=>{
         console.log(`request send!`);

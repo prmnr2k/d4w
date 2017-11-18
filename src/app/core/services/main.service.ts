@@ -219,8 +219,13 @@ export class MainService{
 
 
     /* BOOKINGS BLOCK START */
-    GetBookingsByCwr(id:number){
-        return this.http.GetData('/coworkings/get_bookings/'+id,'');
+    GetBookingsByCwr(id:number, data?:any){
+        /*
+        data = {
+            date:''
+        }
+        */ 
+        return this.http.GetData('/coworkings/get_bookings/'+id,this.ParamsToUrlSearchParams(data));
     }
     BookingCreate(book:BookingModel){
         return this.http.PostData('/bookings/create',JSON.stringify(book));

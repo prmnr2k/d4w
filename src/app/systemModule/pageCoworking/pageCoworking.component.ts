@@ -58,7 +58,7 @@ export class CoworkingComponent implements OnInit {
   ngOnInit() 
   {
     this.activatedRoute.params.forEach((params) => {
-    this.CoworkingId = params["id"];
+      this.CoworkingId = params["id"];
     });
 
     

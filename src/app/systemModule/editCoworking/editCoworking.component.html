@@ -1,0 +1,269 @@
+<ng-container *ngIf="meRole=='creator'">
+            <loading-cmp *ngIf="isLoading"></loading-cmp>
+            <div class="wrapp-for-forms" *ngIf="!isLoading">
+                <form (ngSubmit)="UpdateCoworking(submitFormCwrc)" #submitFormCwrc="ngForm">
+                    <h6 class="head-form">
+                        <span>Изменение коворкинга</span>
+                    </h6>
+                    
+                    <div class="avatar-img hovered" [ngStyle]="{'background-image': 'url('+Coworking.image+')'}"></div>
+                    <label class="file_upload">
+                        <span class="button">Загрузить аватар</span>
+                        <input accept=".jpg, .jpeg, .png" type="file" (change)="loadLogo($event)">
+                    </label>
+                    <div class="my-form-groupe">
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Email</p>
+                            </div>
+                            <div class="right-side side">
+                                <input class="input-text-style" type="text" #email="ngModel" name="email" [ngModel]="Coworking.email" (ngModelChange)="Coworking.email = $event" email required>
+                                <p *ngIf="email.invalid && email.touched" class="red-error">Input valid email!</p>
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Полное название коворкинга</p>
+                            </div>
+                            <div class="right-side side">
+                                <input type="text" class="input-text-style" autocomplete="off"  name="fullname" [ngModel]="Coworking.full_name" (ngModelChange)="Coworking.full_name = $event" >
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Сокращенное название коворкинга</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" type="text" class="input-text-style" name="short_name" [ngModel]="Coworking.short_name" (ngModelChange)="Coworking.short_name = $event" >
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Телефон</p>
+                            </div>
+                            <div class="right-side side">
+                                <input class="input-text-style" type="text" pattern="^[+]?[0-9]{3,}$" #phone="ngModel" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event">
+                                <p *ngIf="phone.invalid && phone.touched" class="red-error">Input valid phone!</p>
+                            </div>
+                        </div>
+                         
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Количество мест</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" type="number" min="0" class="input-text-style" name="capacity" [ngModel]="Coworking.capacity" (ngModelChange)="Coworking.capacity = $event">
+                            </div>
+                        </div>
+            
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Цена ($/час)</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" type="number" min="0" class="input-text-style" name="price" [ngModel]="Coworking.price" (ngModelChange)="Coworking.price = $event">
+                            </div>
+                        </div>
+            
+                         <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Контактная информация</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" type="text"  class="input-text-style" name="contacts" [ngModel]="Coworking.contacts" (ngModelChange)="Coworking.contacts = $event">
+                            </div>
+                        </div>
+                         <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Адрес:</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event">
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Описание:</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" type="text" class="input-text-style" name="description" [ngModel]="Coworking.description" (ngModelChange)="Coworking.description = $event">
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Дополнительная информация (очень важная, без нее никак):</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" type="text" class="input-text-style" name="additional_info" [ngModel]="Coworking.additional_info" (ngModelChange)="Coworking.additional_info = $event">
+                            </div>
+                        </div>
+                    </div>
+                    <p class="head-my-form-groupe">Контактное лицо</p>
+                    <div class="my-form-groupe">
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Фамилия</p>
+                            </div>
+                            <div class="right-side side">
+                                <input class="input-text-style" type="text" autocomplete="off" #lastN="ngModel" name="lname" [ngModel]="Coworking.last_name" (ngModelChange)="Coworking.last_name = $event" required>
+                                <p *ngIf="lastN.invalid && lastN.touched" class="red-error">Last name can`t be empty!</p>
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Имя</p>
+                            </div>
+                            <div class="right-side side">
+                                <input autocomplete="off" class="input-text-style" type="text" #firstN="ngModel" name="fname" [ngModel]="Coworking.first_name" (ngModelChange)="Coworking.first_name = $event" required>
+                                <p *ngIf="firstN.invalid && firstN.touched" class="red-error">First name can`t be empty!</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <h6 class="head-form">
+                        <span>Фото</span>
+                    </h6>
+                    <div class="photos-wrapp">
+                        <label class="files_upload" [ngClass]="{'for-disabled-style': !flagForImages }">
+                            <span class="butt-orange">Загрузить фото</span>
+                            <input [disabled]="!flagForImages" name="galery_images" type="file" multiple accept=".jpg, .jpeg, .png" (change)="changeListener($event)">
+                        </label>
+                        <div class="photos">
+                            <div class="one-photo" *ngFor="let img of Coworking.images; let i = index" >
+                                <div class="for-hover" (click)="DeleteImage(i)" [ngStyle]="{'background-image': 'url('+img+')'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="head-form">
+                        <span>Время работы</span>
+                    </h6>
+                    <div class="my-form-groupe-2 style-edit">
+                        <div class="one-day" *ngFor="let item of Days;let i = index">
+                                <div class="left-side-t">
+                                    <div class="add-day">
+                                        <div class="orange-checkbox">
+                                            <input type="checkbox" class="checkbox" [name]="'workingday'+i" [id]="'checkboxOr-day-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked = $event">
+                                            <label [for]="'checkboxOr-day-'+i"></label>
+                                        </div>
+                                        <p class="day-of-week">{{item.ru_name}}</p>
+                                    </div>
+                                    <div class="inputs checked-day">
+                                        <input class="input-time-style" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="time" [name]="'from'+i" [ngModel]="item.start_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
+                                        <span>:</span>
+                                        <input class="input-time-style" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="time" [name]="'to'+i" [ngModel]="item.finish_work" (ngModelChange)="item.finish_work = $event">
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                     <h6 class="head-form">
+                        <span>Услуги коворкинга</span>
+                    </h6>
+                    <div class="my-form-groupe-3">
+                        <div class="one-nishtyaki" *ngFor="let item of AmetiesCB;let i = index">
+                            <p>{{item.name}}</p>
+                            <div class="orange-checkbox">
+                                <input type="checkbox" class="checkbox" [name]="'nyshtiak'+i" [id]="'check-nyshtiak-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked =  $event">
+                                <label [for]="'check-nyshtiak-'+i"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" *ngIf="RegistrationErr">
+                        <h2 class="error-msg">{{RegErrMsg}}</h2>
+                    </div>
+                    <button class="butt-orange" [disabled]="!submitFormCwrc.valid" type="submit">Изменить коворкинг</button>
+                </form>
+               
+                <div class="all-coworkings">
+                    <h6 class="head-form">
+                        <span>Workers coworking</span>
+                    </h6>
+                 
+                    <p class="head-my-form-groupe">Request</p>
+                    <div class="search-form my-booking-user styles--lists">
+                        <div class="row">
+                            
+                            <div class="col-md-2">
+                                <p>User iD</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>User Name</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>User Email</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="to-del">Add</p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="to-del">Delete</p>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let item of coworkingWorkersRequest">
+                        
+                            <div class="col-md-2">
+                                <p>{{item.user_id}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>{{item.user_name}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p>{{item.user_email}}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="add-booking" (click)="AddWorker(item.id)"></div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="delete-booking" (click)="DeleteRequestWorker(item.id)"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <p class="head-my-form-groupe">Avaliable</p>
+                    <div class="search-form my-booking-user styles--lists">
+                        <div class="row">
+                            
+                            <div class="col-md-1">
+                                <p>iD</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>Email</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>Firstname</p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="to-del">Delete</p>
+                            </div>
+                            
+                        </div>
+                        <div class="row" *ngFor="let item of coworkingWorkers">
+                            
+                            <div class="col-md-1">
+                                <p>{{item.id}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>{{item.email}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p>{{item.first_name}}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="delete-booking" (click)="DeleteWorker(item.id)"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <p class="head-my-form-groupe">Add access by E-mail</p>                          
+                <form (ngSubmit)="AddWorkerEmail(email.value)" class="form-inline my--new-form-flex"> 
+                    <div class="form-group">                                  
+                        <input autocomplete="off" type="text" class="input-text-style" #email name="email">
+                        <button class="butt-orange" type="submit">Add</button>
+                    </div>
+                </form>       
+                
+        </div>
+    </ng-container>
+    

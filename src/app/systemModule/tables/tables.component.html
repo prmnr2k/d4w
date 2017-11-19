@@ -1,0 +1,182 @@
+<loading-cmp *ngIf="isLoading&&canAccess"></loading-cmp>
+<nav id="nav-holder" class="nav-holder-3">
+    <button class="menu-close">
+        <span class="btn-close">
+            <img src="../assets/img/Arrow_right_black.svg" class="img-responsive">
+        </span>
+    </button>
+    <div class="midd">
+        <div class="ava" [ngStyle]="{'background-image': 'url('+ Images[activeBooking.user_id] +')'}"></div>
+        <p class="name">{{Users[activeBooking.user_id]?.first_name}} {{Users[activeBooking.user_id]?.last_name}}</p>
+        <div class="time-show">
+            <div>
+                <p>Начало</p>
+                <p> {{activeBooking?.begin_date?.split("T")[1]?.split(":")[0]}}{{activeBooking?.begin_date | date:":mm"}}</p>
+            </div>
+            <div>
+                <p>Конец</p>
+                <p>{{activeBooking?.end_date?.split("T")[1]?.split(":")[0]}}{{activeBooking?.end_date | date:":mm"}}</p>
+            </div>
+        </div>
+
+        <button class="butt-orange" *ngIf="!activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmStart(activeBooking)">Начало работы</button>
+        <button class="butt-orange" *ngIf="activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmEnd(activeBooking)">Конец работы</button>
+
+
+        <div *ngIf="activeBooking.is_closed" class="likeDislike">
+            <button class="like" (click)="rateUser(Users[activeBooking.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[activeBooking.user_id] && Rates[activeBooking.user_id].score == 'yes'}"></button>
+            <button class="dislike"(click)="rateUser(Users[activeBooking.user_id].id,'no')"[ngClass]="{'checked-rate':Rates[activeBooking.user_id] && Rates[activeBooking.user_id].score == 'no'}"></button>
+        </div>
+
+
+
+
+
+    </div>
+</nav>
+            
+            
+    <div class="mask-nav-3" (click)="closeModal($event)"></div>
+<div [ngStyle]="{'display': isLoading?'none':'block'}" class="coworking-stat-main-wrapp" *ngIf="meRole=='creator'||meRole=='receptionist'">
+    <ng-container>
+        
+                
+
+
+    <form class="pich-the-date-for-stat">
+        <h6 class="head-form">
+            <span>Выберите дату</span>
+        </h6>
+        <input type="text"
+        readonly style="background-color:white; cursor: pointer;text-align:center"
+        class="form-control"
+        #dp="bsDatepicker"
+        bsDatepicker [bsValue]="bsValue"
+        (bsValueChange)="GetBookings($event)">
+    </form>
+    <div class="time-line-wr">
+        <div class="time-line">
+            <div class="time">
+                <p>00:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+            <div class="time">
+                <p>02:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>04:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>06:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>08:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+        
+            <div class="time">
+                <p>10:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>12:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>14:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>16:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+        
+            <div class="time">
+                <p>18:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>20:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+       
+            <div class="time">
+                <p>22:00</p>
+                <div class="dots dot-1"></div>
+                <div class="dots dot-2"></div>
+                 <div class="dots dot-3"></div>
+                 <div class="dots dot-4"></div>
+            </div>
+        </div>
+      
+            
+    </div>
+    <div class="all-places-book">
+        <div class="one-place" *ngFor="let i of WorkingPlaces" >
+            <div class="number">
+                <p>{{i}}</p>
+            </div>
+            <div class="place-info">
+                <div *ngFor="let item of GetBookingsBySeatNumber(i)" [ngClass]="{'started':item.is_visit_confirmed && !item.is_closed,'finished': item.is_closed }" class="one-user-state nav-button" (click)='openModal($event,item)'>
+                    <div class="from">{{item?.begin_date?.split("T")[1]?.split(":")[0]}}{{item?.begin_date | date:":mm"}}</div>
+                    <div class="who-is-it">
+                        <div class="ava" [ngStyle]="{'background-image': 'url('+ Images[item.user_id] +')'}"></div>
+                        <p class="name">{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</p>
+                    </div>
+                    <div class="to">{{item?.end_date?.split("T")[1]?.split(":")[0]}}{{item?.end_date | date:":mm"}}</div>
+                </div>
+                <!--
+                started finished
+                -->
+            </div>
+        </div>
+    </div>
+    
+    </ng-container>
+</div>
+
+
+                  

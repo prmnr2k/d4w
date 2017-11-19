@@ -1,0 +1,96 @@
+
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+
+
+<div class="wrapp-for-forms" *ngIf="!isLoading">
+    <h2 class="error-msg" *ngIf="BookingErr">{{ErrBookingMsg}}</h2>
+    <h2 class="succes-msg" *ngIf="BookingOk">Booking Success!</h2>
+    <span *ngIf="(meRole=='receptionist'&&meCowork==Coworking.id)||(meRole=='creator'&&meCowork==Coworking.id)" class="label label-info" style="font-size:12px; padding:10px;">You are Admin!</span>
+    <h6 class="head-form">
+        <span>Коворкинг "{{Coworking?.full_name}}"</span>
+    </h6>
+    <div class="avatar-img" [ngStyle]="{'background-image': 'url('+ Image +')'}"></div>
+    <div class="description-coworking-wr">
+        <div class="description-coworking">
+                <p><strong>Цена: </strong>{{Coworking?.price}}$</p>
+                <p><strong>Кол-во мест: </strong>{{Coworking?.capacity}}</p>
+                <p><strong>Адрес: </strong>{{Coworking?.address}}</p>
+                <p><strong>Описание: </strong> {{Coworking?.description}}</p>
+        </div>
+        <h6 class="head-form">
+            <span>Рабочие дни</span>
+        </h6>
+        <div class="flex-time-working">
+            <ng-container *ngIf="Coworking && Coworking.working_days">
+                <div class="one-day" *ngFor="let item of Coworking.working_days;let i = index">
+                    <p class="week-day"><strong>{{item.day}}</strong></p>
+                    <p>c <strong>{{item.begin_work}}</strong> по <strong>{{item.end_work}}</strong></p>
+                
+                </div>
+            </ng-container>
+        </div>
+        <h6 class="head-form">
+            <span>Услуги</span>
+        </h6>
+        <div class="flex-pluhi">
+            
+            <ng-container *ngFor="let item of AmetiesCB" >
+                    <span *ngIf="item.checked">
+                        {{item.name}}
+                    </span>
+            </ng-container>
+           
+        </div>
+        <div class="slider-images-coworking-wr">
+            
+            <div class="one-slide" *ngFor="let img of Images; let i = index" [ngStyle]="{'background-image': 'url('+ img?.base64 +')'}"></div>
+           
+        </div>
+    </div>
+    <form (ngSubmit)="BookingCoworking()" *ngIf="meRole=='user'">
+        <h6 class="head-form">
+            <span>Бронирование</span>
+        </h6>
+        <div class="booking-user-wr">
+            <div class="my-form-groupe-2">
+                <div class="one-day">
+                    <div class="left-side-t">
+                        <div class="add-day">
+                            <input type="text"
+                            readonly style="background-color:white; cursor: pointer;"
+                            class="for-data-picker"
+                            [minDate]="minDate"
+                            #dp="bsDatepicker"
+                            dateDisabled = "{date:new Date(); mode:disable;}"
+                            bsDatepicker [(bsValue)]="bsValue"
+                            (bsValueChange)="DateChange()">
+                        </div>
+                        <div class="inputs checked-day">
+                            <ng-container *ngIf="!showTime">
+                                <input class="input-time-style" type="time"  readonly style="background-color:white; cursor: pointer;" name="timeFromHide" value="--:--">
+                            </ng-container>
+                            <ng-container *ngIf="showTime">
+                                <input class="input-time-style" type="time" [ngModel]="fromTime" [value]="fromTime"  name="timeFrom" (ngModelChange)="OnBeginWorkChanged($event)">
+                            </ng-container>
+                            <span>:</span>
+                            <ng-container *ngIf="!showTime">
+                                <input class="input-time-style" type="time" readonly style="background-color:white; cursor: pointer;" name="timeToHide" value="--:--">
+                            </ng-container>
+                            <ng-container *ngIf="showTime">
+                                <input class="input-time-style" type="time" [ngModel]="toTime" [value]="toTime" name="timeTo" (ngModelChange)="OnEndWorkChanged($event)">
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="butt-orange" type="submit" [class.btn-danger]="!showTime" [disabled]="!showTime">{{showTime?"Booking Coworking":"Select Working Day"}}</button>
+    </form>
+    <div *ngIf="meRole=='user'" >
+        <form class="form-inline" style="text-align:center;" (ngSubmit)="receptionCoworking()">
+            <button *ngIf="!receptionSend" type="submit" class="butt-orange">Запрос админ. прав</button>
+            <span *ngIf="receptionSend" class="" style="font-size:16px; padding:10px; color: #FF8026;">Запрос отправлен</span>
+        </form>  
+    </div>
+
+</div>

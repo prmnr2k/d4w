@@ -3,7 +3,7 @@ import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { HttpService } from './core/services/http.service';
 import { MainService } from './core/services/main.service';
 
-import { NotificationsComponent } from '../app/notifications/notifications.component';
+import { NotificationsComponent } from './systemModule/notifications/notifications.component';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 
 @Component({
@@ -67,7 +67,6 @@ export class AppComponent implements OnInit {
       this.isLoggedIn = bool;
       if(this.isLoggedIn)
           this.service.GetMe().subscribe(it =>{
-              console.log(it);
             }
           );
     });

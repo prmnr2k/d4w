@@ -21,6 +21,7 @@ export class CoworkingModel{
         public images?: Base64ImageModel[],
         public creator_id?:number,
         public created_at?: Date,
-        public updated_at?: Date
+        public updated_at?: Date,
+        public image_id?:number
     ){}
 }

@@ -17,6 +17,7 @@ import { CoworkingModel } from '../models/coworking.model';
 import { WorkingDayModel } from '../models/workingDay.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
 import { BookingModel } from '../models/booking.model';
+import { FrontWorkingDayModel } from '../models/frontWorkingDays.model';
 
 @Injectable()
 export class MainService{
@@ -149,7 +150,6 @@ export class MainService{
             user_id: user_id,
             score: score
         }
-        console.log(data);
         return this.http.PostData('/users/rate',JSON.stringify(data));
         
     }
@@ -218,8 +218,13 @@ export class MainService{
 
 
     /* BOOKINGS BLOCK START */
-    GetBookingsByCwr(id:number){
-        return this.http.GetData('/coworkings/get_bookings/'+id,'');
+    GetBookingsByCwr(id:number, data?:any){
+        /*
+        data = {
+            date:''
+        }
+        */ 
+        return this.http.GetData('/coworkings/get_bookings/'+id,this.ParamsToUrlSearchParams(data));
     }
     BookingCreate(book:BookingModel){
         return this.http.PostData('/bookings/create',JSON.stringify(book));
@@ -266,11 +271,9 @@ export class MainService{
             'coworking_id':id,
             'email':email
         }
-        console.log('e-mail',params);
         return this.http.PostData('/access/grant_reception_access',JSON.stringify(params));
     }
     RemoveAccess(id:number){
-        console.log(`remove_id = `,id);
         return this.http.PostData('/access/remove_user_access',JSON.stringify({'user_id':id}));
     }
     RemoveAccessRequest(id:number){
@@ -362,14 +365,36 @@ export class MainService{
 
     public GetAllDays(){
         return [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
+            new FrontWorkingDayModel('Понедельник','Monday'),
+            new FrontWorkingDayModel('Вторник','Tuesday'),
+            new FrontWorkingDayModel('Среда','Wednesday'),
+            new FrontWorkingDayModel('Четверг','Thursday'),
+            new FrontWorkingDayModel('Пятница','Friday'),
+            new FrontWorkingDayModel('Суббота','Saturday',true),
+            new FrontWorkingDayModel('Воскресенье','Sunday',true)
         ];
+    }
+    public GetFrontDaysByWorkingDays(input:WorkingDayModel[]):FrontWorkingDayModel[]{
+        let result:FrontWorkingDayModel[] = this.GetAllDays();
+        for(let item of input){
+            let index = result.findIndex(x => x.en_name == item.day);
+            if(index > -1){
+                result[index].checked = true;
+                result[index].start_work = item.begin_work;
+                result[index].finish_work = item.end_work;
+            }
+        }
+        return result;
+    }
+
+    public GetWorkingDaysFromFront(days:FrontWorkingDayModel[]):WorkingDayModel[]{
+        let result:WorkingDayModel[] = [];
+
+        for(let i of days){
+            if(i.checked)
+                result.push(new WorkingDayModel(i.en_name,i.start_work,i.finish_work));
+        }
+        return result;
     }
 
     public GetAllAmenties(){

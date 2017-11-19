@@ -22,7 +22,6 @@ export class HttpService
     BaseInitByToken(data:string)
     {
         if(data){
-            console.log(data);
             if(this.headers.has('Authorization'))
                 this.headers.delete('Authorization');
             this.headers.append('Authorization',data);
@@ -49,7 +48,6 @@ export class HttpService
     {
         if(!this.headers.has('Content-Type'))
             this.headers.append('Content-Type','application/json');
-            console.log(this.headers);
         return this.http.get(this.serverUrl + method + "?"+ params,{headers:this.headers})
             .map((resp:Response)=>resp.json())
             .catch((error:any) =>{return Observable.throw(error);});
@@ -73,9 +71,7 @@ export class HttpService
     GoogleGet(keyword:string)
     {
         return this.http.get(this.GoogleMapUrl+keyword).map(res => {
-            console.log(`res ok ok`);
             let json = res.json();
-            console.log(`googlegetAUTO `,json.results);
             return json.results;
           })
     }

@@ -1,0 +1,17 @@
+<div class="side-bar-wr">
+        <div class="top">
+            <ul>
+                <li routerLinkActive="active" *ngFor="let menuItem of menuItems">
+                    <a *ngIf="(!menuItem.isLoggedIn || isLoggedIn || menuItem.path=='all_coworkings')&&getUserStatus()>=menuItem.userStatus" [routerLink]="menuItem.path">
+                        <img [src]="menuItem.icon" class="img-responsive" alt="">
+                        <div class="hover-tool">
+                            <p>{{menuItem.title}}</p>
+                        </div>
+                    </a>
+                </li>
+    
+            </ul>
+        </div>
+       
+    </div>
+

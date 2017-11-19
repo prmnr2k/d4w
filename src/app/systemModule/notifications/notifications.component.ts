@@ -14,7 +14,6 @@ export class NotificationsComponent implements OnInit {
   constructor() {
     this.sound.src = "https://wav-library.net/sounds/0-0-1-19124-20";
     this.sound.load();
-
   }
   ngOnInit() {
   }

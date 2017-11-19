@@ -5,6 +5,7 @@ import { MainService } from './core/services/main.service';
 
 import { NotificationsComponent } from './systemModule/notifications/notifications.component';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
+import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-root',
@@ -17,20 +18,24 @@ export class AppComponent implements OnInit {
   title = 'app';
   constructor(public location: Location, private service: MainService,
               private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-                
+                let notGiveNow = true;
+                let prevUser = 0;
                 this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
                 console.log('ng2cable success');
                 this.broadcaster.on<JSON>('BookingsChannel').subscribe(
                   message => {
+                    if(notGiveNow||(!notGiveNow&&prevUser!=message['booking'].user_id)){
+                    notGiveNow = false;
+                    prevUser = message['booking'].user_id;
                     console.log(message['event_type']);
                     console.log(message['booking']);
                     
                     if (message['event_type'] == 'created'){
-                      let name='',phone='777';
+                      let name='';
                       this.service.GetUserById(message['booking'].user_id).
                         subscribe((any)=>{
-                          name = any.first_name;
-                          phone = any.phone;
+                          name = any.first_name.slice(0,30);;
+                         
                          this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
                         //this.pushNotification.showNotification('User is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);  
                      
@@ -41,7 +46,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name;
+                        name = any.first_name.slice(0,30);;
                         this.pushNotification.showNotification(name+' will arrive in 15 minutes!','bottom','right');
                       });
                     }
@@ -52,7 +57,7 @@ export class AppComponent implements OnInit {
                         this.service.GetUserById(message['booking'].user_id).
                           subscribe((any)=>{
                             phone = any.phone;
-                            name = any.first_name;
+                            name = any.first_name.slice(0,30);;
                           this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);                   
                         });
                       }
@@ -62,7 +67,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name;
+                        name = any.first_name.slice(0,30);;
                         this.pushNotification.showNotification(name+' will finish in 5 minutes!','bottom','right');
                       });
                     }
@@ -71,7 +76,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name;
+                        name = any.first_name.slice(0,30);
                         this.pushNotification.showNotification(name+' canceled booking!','bottom','right');
                       });
                     }
@@ -80,7 +85,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name;
+                        name = any.first_name.slice(0,30);
                         this.pushNotification.showNotification(name+' add more time to booking!','bottom','right');
                       });
                     }
@@ -88,13 +93,14 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name;
+                        name = any.first_name.slice(0,30);
                         this.pushNotification.showNotification(name+' want to leave coworking!','bottom','right');
                       });
                     }
 
-                    
+                   setTimeout(()=>{notGiveNow = true;prevUser = 0;},1000); 
                   }
+                }
                 );
               }
 

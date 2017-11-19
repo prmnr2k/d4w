@@ -46,10 +46,19 @@ export class ChangePasswordComponent{
                             this.router.navigate(['/login']);
                         });
                 },
-                (err:any)=>{
-                    console.log('Something went wrong!');
-                    console.log(err);
-                });
+                (err)=>{
+                    if(err.status == 422){
+                        let body:any = JSON.parse(err._body); 
+                        this.RegErrMsg = this.service.CheckErrMessage(body);
+                        
+                    }
+                    else {
+                        this.RegErrMsg = "Cannot change password! " + err.body;
+                    }
+                    this.RegistrationErr = true;
+                    this.isLoading = false;
+                })
+        
         }
     } 
 

@@ -85,27 +85,42 @@ export class EditUserComponent implements OnInit {
                 
                 return;
             }
-            this.service.UpdateMe(this.User)
-                .subscribe((res:UserModel)=>{
-                    console.log('ok!');
-                    console.log(res);
-                    this.InitByUser(res);
-                    this.isLoading = false;
-                    this.service.onAuthChange$.next(true);
-                },
-                (err:any)=>{
-                    if(err.status == 422){
-                        let body:any = JSON.parse(err._body); 
-                        this.RegErrMsg = this.service.CheckErrMessage(body);
-                        
-                    }
-                    else {
-                        this.RegErrMsg = "Cannot update profile: " + err.body;
-                    }
+            this.service.checkUserByEmail(this.User.email).subscribe((ressponjo:any)=>{
+                console.log(ressponjo);
+                if(ressponjo.exists){
+                    console.log("susestv");
+                    this.RegErrMsg = 'This email is already taken! ';
                     this.RegistrationErr = true;
                     this.isLoading = false;
-                    
-                })
+                }
+                else{
+                    this.service.UpdateMe(this.User)
+                    .subscribe((res:UserModel)=>{
+                        console.log('ok!');
+                        console.log(res);
+                        this.InitByUser(res);
+                        this.isLoading = false;
+                        this.service.onAuthChange$.next(true);
+                    },
+                    (err:any)=>{
+                        if(err.status == 422){
+                            let body:any = JSON.parse(err._body); 
+                            this.RegErrMsg = this.service.CheckErrMessage(body);
+                            
+                        }
+                        else {
+                            this.RegErrMsg = "Cannot update profile: " + err.body;
+                        }
+                        this.RegistrationErr = true;
+                        this.isLoading = false;
+                        
+                    })
+                    console.log(ressponjo.exists);
+                    this.isLoading = false;
+                    this.RegistrationErr = false;
+                }
+            });
+           
         }
     }
 
@@ -126,6 +141,7 @@ export class EditUserComponent implements OnInit {
             return false;
         }
        
+        
         return true;
     }
 

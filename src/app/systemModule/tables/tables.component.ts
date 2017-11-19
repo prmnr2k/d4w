@@ -35,7 +35,9 @@ export class TablesComponent implements OnInit {
     canAccess:boolean = false;
     bsValue:Date= new Date();
     WorkingPlaces:number[] = [];
-    
+    Images:string[] = [];
+    activeBooking:BookingModel = new BookingModel();
+
     constructor(private service: MainService, private router: Router) { }
     
     
@@ -101,8 +103,17 @@ export class TablesComponent implements OnInit {
                     this.service.GetUserById(book.user_id)
                         .subscribe((usr:UserModel)=>{
                             this.Users[usr.id] = usr;
+                            if(usr.image_id){
+                                this.service.GetImageById(usr.image_id).subscribe((img:Base64ImageModel)=>{
+                                    this.Images[usr.id] = img.base64;
+
+
+                                });
+                            }
+
+
                             this.isLoading = false;
-                        
+                            
                             
                         })
                 }
@@ -112,7 +123,25 @@ export class TablesComponent implements OnInit {
             })
     }
 
-    
+    openModal(e:any,book:BookingModel){
+        this.activeBooking = book;
+        e.preventDefault();
+        $("body").addClass("has-active-menu");
+        $(".mainWrapper").addClass("has-push-left");
+        $(".nav-holder-3").addClass("is-active");
+        $(".mask-nav-3").addClass("is-active");
+        
+
+
+    }
+
+    closeModal(e:any){
+        e.preventDefault();
+        $("body").removeClass("has-active-menu");
+        $(".mainWrapper").removeClass("has-push-left");
+        $(".nav-holder-3").removeClass("is-active");
+        $(".mask-nav-3").removeClass("is-active")
+    }
 
     GetBookingsBySeatNumber(n:number):BookingModel[]{
         return this.Bookings.filter(x=>x.seat_number == n);
@@ -131,6 +160,12 @@ export class TablesComponent implements OnInit {
                 "width": width + "%"
                 ,"left": margin + "%"
             });
+            if((parseInt($(this).find(".to").text())-parseInt($(this).find(".from").text()))<=6){
+                $(this).parents(".place-info").addClass("height-big");
+                $(this).addClass("small-block");
+            }
+           
+
         });
         
         function count_time_width(firstDate, secondDate) {
@@ -160,19 +195,35 @@ export class TablesComponent implements OnInit {
         });
     }
 
-    changeConfirmStart(index:any){
+    changeConfirmStart(book:BookingModel){
+        let index = this.Bookings.findIndex(x=>x.id == book.id);
+        if(index>-1){
+            this.service.bookingConfirmChangeStart(this.Bookings[index].id).subscribe((respon:BookingModel)=>{
+                this.safeUpdateBooking(index,respon);
+        });
+        }
         
-        /*this.service.bookingConfirmChangeStart(this.Bookings[index].id).subscribe((respon:BookingModel)=>{
-                this.Bookings[index] = respon;
-        });*/
+       
     }
 
-    changeConfirmEnd(index:any){
-        
-        /*this.service.bookingConfirmChangeEnd(this.Bookings[index].id).subscribe((respon:BookingModel)=>{
-                this.Bookings[index] = respon;
-                console.log(respon);
-        });*/
+    safeUpdateBooking(index:number,booking:BookingModel){
+        if(this.Bookings[index].id == booking.id){
+
+            this.Bookings[index].is_visit_confirmed = this.activeBooking.is_visit_confirmed = booking.is_visit_confirmed;
+            this.Bookings[index].is_closed = this.activeBooking.is_closed = booking.is_closed;
+
+        }
+    }
+
+
+    changeConfirmEnd(book:BookingModel){
+        let index = this.Bookings.findIndex(x=>x.id == book.id);
+        if(index>-1){
+            this.service.bookingConfirmChangeEnd(this.Bookings[index].id).subscribe((respon:BookingModel)=>{
+                this.safeUpdateBooking(index,respon);
+             });
+        }
+      
     }
 
 

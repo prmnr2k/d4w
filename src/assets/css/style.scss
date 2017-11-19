@@ -1366,6 +1366,7 @@ input::-webkit-inner-spin-button {
                 border-top: 1px solid rgba(0, 0, 0, 0.12);
             }
             .number{
+
                 width: 75px;
                 flex-shrink: 0;
                 display: flex;
@@ -1379,6 +1380,19 @@ input::-webkit-inner-spin-button {
                 width: 100%;
                 position: relative;
                 height: 80px;
+                &.height-big{
+                    height: 160px;
+                    .one-user-state{
+                        &.small-block{
+                            padding:5px;
+                            flex-direction:column;
+                            .who-is-it .name{
+                                font-size: 9px;
+                            }
+                        }
+
+                    }
+                }
                 .one-user-state{
                     position: absolute;
                     top: 0;
@@ -1419,6 +1433,7 @@ input::-webkit-inner-spin-button {
                         }
                         .name{
                             font-size: 11px;
+                            text-align: center;
                         }
                     }
                 }

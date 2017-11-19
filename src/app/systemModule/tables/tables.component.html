@@ -1,7 +1,48 @@
 <loading-cmp *ngIf="isLoading&&canAccess"></loading-cmp>
+<nav id="nav-holder" class="nav-holder-3">
+    <button class="menu-close">
+        <span class="btn-close">
+            <img src="../assets/img/Arrow_right_black.svg" class="img-responsive">
+        </span>
+    </button>
+    <div class="midd">
+        <div class="ava" [ngStyle]="{'background-image': 'url('+ Images[activeBooking.user_id] +')'}"></div>
+        <p class="name">{{Users[activeBooking.user_id]?.first_name}} {{Users[activeBooking.user_id]?.last_name}}</p>
+        <div class="time-show">
+            <div>
+                <p>Начало</p>
+                <p> {{activeBooking.begin_date.split("T")[1].split(":")[0]}}{{activeBooking.begin_date | date:":mm"}}</p>
+            </div>
+            <div>
+                <p>Конец</p>
+                <p>{{activeBooking.end_date.split("T")[1].split(":")[0]}}{{activeBooking.end_date | date:":mm"}}</p>
+            </div>
+        </div>
 
+        <button class="butt-orange" *ngIf="!activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmStart(activeBooking)">Начало работы</button>
+        <button class="butt-orange" *ngIf="activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmEnd(activeBooking)">Конец работы</button>
+
+
+        <div *ngIf="activeBooking.is_closed" class="likeDislike">
+            <button class="like" (click)="rateUser(Users[activeBooking.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[activeBooking.user_id] && Rates[activeBooking.user_id].score == 'yes'}"></button>
+            <button class="dislike"(click)="rateUser(Users[activeBooking.user_id].id,'no')"[ngClass]="{'checked-rate':Rates[activeBooking.user_id] && Rates[activeBooking.user_id].score == 'no'}"></button>
+        </div>
+
+
+
+
+
+    </div>
+</nav>
+            
+            
+    <div class="mask-nav-3" (click)="closeModal($event)"></div>
 <div class="coworking-stat-main-wrapp" *ngIf="meRole=='creator'||meRole=='receptionist'">
     <ng-container *ngIf="!isLoading">
+        
+                
+
+
     <form class="pich-the-date-for-stat">
         <h6 class="head-form">
             <span>Выберите дату</span>
@@ -114,18 +155,18 @@
             
     </div>
     <div class="all-places-book">
-        <div class="one-place" *ngFor="let i of WorkingPlaces">
+        <div class="one-place" *ngFor="let i of WorkingPlaces" >
             <div class="number">
                 <p>{{i}}</p>
             </div>
             <div class="place-info">
-                <div *ngFor="let item of GetBookingsBySeatNumber(i)" class="one-user-state nav-button">
-                    <div class="from">{{item.begin_date | date:'HH:mm'}}</div>
+                <div *ngFor="let item of GetBookingsBySeatNumber(i)" [ngClass]="{'started':item.is_visit_confirmed && !item.is_closed,'finished': item.is_closed }" class="one-user-state nav-button" (click)='openModal($event,item)'>
+                    <div class="from">{{item.begin_date.split("T")[1].split(":")[0]}}{{item.begin_date | date:":mm"}}</div>
                     <div class="who-is-it">
-                        <div class="ava" style="background-image: url(img/ava.png)"></div>
+                        <div class="ava" [ngStyle]="{'background-image': 'url('+ Images[item.user_id] +')'}"></div>
                         <p class="name">{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</p>
                     </div>
-                    <div class="to">{{item.end_date | date:'HH:mm'}}</div>
+                    <div class="to">{{item.end_date.split("T")[1].split(":")[0]}}{{item.end_date | date:":mm"}}</div>
                 </div>
                 <!--
                 started finished
@@ -142,30 +183,6 @@
     
     </ng-container>
 </div>
-<table class="table table-hover table-striped">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Username</th>
-            <th>Confirmed</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of Bookings; let i = index">
-            <td>{{item.begin_date | date:'dd.M.yyyy'}}</td>
-            <td>{{item.begin_date | date:'H:mm'}} - {{item.end_date | date:'H:mm'}}</td>
-            <td>{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</td>
-            <td>
-                <button class="button-fisit" *ngIf="!item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmStart(i)">start</button>
-                <button class="button-fisit" *ngIf="item.is_visit_confirmed && !item.is_closed" (click)="changeConfirmEnd(i)">finish</button>
 
-                <div *ngIf="item.is_closed" class="likeDislike">
-                    <button class="like" (click)="rateUser(Users[item.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'yes'}"></button>
-                    <button class="dislike"(click)="rateUser(Users[item.user_id].id,'no')"[ngClass]="{'checked-rate':Rates[item.user_id] && Rates[item.user_id].score == 'no'}"></button>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+
                   

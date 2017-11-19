@@ -1271,6 +1271,16 @@ input::-webkit-inner-spin-button {
       width: 100%;
       position: relative;
       height: 80px; }
+      .coworking-stat-main-wrapp .all-places-book .one-place .place-info.height-big {
+        height: 160px; }
+        .coworking-stat-main-wrapp .all-places-book .one-place .place-info.height-big .one-user-state.small-block {
+          padding: 5px;
+          -webkit-box-orient: vertical;
+          -webkit-box-direction: normal;
+              -ms-flex-direction: column;
+                  flex-direction: column; }
+          .coworking-stat-main-wrapp .all-places-book .one-place .place-info.height-big .one-user-state.small-block .who-is-it .name {
+            font-size: 9px; }
       .coworking-stat-main-wrapp .all-places-book .one-place .place-info .one-user-state {
         position: absolute;
         top: 0;
@@ -1311,7 +1321,8 @@ input::-webkit-inner-spin-button {
             border: 1px solid #eeeeee;
             margin: 0 auto 5px auto; }
           .coworking-stat-main-wrapp .all-places-book .one-place .place-info .one-user-state .who-is-it .name {
-            font-size: 11px; }
+            font-size: 11px;
+            text-align: center; }
 
 .add-new-place {
   display: -webkit-box;
@@ -1476,5 +1487,4 @@ button {
           text-align: center; }
           .nav-holder-3 .midd .time-show div p:first-child {
             font-size: 14px; }
-
 /*# sourceMappingURL=style.css.map */

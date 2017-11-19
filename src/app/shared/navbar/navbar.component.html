@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="settings-wr my-row" *ngIf="isLoggedIn&& meRole=='user'">
+                    <div class="settings-wr my-row" (click)="Navigate(['/system','my_bookings'])" *ngIf="isLoggedIn&& meRole=='user'">
                         <div class="settings">
                             <p>Брони</p>
                             <div class="image">

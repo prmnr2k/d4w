@@ -830,13 +830,15 @@ input::-webkit-inner-spin-button {
         -webkit-box-pack: end;
             -ms-flex-pack: end;
                 justify-content: flex-end;
-        background: #FAFAFA;
+        background: #fff;
         position: relative;
         padding: 16px 20px 16px; }
         .navigation .right-side .ava-and-settings .drop-d .my-row:hover p {
           -webkit-transition: 0.3s;
           transition: 0.3s;
           color: #FF8026; }
+        .navigation .right-side .ava-and-settings .drop-d .my-row:nth-child(odd) {
+          background: #FAFAFA; }
         .navigation .right-side .ava-and-settings .drop-d .my-row .settings {
           display: -webkit-box;
           display: -ms-flexbox;
@@ -860,9 +862,8 @@ input::-webkit-inner-spin-button {
                   justify-content: center; }
           .navigation .right-side .ava-and-settings .drop-d .my-row .image img {
             -ms-flex-negative: 0;
-                flex-shrink: 0; }
-        .navigation .right-side .ava-and-settings .drop-d .my-row.exit-wr {
-          background: #fff; }
+                flex-shrink: 0;
+            max-width: 24px; }
     .navigation .right-side .ava-and-settings:hover {
       background: #fff;
       border: 1px solid #EEEEEE;

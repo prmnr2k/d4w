@@ -895,9 +895,13 @@ input::-webkit-inner-spin-button {
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
-                    background: #FAFAFA;
+                    
+                    background: #fff;
                     position: relative;
                     padding: 16px 20px 16px;
+                    &:nth-child(odd){
+                        background: #FAFAFA;
+                    }
                     .settings{
                         display: flex;
                         align-items: center;
@@ -911,10 +915,11 @@ input::-webkit-inner-spin-button {
                         justify-content: center;
                         img{
                             flex-shrink: 0;
+                            max-width: 24px;
                         }
                     }
                     &.exit-wr{
-                        background: #fff;
+                        
                     }
                 }
             }

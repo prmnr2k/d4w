@@ -26,11 +26,14 @@ export class AppComponent implements OnInit {
                     console.log(message['booking']);
                     
                     if (message['event_type'] == 'created'){
-                      let name='';
+                      let name='',phone='777';
                       this.service.GetUserById(message['booking'].user_id).
                         subscribe((any)=>{
                           name = any.first_name;
-                          this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
+                          phone = any.phone;
+                         this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
+                        //this.pushNotification.showNotification('User is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);  
+                     
                         }); 
                     }
 
@@ -45,7 +48,13 @@ export class AppComponent implements OnInit {
 
                     else if (message['event_type'] == 'after_start'){
                       if(!message['booking'].is_visit_confirmed){
-                          this.pushNotification.showNotification('User is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',message['booking'].user_id);  
+                        let phone='',name='';
+                        this.service.GetUserById(message['booking'].user_id).
+                          subscribe((any)=>{
+                            phone = any.phone;
+                            name = any.first_name;
+                          this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);                   
+                        });
                       }
                     }
 

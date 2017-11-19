@@ -16,10 +16,9 @@ export class NotificationsComponent implements OnInit {
     this.sound.load();
 
   }
-
   ngOnInit() {
   }
-  showNotification(text, from, align,user_id?){
+  showNotification(text, from, align,user_phone?){
       const type = ['','info','success','warning','danger'];
       var color = Math.floor((Math.random() * 1000) + 1);
       $.notify({
@@ -35,9 +34,10 @@ export class NotificationsComponent implements OnInit {
           }
       });
 
-      if(user_id)
+      if(user_phone)
       document.getElementById('id-but').onclick = function(){
         console.log(`old send Сlickatell`);
+        console.log('mob send = ',user_phone);
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "https://platform.clickatell.com/messages/http/send?apiKey=2SrHPOF5S9Ws8QHc5oUG5g==&to="+`380669643799`+"&content="+`You are late to cwrk! d4w`, true);
         xhr.onreadystatechange = function(){

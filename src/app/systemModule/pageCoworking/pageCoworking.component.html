@@ -3,8 +3,7 @@
 
 
 <div class="wrapp-for-forms" *ngIf="!isLoading">
-    <h2 class="error-msg" *ngIf="BookingErr">{{ErrBookingMsg}}</h2>
-    <h2 class="succes-msg" *ngIf="BookingOk">Booking Success!</h2>
+       
     <span *ngIf="(meRole=='receptionist'&&meCowork==Coworking.id)||(meRole=='creator'&&meCowork==Coworking.id)" class="label label-info" style="font-size:12px; padding:10px;">You are Admin!</span>
     <h6 class="head-form">
         <span>Коворкинг "{{Coworking?.full_name}}"</span>
@@ -51,6 +50,8 @@
         <h6 class="head-form">
             <span>Бронирование</span>
         </h6>
+        <h2 class="error-text-style" *ngIf="BookingErr">{{ErrBookingMsg}}</h2>
+        <h2 class="error-text-style" *ngIf="BookingOk">Booking Success!</h2>
         <div class="booking-user-wr">
             <div class="my-form-groupe-2">
                 <div class="one-day">

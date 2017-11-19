@@ -10,7 +10,7 @@ import { TypographyComponent } from './typography/typography.component';
 import { IconsComponent } from './icons/icons.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
+
 import { RegistrationComponent } from './registration/registration.component';
 import { EditCoworkingComponent } from './editCoworking/editCoworking.component';
 import { SystemAccessGuard } from './system.guard';

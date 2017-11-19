@@ -1,0 +1,68 @@
+<ng-container *ngIf="meRole&&(meRole=='creator'||meRole=='user'||meRole=='receptionist')" >
+    <loading-cmp *ngIf="isLoading"></loading-cmp>
+    <div class="wrapp-for-forms" *ngIf="!isLoading">
+        <form (ngSubmit)="UpdateUser(submitFormUsr)" #submitFormUsr="ngForm">
+            <h6 class="head-form">
+                <span>Изменение профиля</span>
+            </h6>
+    
+            <div class="avatar-img hovered" [ngStyle]="{'background-image': 'url('+User.image+')'}"></div>
+            <label class="file_upload">
+                <span class="button">Загрузить аватар</span>
+                <input accept=".jpg, .jpeg, .png" type="file" (change)="changeListener($event)">
+            </label>
+            <div class="my-form-groupe">
+                <div class="row-inputs">
+                    <div class="left-side side">
+                        <p>Email</p>
+                    </div>
+                    <div class="right-side side">
+                        <input class="input-text-style" type="text" #email="ngModel" name="email" [ngModel]="User.email" (ngModelChange)="User.email = $event" email required>
+                        <p *ngIf="email.invalid && email.touched" class="red-error">Input valid email!</p>
+                    </div>
+                </div>
+                <div class="row-inputs">
+                    <div class="left-side side">
+                        <p>Фамилия</p>
+                    </div>
+                    <div class="right-side side">
+                        <input class="input-text-style" type="text" autocomplete="off" #lastN="ngModel" name="lname"  [ngModel]="User.last_name" (ngModelChange)="User.last_name = $event" required>
+                        <p *ngIf="lastN.invalid && lastN.touched" class="red-error">Last name can`t be empty!</p>
+                    </div>
+                </div>
+                <div class="row-inputs">
+                    <div class="left-side side">
+                        <p>Имя</p>
+                    </div>
+                    <div class="right-side side">
+                        <input autocomplete="off" class="input-text-style" type="text" #firstN="ngModel" name="fname" [ngModel]="User.first_name" (ngModelChange)="User.first_name = $event" required>
+                        <p *ngIf="firstN.invalid && firstN.touched" class="red-error">First name can`t be empty!</p>
+                    </div>
+                </div>
+                <div class="row-inputs">
+                    <div class="left-side side">
+                        <p>Телефон</p>
+                    </div>
+                    <div class="right-side side">
+                        <input class="input-text-style" type="text" pattern="^[+]?[0-9]{3,}$" #phone="ngModel" name="phone" [ngModel]="User.phone" (ngModelChange)="User.phone = $event">
+                        <p *ngIf="phone.invalid && phone.touched" class="red-error">Input valid phone!</p>
+                    </div>
+                </div>
+                <div class="row-inputs">
+                    <div class="left-side side">
+                        <p>Адрес:</p>
+                    </div>
+                    <div class="right-side side">
+                        <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="User.address" (ngModelChange)="User.address = $event">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="RegistrationErr">
+                <h2 class="error-text-style">{{RegErrMsg}}</h2>
+            </div>
+            <button class="butt-orange" type="submit" [disabled]="!submitFormUsr.valid">Сохранить</button>
+            <div class="clearfix"></div>
+        </form>
+        <button class="butt-orange" type="button" (click)="DeleteUser()">Удалить профиль</button>
+    </div>
+</ng-container>

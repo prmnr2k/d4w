@@ -1,0 +1,15 @@
+input.ng-touched.ng-invalid{
+    border: 1px solid #DC143C;
+}
+.red-error{
+    color: #DC143C;
+    font-size: 14px;
+}
+.row.ng-touched.ng-invalid .mystyle.ng-touched{
+    border: 1px solid #DC143C;
+}
+.for-flex-my{
+    display: flex;
+    flex-wrap: wrap;
+   
+}

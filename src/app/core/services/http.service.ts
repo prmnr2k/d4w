@@ -22,7 +22,6 @@ export class HttpService
     BaseInitByToken(data:string)
     {
         if(data){
-            console.log(data);
             if(this.headers.has('Authorization'))
                 this.headers.delete('Authorization');
             this.headers.append('Authorization',data);
@@ -34,6 +33,7 @@ export class HttpService
     GetToken():TokenModel{
         return this.token;
     }
+
     
     PostData(method:string,data:string)
     {
@@ -71,10 +71,9 @@ export class HttpService
     GoogleGet(keyword:string)
     {
         return this.http.get(this.GoogleMapUrl+keyword).map(res => {
-            console.log(`res ok ok`);
             let json = res.json();
-            console.log(`googlegetAUTO `,json.results);
             return json.results;
           })
     }
+
 }

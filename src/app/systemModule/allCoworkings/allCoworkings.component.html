@@ -1,0 +1,108 @@
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+
+<div class="all-coworkings" *ngIf="!isLoading">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="all-coworkings-flex">
+                    <div class="one-cowork-wr" *ngFor="let item of Coworkings">
+                        <div class="one-cowork">
+                            <a class="link-to-cowork" [routerLink]="['/coworking',item.id]">
+                                <span class="spanlink"></span>
+                            </a>
+                            <div class="img-cowork" [ngStyle]="{'background-image':'url(' + Images['act'+item.id] + ')'}"></div>
+                            <div class="description">
+                                <p class="name-c">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</p>
+                                <div class="flex-price">
+                                    <span class="price"><strong>Цена:</strong> {{item.price}}$</span>
+                                    <span class="capacity"><strong>Вместимость:</strong> {{item.capacity}}</span>
+                                </div>
+                                <p class="adress"><strong>Address:</strong> {{item.address}}</p>
+                                <p class="week">
+                                    <span *ngFor="let day of item.working_days;let j = index">| {{day.day.slice(0,2)}} </span>
+                                |</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <form class="search-form">
+                    <div class="col-md-12" *ngIf="RegistrationErr">
+                        <h2 class="error-msg">{{RegErrMsg}}</h2>
+                    </div>
+                    <h6 class="head-form">
+                        <span>Поиск</span>
+                    </h6>
+                        <div class="my-form-groupe">
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Название</p>
+                            </div>
+                            <div class="right-side side">
+                                <input class="input-text-style" type="text" name="fullname" [ngModel]="Params.full_name" (ngModelChange)="Params.full_name = $event">
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Описание</p>
+                            </div>
+                            <div class="right-side side">
+                                <input class="input-text-style" type="text" name="description" [ngModel]="Params.description" (ngModelChange)="Params.description = $event">
+                            </div>
+                        </div>
+                        <div class="row-inputs">
+                            <div class="left-side side">
+                                <p>Доп. информация</p>
+                            </div>
+                            <div class="right-side side">
+                                <input class="input-text-style" type="text" name="additional_info" [ngModel]="Params.additional_info" (ngModelChange)="Params.additional_info = $event">
+                            </div>
+                            </div>
+                    </div>
+                    <div class="advanced-search">
+                        <h6 class="head-form">
+                            <span>Дата и Время</span>
+                        </h6>
+                        <div class="my-form-groupe">
+                            <!--<div class="row-inputs">
+                                <div class="left-side side">
+                                    <p>Дата</p>
+                                </div>
+                                <div class="right-side side">
+                                    <input class="input-text-style" type="text"
+                                    #dp="bsDatepicker"
+                                    bsDatepicker [(bsValue)]="Params.date">
+                                </div>
+                            </div>-->
+                            <div class="row-inputs">
+                                <div class="left-side side">
+                                    <p>Время с</p>
+                                </div>
+                                <div class="right-side side">
+                                    <input class="input-text-style" type="time" name="from" [ngModel]="Params.from" (ngModelChange)="Params.from = $event">
+                                </div>
+                            </div>
+                            <div class="row-inputs">
+                                <div class="left-side side">
+                                    <p>Время по</p>
+                                </div>
+                                <div class="right-side side">
+                                    <input class="input-text-style" type="time" name="to" [ngModel]="Params.to" (ngModelChange)="Params.to = $event">
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="map">
+                        <agm-map [latitude]="55.751244" [longitude]="37.618423" (mapClick)="SetPoint($event)">
+                            <ng-container *ngIf="Params.lat && Params.lng">
+                                <agm-marker [markerDraggable]="true" [latitude]="Params.lat" [longitude]="Params.lng"></agm-marker>
+                            </ng-container>
+                        </agm-map>
+                    </div>
+                    <button class="butt-orange" (click)="CoworkingSearch()">Поиск</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

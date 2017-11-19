@@ -1,0 +1,55 @@
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+<div class="all-coworkings" *ngIf="!isLoading" >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search-form my-booking-user">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <p>NAME</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>ADDRESS</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>BEGIN</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>END</p>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <ng-container></ng-container>
+                    <div class="row" *ngFor="let item of Bookings;let i = index">
+                        <div class="col-md-1">
+                            <p class="open">
+                                <a [routerLink]="['/coworking',Coworkings[i]?Coworkings[i].id:'1']">Open</a>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>{{Coworkings[i]?Coworkings[i].full_name:'name'}}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{Coworkings[i]?Coworkings[i].address:'address'}}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>{{item.begin_date.split("T")[0]| date: "MM/d/y"}}  {{item.begin_date.split("T")[1].split(":")[0]}}{{item.begin_date | date: ":mm"}}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <p>{{item.end_date.split("T")[0]| date: "MM/d/y"}}  {{item.end_date.split("T")[1].split(":")[0]}}{{item.end_date | date: ":mm"}}</p>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="delete-booking" (click)="UnBooking(item.id)"></div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+        
+  

@@ -1,6 +1,7 @@
 export class BookingModel{
     constructor(
         public id?: number,
+        public seat_number?: number,
         public coworking_id?: number,
         public user_id?: number,
         public begin_date?: string,

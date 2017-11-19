@@ -66,6 +66,33 @@ export class AppComponent implements OnInit {
                         this.pushNotification.showNotification(name+' will finish in 5 minutes!','bottom','right');
                       });
                     }
+
+                    else if (message['event_type'] == 'cancel'){
+                      let name='';
+                      this.service.GetUserById(message['booking'].user_id).
+                      subscribe((any)=>{
+                        name = any.first_name;
+                        this.pushNotification.showNotification(name+' canceled booking!','bottom','right');
+                      });
+                    }
+
+                    else if (message['event_type'] == 'extending'){
+                      let name='';
+                      this.service.GetUserById(message['booking'].user_id).
+                      subscribe((any)=>{
+                        name = any.first_name;
+                        this.pushNotification.showNotification(name+' add more time to booking!','bottom','right');
+                      });
+                    }
+                    else if (message['event_type'] == 'leaving'){
+                      let name='';
+                      this.service.GetUserById(message['booking'].user_id).
+                      subscribe((any)=>{
+                        name = any.first_name;
+                        this.pushNotification.showNotification(name+' want to leave coworking!','bottom','right');
+                      });
+                    }
+
                     
                   }
                 );

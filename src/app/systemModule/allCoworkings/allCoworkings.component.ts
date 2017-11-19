@@ -59,8 +59,6 @@ export class AllCoworkingsComponent implements OnInit {
               });}}
               this.isLoading = false; 
             });
-          
-  
     }
 
     

@@ -101,6 +101,10 @@ export class NavbarComponent implements OnInit{
       return 'Dashboard';
     }
 
+    Navigate(params:string[]){
+        this.router.navigate(params);
+    }
+
     Logout(){
         this.service.Logout()
             .add(()=>{

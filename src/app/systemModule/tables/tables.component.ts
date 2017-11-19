@@ -40,7 +40,6 @@ export class TablesComponent implements OnInit {
 
     constructor(private service: MainService, private router: Router) { }
     
-    
     ngOnInit() 
     {
 
@@ -51,7 +50,6 @@ export class TablesComponent implements OnInit {
           this.meRole = res.role;
           this.meCwrk = res.coworking_id;
           if(this.meRole=='creator'||this.meRole=='receptionist')this.canAccess = true;
-            console.log(`router`,this.router);
           if(!this.canAccess)this.router.navigate(['/system','all_coworkings']);
             this.service.GetMe()
             .subscribe((user:UserModel)=>{
@@ -79,6 +77,7 @@ export class TablesComponent implements OnInit {
     }
 
     GetBookings(date?:Date){
+        this.isLoading = true;
         if(date)
             this.bsValue = date;
         let dateStr = this.bsValue.toISOString().split('T')[0];
@@ -112,13 +111,17 @@ export class TablesComponent implements OnInit {
                             }
 
 
-                            this.isLoading = false;
+                            
                             
                             
                         })
                 }
                 setTimeout(()=>{
-                    this.SetPositions();
+                    
+                    this.SetPositions(()=>{
+                        this.isLoading = false;
+                    });
+                    
                 },500);
             })
     }
@@ -147,11 +150,15 @@ export class TablesComponent implements OnInit {
         return this.Bookings.filter(x=>x.seat_number == n);
     }
 
-    SetPositions(){
+    SetPositions(callback:()=>void)
+    {
+        if($(".one-user-state").length == 0){
+            callback();
+            return;
+        }
 
-        $(".one-user-state").each(function () {
+        $(".one-user-state").each(function (e) {
             let width = count_time_width($(this).find(".from").text(), $(this).find(".to").text());
-            console.log(width);
             let margin = 0;
             if ($(this).find(".from").text() != '00:00') {
                 margin = count_time_width('00:00', $(this).find(".from").text());
@@ -164,8 +171,9 @@ export class TablesComponent implements OnInit {
                 $(this).parents(".place-info").addClass("height-big");
                 $(this).addClass("small-block");
             }
-           
-
+            if(e == ($(".one-user-state").length - 1)){
+                callback();
+            }
         });
         
         function count_time_width(firstDate, secondDate) {
@@ -190,7 +198,6 @@ export class TablesComponent implements OnInit {
 
     rateUser(id:number,score:string){
         this.service.rateUser(id, score).subscribe((respon:any)=>{
-                //console.log(respon);
                 this.Rates[id] = respon;
         });
     }
@@ -235,17 +242,14 @@ export class TablesComponent implements OnInit {
     onRatingChangeResult:OnRatingChangeEven;
  
     onClick = ($event:OnClickEvent) => {
-        //console.log('onClick $event: ', $event);
         this.onClickResult = $event;
     };
  
     onRatingChange = ($event:OnRatingChangeEven) => {
-        //console.log('onRatingUpdated $event: ', $event);
         this.onRatingChangeResult = $event;
     };
  
     onHoverRatingChange = ($event:OnHoverRatingChangeEvent) => {
-        //console.log('onHoverRatingChange $event: ', $event);
         this.onHoverRatingChangeResult = $event;
     };
 

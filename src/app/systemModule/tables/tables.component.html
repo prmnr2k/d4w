@@ -11,11 +11,11 @@
         <div class="time-show">
             <div>
                 <p>Начало</p>
-                <p> {{activeBooking.begin_date.split("T")[1].split(":")[0]}}{{activeBooking.begin_date | date:":mm"}}</p>
+                <p> {{activeBooking?.begin_date?.split("T")[1]?.split(":")[0]}}{{activeBooking?.begin_date | date:":mm"}}</p>
             </div>
             <div>
                 <p>Конец</p>
-                <p>{{activeBooking.end_date.split("T")[1].split(":")[0]}}{{activeBooking.end_date | date:":mm"}}</p>
+                <p>{{activeBooking?.end_date?.split("T")[1]?.split(":")[0]}}{{activeBooking?.end_date | date:":mm"}}</p>
             </div>
         </div>
 
@@ -37,8 +37,8 @@
             
             
     <div class="mask-nav-3" (click)="closeModal($event)"></div>
-<div class="coworking-stat-main-wrapp" *ngIf="meRole=='creator'||meRole=='receptionist'">
-    <ng-container *ngIf="!isLoading">
+<div [ngStyle]="{'display': isLoading?'none':'block'}" class="coworking-stat-main-wrapp" *ngIf="meRole=='creator'||meRole=='receptionist'">
+    <ng-container>
         
                 
 
@@ -161,23 +161,17 @@
             </div>
             <div class="place-info">
                 <div *ngFor="let item of GetBookingsBySeatNumber(i)" [ngClass]="{'started':item.is_visit_confirmed && !item.is_closed,'finished': item.is_closed }" class="one-user-state nav-button" (click)='openModal($event,item)'>
-                    <div class="from">{{item.begin_date.split("T")[1].split(":")[0]}}{{item.begin_date | date:":mm"}}</div>
+                    <div class="from">{{item?.begin_date?.split("T")[1]?.split(":")[0]}}{{item?.begin_date | date:":mm"}}</div>
                     <div class="who-is-it">
                         <div class="ava" [ngStyle]="{'background-image': 'url('+ Images[item.user_id] +')'}"></div>
                         <p class="name">{{Users[item.user_id]?.first_name}} {{Users[item.user_id]?.last_name}}</p>
                     </div>
-                    <div class="to">{{item.end_date.split("T")[1].split(":")[0]}}{{item.end_date | date:":mm"}}</div>
+                    <div class="to">{{item?.end_date?.split("T")[1]?.split(":")[0]}}{{item?.end_date | date:":mm"}}</div>
                 </div>
                 <!--
                 started finished
                 -->
             </div>
-        </div>
-    </div>
-    <div class="add-new-place">
-        <div class="butt-for-add">
-            <img src="img/Add.svg" class="img-responsive" alt="">
-            <p>Добавить место</p>
         </div>
     </div>
     

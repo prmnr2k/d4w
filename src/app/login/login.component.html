@@ -13,8 +13,8 @@
                 <div *ngIf="isLoginErr" class="col-md-12">
                     <h2 class="error-text-style">Incorrect email or password!</h2>
                 </div>
-                <input class="input-style-transp" type="text" placeholder="Еmail" name="email" [ngModel]="LoginParams.email" (ngModelChange)="LoginParams.email = $event">
-                <input class="input-style-transp" type="password" placeholder="Пароль" name="pw" [ngModel]="LoginParams.password" (ngModelChange)="LoginParams.password = $event">
+                <input autocomplete="off" class="input-style-transp" type="text" placeholder="Еmail" name="email" [ngModel]="LoginParams.email" (ngModelChange)="LoginParams.email = $event">
+                <input autocomplete="off" class="input-style-transp" type="password" placeholder="Пароль" name="pw" [ngModel]="LoginParams.password" (ngModelChange)="LoginParams.password = $event">
                 <button class="butt-orange" type="submit">Войти</button>
                 <a [routerLink]="['/system','all_coworkings']" class="butt-orange">Войти как гость</a>
                 <span class="forgot-pass" (click)="switchForm = !switchForm">Забыли пароль?</span>
@@ -26,7 +26,7 @@
             <form *ngIf="!switchForm">
                 <p class="head-text">Восстановление пароля</p>
                 <p class="head-text small-size">Введите ваш email, и мы отправим вам инструкции по восстановлению доступа к аккаунту</p>
-                <input class="input-style-transp" type="text" placeholder="Еmail">
+                <input autocomplete="off" class="input-style-transp" type="text" placeholder="Еmail">
                 <button class="butt-orange" type="submit">Восстановить</button>
                 <span class="forgot-pass" (click)="switchForm = !switchForm">Я помню пароль</span>
             </form>

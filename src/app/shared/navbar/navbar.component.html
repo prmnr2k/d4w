@@ -2,13 +2,13 @@
     <img src="../assets/img/main-logo.svg" alt="" class="img-responsive nav-logo">
     <div class="right-side" *ngIf="!isLoggedIn">
         <ul class="sign-menu-wr">
-            <li>
+            <li routerLinkActive="active">
                 <a routerLink="/login">Sign in</a>
             </li>
-            <li class="active">
+            <li routerLinkActive="active">
                 <a routerLink="/system/registration">Sign up as coworking</a>
             </li>
-            <li>
+            <li routerLinkActive="active">
                 <a routerLink="/system/userRegistration">Sign up as user</a>
             </li>
         </ul>
@@ -20,11 +20,19 @@
                     <div class="ava" [ngStyle]="{'background-image': 'url(' + Image + ')'}"></div>
                 </div>
                 <div class="drop-d">
-                    <div class="settings-wr my-row">
+                    <div class="settings-wr my-row" (click)="Navigate(['/system','user_profile'])">
                         <div class="settings">
                             <p>Настройки</p>
                             <div class="image">
                                 <img src="../assets/img/Settings.svg" class="img-responsive" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-wr my-row" (click)="Navigate(['/system','change_password'])">
+                        <div class="settings">
+                            <p>Спена пароля</p>
+                            <div class="image">
+                                <img src="../assets/img/key.svg" class="img-responsive" alt="">
                             </div>
                         </div>
                     </div>

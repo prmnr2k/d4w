@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
       this.isLoggedIn = bool;
       if(this.isLoggedIn)
           this.service.GetMe().subscribe(it =>{
-              console.log(it);
             }
           );
     });

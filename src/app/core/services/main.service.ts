@@ -150,7 +150,6 @@ export class MainService{
             user_id: user_id,
             score: score
         }
-        console.log(data);
         return this.http.PostData('/users/rate',JSON.stringify(data));
         
     }
@@ -272,11 +271,9 @@ export class MainService{
             'coworking_id':id,
             'email':email
         }
-        console.log('e-mail',params);
         return this.http.PostData('/access/grant_reception_access',JSON.stringify(params));
     }
     RemoveAccess(id:number){
-        console.log(`remove_id = `,id);
         return this.http.PostData('/access/remove_user_access',JSON.stringify({'user_id':id}));
     }
     RemoveAccessRequest(id:number){

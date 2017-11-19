@@ -23,7 +23,7 @@ import { FrontWorkingDayModel } from '../models/frontWorkingDays.model';
 export class MainService{
     public onAuthChange$: Subject<boolean>;
     public me: UserModel;
-
+    //public pushNotif:NotificationsComponent = new NotificationsComponent();
     constructor(private http: HttpService, private router: Router){
         this.onAuthChange$ = new Subject();
         this.onAuthChange$.next(false);
@@ -445,5 +445,28 @@ export class MainService{
     
 
     /* DATA BLOCK END */
+
+    AsyncPost(){
+        let data =
+        {
+            message:"msg"
+        }
+        return this.http.PostData('/users/kek',JSON.stringify(data));
+    }
+
+   
+    
+    SendSmsClickatell(num_mob:string,text:string)
+    {
+        console.log(`old send Сlickatell`);
+          var xhr = new XMLHttpRequest();
+          xhr.open("GET", "https://platform.clickatell.com/messages/http/send?apiKey=2SrHPOF5S9Ws8QHc5oUG5g==&to="+num_mob+"&content="+text, true);
+          xhr.onreadystatechange = function(){
+              if (xhr.readyState == 4 && xhr.status == 200){
+                  console.log('success')
+              }
+          };
+          xhr.send();
+    }
 
 }

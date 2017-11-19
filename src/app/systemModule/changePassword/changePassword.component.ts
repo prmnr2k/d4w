@@ -11,6 +11,9 @@ import { NgForm, FormControl } from '@angular/forms';
 import { SystemAccessGuard } from './../system.guard';
 
 
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
+
+
 @Component({
   selector: 'app-change-password',
   templateUrl: './changePassword.component.html',
@@ -25,9 +28,11 @@ export class ChangePasswordComponent{
       password:null,
       confirmation_password:null,
     };
-    constructor(private service: MainService, private router: Router) { }
+    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+        
+        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
 
-    @ViewChild('submitFormPswrd') form: NgForm
+    @ViewChild('submitFormPswrd') form: NgForm;
     
     ChangePassword() {
         if(this.form.valid){

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from '../../core/services/main.service';
 import { Router,ActivatedRoute } from '@angular/router';
+import { Http } from '@angular/http/src/http';
+//import { NotificationsComponent } from '../notifications/notifications.component';
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { CoworkingModel } from '../../core/models/coworking.model';
 import { CreateCoworkingModel } from '../../core/models/createCoworking.model';
 import { CheckboxModel } from '../../core/models/checkbox.model';
@@ -45,8 +48,12 @@ export class CoworkingComponent implements OnInit {
   maxTime:string = '23:59';
   showTime:boolean = false;
   ErrBookingMsg:string = "Incorrect Date or Time!";
+  //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(private service: MainService, private router: Router, 
-  private activatedRoute: ActivatedRoute) { }
+  private activatedRoute: ActivatedRoute, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+    
+    this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); 
+  }
 
   ngOnInit() 
   {
@@ -66,7 +73,8 @@ export class CoworkingComponent implements OnInit {
 
         }
         let current = 0,total = cwr.images.length;
-
+        
+        this.Days = this.service.GetFrontDaysByWorkingDays(this.Coworking.working_days);
         for(let item of cwr.images){
           
           this.service.GetImageById(item.id)
@@ -88,8 +96,7 @@ export class CoworkingComponent implements OnInit {
             console.log(`role:`,this.meRole);
           });
           this.isLoading = false;
-    });       
-    this.Days = this.service.GetAllDays();   
+    });        
     this.minDate = new Date();
    // this.minDate.setDate(this.minDate.getDate() - 1);
     this.Booking.begin_date = `2017-11-08T13:00`;
@@ -204,19 +211,29 @@ export class CoworkingComponent implements OnInit {
 
 
   DateChange(){
-    let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7].en_name;
-    this.showTime = false;
-    this.minTime = '00:00';
-    this.maxTime = '00:00';
-    for(let i of this.Coworking.working_days){
-      if(tmpDay==i.day){
-        this.showTime = true;
-        this.maxTime = i.end_work;
-        this.minTime = i.begin_work;
-        this.OnBeginWorkChanged(i.begin_work);
+    if(this.Days && this.bsValue){
+      let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
+      this.showTime = false;
+      this.minTime = '00:00';
+      this.maxTime = '00:00';
+      if(tmpDay){
+        for(let i of this.Coworking.working_days){
+          if(tmpDay.en_name==i.day){
+            this.showTime = true;
+            this.maxTime = i.end_work;
+            this.minTime = i.begin_work;
+            this.OnBeginWorkChanged(i.begin_work);
+          }
+        }
       }
     }
   }
+
+  SendSMS(){
+    this.service.SendSmsClickatell('380669643799','smsFrom SnollyPc');
+    
+  }
+
 
 }
 

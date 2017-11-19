@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 import { MainService } from './core/services/main.service';
 import { HttpService } from './core/services/http.service';
 import { AppAccessGuard } from './app.guard';
-import { LoadingModule } from './shared/loading/loading.module';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
 
@@ -24,7 +23,8 @@ import { PasswordValidationDirective } from './shared/directives/pass.validator.
 import { SystemModule } from './systemModule/system.module';
 import { LoginComponent } from 'app/login/login.component';
 
-
+import { Ng2CableModule } from 'ng2-cable';
+import { LoadingModule } from 'app/shared/loading/loading.module';
 
 @NgModule({
   declarations: [
@@ -37,9 +37,10 @@ import { LoginComponent } from 'app/login/login.component';
     HttpModule,
     RouterModule,
     AppRoutingModule,
-    LoadingModule,
+    Ng2CableModule,
     //LoginModule,
-    SystemModule
+    SystemModule,
+    LoadingModule
   ],
   providers: [MainService, HttpModule, HttpService, AppAccessGuard],
   bootstrap: [AppComponent]

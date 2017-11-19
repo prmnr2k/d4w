@@ -10,6 +10,7 @@ import { BookingModel } from '../../core/models/booking.model';
 
 import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/star-rating-struct";
 import { RateModel } from 'app/core/models/rate.model';
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
 
 declare var jquery:any;
 declare var $ :any;
@@ -38,8 +39,9 @@ export class TablesComponent implements OnInit {
     Images:string[] = [];
     activeBooking:BookingModel = new BookingModel();
 
-    constructor(private service: MainService, private router: Router) { }
-    
+    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
+    }
     ngOnInit() 
     {
 
@@ -64,16 +66,10 @@ export class TablesComponent implements OnInit {
                             this.WorkingPlaces = Array(this.Coworking.capacity).fill(1).map((x,i)=>i+1);
 
                             this.GetBookings();
-                                
                         }
                     })
-                   
             })
         });
-
-        
-            
-
     }
 
     GetBookings(date?:Date){
@@ -105,15 +101,8 @@ export class TablesComponent implements OnInit {
                             if(usr.image_id){
                                 this.service.GetImageById(usr.image_id).subscribe((img:Base64ImageModel)=>{
                                     this.Images[usr.id] = img.base64;
-
-
                                 });
                             }
-
-
-                            
-                            
-                            
                         })
                 }
                 setTimeout(()=>{

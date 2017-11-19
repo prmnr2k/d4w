@@ -12,6 +12,10 @@ import { TokenModel } from '../../core/models/token.model';
 import { FrontWorkingDayModel } from '../../core/models/frontWorkingDays.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
 
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
+
+
+
 @Component({
   selector: 'app-edit-coworking',
   templateUrl: './editCoworking.component.html',
@@ -30,9 +34,13 @@ export class EditCoworkingComponent implements OnInit {
     coworkingWorkers:UserModel[] = [];
     coworkingWorkersRequest:WorkerRequestModel[] = [];
     coworkingWorkersRequestUser:UserModel[] = [];
+    
     flagForImages:boolean = true;
     imagesCount:number = 5;
-    constructor(private service: MainService, private router: Router) { }
+    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+        
+        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); 
+    }
 
     @ViewChild('submitFormCwrc') form: NgForm;
 

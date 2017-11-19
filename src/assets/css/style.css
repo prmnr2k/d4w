@@ -86,6 +86,10 @@ html, body {
   text-align: center;
   outline: none; }
 
+input:disabled {
+  opacity: 0.7 !important;
+  cursor: no-drop !important; }
+
 .butt-orange {
   max-width: 275px;
   width: 100%;
@@ -100,6 +104,9 @@ html, body {
   font-size: 14px;
   border: none;
   line-height: 26px; }
+  .butt-orange:disabled {
+    opacity: 0.7;
+    cursor: no-drop; }
 
 .input-text-style {
   outline: none;
@@ -1157,8 +1164,8 @@ input::-webkit-inner-spin-button {
         position: absolute;
         top: 50%;
         left: 50%;
-        -webkit-transform: translate(-50%);
-                transform: translate(-50%);
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
         height: 14px;
         background: #FF8026; }
 

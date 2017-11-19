@@ -3,30 +3,30 @@
 
 
 <div class="wrapp-for-forms" *ngIf="!isLoading">
-    <h2 class="error-msg" *ngIf="BookingErr">{{ErrBookingMsg}}</h2>
-    <h2 class="succes-msg" *ngIf="BookingOk">Booking Success!</h2>
+       
     <span *ngIf="(meRole=='receptionist'&&meCowork==Coworking.id)||(meRole=='creator'&&meCowork==Coworking.id)" class="label label-info" style="font-size:12px; padding:10px;">You are Admin!</span>
     <h6 class="head-form">
-        <span>Коворкинг "{{Coworking.full_name}}"</span>
+        <span>Коворкинг "{{Coworking?.full_name}}"</span>
     </h6>
     <div class="avatar-img" [ngStyle]="{'background-image': 'url('+ Image +')'}"></div>
     <div class="description-coworking-wr">
         <div class="description-coworking">
-                <p><strong>Цена: </strong>{{Coworking.price}}$</p>
-                <p><strong>Кол-во мест: </strong>{{Coworking.capacity}}</p>
-                <p><strong>Адрес: </strong>{{Coworking.address}}</p>
-                <p><strong>Описание: </strong> {{Coworking.description}}</p>
+                <p><strong>Цена: </strong>{{Coworking?.price}}$</p>
+                <p><strong>Кол-во мест: </strong>{{Coworking?.capacity}}</p>
+                <p><strong>Адрес: </strong>{{Coworking?.address}}</p>
+                <p><strong>Описание: </strong> {{Coworking?.description}}</p>
         </div>
         <h6 class="head-form">
             <span>Рабочие дни</span>
         </h6>
         <div class="flex-time-working">
-            <div class="one-day" *ngFor="let item of Coworking.working_days;let i = index">
-                <p class="week-day"><strong>{{item.day}}</strong></p>
-                <p>c <strong>{{item.begin_work}}</strong> по <strong>{{item.end_work}}</strong></p>
-
-            </div>
-            
+            <ng-container *ngIf="Coworking && Coworking.working_days">
+                <div class="one-day" *ngFor="let item of Coworking.working_days;let i = index">
+                    <p class="week-day"><strong>{{item.day}}</strong></p>
+                    <p>c <strong>{{item.begin_work}}</strong> по <strong>{{item.end_work}}</strong></p>
+                
+                </div>
+            </ng-container>
         </div>
         <h6 class="head-form">
             <span>Услуги</span>
@@ -42,7 +42,7 @@
         </div>
         <div class="slider-images-coworking-wr">
             
-            <div class="one-slide" *ngFor="let img of Images; let i = index" [ngStyle]="{'background-image': 'url('+ img.base64 +')'}"></div>
+            <div class="one-slide" *ngFor="let img of Images; let i = index" [ngStyle]="{'background-image': 'url('+ img?.base64 +')'}"></div>
            
         </div>
     </div>
@@ -50,6 +50,8 @@
         <h6 class="head-form">
             <span>Бронирование</span>
         </h6>
+        <h2 class="error-text-style" *ngIf="BookingErr">{{ErrBookingMsg}}</h2>
+        <h2 class="error-text-style" *ngIf="BookingOk">Booking Success!</h2>
         <div class="booking-user-wr">
             <div class="my-form-groupe-2">
                 <div class="one-day">

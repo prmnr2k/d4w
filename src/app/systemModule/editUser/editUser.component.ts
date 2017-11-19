@@ -8,6 +8,9 @@ import { Base64ImageModel } from '../../core/models/base64image.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
 import { NgForm, FormControl } from '@angular/forms';
 
+import { Ng2Cable, Broadcaster } from 'ng2-cable';
+
+
 @Component({
   selector: 'app-edit-user',
   templateUrl: './editUser.component.html',
@@ -20,9 +23,11 @@ export class EditUserComponent implements OnInit {
     User = new CreateUserModel();
     UserId:number = 0;
     meRole:string = 'guest';
-    constructor(private service: MainService, private router: Router) { }
+    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+        
+        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
 
-    @ViewChild('submitFormUsr') form: NgForm
+    @ViewChild('submitFormUsr') form: NgForm;
     
     ngOnInit() 
     {

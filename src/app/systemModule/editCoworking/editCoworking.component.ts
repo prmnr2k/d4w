@@ -54,6 +54,7 @@ export class EditCoworkingComponent implements OnInit {
                     .subscribe((cwr:CoworkingModel[])=>{
                         this.CoworkingId = cwr[0].id;
                         console.log(cwr);
+                        this.imagesCount = 5 - cwr[0].images.length;
                         this.InitByCoworking(cwr[0]);
                         this.service.GetMyAccess()
                         .subscribe((res)=>{

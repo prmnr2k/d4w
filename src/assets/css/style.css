@@ -506,8 +506,7 @@ input:disabled {
           width: 100px;
           border: none;
           background: #fff;
-          border-bottom: 1px dashed rgba(0, 0, 0, 0.12);
-          text-align: right; }
+          border-bottom: 1px dashed rgba(0, 0, 0, 0.12); }
         .my-form-groupe-2 .one-day .left-side-t .inputs span {
           padding: 0 15px; }
         .my-form-groupe-2 .one-day .left-side-t .inputs.checked-day .input-time-style {
@@ -790,7 +789,8 @@ input::-webkit-inner-spin-button {
     background: #FAFAFA; }
     .navigation .right-side .ava-and-settings p {
       margin-right: 16px;
-      margin-bottom: 0; }
+      margin-bottom: 0;
+      text-align: right; }
     .navigation .right-side .ava-and-settings .ava-wr {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -803,8 +803,9 @@ input::-webkit-inner-spin-button {
       -webkit-transition: 0.3s;
       transition: 0.3s;
       z-index: 50;
-      padding: 16px 20px 16px 55px;
-      transition: 0.3s; }
+      padding: 16px 20px 16px 70px;
+      transition: 0.3s;
+      text-align: right; }
       .navigation .right-side .ava-and-settings .ava-wr .ava {
         width: 40px;
         height: 40px;
@@ -852,7 +853,8 @@ input::-webkit-inner-spin-button {
           display: flex;
           -webkit-box-align: center;
               -ms-flex-align: center;
-                  align-items: center; }
+                  align-items: center;
+          text-align: right; }
         .navigation .right-side .ava-and-settings .drop-d .my-row .image {
           width: 40px;
           height: 40px;
@@ -922,8 +924,8 @@ input::-webkit-inner-spin-button {
       margin-right: 5px !important; }
 
 .error-text-style {
-  font-size: 16px;
-  color: #FF8026;
+  font-size: 20px;
+  color: #000;
   text-align: center;
   padding: 10px 0 25px 0; }
 

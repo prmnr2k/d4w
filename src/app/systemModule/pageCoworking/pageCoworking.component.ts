@@ -47,6 +47,7 @@ export class CoworkingComponent implements OnInit {
   minTime:string = '00:00';
   maxTime:string = '23:59';
   showTime:boolean = false;
+  errTime:boolean = true;
   ErrBookingMsg:string = "Incorrect Date or Time!";
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(private service: MainService, private router: Router, 
@@ -161,28 +162,34 @@ export class CoworkingComponent implements OnInit {
   }
 
   OnBeginWorkChanged($event:any){
+   
     let beginArr = $event.split(":");
     let beginHour =  +beginArr[0];
     
       let endHour = +beginArr[0] + 1;
-     
+    
       if(!this.validateMinTime(endHour+":"+beginArr[1]))  this.toTime = this.maxTime;
      else{
       let endHourString:string;
       if(endHour<10) endHourString="0"+endHour; else endHourString = ''+endHour;
       this.fromTime = $event;
+    
       this.toTime = endHourString + ":" + beginArr[1];
      }
-
+     if(this.fromTime>=this.minTime&&this.fromTime<this.maxTime) this.errTime = false;
+     else this.errTime = true;
+    
   }
 
   OnEndWorkChanged($event:any){
-  
+
   // if(this.validateMinTime($event))
     this.toTime = $event;
  //   else this.toTime = this.maxTime;
-
-    console.log(this.toTime);
+    if(this.toTime>this.maxTime||this.toTime<this.minTime)this.errTime = true;
+    else this.errTime = false;
+  
+    console.log(this.toTime,this.maxTime,this.toTime>this.maxTime);
   }
 
   validateMinTime($event:any){

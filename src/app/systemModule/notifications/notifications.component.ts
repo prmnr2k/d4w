@@ -12,9 +12,8 @@ export class NotificationsComponent implements OnInit {
 
   sound = new Audio();
   constructor() {
-    this.sound.src = "https://wav-library.net/sounds/0-0-1-17733-20";
+    this.sound.src = "https://wav-library.net/sounds/0-0-1-19124-20";
     this.sound.load();
-
   }
   ngOnInit() {
   }
@@ -49,6 +48,7 @@ export class NotificationsComponent implements OnInit {
         document.getElementById('id-but').style.color='green';
         document.getElementById('id-but').setAttribute("disabled","disabled");
       };
+      
       this.sound.play();
   }
 

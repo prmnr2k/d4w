@@ -124,6 +124,7 @@ input{
      border: 1px solid rgba(0,0,0,0.12);
     display: block;
     min-width: 350px;
+    resize: none;
 }
 
 
@@ -1064,6 +1065,9 @@ input::-webkit-inner-spin-button {
                         font-size: 16px;
                         font-family: OpenSansSemiBold;
                         transition: 0.3s;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
                     }
                     .flex-price{
                         display: flex;

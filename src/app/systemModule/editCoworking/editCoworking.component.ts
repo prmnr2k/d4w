@@ -37,6 +37,7 @@ export class EditCoworkingComponent implements OnInit {
     oldEmail:string = "";
     flagForImages:boolean = true;
     imagesCount:number = 5;
+    arrorTime:string = '';
     constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
         
         this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); 
@@ -203,7 +204,9 @@ export class EditCoworkingComponent implements OnInit {
             return false;
         }
         if(!this.Coworking.working_days || this.Coworking.working_days.length == 0 || this.Coworking.working_days.filter(x=> !x.begin_work || !x.end_work).length > 0){
-            this.RegErrMsg = "Input working days!";
+            
+            this.arrorTime = "Input working days!";
+
             return false;
         }
         if(!this.checkWorkingTime()){

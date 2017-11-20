@@ -28,7 +28,7 @@
                     <p>Полное название коворкинга</p>
                 </div>
                 <div class="right-side side">
-                    <input type="text" maxlength="20" class="input-text-style" autocomplete="off"  name="fullname" [ngModel]="Coworking.full_name" (ngModelChange)="Coworking.full_name = $event" >
+                    <input type="text" maxlength="35" class="input-text-style" autocomplete="off"  name="fullname" [ngModel]="Coworking.full_name" (ngModelChange)="Coworking.full_name = $event" >
                 </div>
             </div>
             <div class="row-inputs">
@@ -36,7 +36,7 @@
                     <p>Сокращенное название коворкинга</p>
                 </div>
                 <div class="right-side side">
-                    <input autocomplete="off" type="text" class="input-text-style" name="short_name" [ngModel]="Coworking.short_name" (ngModelChange)="Coworking.short_name = $event" >
+                    <input autocomplete="off" maxlength="20" type="text" class="input-text-style" name="short_name" [ngModel]="Coworking.short_name" (ngModelChange)="Coworking.short_name = $event" >
                 </div>
             </div>
             <div ngModelGroup="passwordGroup" #passwordGroup="ngModelGroup" validateEqual password="password" confirmation="passwordConfirmation">
@@ -117,7 +117,7 @@
                     <p>Описание:</p>
                 </div>
                 <div class="right-side side">
-                    <input autocomplete="off" type="text" class="input-text-style" name="description" [ngModel]="Coworking.description" (ngModelChange)="Coworking.description = $event">
+                    <textarea autocomplete="off" type="text" class="input-text-style" name="description" [ngModel]="Coworking.description" (ngModelChange)="Coworking.description = $event"></textarea>
                 </div>
             </div>
             <div class="row-inputs">
@@ -136,7 +136,7 @@
                     <p>Фамилия</p>
                 </div>
                 <div class="right-side side">
-                    <input class="input-text-style" type="text" autocomplete="off" #lastN="ngModel" name="lname" [ngModel]="Coworking.last_name" (ngModelChange)="Coworking.last_name = $event" required>
+                    <input class="input-text-style" type="text" maxlength="20" autocomplete="off" #lastN="ngModel" name="lname" [ngModel]="Coworking.last_name" (ngModelChange)="Coworking.last_name = $event" required>
                     <p *ngIf="lastN.invalid && lastN.touched" class="red-error">Last name can`t be empty!</p>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                     <p>Имя</p>
                 </div>
                 <div class="right-side side">
-                    <input autocomplete="off" class="input-text-style" type="text" #firstN="ngModel" name="fname" [ngModel]="Coworking.first_name" (ngModelChange)="Coworking.first_name = $event" required>
+                    <input autocomplete="off" class="input-text-style" maxlength="20" type="text" #firstN="ngModel" name="fname" [ngModel]="Coworking.first_name" (ngModelChange)="Coworking.first_name = $event" required>
                     <p *ngIf="firstN.invalid && firstN.touched" class="red-error">First name can`t be empty!</p>
                 </div>
             </div>

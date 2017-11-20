@@ -47,7 +47,7 @@ export class CoworkingComponent implements OnInit {
   minTime:string = '00:00';
   maxTime:string = '23:59';
   showTime:boolean = false;
-  errTime:boolean = false;
+  errTime:boolean = true;
   ErrBookingMsg:string = "Incorrect Date or Time!";
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(private service: MainService, private router: Router, 

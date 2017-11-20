@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                         subscribe((any)=>{
-                          name = any.first_name.slice(0,30);;
+                          name = any.first_name.slice(0,20);
                          
                          this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
                         //this.pushNotification.showNotification('User is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);  
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name.slice(0,30);;
+                        name = any.first_name.slice(0,20);
                         this.pushNotification.showNotification(name+' will arrive in 15 minutes!','bottom','right');
                       });
                     }
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit {
                         this.service.GetUserById(message['booking'].user_id).
                           subscribe((any)=>{
                             phone = any.phone;
-                            name = any.first_name.slice(0,30);;
+                            name = any.first_name.slice(0,20);
                           this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);                   
                         });
                       }
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name.slice(0,30);;
+                        name = any.first_name.slice(0,20);
                         this.pushNotification.showNotification(name+' will finish in 5 minutes!','bottom','right');
                       });
                     }
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name.slice(0,30);
+                        name = any.first_name.slice(0,20);
                         this.pushNotification.showNotification(name+' canceled booking!','bottom','right');
                       });
                     }
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name.slice(0,30);
+                        name = any.first_name.slice(0,20);
                         this.pushNotification.showNotification(name+' add more time to booking!','bottom','right');
                       });
                     }
@@ -93,7 +93,7 @@ export class AppComponent implements OnInit {
                       let name='';
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
-                        name = any.first_name.slice(0,30);
+                        name = any.first_name.slice(0,20);
                         this.pushNotification.showNotification(name+' want to leave coworking!','bottom','right');
                       });
                     }

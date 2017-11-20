@@ -23,6 +23,7 @@ export class EditUserComponent implements OnInit {
     User = new CreateUserModel();
     UserId:number = 0;
     meRole:string = 'guest';
+    oldEmail:string = '';
     constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
         
         this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
@@ -54,6 +55,7 @@ export class EditUserComponent implements OnInit {
                     
                 },
                 (err:any)=>{
+                    this.isLoading = false;
                     console.log('delete err');
                     console.log(err);
                 });
@@ -64,6 +66,7 @@ export class EditUserComponent implements OnInit {
     InitByUser(usr:UserModel){
         console.log(usr);
         this.User = this.service.UserModelToCreateUserModel(usr);
+        this.oldEmail = usr.email?usr.email:'';
         this.UserId = usr.id?usr.id:0;
         if(usr.image_id){
             this.service.GetImageById(usr.image_id)
@@ -76,52 +79,59 @@ export class EditUserComponent implements OnInit {
 
 
     UpdateUser(){
+        this.RegistrationErr = false;
         if(this.form.valid){
             this.isLoading = true;
-            this.RegistrationErr = false;
             if(!this.CheckUsr()){
                 this.RegistrationErr = true;
                 this.isLoading = false;
                 
                 return;
             }
-            this.service.checkUserByEmail(this.User.email).subscribe((ressponjo:any)=>{
-                console.log(ressponjo);
-                if(ressponjo.exists){
-                    console.log("susestv");
-                    this.RegErrMsg = 'This email is already taken! ';
-                    this.RegistrationErr = true;
-                    this.isLoading = false;
-                }
-                else{
-                    this.service.UpdateMe(this.User)
-                    .subscribe((res:UserModel)=>{
-                        console.log('ok!');
-                        console.log(res);
-                        this.InitByUser(res);
-                        this.isLoading = false;
-                        this.service.onAuthChange$.next(true);
-                    },
-                    (err:any)=>{
-                        if(err.status == 422){
-                            let body:any = JSON.parse(err._body); 
-                            this.RegErrMsg = this.service.CheckErrMessage(body);
-                            
-                        }
-                        else {
-                            this.RegErrMsg = "Cannot update profile: " + err.body;
-                        }
+            if(this.User.email == this.oldEmail){
+                this.finalUpdate();
+            }
+            else{
+                this.service.checkUserByEmail(this.User.email).subscribe((ressponjo:any)=>{
+                    console.log(ressponjo);
+                    if(ressponjo.exists){
+                        console.log("susestv");
+                        this.RegErrMsg = 'This email is already taken! ';
                         this.RegistrationErr = true;
                         this.isLoading = false;
-                        
-                    })
-                    console.log(ressponjo.exists);
-                    this.isLoading = false;
-                    this.RegistrationErr = false;
-                }
-            });
-            
+                    }
+                    else{
+                        this.finalUpdate();
+                    }
+                });
+            }
         }
+    }
+
+    finalUpdate() {
+        this.service.UpdateMe(this.User)
+        .subscribe((res:UserModel)=>{
+            console.log('ok!');
+            console.log(res);
+            this.InitByUser(res);
+            this.isLoading = false;
+            this.service.onAuthChange$.next(true);
+        },
+        (err:any)=>{
+            if(err.status == 422){
+                let body:any = JSON.parse(err._body); 
+                this.RegErrMsg = this.service.CheckErrMessage(body);
+                
+            }
+            else {
+                this.RegErrMsg = "Cannot update profile: " + err.body;
+            }
+            this.RegistrationErr = true;
+            this.isLoading = false;
+            
+        })
+        this.isLoading = false;
+        this.RegistrationErr = false;
     }
 
     CheckUsr(){
@@ -141,6 +151,7 @@ export class EditUserComponent implements OnInit {
             return false;
         }
        
+        
         return true;
     }
 

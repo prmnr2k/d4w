@@ -66,7 +66,7 @@ export class RegistrationComponent implements OnInit {
                 console.log(ressponjo);
                 if(ressponjo.exists){
                     console.log("susestv");
-                    this.RegErrMsg = 'email is existed';
+                    this.RegErrMsg = 'Email is existed!';
                     this.RegistrationErr = true;
                     this.isLoading = false;
                 }

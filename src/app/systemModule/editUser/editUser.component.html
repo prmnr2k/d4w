@@ -6,6 +6,7 @@
                 <span>Изменение профиля</span>
             </h6>
     
+        <h2 *ngIf="RegistrationErr" class="error-text-style">{{RegErrMsg}}</h2>
             <div class="avatar-img hovered" [ngStyle]="{'background-image': 'url('+User.image+')'}"></div>
             <label class="file_upload">
                 <span class="button">Загрузить аватар</span>
@@ -26,7 +27,7 @@
                         <p>Фамилия</p>
                     </div>
                     <div class="right-side side">
-                        <input class="input-text-style" type="text" autocomplete="off" #lastN="ngModel" name="lname"  [ngModel]="User.last_name" (ngModelChange)="User.last_name = $event" required>
+                        <input class="input-text-style" type="text" maxlength="60" autocomplete="off" #lastN="ngModel" name="lname"  [ngModel]="User.last_name" (ngModelChange)="User.last_name = $event" required>
                         <p *ngIf="lastN.invalid && lastN.touched" class="red-error">Last name can`t be empty!</p>
                     </div>
                 </div>
@@ -35,7 +36,7 @@
                         <p>Имя</p>
                     </div>
                     <div class="right-side side">
-                        <input autocomplete="off" class="input-text-style" type="text" #firstN="ngModel" name="fname" [ngModel]="User.first_name" (ngModelChange)="User.first_name = $event" required>
+                        <input autocomplete="off" class="input-text-style" type="text" maxlength="60" #firstN="ngModel" name="fname" [ngModel]="User.first_name" (ngModelChange)="User.first_name = $event" required>
                         <p *ngIf="firstN.invalid && firstN.touched" class="red-error">First name can`t be empty!</p>
                     </div>
                 </div>
@@ -56,9 +57,6 @@
                         <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="User.address" (ngModelChange)="User.address = $event">
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12" *ngIf="RegistrationErr">
-                <h2 class="error-text-style">{{RegErrMsg}}</h2>
             </div>
             <button class="butt-orange" type="submit" [disabled]="!submitFormUsr.valid">Сохранить</button>
             <div class="clearfix"></div>

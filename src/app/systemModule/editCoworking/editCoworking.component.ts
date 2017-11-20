@@ -142,24 +142,36 @@ export class EditCoworkingComponent implements OnInit {
                 this.isLoading = false;
                 return;
             }
-            this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
-                .subscribe((res:CoworkingModel)=>{
-                    this.InitByCoworking(res);
-                    this.isLoading = false;
-                    this.service.onAuthChange$.next(true);
-                },
-                (err:any)=>{
-                    if(err.status == 422){
-                        let body:any = JSON.parse(err._body); 
-                        this.RegErrMsg = this.service.CheckErrMessage(body);
-                        
-                    }
-                    else {
-                        this.RegErrMsg = "Can`t update coworking: " + err.body;
-                    }
+            this.service.checkUserByEmail(this.Coworking.email).subscribe((ressponjo:any)=>{
+                if(ressponjo.exists){
+                    console.log("susestv");
+                    this.RegErrMsg = 'This email is already taken! ';
                     this.RegistrationErr = true;
                     this.isLoading = false;
-                });
+                }
+                else{
+                    this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
+                        .subscribe((res:CoworkingModel)=>{
+                            this.InitByCoworking(res);
+                            this.isLoading = false;
+                            this.service.onAuthChange$.next(true);
+                        },
+                        (err:any)=>{
+                            if(err.status == 422){
+                                let body:any = JSON.parse(err._body); 
+                                this.RegErrMsg = this.service.CheckErrMessage(body);
+                                
+                            }
+                            else {
+                                this.RegErrMsg = "Can`t update coworking: " + err.body;
+                            }
+                            this.RegistrationErr = true;
+                            this.isLoading = false;
+                        });
+                    this.isLoading = false;
+                    this.RegistrationErr = false;
+                }
+            });
         }
     }
 

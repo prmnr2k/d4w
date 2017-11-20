@@ -30,6 +30,7 @@ import { SystemRoutingModule } from './system.routing';
 import { LbdModule } from 'app/systemModule/lbd/lbd.module';
 import { SystemComponent } from 'app/systemModule/system.component';
 import { SystemAccessGuard } from './system.guard';
+import { IdBookingComponent } from './idBooking/idBooking.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { SystemAccessGuard } from './system.guard';
     CoworkingComponent,
     EditUserComponent,
     ChangePasswordComponent,
-    SystemComponent
+    SystemComponent,
+    IdBookingComponent
   ],
   imports: [
     CommonModule,

@@ -5,12 +5,13 @@
                     <h6 class="head-form">
                         <span>Изменение коворкинга</span>
                     </h6>
-                    
+                        <h2 class="error-text-style">{{RegErrMsg}}</h2>
                     <div class="avatar-img hovered" [ngStyle]="{'background-image': 'url('+Coworking.image+')'}"></div>
                     <label class="file_upload">
                         <span class="button">Загрузить аватар</span>
                         <input accept=".jpg, .jpeg, .png" type="file" (change)="loadLogo($event)">
                     </label>
+                    
                     <div class="my-form-groupe">
                         <div class="row-inputs">
                             <div class="left-side side">
@@ -52,7 +53,7 @@
                                 <p>Количество мест</p>
                             </div>
                             <div class="right-side side">
-                                <input autocomplete="off" type="number" min="0" class="input-text-style" name="capacity" [ngModel]="Coworking.capacity" (ngModelChange)="Coworking.capacity = $event">
+                                <input autocomplete="off" type="number" min="0" pattern="^[0-9]+$" class="input-text-style" name="capacity" [ngModel]="Coworking.capacity" (ngModelChange)="Coworking.capacity = $event">
                             </div>
                         </div>
             
@@ -61,7 +62,7 @@
                                 <p>Цена ($/час)</p>
                             </div>
                             <div class="right-side side">
-                                <input autocomplete="off" type="number" min="0" class="input-text-style" name="price" [ngModel]="Coworking.price" (ngModelChange)="Coworking.price = $event">
+                                <input autocomplete="off" type="number" min="0" pattern="^[0-9]+$" class="input-text-style" name="price" [ngModel]="Coworking.price" (ngModelChange)="Coworking.price = $event">
                             </div>
                         </div>
             
@@ -166,9 +167,6 @@
                                 <label [for]="'check-nyshtiak-'+i"></label>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-12" *ngIf="RegistrationErr">
-                        <h2 class="error-msg">{{RegErrMsg}}</h2>
                     </div>
                     <button class="butt-orange" [disabled]="!submitFormCwrc.valid" type="submit">Изменить коворкинг</button>
                 </form>

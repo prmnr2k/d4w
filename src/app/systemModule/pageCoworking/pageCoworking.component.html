@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <button class="butt-orange" type="submit" [class.btn-danger]="!showTime" [disabled]="!showTime">{{showTime?"Booking Coworking":"Select Working Day"}}</button>
+        <button class="butt-orange" type="submit" [class.btn-danger]="!showTime" [class.btn-danger]="errTime" [disabled]="!showTime" [disabled]="errTime">{{showTime&&!errTime?"Booking Coworking":"Select Working Day and Time"}}</button>
     </form>
     <div *ngIf="meRole=='user'" >
         <form class="form-inline" style="text-align:center;" (ngSubmit)="receptionCoworking()">

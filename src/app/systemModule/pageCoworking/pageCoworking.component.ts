@@ -16,7 +16,7 @@ import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 declare var jquery:any;
 declare var $ :any;
-
+declare var gapi :any;
 
 
 @Component({
@@ -117,8 +117,10 @@ export class CoworkingComponent implements OnInit {
     subscribe( (any) =>{
       console.log(`i booking!!`,any);
       this.BookingErr = false;
+      this.addEventGoogleCalendar(this.Booking);
       this.router.navigate(['/my_bookings']);
       this.BookingOk = true;
+      
     },
     (err)=>{
       console.log(`error = `,err);
@@ -240,7 +242,46 @@ export class CoworkingComponent implements OnInit {
     this.service.SendSmsClickatell('380669643799','smsFrom SnollyPc');
     
   }
+  addEventGoogleCalendar(book:BookingModel){
+    console.log(`start G CALENDAR event`,book);
 
+    let clientId = '955641291165-ah9q59fs2mqvmdjsolthjtalenqrm36v.apps.googleusercontent.com';
+    let apiKey = 'AIzaSyC_AVRBRTKnnd2C8ZBQxwv708KiCFnYti0';
+    let scopes = ['https://www.googleapis.com/auth/plus.me','https://www.googleapis.com/auth/calendar.readonly'];
+    let logoutUrl = 'https://accounts.google.com/o/oauth2/revoke?token=';
+
+
+    gapi.client.setApiKey(apiKey);
+    var authorisationRequestData =
+    {
+      'client_id': clientId, 
+      'scope': scopes, 
+      'immediate':true
+    } 
+    gapi.auth.authorize(authorisationRequestData,
+      (authenticationResult) => {
+        if(authenticationResult && !authenticationResult.error){
+         
+        }
+        else {
+          
+        }
+      }
+      );
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
 
 }
 

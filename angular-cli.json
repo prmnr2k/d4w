@@ -33,6 +33,9 @@
         "assets/js/jquery.js",
         "assets/js/bootstrap.min.js",
         "assets/js/slick.min.js",
+  
+        "../node_modules/bootstrap/dist/js/bootstrap.js",
+        "../node_modules/bootstrap-notify/bootstrap-notify.js",
         "../node_modules/chartist/dist/chartist.js"
       ],
       "environmentSource": "environments/environment.ts",

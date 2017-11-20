@@ -20,9 +20,7 @@
                                 <p class="adress"><strong>Address:</strong> {{item.address}}</p>
                                 <p class="week">
                                     <span *ngFor="let day of item.working_days;let j = index">| {{day.day.slice(0,2)}} </span>
-
-                                    
-                                    |</p>
+                                |</p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +65,7 @@
                             <span>Дата и Время</span>
                         </h6>
                         <div class="my-form-groupe">
-                            <div class="row-inputs">
+                            <!--<div class="row-inputs">
                                 <div class="left-side side">
                                     <p>Дата</p>
                                 </div>
@@ -76,7 +74,7 @@
                                     #dp="bsDatepicker"
                                     bsDatepicker [(bsValue)]="Params.date">
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="row-inputs">
                                 <div class="left-side side">
                                     <p>Время с</p>

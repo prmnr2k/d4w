@@ -6,13 +6,13 @@ import { CreateCoworkingModel } from './../../core/models/createCoworking.model'
 import { WorkerRequestModel } from './../../core/models/workerRequest.model';
 import { CheckboxModel } from './../../core/models/checkbox.model';
 import { WorkingDayModel } from './../../core/models/workingDay.model';
-import { UserModel } from './../../core/models/user.model';
 import { NgForm, FormControl } from '@angular/forms';
 import { TokenModel } from '../../core/models/token.model';
 import { FrontWorkingDayModel } from '../../core/models/frontWorkingDays.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
+import { UserModel } from 'app/core/models/user.model';
 
 
 
@@ -34,7 +34,7 @@ export class EditCoworkingComponent implements OnInit {
     coworkingWorkers:UserModel[] = [];
     coworkingWorkersRequest:WorkerRequestModel[] = [];
     coworkingWorkersRequestUser:UserModel[] = [];
-    
+    oldEmail:string = "";
     flagForImages:boolean = true;
     imagesCount:number = 5;
     constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
@@ -99,7 +99,7 @@ export class EditCoworkingComponent implements OnInit {
         this.CoworkingId = cwrk.id?cwrk.id:0;
         this.Coworking.first_name = this.Me.first_name?this.Me.first_name:'';
         this.Coworking.last_name = this.Me.last_name?this.Me.last_name:'';
-        this.Coworking.email = this.Me.email?this.Me.email:'';
+        this.Coworking.email = this.oldEmail = this.Me.email?this.Me.email:'';
         this.Coworking.phone = this.Me.phone?this.Me.phone:'';
         this.Days = this.service.GetFrontDaysByWorkingDays(cwrk.working_days);
         let imgId = cwrk.image_id?cwrk.image_id:(this.Me.image_id?this.Me.image_id:0);
@@ -142,37 +142,51 @@ export class EditCoworkingComponent implements OnInit {
                 this.isLoading = false;
                 return;
             }
-            this.service.checkUserByEmail(this.Coworking.email).subscribe((ressponjo:any)=>{
-                if(ressponjo.exists){
-                    console.log("susestv");
-                    this.RegErrMsg = 'This email is already taken! ';
-                    this.RegistrationErr = true;
-                    this.isLoading = false;
-                }
-                else{
-                    this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
-                        .subscribe((res:CoworkingModel)=>{
-                            this.InitByCoworking(res);
-                            this.isLoading = false;
-                            this.service.onAuthChange$.next(true);
-                        },
-                        (err:any)=>{
-                            if(err.status == 422){
-                                let body:any = JSON.parse(err._body); 
-                                this.RegErrMsg = this.service.CheckErrMessage(body);
-                                
-                            }
-                            else {
-                                this.RegErrMsg = "Can`t update coworking: " + err.body;
-                            }
-                            this.RegistrationErr = true;
-                            this.isLoading = false;
-                        });
-                    this.isLoading = false;
-                    this.RegistrationErr = false;
-                }
-            });
+            if(this.Coworking.email == this.oldEmail) {
+                this.finalUpdate();
+            }
+            else {
+                this.service.checkUserByEmail(this.Coworking.email).subscribe((ressponjo:any)=>{
+                    if(ressponjo.exists){
+                        console.log("susestv");
+                        this.RegErrMsg = 'This email is already taken! ';
+                        this.RegistrationErr = true;
+                        this.isLoading = false;
+                    }
+                    else{
+                        this.finalUpdate();
+                    }
+                });
+            }
         }
+    }
+
+    finalUpdate() {
+        this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
+        .subscribe((res:CoworkingModel)=>{
+            this.service.GetMe()
+                .subscribe((usr:UserModel)=>{
+                    this.Me = usr;
+                    this.InitByCoworking(res);
+                })
+            
+            this.isLoading = false;
+            this.service.onAuthChange$.next(true);
+        },
+        (err:any)=>{
+            if(err.status == 422){
+                let body:any = JSON.parse(err._body); 
+                this.RegErrMsg = this.service.CheckErrMessage(body);
+                
+            }
+            else {
+                this.RegErrMsg = "Can`t update coworking: " + err.body;
+            }
+            this.RegistrationErr = true;
+            this.isLoading = false;
+        });
+    this.isLoading = false;
+    this.RegistrationErr = false;
     }
 
     CheckCwrk(){

@@ -247,74 +247,67 @@ export class CoworkingComponent implements OnInit {
   addEventGoogleCalendar(){
     var clientId = '1097282523471-lm7pu51rn7i3ahqu7qf0h8a1dm94hsoj.apps.googleusercontent.com';
     var scopes = 'https://www.googleapis.com/auth/calendar';
-    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false},  this.makeApiCall(this.Booking.begin_date,this.Booking.end_date));
-
+    var start_date = this.Booking.begin_date;
+    var end_date = this.Booking.end_date;
+    var auth = gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false},  
+       function(response) {
+  
+        gapi.client.load('calendar', 'v3', function() {
+          /*
+          console.log('-->',gapi.client.calendar);
+          var request = gapi.client.calendar.calendarList.list();
+          request.execute(function(resp){
+            $.each( resp.items, function( key, value ) {
+              console.log(resp.items[key].id);
+            });
+          });
+          var request1 = gapi.client.calendar.events.list({
+            'calendarId': 'primary',
+            'timeMin': '2015-12-23T04:26:52.000Z'//Suppose that you want get data after 23 Dec 2014
+          });
+          request1.execute(function(resp){
+            $.each( resp.items, function( key, value ) {
+              console.log(resp.items[key]);// here you give all events from google calendar
+            });
+          });
+        */
+      // var offset = new Date().getTimezoneOffset()/60;
+        //console.log(`timezone`,offset);
+    
+          var event = {
+            'summary': 'D4W Start',
+                    'description': 'You are booking work place!',
+            'start': {
+              'dateTime': start_date+":00",
+              'timeZone':'Europe/Moscow' 
+            },
+            'end': {
+              'dateTime': end_date+":00",
+              'timeZone':'Europe/Moscow'
+            },
+            
+            'reminders': {
+              'useDefault': false,
+              'overrides': [
+                {'method': 'email', 'minutes': 24 * 60},
+                {'method': 'popup', 'minutes': 30}
+              ]
+            }
+          };
+          console.log(`event = `,event);
+          var request = gapi.client.calendar.events.insert({
+            'calendarId': 'primary',
+            'resource': event
+          });
+          
+          request.execute(function(event) {
+            console.log('Event created: ' + event.htmlLink);
+          });
+        });
+      } 
+    );    
   }
 
-  
-
-  makeApiCall(start_date,end_date) {
-    // console.log('book = ',this.Booking);
-    console.log(`from CREATE: `,start_date,end_date);
-    gapi.client.load('calendar', 'v3', function() {
-      /*
-      console.log('-->',gapi.client.calendar);
-      var request = gapi.client.calendar.calendarList.list();
-      request.execute(function(resp){
-        $.each( resp.items, function( key, value ) {
-          console.log(resp.items[key].id);
-        });
-      });
-      var request1 = gapi.client.calendar.events.list({
-        'calendarId': 'primary',
-        'timeMin': '2015-12-23T04:26:52.000Z'//Suppose that you want get data after 23 Dec 2014
-      });
-      request1.execute(function(resp){
-        $.each( resp.items, function( key, value ) {
-          console.log(resp.items[key]);// here you give all events from google calendar
-        });
-      });
-     */
-    var offset = new Date().getTimezoneOffset()/60;
-    console.log(`timezone`,offset);
-
-      var event = {
-        'summary': 'D4W Start',
-                'description': 'You are booking work place!',
-        'start': {
-          'dateTime': start_date+":00",
-          'timeZone':'Europe/Moscow' 
-        },
-        'end': {
-          'dateTime': end_date+":00",
-          'timeZone':'Europe/Moscow'
-        },
-        
-        'reminders': {
-          'useDefault': false,
-          'overrides': [
-            {'method': 'email', 'minutes': 24 * 60},
-            {'method': 'popup', 'minutes': 30}
-          ]
-        }
-      };
-      console.log(`event = `,event);
-      var request = gapi.client.calendar.events.insert({
-        'calendarId': 'primary',
-        'resource': event
-      });
-      
-      request.execute(function(event) {
-        console.log('Event created: ' + event.htmlLink);
-      });
-    
-
-    });
-  } 
-
-
-
- 
 }
 
 

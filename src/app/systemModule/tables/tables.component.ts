@@ -81,6 +81,7 @@ export class TablesComponent implements OnInit {
         this.service.GetBookingsByCwr(this.Coworking.id,{date:dateStr})
             .subscribe((res:BookingModel[])=>{
                 this.Bookings=res;
+                console.log(`all bookings`,res);
                 this.service.getMyRates().subscribe((resp:RateModel[])=>{
                     this.Rates = [];
                     for(let i of resp){

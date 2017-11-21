@@ -18,7 +18,7 @@
                         <div class="col-md-2">
                             <p>END</p>
                         </div>
-                        <div class="col-md-2"></div>
+                        <div class="col-md-1"></div>
                     </div>
                     <ng-container></ng-container>
                     <div class="row" *ngFor="let item of Bookings;let i = index">
@@ -27,11 +27,16 @@
                                 <a [routerLink]="['/coworking',Coworkings[i]?Coworkings[i].id:'1']">Open</a>
                             </p>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
                             <p>{{Coworkings[i]?Coworkings[i].full_name:'name'}}</p>
                         </div>
                         <div class="col-md-3">
                             <p>{{Coworkings[i]?Coworkings[i].address:'address'}}</p>
+                        </div>
+                        <div class="col-md-1">
+                            <p class="open">
+                                <a [routerLink]="['/booking',Bookings[i]?Bookings[i].id:'1']">Details</a>
+                            </p>
                         </div>
                         <div class="col-md-2">
                             <p>{{item.begin_date.split("T")[0]| date: "MM/d/y"}}  {{item.begin_date.split("T")[1].split(":")[0]}}{{item.begin_date | date: ":mm"}}</p>

@@ -14,10 +14,8 @@
                         <p>Address: {{Coworking.address}}</p>
                         <p>Expiration date: {{Booking.end_date | date:'dd.MM.yyyy HH:mm'}}</p>
                         <p style="word-wrap: break-word; word-break: break-all;">Description: {{Coworking.description}}</p>
-                        <div *ngIf="Booking.is_closed" class="likeDislike"> 
                             <button class="like" (click)="rateCoworking(Coworking.id,'yes')" [ngClass]="{'checked-rate':Rate && Rate.score == 'yes'}"></button>
                             <button class="dislike"(click)="rateCoworking(Coworking.id,'no')"[ngClass]="{'checked-rate':Rate && Rate.score == 'no'}"></button>
-                        </div>
                         <button type="button" class="btn btn-info btn-fill pull-right" style="margin-right: 15px;" (click)="extendBooking()">Extend by 30 min</button>
                     </div>
                 </div>

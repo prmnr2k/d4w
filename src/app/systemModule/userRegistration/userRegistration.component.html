@@ -1,6 +1,9 @@
 <loading-cmp *ngIf="isLoading"></loading-cmp>
 <div class="wrapp-for-forms" *ngIf="!isLoading">
     <form (ngSubmit)="CreateUser(submitFormCwrc)" #submitFormCwrc="ngForm">
+        <div class="col-md-12" *ngIf="RegistrationErr">
+            <h2 class="error-text-style">{{RegErrMsg}}</h2>
+        </div>
         <h6 class="head-form">
             <span>Регистрация</span>
         </h6>
@@ -83,9 +86,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12" *ngIf="RegistrationErr">
-            <h2 class="error-msg">{{RegErrMsg}}</h2>
-        </div>
+        
         <button class="butt-orange" type="submit" [disabled]="!submitFormCwrc.valid">Register</button>
         <div class="clearfix"></div>
     </form>

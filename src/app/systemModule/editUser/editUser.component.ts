@@ -55,6 +55,7 @@ export class EditUserComponent implements OnInit {
                     
                 },
                 (err:any)=>{
+                    this.isLoading = false;
                     console.log('delete err');
                     console.log(err);
                 });

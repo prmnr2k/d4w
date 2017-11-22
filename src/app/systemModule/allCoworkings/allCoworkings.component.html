@@ -58,7 +58,16 @@
                             <div class="right-side side">
                                 <input class="input-text-style" type="text" name="additional_info" [ngModel]="Params.additional_info" (ngModelChange)="Params.additional_info = $event">
                             </div>
+                        </div>
+                        <div class="my-form-groupe-3">
+                            <div class="one-nishtyaki">
+                                <p>Понедельник</p>
+                                <div class="orange-checkbox">
+                                    <input type="checkbox" class="checkbox" name='weekDay-1' id="weekDay-1" [ngModel]="Params.qq" (ngModelChange)="item.checked =  $event">
+                                    <label for="weekDay-1"></label>
+                                </div>
                             </div>
+                        </div>
                     </div>
                     <div class="advanced-search">
                         <h6 class="head-form">

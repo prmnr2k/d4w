@@ -280,15 +280,45 @@ export class EditCoworkingComponent implements OnInit {
             
         }
     }
+    getMask(index:number){
+        return {
+            mask: [/[0-2]/, this.Days[index].start_work && parseInt(this.Days[index].start_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+            keepCharPositions: true
+          };
+    } 
+
+    getMaskEnd(index:number){
+        
+        return {
+            mask: [/[0-2]/, this.Days[index].finish_work && parseInt(this.Days[index].finish_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+            keepCharPositions: true
+          };
+    } 
+
     OnBeginWorkChanged(index:number, $event:any){
         this.Days[index].start_work = $event;
         if(!this.Days[index].finish_work || 
             this.Days[index].finish_work < this.Days[index].start_work)
         {
-            let beginArr = this.Days[index].start_work.split(":");
-            let endHour = +beginArr[0] + 2;
             
-            this.Days[index].finish_work = endHour+ ":" + beginArr[1];
+            if(this.Days[index].start_work.indexOf("_") == -1){
+                if(parseInt(this.Days[index].start_work[0]+this.Days[index].start_work[1]) <= 21 && parseInt(this.Days[index].start_work[3]+this.Days[index].start_work[4])<=59){
+                    let beginArr = this.Days[index].start_work.split(":");
+                    let endHour;
+                    if(+beginArr[0] <= 7){
+                        let for_parse = parseInt(beginArr[0][1]);
+                         endHour = '0'+(for_parse+2);
+                    }
+                    else{
+                        endHour = +beginArr[0] + 2;
+                    }
+                    this.Days[index].finish_work = endHour+ ":" + beginArr[1];
+                }
+                else{
+                   
+                    this.Days[index].finish_work = "23:59"
+                }
+            }
         
         }
 

@@ -70,7 +70,7 @@
             
                          <div class="row-inputs">
                             <div class="left-side side">
-                                <p>Контактная информация</p>
+                                <p>Контактная информация (Информация, которая поможет связаться с Вами)</p>
                             </div>
                             <div class="right-side side">
                                 <input autocomplete="off" type="text"  class="input-text-style" name="contacts" [ngModel]="Coworking.contacts" (ngModelChange)="Coworking.contacts = $event">
@@ -152,9 +152,9 @@
                                         <p class="day-of-week">{{item.ru_name}}</p>
                                     </div>
                                     <div class="inputs checked-day">
-                                        <input class="input-time-style" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="time" [name]="'from'+i" [ngModel]="item.start_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
+                                        <input class="input-time-style" [textMask]="getMask(i)" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="text" [name]="'from'+i" [ngModel]="item.start_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
                                         <span>:</span>
-                                        <input class="input-time-style" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="time" [name]="'to'+i" [ngModel]="item.finish_work" (ngModelChange)="item.finish_work = $event">
+                                        <input class="input-time-style" [textMask]="getMaskEnd(i)" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="text" [name]="'to'+i" [ngModel]="item.finish_work" (ngModelChange)="item.finish_work = $event">
                                     </div>
                                 </div>
                         </div>

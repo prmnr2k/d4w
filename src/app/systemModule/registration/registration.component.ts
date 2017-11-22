@@ -21,7 +21,8 @@ declare var $ :any;
   styleUrls: ['./st-form.css']
 })
 
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit  {
+    
     RegistrationErr = false;
     isLoading = true;
     RegErrMsg = '';
@@ -40,8 +41,9 @@ export class RegistrationComponent implements OnInit {
         this.Coworking.images = [];
         this.Coworking.working_days = [];
         this.isLoading = false;
+        
     }
-
+   
     DeleteImage(i:number){
         this.Coworking.images.splice(i,1);
         this.imagesCount += 1;
@@ -79,6 +81,8 @@ export class RegistrationComponent implements OnInit {
             });
         }
     }
+
+   
 
     finalCreateCoworking(){
         this.isLoading = true;
@@ -162,6 +166,7 @@ export class RegistrationComponent implements OnInit {
 
 
     checkWorkingTime(){
+        
         let date = new Date();
         let begin:Date,end:Date;
         for(let i of this.Coworking.working_days){
@@ -223,15 +228,65 @@ export class RegistrationComponent implements OnInit {
             
         }
     }
+
+    changeWeekends($event:any){
+        this.Weekends = !this.Weekends;
+        console.log(this.Days);
+        if(!this.Weekends){
+            for(let i in this.Days){
+                if(this.Days[i].weekend){
+                    this.Days[i].checked = false;
+                    
+                }
+                    
+            }
+        }
+
+        
+    }
+
+    
+   
+
+    getMask(index:number){
+        return {
+            mask: [/[0-2]/, this.Days[index].start_work && parseInt(this.Days[index].start_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+            keepCharPositions: true
+          };
+    } 
+
+    getMaskEnd(index:number){
+        
+        return {
+            mask: [/[0-2]/, this.Days[index].finish_work && parseInt(this.Days[index].finish_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+            keepCharPositions: true
+          };
+    } 
+
     OnBeginWorkChanged(index:number, $event:any){
         this.Days[index].start_work = $event;
         if(!this.Days[index].finish_work || 
             this.Days[index].finish_work < this.Days[index].start_work)
         {
-            let beginArr = this.Days[index].start_work.split(":");
-            let endHour = +beginArr[0] + 2;
             
-            this.Days[index].finish_work = endHour+ ":" + beginArr[1];
+            if(this.Days[index].start_work.indexOf("_") == -1){
+                if(parseInt(this.Days[index].start_work[0]+this.Days[index].start_work[1]) <= 21 && parseInt(this.Days[index].start_work[3]+this.Days[index].start_work[4])<=59){
+                    let beginArr = this.Days[index].start_work.split(":");
+                    let endHour;
+                    if(+beginArr[0] <= 7){
+                        let for_parse = parseInt(beginArr[0][1]);
+                         endHour = '0'+(for_parse+2);
+                    }
+                    else{
+                        endHour = +beginArr[0] + 2;
+                    }
+                    this.Days[index].finish_work = endHour+ ":" + beginArr[1];
+                }
+                else{
+                   
+                    this.Days[index].finish_work = "23:59"
+                }
+            }
         
         }
 

@@ -98,7 +98,7 @@
 
              <div class="row-inputs">
                 <div class="left-side side">
-                    <p>Контактная информация</p>
+                    <p>Контактная информация (Информация, которая поможет связаться с Вами)</p>
                 </div>
                 <div class="right-side side">
                     <input autocomplete="off" type="text"  class="input-text-style" name="contacts" [ngModel]="Coworking.contacts" (ngModelChange)="Coworking.contacts = $event">
@@ -172,14 +172,16 @@
             <div class="for-relative">
                 <p>Выходные дни</p>
                 <div class="mac-checkbox big">
-                    <input type="checkbox" class="checkbox" name="wknd" id="checkbox-1" [ngModel]="Weekends" (ngModelChange)="Weekends = $event">
+                    <input type="checkbox" class="checkbox" name="wknd" id="checkbox-1" [ngModel]="Weekends" (ngModelChange)="changeWeekends($event)">
                     <label for="checkbox-1"></label>
                 </div>
             </div>
         </div>
         <div class="my-form-groupe-2">
-            <div class="one-day" *ngFor="let item of Days;let i = index">
-                    <div class="left-side-t" *ngIf="!item.weekend || item.weekend == Weekends">
+            <ng-container  *ngFor="let item of Days;let i = index">
+            <div class="one-day" [ngStyle]="{'display': (!item.weekend || item.weekend == Weekends) ? 'flex':'none'}">
+                    <div class="left-side-t" >
+                        
                         <div class="add-day">
                             <div class="orange-checkbox">
                                 <input type="checkbox" class="checkbox" [name]="'workingday'+i" [id]="'checkboxOr-day-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked = $event">
@@ -188,19 +190,20 @@
                             <p class="day-of-week">{{item.ru_name}}</p>
                         </div>
                         <div class="inputs checked-day">
-                            <input class="input-time-style" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="time" [name]="'from'+i" [ngModel]="item.start_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
-                            <span>:</span>
-                            <input class="input-time-style" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="time" [name]="'to'+i" [ngModel]="item.finish_work" (ngModelChange)="item.finish_work = $event">
+                            <input class="input-time-style time-mask" [textMask]="getMask(i)" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="text" [name]="'from'+i" [ngModel]="item.start_work" (ngModelChange)="OnBeginWorkChanged(i,$event)" >
+                            <span>-</span>
+                            <input class="input-time-style time-mask" [textMask]="getMaskEnd(i)" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="text" [name]="'to'+i" [ngModel]="item.finish_work" (ngModelChange)="item.finish_work = $event">
                         </div>
                     </div>
-                    <div class="right-side-mac-chec" *ngIf="!item.weekend || item.weekend == Weekends">
+                    <div class="right-side-mac-chec">
                         <p>Круглосуточно</p>
                         <div class="mac-checkbox">
                             <input type="checkbox" class="checkbox" [name]="'nonstop'+i" [id]="'checkbox-2-'+i" [ngModel]="item.nonstop" (ngModelChange)="SetWorkNonStop(i,$event)">
                             <label [for]="'checkbox-2-'+i"></label>
                         </div>
                     </div>
-            </div>
+                </div>
+            </ng-container>
         </div>
          <h6 class="head-form">
             <span>Услуги коворкинга</span>

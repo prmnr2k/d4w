@@ -43,6 +43,7 @@ export class IdBookingComponent implements OnInit {
       this.service.GetBookingById(this.BookingId)
       .subscribe((res:BookingModel)=>{
           this.Booking = res;
+          console.log(res);
           this.service.GetCoworkingById(this.Booking.coworking_id)
           .subscribe((cow:CoworkingModel)=>{
             this.Coworking = cow;

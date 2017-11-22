@@ -80,7 +80,7 @@
                                     <p>Время с</p>
                                 </div>
                                 <div class="right-side side">
-                                    <input class="input-text-style" type="time" name="from" [ngModel]="Params.from" (ngModelChange)="Params.from = $event">
+                                    <input class="input-text-style"  [textMask]="getMask()"  type="text" name="from" [ngModel]="Params.from" (ngModelChange)="OnBeginWorkChanged($event)">
                                 </div>
                             </div>
                             <div class="row-inputs">
@@ -88,9 +88,9 @@
                                     <p>Время по</p>
                                 </div>
                                 <div class="right-side side">
-                                    <input class="input-text-style" type="time" name="to" [ngModel]="Params.to" (ngModelChange)="Params.to = $event">
+                                    <input class="input-text-style" [textMask]="getMaskEnd()" type="text" name="to" [ngModel]="Params.to" (ngModelChange)="OnEndWorkChanged($event)">
                                 </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="map">

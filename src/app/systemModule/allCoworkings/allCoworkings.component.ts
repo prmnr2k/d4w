@@ -60,8 +60,28 @@ export class AllCoworkingsComponent implements OnInit {
               this.isLoading = false; 
             });
     }
-
+    getMask(){
+      return {
+          mask: [/[0-2]/, this.Params.begin_work && parseInt(this.Params.begin_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+          keepCharPositions: true
+        };
+      } 
+  
+    getMaskEnd(){
+      
+      return {
+          mask: [/[0-2]/, this.Params.end_work && parseInt(this.Params.end_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+          keepCharPositions: true
+        };
+    } 
     
+    OnBeginWorkChanged($event:any){
+      this.Params.begin_work = $event
+    }
+    OnEndWorkChanged($event:any){
+      this.Params.end_work = $event
+    }
+
     CoworkingSearch() {
       this.service.GetAllCoworking(this.Params)
       .subscribe((cwr:CoworkingModel[])=>{

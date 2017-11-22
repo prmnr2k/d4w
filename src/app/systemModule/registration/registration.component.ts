@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MainService } from '../../core/services/main.service';
 import { Router } from '@angular/router';
 import { NgForm, FormControl } from '@angular/forms';
@@ -21,7 +21,7 @@ declare var $ :any;
   styleUrls: ['./st-form.css']
 })
 
-export class RegistrationComponent implements OnInit, AfterViewInit  {
+export class RegistrationComponent implements OnInit  {
     
     RegistrationErr = false;
     isLoading = true;
@@ -43,9 +43,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit  {
         this.isLoading = false;
         
     }
-    ngAfterViewInit(){
-        this.initTimePicker();
-    }
+   
     DeleteImage(i:number){
         this.Coworking.images.splice(i,1);
         this.imagesCount += 1;
@@ -84,15 +82,7 @@ export class RegistrationComponent implements OnInit, AfterViewInit  {
         }
     }
 
-    initTimePicker(){
-        $(".time-mask").inputmask("hh:mm:ss", {
-            placeholder: "HH:MM:SS", 
-            insertMode: false, 
-            showMaskOnHover: false,
-            hourFormat: 12
-          }
-       );
-    }
+   
 
     finalCreateCoworking(){
         this.isLoading = true;
@@ -255,25 +245,45 @@ export class RegistrationComponent implements OnInit, AfterViewInit  {
         
     }
 
+    
+   
+
+    getMask(index:number){
+        return {
+            mask: [/[0-2]/, this.Days[index].start_work && parseInt(this.Days[index].start_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+            keepCharPositions: true
+          };
+    } 
+
+    getMaskEnd(index:number){
+        
+        return {
+            mask: [/[0-2]/, this.Days[index].finish_work && parseInt(this.Days[index].finish_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+            keepCharPositions: true
+          };
+    } 
+
     OnBeginWorkChanged(index:number, $event:any){
         this.Days[index].start_work = $event;
-        
-        console.log('$event = '+$event);
-        console.log('this.Days[index].start_work = '+this.Days[index].start_work);
-        
         if(!this.Days[index].finish_work || 
             this.Days[index].finish_work < this.Days[index].start_work)
         {
-            console.log("goooood");
-            if(this.Days[index].start_work.split(":").length == 2){
-                if(parseInt(this.Days[index].start_work.split(":")[0]) <= 21 && parseInt(this.Days[index].start_work.split(":")[1])<=59){
-                  
-                    let beginArr = this.Days[index].start_work.split(":");
-                    let endHour = +beginArr[0] + 2;
             
+            if(this.Days[index].start_work.indexOf("_") == -1){
+                if(parseInt(this.Days[index].start_work[0]+this.Days[index].start_work[1]) <= 21 && parseInt(this.Days[index].start_work[3]+this.Days[index].start_work[4])<=59){
+                    let beginArr = this.Days[index].start_work.split(":");
+                    let endHour;
+                    if(+beginArr[0] <= 7){
+                        let for_parse = parseInt(beginArr[0][1]);
+                         endHour = '0'+(for_parse+2);
+                    }
+                    else{
+                        endHour = +beginArr[0] + 2;
+                    }
                     this.Days[index].finish_work = endHour+ ":" + beginArr[1];
                 }
                 else{
+                   
                     this.Days[index].finish_work = "23:59"
                 }
             }

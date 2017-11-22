@@ -21,6 +21,7 @@ import { UserRegistrationComponent } from "./userRegistration/userRegistration.c
 import { EditUserComponent } from "./editUser/editUser.component";
 import { ChangePasswordComponent } from './changePassword/changePassword.component';
 import { SystemComponent } from './system.component';
+import { IdBookingComponent } from './idBooking/idBooking.component';
 
 const routes: Routes =
 [
@@ -41,7 +42,8 @@ const routes: Routes =
       { path: 'coworking/:id', component:CoworkingComponent},
       { path: 'user_profile', component: EditUserComponent, canActivate: [SystemAccessGuard] },
       { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
-      { path: 'change_password', component: ChangePasswordComponent, canActivate: [SystemAccessGuard] }
+      { path: 'change_password', component: ChangePasswordComponent, canActivate: [SystemAccessGuard] },
+      { path: 'booking/:id', component: IdBookingComponent, canActivate: [SystemAccessGuard] }
     ]
   }
 ];

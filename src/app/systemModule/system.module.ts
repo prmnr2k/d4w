@@ -31,6 +31,8 @@ import { LbdModule } from 'app/systemModule/lbd/lbd.module';
 import { SystemComponent } from 'app/systemModule/system.component';
 import { SystemAccessGuard } from './system.guard';
 import { IdBookingComponent } from './idBooking/idBooking.component';
+import { TextMaskModule } from 'angular2-text-mask';
+
 
 @NgModule({
   declarations: [
@@ -61,6 +63,7 @@ import { IdBookingComponent } from './idBooking/idBooking.component';
     HttpModule,
     NavbarModule,
     FooterModule,
+    TextMaskModule,
     SidebarModule,
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),

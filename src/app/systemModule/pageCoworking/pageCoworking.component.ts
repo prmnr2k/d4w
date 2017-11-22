@@ -40,8 +40,8 @@ export class CoworkingComponent implements OnInit {
   Image:string = '';
   Booking:BookingModel = new BookingModel();
   bsValue: Date = new Date();
-  toTime:string = '01:00';
-  fromTime:string = '00:00';
+  toTime:string = '11:00';
+  fromTime:string = '10:00';
   minDate: Date;
   receptionSend:boolean = false;
   minTime:string = '00:00';
@@ -52,10 +52,10 @@ export class CoworkingComponent implements OnInit {
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(private service: MainService, private router: Router, 
   private activatedRoute: ActivatedRoute, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-    
-    this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); 
+      this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
   }
 
+  
   ngOnInit() 
   {
     this.activatedRoute.params.forEach((params) => {
@@ -104,6 +104,23 @@ export class CoworkingComponent implements OnInit {
     this.Booking.end_date = `2017-11-08T15:00`;
     this.DateChange();
   }
+
+  getMask(){
+    return {
+        mask: [/[0-2]/, this.fromTime && parseInt(this.fromTime[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+        keepCharPositions: true
+      };
+    } 
+
+  getMaskEnd(){
+    
+    return {
+        mask: [/[0-2]/, this.toTime && parseInt(this.toTime[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+        keepCharPositions: true
+      };
+  } 
+
+
 
   BookingCoworking(){
   

@@ -76,8 +76,10 @@ export class TablesComponent implements OnInit {
         this.isLoading = true;
         if(date)
             this.bsValue = date;
-        let dateStr = this.bsValue.toISOString().split('T')[0];
-        //let dateObj = date.toLocaleDateString();
+              
+        //let dateStr = this.bsValue.toISOString().split('T')[0]; //with UTC
+        let dateStr = this.bsValue.getFullYear()+'-'+(this.bsValue.getMonth()+1)+'-'+this.bsValue.getDate();
+       
         this.service.GetBookingsByCwr(this.Coworking.id,{date:dateStr})
             .subscribe((res:BookingModel[])=>{
                 this.Bookings=res;

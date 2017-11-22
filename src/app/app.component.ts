@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name.slice(0,20);
-                        this.pushNotification.showNotification(name+' will arrive in 15 minutes!','bottom','right');
+                        this.pushNotification.showNotification(name+' will come soon!','bottom','right');
                       });
                     }
 

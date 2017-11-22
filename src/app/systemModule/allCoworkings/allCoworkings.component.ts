@@ -37,7 +37,10 @@ export class AllCoworkingsComponent implements OnInit {
       begin_work:'',
       end_work:'',
       lat:null,
-      lng:null
+      lng:null,
+      working_days: [],
+      begin_date:'',
+      end_date:'',
       //date:null
     };
     constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {

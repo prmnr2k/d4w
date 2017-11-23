@@ -12,6 +12,7 @@ import { MapsAPILoader } from "angular2-google-maps/core";
 import {} from '@types/googlemaps';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
+import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 
 declare var google: any;
@@ -22,9 +23,10 @@ declare var google: any;
   styleUrls:["./allCoworkings.component.css"]
 })
 export class AllCoworkingsComponent implements OnInit {
-    
+    bsRangeValue:any;
     RegistrationErr = false;
     isLoading = true;
+    Working_days:FrontWorkingDayModel[] = [];
     Coworkings:CoworkingModel[] = [];
     Images:string[] = [];
     Params = {
@@ -38,11 +40,13 @@ export class AllCoworkingsComponent implements OnInit {
       end_work:'',
       lat:null,
       lng:null,
-      working_days: [],
+      working_days:[],
       begin_date:'',
       end_date:'',
       //date:null
     };
+
+
     constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
       
       this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
@@ -50,6 +54,7 @@ export class AllCoworkingsComponent implements OnInit {
 
     ngOnInit() 
     {
+      this.Working_days = this.service.GetAllDays();
       this.service.GetAllCoworking()
       .subscribe((cwr:CoworkingModel[])=>{
           console.log(cwr);
@@ -85,11 +90,23 @@ export class AllCoworkingsComponent implements OnInit {
       this.Params.end_work = $event
     }
 
+    setDate(date?:Date){
+      this.Params.begin_date = this.bsRangeValue[0].getDate()+'.'+(this.bsRangeValue[0].getMonth()+1)+'.'+this.bsRangeValue[0].getFullYear();
+      this.Params.end_date = this.bsRangeValue[1].getDate()+'.'+(this.bsRangeValue[1].getMonth()+1)+'.'+this.bsRangeValue[1].getFullYear();
+    }
+
     CoworkingSearch() {
+      
+      for(let itemWeek of this.Working_days){
+        if(itemWeek.checked){
+          this.Params.working_days.push(itemWeek.en_name);
+        }
+      }
+    
       this.service.GetAllCoworking(this.Params)
       .subscribe((cwr:CoworkingModel[])=>{
           console.log(cwr);
-          this.Coworkings = cwr;
+         this.Coworkings = cwr;
           for(let item of cwr){
             if(item.images && item.images[0]){
               this.service.GetImageById(item.images[0].id)
@@ -97,7 +114,10 @@ export class AllCoworkingsComponent implements OnInit {
                   this.Images['act'+item.id] = image.base64;
               });}}
               this.isLoading = false; 
+              this.Params.working_days = [];
             });
+
+            
     }
 
     SetPoint($event) {

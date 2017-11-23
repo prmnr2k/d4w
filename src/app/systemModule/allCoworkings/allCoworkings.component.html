@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="my-form-groupe-3">
-                            <div class="one-nishtyaki" *ngFor="let item of  Params.working_days; let i = index">
+                            <div class="one-nishtyaki" *ngFor="let item of Working_days; let i = index">
                                 <p>{{item.ru_name}}</p>
                                 <div class="orange-checkbox">
                                     <input type="checkbox" class="checkbox" [name]="'workingday'+i" [id]="'checkboxOr-day-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked = $event">
@@ -82,7 +82,7 @@
                                 <div class="right-side side">
                                     <input class="input-text-style" type="text"
                                     #dp="bsDaterangepicker"
-                                    bsDaterangepicker [(bsValue)]="Params.date">
+                                    bsDaterangepicker [(bsValue)]="bsRangeValue" (bsValueChange)="setDate($event)">
                                 </div>
                             </div>
                             <div class="row-inputs">

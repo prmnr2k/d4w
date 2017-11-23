@@ -23,9 +23,10 @@ declare var google: any;
   styleUrls:["./allCoworkings.component.css"]
 })
 export class AllCoworkingsComponent implements OnInit {
-    
+    bsRangeValue:any;
     RegistrationErr = false;
     isLoading = true;
+    Working_days:FrontWorkingDayModel[] = [];
     Coworkings:CoworkingModel[] = [];
     Images:string[] = [];
     Params = {
@@ -53,7 +54,7 @@ export class AllCoworkingsComponent implements OnInit {
 
     ngOnInit() 
     {
-      this.Params.working_days = this.service.GetAllDays();
+      this.Working_days = this.service.GetAllDays();
       this.service.GetAllCoworking()
       .subscribe((cwr:CoworkingModel[])=>{
           console.log(cwr);
@@ -89,13 +90,28 @@ export class AllCoworkingsComponent implements OnInit {
       this.Params.end_work = $event
     }
 
-    CoworkingSearch() {
+    setDate(date?:Date){
+      this.Params.begin_date = this.bsRangeValue[0].getDate()+'.'+(this.bsRangeValue[0].getMonth()+1)+'.'+this.bsRangeValue[0].getFullYear();
+      this.Params.end_date = this.bsRangeValue[1].getDate()+'.'+(this.bsRangeValue[1].getMonth()+1)+'.'+this.bsRangeValue[1].getFullYear();
+    }
 
+    CoworkingSearch() {
+      
+      console.log("Working_days")
+      console.log(this.Working_days);
+
+
+      for(let itemWeek of this.Working_days){
+        if(itemWeek.checked){
+          this.Params.working_days.push(itemWeek.en_name);
+        }
+      }
+      console.log("params");
       console.log(this.Params);
-      /*this.service.GetAllCoworking(this.Params)
+      this.service.GetAllCoworking(this.Params)
       .subscribe((cwr:CoworkingModel[])=>{
           console.log(cwr);
-          this.Coworkings = cwr;
+         this.Coworkings = cwr;
           for(let item of cwr){
             if(item.images && item.images[0]){
               this.service.GetImageById(item.images[0].id)
@@ -103,7 +119,10 @@ export class AllCoworkingsComponent implements OnInit {
                   this.Images['act'+item.id] = image.base64;
               });}}
               this.isLoading = false; 
-            });*/
+              this.Params.working_days = [];
+            });
+
+            
     }
 
     SetPoint($event) {

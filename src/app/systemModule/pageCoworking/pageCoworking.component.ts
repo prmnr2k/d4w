@@ -16,7 +16,7 @@ import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 declare var jquery:any;
 declare var $ :any;
-
+declare var gapi :any;
 
 
 @Component({
@@ -40,8 +40,8 @@ export class CoworkingComponent implements OnInit {
   Image:string = '';
   Booking:BookingModel = new BookingModel();
   bsValue: Date = new Date();
-  toTime:string = '01:00';
-  fromTime:string = '00:00';
+  toTime:string = '11:00';
+  fromTime:string = '10:00';
   minDate: Date;
   receptionSend:boolean = false;
   minTime:string = '00:00';
@@ -52,10 +52,10 @@ export class CoworkingComponent implements OnInit {
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(private service: MainService, private router: Router, 
   private activatedRoute: ActivatedRoute, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-    
-    this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); 
+      this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
   }
 
+  
   ngOnInit() 
   {
     this.activatedRoute.params.forEach((params) => {
@@ -105,8 +105,25 @@ export class CoworkingComponent implements OnInit {
     this.DateChange();
   }
 
+  getMask(){
+    return {
+        mask: [/[0-2]/, this.fromTime && parseInt(this.fromTime[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+        keepCharPositions: true
+      };
+    } 
+
+  getMaskEnd(){
+    
+    return {
+        mask: [/[0-2]/, this.toTime && parseInt(this.toTime[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+        keepCharPositions: true
+      };
+  } 
+
+
+
   BookingCoworking(){
-  
+    
     this.Booking.coworking_id = this.Coworking.id;
     this.Booking.visitors_count = 1;
     this.Booking.begin_date = this.bsValue.getFullYear()+`-`+this.incr(this.bsValue.getMonth())+`-`+this.bsValue.getDate()+'T'+this.fromTime;
@@ -117,19 +134,23 @@ export class CoworkingComponent implements OnInit {
     subscribe( (any) =>{
       console.log(`i booking!!`,any);
       this.BookingErr = false;
+      this.addEventGoogleCalendar();
       this.router.navigate(['/my_bookings']);
       this.BookingOk = true;
+      
     },
     (err)=>{
       console.log(`error = `,err);
       if(this.showTime){
         if(err._body==`{"begin_date":["INVALID"]}`) this.ErrBookingMsg = `In Start Time Coworking isn't work!`;
         if(err._body==`{"end_date":["INVALID"]}`) this.ErrBookingMsg = `In End Time Coworking isn't work!`;
+        if(err._body==`{"capacity":["LIMIT_REACHED"]}`) this.ErrBookingMsg = `No available seats at this time!`;
       }
       else this.ErrBookingMsg = `In This Date Coworking isn't work!`;
       this.BookingErr = true;
       this.BookingOk = false;
   });
+   
   }
 
   incr(n:number){
@@ -162,34 +183,64 @@ export class CoworkingComponent implements OnInit {
   }
 
   OnBeginWorkChanged($event:any){
+    this.fromTime = $event;
+    if(!this.toTime || 
+        this.toTime < this.fromTime)
+    {
+        
+        if(this.fromTime.indexOf("_") == -1){
+          console.log('fromTime = '+this.fromTime.indexOf("_"));
+            if(parseInt(this.fromTime[0]+this.fromTime[1]) <= 21 && parseInt(this.fromTime[3]+this.fromTime[4])<=59){
+                let beginArr = this.fromTime.split(":");
+                let endHour;
+                if(+beginArr[0] <= 7){
+                    let for_parse = parseInt(beginArr[0][1]);
+                     endHour = '0'+(for_parse+1);
+                }
+                else{
+                    endHour = +beginArr[0] + 1;
+                }
+                this.toTime = endHour+ ":" + beginArr[1];
+                if(this.toTime>this.maxTime||this.toTime<this.minTime)this.errTime = true;
+                else this.errTime = false;
+            }
+            else{
+               
+                this.toTime = "23:59"
+                if(this.toTime>this.maxTime||this.toTime<this.minTime)this.errTime = true;
+                else this.errTime = false;
+            }
+        }
+       
+    }
+    if(this.fromTime.indexOf("_") != -1){
+     
+      this.errTime = true;
+      
+    }
+    else{
+      this.errTime = false;
+    }
+    
+
    
-    let beginArr = $event.split(":");
-    let beginHour =  +beginArr[0];
-    
-      let endHour = +beginArr[0] + 1;
-    
-      if(!this.validateMinTime(endHour+":"+beginArr[1]))  this.toTime = this.maxTime;
-     else{
-      let endHourString:string;
-      if(endHour<10) endHourString="0"+endHour; else endHourString = ''+endHour;
-      this.fromTime = $event;
-    
-      this.toTime = endHourString + ":" + beginArr[1];
-     }
-     if(this.fromTime>=this.minTime&&this.fromTime<this.maxTime) this.errTime = false;
-     else this.errTime = true;
-    
-  }
+}
 
   OnEndWorkChanged($event:any){
-
+    console.log('totime2 = '+this.toTime);
   // if(this.validateMinTime($event))
     this.toTime = $event;
  //   else this.toTime = this.maxTime;
-    if(this.toTime>this.maxTime||this.toTime<this.minTime)this.errTime = true;
+ if(this.toTime.indexOf("_") != -1){
+  this.errTime = true;
+}
+else{
+  this.errTime = false;
+}
+    if(this.toTime>this.maxTime||this.toTime<this.minTime && this.toTime.indexOf("_") == -1)this.errTime = true;
     else this.errTime = false;
   
-    console.log(this.toTime,this.maxTime,this.toTime>this.maxTime);
+   
   }
 
   validateMinTime($event:any){
@@ -218,6 +269,8 @@ export class CoworkingComponent implements OnInit {
 
 
   DateChange(){
+    console.log("showTime ="+this.showTime);
+ 
     if(this.Days && this.bsValue){
       let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
       this.showTime = false;
@@ -227,6 +280,11 @@ export class CoworkingComponent implements OnInit {
         for(let i of this.Coworking.working_days){
           if(tmpDay.en_name==i.day){
             this.showTime = true;
+            this.toTime = '11:00';
+            this.fromTime= '10:00';
+            console.log("tmpDay = " +tmpDay)
+            console.log("errTime ="+this.errTime);
+            this.errTime = false;
             this.maxTime = i.end_work;
             this.minTime = i.begin_work;
             this.OnBeginWorkChanged(i.begin_work);
@@ -241,6 +299,70 @@ export class CoworkingComponent implements OnInit {
     
   }
 
+
+  addEventGoogleCalendar(){
+    var clientId = '1097282523471-lm7pu51rn7i3ahqu7qf0h8a1dm94hsoj.apps.googleusercontent.com';
+    var scopes = 'https://www.googleapis.com/auth/calendar';
+    var start_date = this.Booking.begin_date;
+    var end_date = this.Booking.end_date;
+    var auth = gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false},  
+       function(response) {
+  
+        gapi.client.load('calendar', 'v3', function() {
+          /*
+          console.log('-->',gapi.client.calendar);
+          var request = gapi.client.calendar.calendarList.list();
+          request.execute(function(resp){
+            $.each( resp.items, function( key, value ) {
+              console.log(resp.items[key].id);
+            });
+          });
+          var request1 = gapi.client.calendar.events.list({
+            'calendarId': 'primary',
+            'timeMin': '2015-12-23T04:26:52.000Z'//Suppose that you want get data after 23 Dec 2014
+          });
+          request1.execute(function(resp){
+            $.each( resp.items, function( key, value ) {
+              console.log(resp.items[key]);// here you give all events from google calendar
+            });
+          });
+        */
+      // var offset = new Date().getTimezoneOffset()/60;
+        //console.log(`timezone`,offset);
+    
+          var event = {
+            'summary': 'D4W Start',
+                    'description': 'You are booking work place!',
+            'start': {
+              'dateTime': start_date+":00",
+              'timeZone':'Europe/Moscow' 
+            },
+            'end': {
+              'dateTime': end_date+":00",
+              'timeZone':'Europe/Moscow'
+            },
+            
+            'reminders': {
+              'useDefault': false,
+              'overrides': [
+                {'method': 'email', 'minutes': 24 * 60},
+                {'method': 'popup', 'minutes': 30}
+              ]
+            }
+          };
+          console.log(`event = `,event);
+          var request = gapi.client.calendar.events.insert({
+            'calendarId': 'primary',
+            'resource': event
+          });
+          
+          request.execute(function(event) {
+            console.log('Event created: ' + event.htmlLink);
+          });
+        });
+      } 
+    );    
+  }
 
 }
 

@@ -58,29 +58,39 @@
                             <div class="right-side side">
                                 <input class="input-text-style" type="text" name="additional_info" [ngModel]="Params.additional_info" (ngModelChange)="Params.additional_info = $event">
                             </div>
+                        </div>
+                        <div class="my-form-groupe-3">
+                            <div class="one-nishtyaki">
+                                <p>Понедельник</p>
+                                <div class="orange-checkbox">
+                                    <input type="checkbox" class="checkbox" name='weekDay-1' id="weekDay-1" [ngModel]="Params.qq" (ngModelChange)="item.checked =  $event">
+                                    <label for="weekDay-1"></label>
+                                </div>
                             </div>
+
+                        </div>
                     </div>
                     <div class="advanced-search">
                         <h6 class="head-form">
                             <span>Дата и Время</span>
                         </h6>
                         <div class="my-form-groupe">
-                            <!--<div class="row-inputs">
+                            <div class="row-inputs">
                                 <div class="left-side side">
                                     <p>Дата</p>
                                 </div>
                                 <div class="right-side side">
                                     <input class="input-text-style" type="text"
-                                    #dp="bsDatepicker"
-                                    bsDatepicker [(bsValue)]="Params.date">
+                                    #dp="bsDaterangepicker"
+                                    bsDaterangepicker [(bsValue)]="Params.date">
                                 </div>
-                            </div>-->
+                            </div>
                             <div class="row-inputs">
                                 <div class="left-side side">
                                     <p>Время с</p>
                                 </div>
                                 <div class="right-side side">
-                                    <input class="input-text-style" type="time" name="from" [ngModel]="Params.from" (ngModelChange)="Params.from = $event">
+                                    <input class="input-text-style"  [textMask]="getMask()"  type="text" name="from" [ngModel]="Params.from" (ngModelChange)="OnBeginWorkChanged($event)">
                                 </div>
                             </div>
                             <div class="row-inputs">
@@ -88,9 +98,9 @@
                                     <p>Время по</p>
                                 </div>
                                 <div class="right-side side">
-                                    <input class="input-text-style" type="time" name="to" [ngModel]="Params.to" (ngModelChange)="Params.to = $event">
+                                    <input class="input-text-style" [textMask]="getMaskEnd()" type="text" name="to" [ngModel]="Params.to" (ngModelChange)="OnEndWorkChanged($event)">
                                 </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="map">

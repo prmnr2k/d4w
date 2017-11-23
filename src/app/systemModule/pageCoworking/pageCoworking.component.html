@@ -67,19 +67,11 @@
                             (bsValueChange)="DateChange()">
                         </div>
                         <div class="inputs checked-day">
-                            <ng-container *ngIf="!showTime">
-                                <input class="input-time-style" type="time"  readonly style="background-color:white; cursor: pointer;" name="timeFromHide" value="--:--">
-                            </ng-container>
-                            <ng-container *ngIf="showTime">
-                                <input class="input-time-style" type="time" [ngModel]="fromTime" [value]="fromTime"  name="timeFrom" (ngModelChange)="OnBeginWorkChanged($event)">
-                            </ng-container>
+                        
+                            <input [disabled]='!showTime' [textMask]="getMask()" class="input-time-style" type="text" [ngModel]="fromTime" name="timeFrom" (ngModelChange)="OnBeginWorkChanged($event)">
                             <span>:</span>
-                            <ng-container *ngIf="!showTime">
-                                <input class="input-time-style" type="time" readonly style="background-color:white; cursor: pointer;" name="timeToHide" value="--:--">
-                            </ng-container>
-                            <ng-container *ngIf="showTime">
-                                <input class="input-time-style" type="time" [ngModel]="toTime" [value]="toTime" name="timeTo" (ngModelChange)="OnEndWorkChanged($event)">
-                            </ng-container>
+                            <input [disabled]='!showTime' [textMask]="getMaskEnd()" class="input-time-style" type="text" [ngModel]="toTime" name="timeTo" (ngModelChange)="OnEndWorkChanged($event)">
+                          
                         </div>
                     </div>
                 </div>

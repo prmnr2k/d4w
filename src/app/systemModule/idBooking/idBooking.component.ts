@@ -43,6 +43,7 @@ export class IdBookingComponent implements OnInit {
       this.service.GetBookingById(this.BookingId)
       .subscribe((res:BookingModel)=>{
           this.Booking = res;
+          console.log(res);
           this.service.GetCoworkingById(this.Booking.coworking_id)
           .subscribe((cow:CoworkingModel)=>{
             this.Coworking = cow;
@@ -71,7 +72,7 @@ export class IdBookingComponent implements OnInit {
 }
 
   extendBooking() {
-    confirm("Extend will be confirmed by administrator! ")
+    confirm("Запрос на продление будет отправлен администратору! ")
     this.service.ExtendBooking(this.Booking.id, "00:30")
     .subscribe((res:any)=>{
       console.log("RES" + res);

@@ -12,6 +12,7 @@ import { MapsAPILoader } from "angular2-google-maps/core";
 import {} from '@types/googlemaps';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
+import { BaseComponent } from '../../core/base/base.component';
 
 
 declare var google: any;
@@ -21,91 +22,101 @@ declare var google: any;
   templateUrl: './allCoworkings.component.html',
   styleUrls:["./allCoworkings.component.css"]
 })
-export class AllCoworkingsComponent implements OnInit {
-    
-    RegistrationErr = false;
-    isLoading = true;
-    Coworkings:CoworkingModel[] = [];
-    Images:string[] = [];
-    Params = {
-      limit:10,
-      offset:0,
-      description:'',
-      full_name:'',
-      address:'',
-      additional_info:'',
-      begin_work:'',
-      end_work:'',
-      lat:null,
-      lng:null,
-      working_days: [],
-      begin_date:'',
-      end_date:'',
-      //date:null
+export class AllCoworkingsComponent extends BaseComponent implements OnInit{
+  RegistrationErr = false;
+  Coworkings:CoworkingModel[] = [];
+  Images:string[] = [];
+  Params = {
+    limit:10,
+    offset:0,
+    description:'',
+    full_name:'',
+    address:'',
+    additional_info:'',
+    begin_work:'',
+    end_work:'',
+    lat:null,
+    lng:null,
+    working_days: [],
+    begin_date:'',
+    end_date:'',
+    //date:null
+  };
+
+  ngOnInit() 
+  {
+    this.CoworkingSearch();
+  }
+
+  getMask(){
+    return {
+      mask: [/[0-2]/, this.Params.begin_work && parseInt(this.Params.begin_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+      keepCharPositions: true
     };
-    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-      
-      this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
+  } 
 
+  getMaskEnd(){
+    return {
+      mask: [/[0-2]/, this.Params.end_work && parseInt(this.Params.end_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
+      keepCharPositions: true
+    };
+  } 
 
-    ngOnInit() 
-    {
-      this.service.GetAllCoworking()
-      .subscribe((cwr:CoworkingModel[])=>{
-          console.log(cwr);
-          this.Coworkings = cwr;
-          for(let item of cwr){
-            if(item.images && item.images[0]){
-              this.service.GetImageById(item.images[0].id)
-              .subscribe((image:Base64ImageModel)=>{
-                  this.Images['act'+item.id] = image.base64;
-              });}}
-              this.isLoading = false; 
-            });
-    }
-    getMask(){
-      return {
-          mask: [/[0-2]/, this.Params.begin_work && parseInt(this.Params.begin_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
-          keepCharPositions: true
-        };
-      } 
-  
-    getMaskEnd(){
-      
-      return {
-          mask: [/[0-2]/, this.Params.end_work && parseInt(this.Params.end_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
-          keepCharPositions: true
-        };
-    } 
-    
-    OnBeginWorkChanged($event:any){
-      this.Params.begin_work = $event
-    }
-    OnEndWorkChanged($event:any){
-      this.Params.end_work = $event
-    }
+  OnBeginWorkChanged($event:any){
+    this.Params.begin_work = $event
+  }
+  OnEndWorkChanged($event:any){
+    this.Params.end_work = $event
+  }
 
-    CoworkingSearch() {
-      this.service.GetAllCoworking(this.Params)
-      .subscribe((cwr:CoworkingModel[])=>{
-          console.log(cwr);
-          this.Coworkings = cwr;
-          for(let item of cwr){
-            if(item.images && item.images[0]){
-              this.service.GetImageById(item.images[0].id)
-              .subscribe((image:Base64ImageModel)=>{
-                  this.Images['act'+item.id] = image.base64;
-              });}}
-              this.isLoading = false; 
-            });
-    }
+  CoworkingSearch(params?:boolean) {
+    this.WaitBeforeLoading(
+      ()=>this.service.GetAllCoworking(params?this.Params:null),
+      (res:any)=>{
 
-    SetPoint($event) {
-      if($event && $event.coords){
-        console.log($event.coords);
-        this.Params.lat = $event.coords.lat;
-        this.Params.lng = $event.coords.lng;
+        this.Coworkings = res;
+
+        if(this.Coworkings.length == 0)
+          return;
+        
+        let total = this.Coworkings.length,current=0;
+        this.Images = [];
+        for(let item of this.Coworkings)
+        {
+          if( item.images && item.images[0] && item.images[0].id){
+            this.service.GetImageById(item.images[0].id)
+              .subscribe((img:Base64ImageModel)=>{
+                this.Images[item.id] = img.base64;
+                current += 1;
+                if(total == current){
+                  this.Ready(true);
+                }
+              },
+            (err)=>{
+              this.Images[item.id] = null;//"assets/img/bg-sign-in.png";
+              current += 1;
+              if(total == current){
+                this.Ready(true);
+            }
+          })
+        }
+        else{
+          this.Images[item.id] = null;//"assets/img/bg-sign-in.png";
+          current += 1;
+          if(total == current){
+            this.Ready(true);
+          }
+        }
       }
+    });
+  }
+
+  SetPoint($event) {
+    if($event && $event.coords){
+      this.Params.lat = $event.coords.lat;
+      this.Params.lng = $event.coords.lng;
     }
+  }
+
 }
 

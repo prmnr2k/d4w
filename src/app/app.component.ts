@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   pushNotification:NotificationsComponent = new NotificationsComponent();
   isLoggedIn:boolean = false;
   title = 'app';
-  constructor(public location: Location, private service: MainService,
+  constructor(private service: MainService,
               private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
                 let notGiveNow = true;
                 let prevUser = 0;
@@ -151,16 +151,5 @@ export class AppComponent implements OnInit {
     
   }
   
-  
 
-  isMap(path){
-    var titlee = this.location.prepareExternalUrl(this.location.path());
-    titlee = titlee.slice( 1 );
-    if(path == titlee){
-      return false;
-    }
-    else {
-      return true;
-    }
-  }
 }

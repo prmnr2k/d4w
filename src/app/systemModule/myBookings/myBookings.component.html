@@ -24,18 +24,18 @@
                     <div class="row" *ngFor="let item of Bookings;let i = index">
                         <div class="col-md-1">
                             <p class="open">
-                                <a [routerLink]="['/coworking',Coworkings[i]?Coworkings[i].id:'1']">Open</a>
+                                <a [routerLink]="['/coworking',item.coworking_id]">Open</a>
                             </p>
                         </div>
                         <div class="col-md-1">
-                            <p>{{Coworkings[i]?Coworkings[i].full_name:'name'}}</p>
+                            <p>{{Coworkings[item.coworking_id]?Coworkings[item.coworking_id].full_name:'name'}}</p>
                         </div>
                         <div class="col-md-3">
-                            <p>{{Coworkings[i]?Coworkings[i].address:'address'}}</p>
+                            <p>{{Coworkings[item.coworking_id]?Coworkings[item.coworking_id].address:'address'}}</p>
                         </div>
                         <div class="col-md-1">
                             <p class="open">
-                                <a [routerLink]="['/booking',Bookings[i]?Bookings[i].id:'1']">Details</a>
+                                <a [routerLink]="['/booking',item.id]">Details</a>
                             </p>
                         </div>
                         <div class="col-md-2">

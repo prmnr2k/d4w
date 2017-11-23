@@ -4,33 +4,37 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Injectable } from '@angular/core';
 import { UserModel } from './../core/models/user.model';
 import { MainService } from './../core/services/main.service';
+import { BaseComponent } from '../core/base/base.component';
+import { setTimeout } from "timers";
 
 @Injectable()
-export class SystemAccessGuard implements CanActivate{
-    constructor(private service: MainService,private router: Router){
-    }
+export class SystemAccessGuard extends BaseComponent implements CanActivate{
+    /*constructor(private service: MainService,private router: Router){
+    }*/
     canActivate(router:ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|boolean{
-        console.log(router);
-        console.log(state);
+        //console.log(router.routeConfig.path);
         
-        console.log(router.routeConfig.path);
-        /*if(router.routeConfig.path == "login" || state.url == "/system/registration" || state.url == "/system/userRegistration")
-            return !this.service.IsLogedIn();
-        else{
-             if(this.service.IsLogedIn()){
-                 if(router.routeConfig.path==`coworking_profile`){
-                        return true;
-                 }
-                else return true;
+            switch(router.routeConfig.path){
+                case "my_bookings":{
+                    
+                    setTimeout(()=>{
+                        if(this.userStatus == 1){
+                            console.log('returned');
+                            return true;
+                        }
+                        else{
+                            return this.LoginNavigate();
+                        }
+                     },300);
+                }
+                default:{
+                    return true;
+                }
             }
-            else{
-                this.router.navigate(['/login']);
-                return false;
-            }
-        }*/
-        return true;
-        
-
+    }
+    LoginNavigate(){
+        this.router.navigate(['/login']);
+        return false;
     }
 
     /*LoginPageAccess():boolean{

@@ -20,7 +20,9 @@
     font-weight: normal;
     font-style: normal;
 }
-
+bs-datepicker-container, bs-daterangepicker-container{
+    transform: translateX(-90px);
+}
 $main_color : #FF8026;
 
 .load-img{

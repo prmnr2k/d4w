@@ -12,7 +12,7 @@
                         <p>Price: {{Coworking.price}}$</p>
                         <p>Capacity: {{Coworking.capacity}}</p>
                         <p>Address: {{Coworking.address}}</p>
-                        <p>Expiration date: {{Booking.end_date | date:'dd.MM.yyyy HH:mm'}}</p>
+                        <p>Expiration date: {{Booking.end_date.split("T")[0]| date: "MM/d/y"}}  {{Booking.end_date.split("T")[1].split(":")[0]}}{{Booking.end_date | date: ":mm"}}</p>
                         <p style="word-wrap: break-word; word-break: break-all;">Description: {{Coworking.description}}</p>
                             <button class="like" (click)="rateCoworking(Coworking.id,'yes')" [ngClass]="{'checked-rate':Rate && Rate.score == 'yes'}"></button>
                             <button class="dislike"(click)="rateCoworking(Coworking.id,'no')"[ngClass]="{'checked-rate':Rate && Rate.score == 'no'}"></button>

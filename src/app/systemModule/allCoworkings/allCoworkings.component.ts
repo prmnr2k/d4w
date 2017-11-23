@@ -13,6 +13,7 @@ import {} from '@types/googlemaps';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { BaseComponent } from '../../core/base/base.component';
+import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 
 declare var google: any;
@@ -22,10 +23,12 @@ declare var google: any;
   templateUrl: './allCoworkings.component.html',
   styleUrls:["./allCoworkings.component.css"]
 })
+
 export class AllCoworkingsComponent extends BaseComponent implements OnInit{
   RegistrationErr = false;
   Coworkings:CoworkingModel[] = [];
   Images:string[] = [];
+  bsRangeValue:any;
   Params = {
     limit:10,
     offset:0,
@@ -42,9 +45,11 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
     end_date:'',
     //date:null
   };
+  Working_days:FrontWorkingDayModel[] = [];
 
   ngOnInit() 
   {
+    this.Working_days = this.service.GetAllDays();
     this.CoworkingSearch();
   }
 
@@ -54,6 +59,7 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
       keepCharPositions: true
     };
   } 
+
 
   getMaskEnd(){
     return {
@@ -69,7 +75,17 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
     this.Params.end_work = $event
   }
 
+  setDate(date?:Date){
+    this.Params.begin_date = this.bsRangeValue[0].getDate()+'.'+(this.bsRangeValue[0].getMonth()+1)+'.'+this.bsRangeValue[0].getFullYear();
+    this.Params.end_date = this.bsRangeValue[1].getDate()+'.'+(this.bsRangeValue[1].getMonth()+1)+'.'+this.bsRangeValue[1].getFullYear();
+  }
+
   CoworkingSearch(params?:boolean) {
+
+    if(params){
+      this.Params.working_days = this.service.GetCheckedWorkingDaysName(this.Working_days);
+    }
+    
     this.WaitBeforeLoading(
       ()=>this.service.GetAllCoworking(params?this.Params:null),
       (res:any)=>{

@@ -432,6 +432,16 @@ export class MainService{
         return result;
     }
 
+    public GetCheckedWorkingDaysName(days:FrontWorkingDayModel[]):string[]{
+        let result:string[] = [];
+        for(let item of days){
+            if(item.checked){
+              result.push(item.en_name);
+            }
+        }
+        return result;
+    }
+
     public GetAllAmenties(){
         return [
             new CheckboxModel("Free coffee","free_coffee"),

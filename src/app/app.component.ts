@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
               private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
                 let notGiveNow = true;
                 let prevUser = 0;
-                let count = 0;
+                let count = new Date().getTime();
                 this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
                 console.log('ng2cable success');
                 this.broadcaster.on<JSON>('BookingsChannel').subscribe(
@@ -58,9 +58,10 @@ export class AppComponent implements OnInit {
                         let phone='',name='';
                         this.service.GetUserById(message['booking'].user_id).
                           subscribe((any)=>{
+                            count = new Date().getTime();
                             phone = any.phone;
                             name = any.first_name.slice(0,20);
-                          this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but-'+count+'" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone,count);                   
+                          this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but-'+count+'" class="form-control" class="btn btn-info btn-fill">Send SMS to User</button>','bottom','right',phone,count);                   
                         });
                       }
                     }

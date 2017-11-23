@@ -60,14 +60,14 @@
                             </div>
                         </div>
                         <div class="my-form-groupe-3">
-                            <div class="one-nishtyaki">
-                                <p>Понедельник</p>
+                            <div class="one-nishtyaki" *ngFor="let item of  Params.working_days; let i = index">
+                                <p>{{item.ru_name}}</p>
                                 <div class="orange-checkbox">
-                                    <input type="checkbox" class="checkbox" name='weekDay-1' id="weekDay-1" [ngModel]="Params.qq" (ngModelChange)="item.checked =  $event">
-                                    <label for="weekDay-1"></label>
+                                    <input type="checkbox" class="checkbox" [name]="'workingday'+i" [id]="'checkboxOr-day-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked = $event">
+                                    <label [for]="'checkboxOr-day-'+i"></label>
                                 </div>
                             </div>
-
+                            
                         </div>
                     </div>
                     <div class="advanced-search">

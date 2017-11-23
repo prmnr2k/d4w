@@ -12,6 +12,7 @@ import { MapsAPILoader } from "angular2-google-maps/core";
 import {} from '@types/googlemaps';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
+import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 
 declare var google: any;
@@ -38,11 +39,13 @@ export class AllCoworkingsComponent implements OnInit {
       end_work:'',
       lat:null,
       lng:null,
-      working_days: [],
+      working_days:[],
       begin_date:'',
       end_date:'',
       //date:null
     };
+
+
     constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
       
       this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
@@ -50,6 +53,7 @@ export class AllCoworkingsComponent implements OnInit {
 
     ngOnInit() 
     {
+      this.Params.working_days = this.service.GetAllDays();
       this.service.GetAllCoworking()
       .subscribe((cwr:CoworkingModel[])=>{
           console.log(cwr);
@@ -86,7 +90,9 @@ export class AllCoworkingsComponent implements OnInit {
     }
 
     CoworkingSearch() {
-      this.service.GetAllCoworking(this.Params)
+
+      console.log(this.Params);
+      /*this.service.GetAllCoworking(this.Params)
       .subscribe((cwr:CoworkingModel[])=>{
           console.log(cwr);
           this.Coworkings = cwr;
@@ -97,7 +103,7 @@ export class AllCoworkingsComponent implements OnInit {
                   this.Images['act'+item.id] = image.base64;
               });}}
               this.isLoading = false; 
-            });
+            });*/
     }
 
     SetPoint($event) {

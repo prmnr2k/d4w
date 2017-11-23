@@ -1,27 +1,28 @@
-<div class="main-content" >
-    <div class="container-fluid">
-        <loading-cmp *ngIf="isLoading"></loading-cmp>
-        <div class="row" *ngIf="!isLoading">
-            <div class="col-md-12" *ngIf="RegistrationErr">
-                <h2 class="error-msg">{{RegErrMsg}}</h2>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <p>Name: {{Coworking.full_name}}</p>
-                        <p>Price: {{Coworking.price}}$</p>
-                        <p>Capacity: {{Coworking.capacity}}</p>
-                        <p>Address: {{Coworking.address}}</p>
-                        <p>Expiration date: {{Booking.end_date | date:'dd.MM.yyyy HH:mm'}}</p>
-                        <p style="word-wrap: break-word; word-break: break-all;">Description: {{Coworking.description}}</p>
-                            <button class="like" (click)="rateCoworking(Coworking.id,'yes')" [ngClass]="{'checked-rate':Rate && Rate.score == 'yes'}"></button>
-                            <button class="dislike"(click)="rateCoworking(Coworking.id,'no')"[ngClass]="{'checked-rate':Rate && Rate.score == 'no'}"></button>
-                        <button type="button" class="btn btn-info btn-fill pull-right" style="margin-right: 15px;" (click)="extendBooking()">Extend by 30 min</button>
-                    </div>
-                </div>
-            </div>
-            <!-- *ngIf="Booking.end_date < rightNow" -->
-                   
+
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+
+
+<div class="wrapp-for-forms" *ngIf="!isLoading">
+
+    <h2 class="error-msg">{{RegErrMsg}}</h2>
+    <h6 class="head-form">
+        <span>Коворкинг "{{Coworking?.full_name}}"</span>
+    </h6>
+
+    <div class="description-coworking-wr">
+        <div class="description-coworking">
+            <p><strong>Цена: </strong>{{Coworking.price}}$</p>
+            <p><strong>Кол-во мест: </strong>{{Coworking.capacity}}</p>
+            <p><strong>Адрес: </strong>{{Coworking.address}}</p>
+            <p><strong>Expiration date: </strong>{{Booking.end_date | date:'dd.MM.yyyy HH:mm'}}</p>
+            <p><strong>Описание </strong>{{Coworking.description}}</p>
         </div>
+        <div class="likeDislike">
+            <button class="like" (click)="rateCoworking(Coworking.id,'yes')" [ngClass]="{'checked-rate':Rate && Rate.score == 'yes'}"></button>
+            <button class="dislike" (click)="rateCoworking(Coworking.id,'no')" [ngClass]="{'checked-rate':Rate && Rate.score == 'no'}"></button>
+            
+        </div>
+        <button type="button" class="butt-orange" style="margin-right: 15px;" (click)="extendBooking()">Extend by 30 min</button>
     </div>
-</div>
+ </div>
+

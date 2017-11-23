@@ -123,7 +123,7 @@ export class CoworkingComponent implements OnInit {
 
 
   BookingCoworking(){
-  
+    
     this.Booking.coworking_id = this.Coworking.id;
     this.Booking.visitors_count = 1;
     this.Booking.begin_date = this.bsValue.getFullYear()+`-`+this.incr(this.bsValue.getMonth())+`-`+this.bsValue.getDate()+'T'+this.fromTime;
@@ -144,11 +144,13 @@ export class CoworkingComponent implements OnInit {
       if(this.showTime){
         if(err._body==`{"begin_date":["INVALID"]}`) this.ErrBookingMsg = `In Start Time Coworking isn't work!`;
         if(err._body==`{"end_date":["INVALID"]}`) this.ErrBookingMsg = `In End Time Coworking isn't work!`;
+        if(err._body==`{"capacity":["LIMIT_REACHED"]}`) this.ErrBookingMsg = `No available seats at this time!`;
       }
       else this.ErrBookingMsg = `In This Date Coworking isn't work!`;
       this.BookingErr = true;
       this.BookingOk = false;
   });
+   
   }
 
   incr(n:number){
@@ -181,34 +183,64 @@ export class CoworkingComponent implements OnInit {
   }
 
   OnBeginWorkChanged($event:any){
+    this.fromTime = $event;
+    if(!this.toTime || 
+        this.toTime < this.fromTime)
+    {
+        
+        if(this.fromTime.indexOf("_") == -1){
+          console.log('fromTime = '+this.fromTime.indexOf("_"));
+            if(parseInt(this.fromTime[0]+this.fromTime[1]) <= 21 && parseInt(this.fromTime[3]+this.fromTime[4])<=59){
+                let beginArr = this.fromTime.split(":");
+                let endHour;
+                if(+beginArr[0] <= 7){
+                    let for_parse = parseInt(beginArr[0][1]);
+                     endHour = '0'+(for_parse+1);
+                }
+                else{
+                    endHour = +beginArr[0] + 1;
+                }
+                this.toTime = endHour+ ":" + beginArr[1];
+                if(this.toTime>this.maxTime||this.toTime<this.minTime)this.errTime = true;
+                else this.errTime = false;
+            }
+            else{
+               
+                this.toTime = "23:59"
+                if(this.toTime>this.maxTime||this.toTime<this.minTime)this.errTime = true;
+                else this.errTime = false;
+            }
+        }
+       
+    }
+    if(this.fromTime.indexOf("_") != -1){
+     
+      this.errTime = true;
+      
+    }
+    else{
+      this.errTime = false;
+    }
+    
+
    
-    let beginArr = $event.split(":");
-    let beginHour =  +beginArr[0];
-    
-      let endHour = +beginArr[0] + 1;
-    
-      if(!this.validateMinTime(endHour+":"+beginArr[1]))  this.toTime = this.maxTime;
-     else{
-      let endHourString:string;
-      if(endHour<10) endHourString="0"+endHour; else endHourString = ''+endHour;
-      this.fromTime = $event;
-    
-      this.toTime = endHourString + ":" + beginArr[1];
-     }
-     if(this.fromTime>=this.minTime&&this.fromTime<this.maxTime) this.errTime = false;
-     else this.errTime = true;
-    
-  }
+}
 
   OnEndWorkChanged($event:any){
-
+    console.log('totime2 = '+this.toTime);
   // if(this.validateMinTime($event))
     this.toTime = $event;
  //   else this.toTime = this.maxTime;
-    if(this.toTime>this.maxTime||this.toTime<this.minTime)this.errTime = true;
+ if(this.toTime.indexOf("_") != -1){
+  this.errTime = true;
+}
+else{
+  this.errTime = false;
+}
+    if(this.toTime>this.maxTime||this.toTime<this.minTime && this.toTime.indexOf("_") == -1)this.errTime = true;
     else this.errTime = false;
   
-    console.log(this.toTime,this.maxTime,this.toTime>this.maxTime);
+   
   }
 
   validateMinTime($event:any){
@@ -237,6 +269,8 @@ export class CoworkingComponent implements OnInit {
 
 
   DateChange(){
+    console.log("showTime ="+this.showTime);
+ 
     if(this.Days && this.bsValue){
       let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
       this.showTime = false;
@@ -246,6 +280,11 @@ export class CoworkingComponent implements OnInit {
         for(let i of this.Coworking.working_days){
           if(tmpDay.en_name==i.day){
             this.showTime = true;
+            this.toTime = '11:00';
+            this.fromTime= '10:00';
+            console.log("tmpDay = " +tmpDay)
+            console.log("errTime ="+this.errTime);
+            this.errTime = false;
             this.maxTime = i.end_work;
             this.minTime = i.begin_work;
             this.OnBeginWorkChanged(i.begin_work);

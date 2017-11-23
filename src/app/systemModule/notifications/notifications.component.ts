@@ -17,7 +17,7 @@ export class NotificationsComponent implements OnInit {
   }
   ngOnInit() {
   }
-  showNotification(text, from, align,user_phone?){
+  showNotification(text, from, align,user_phone?,count?){
       const type = ['','info','success','warning','danger'];
       var color = Math.floor((Math.random() * 1000) + 1);
       $.notify({
@@ -33,8 +33,8 @@ export class NotificationsComponent implements OnInit {
           }
       });
 
-      if(user_phone)
-      document.getElementById('id-but').onclick = function(){
+      if(user_phone){
+        document.getElementById('id-but-'+count).onclick = function(){
         console.log(`old send Сlickatell`);
         console.log('mob send = ',user_phone);
         var xhr = new XMLHttpRequest();
@@ -45,10 +45,10 @@ export class NotificationsComponent implements OnInit {
             }
         };
         xhr.send();
-        document.getElementById('id-but').style.color='green';
-        document.getElementById('id-but').setAttribute("disabled","disabled");
+        document.getElementById('id-but-'+count).style.color='green';
+        document.getElementById('id-but-'+count).setAttribute("disabled","disabled");
       };
-      
+    }
       this.sound.play();
   }
 

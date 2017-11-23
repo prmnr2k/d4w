@@ -20,12 +20,14 @@ export class AppComponent implements OnInit {
               private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
                 let notGiveNow = true;
                 let prevUser = 0;
+                let count = 0;
                 this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
                 console.log('ng2cable success');
                 this.broadcaster.on<JSON>('BookingsChannel').subscribe(
                   message => {
                     if(notGiveNow||(!notGiveNow&&prevUser!=message['booking'].user_id)){
                     notGiveNow = false;
+                    count++;
                     prevUser = message['booking'].user_id;
                     console.log(message['event_type']);
                     console.log(message['booking']);
@@ -47,7 +49,7 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name.slice(0,20);
-                        this.pushNotification.showNotification(name+' will arrive in 15 minutes!','bottom','right');
+                        this.pushNotification.showNotification(name+' will come soon!','bottom','right');
                       });
                     }
 
@@ -58,7 +60,7 @@ export class AppComponent implements OnInit {
                           subscribe((any)=>{
                             phone = any.phone;
                             name = any.first_name.slice(0,20);
-                          this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);                   
+                          this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but-'+count+'" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone,count);                   
                         });
                       }
                     }

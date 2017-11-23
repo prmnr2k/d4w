@@ -19,7 +19,11 @@
   font-style: normal; }
 bs-datepicker-container, bs-daterangepicker-container {
   -webkit-transform: translateX(-90px);
-          transform: translateX(-90px); }
+          transform: translateX(-90px);
+  width: 318px; }
+
+.bs-datepicker-multiple {
+  margin-left: 0 !important; }
 
 .load-img {
   max-width: 100px !important; }

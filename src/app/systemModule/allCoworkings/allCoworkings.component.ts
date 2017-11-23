@@ -97,17 +97,12 @@ export class AllCoworkingsComponent implements OnInit {
 
     CoworkingSearch() {
       
-      console.log("Working_days")
-      console.log(this.Working_days);
-
-
       for(let itemWeek of this.Working_days){
         if(itemWeek.checked){
           this.Params.working_days.push(itemWeek.en_name);
         }
       }
-      console.log("params");
-      console.log(this.Params);
+    
       this.service.GetAllCoworking(this.Params)
       .subscribe((cwr:CoworkingModel[])=>{
           console.log(cwr);

@@ -72,9 +72,10 @@ export class IdBookingComponent implements OnInit {
 }
 
   extendBooking() {
+    confirm("Запрос на продление будет отправлен администратору! ")
     this.service.ExtendBooking(this.Booking.id, "00:30")
     .subscribe((res:any)=>{
-      console.log(res);
+      console.log("RES" + res);
     })
   }
    

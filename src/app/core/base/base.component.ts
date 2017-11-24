@@ -27,7 +27,6 @@ export class BaseComponent{
 
 
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
-        this.ready = new Subject();
 
         this.isLoggedIn = this.service.IsLogedIn();
         if(this.isLoggedIn){

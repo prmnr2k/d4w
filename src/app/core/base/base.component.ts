@@ -18,7 +18,6 @@ export class BaseComponent{
     
 
     public isLoading:boolean = false;
-    private readonly ready:Subject<boolean>;
 
     public isLoggedIn:boolean = false;
     public userStatus:number = 0;
@@ -49,12 +48,6 @@ export class BaseComponent{
             });
         
         
-        this.ready
-            .subscribe((val:boolean)=>{
-                if(this.isLoading == val)
-                    this.SetLoading(!val);
-            });
-
         this.service.onLoadingChange$
             .subscribe((val:boolean)=>{
                 this.isLoading = val;
@@ -80,13 +73,12 @@ export class BaseComponent{
 
     protected GetMyAccess(){
         this.service.GetMyAccess()
-        .subscribe((res)=>{
-        
-            this.SetUserStatus(res.role);
-        },
-        err=>{
-            this.SetUserStatus('');
-        });
+            .subscribe((res)=>{
+                this.SetUserStatus(res.role);
+            },
+            err=>{
+                this.SetUserStatus('');
+            });
     }
 
 
@@ -142,12 +134,8 @@ export class BaseComponent{
             );
     }
 
-    private SetLoading = (bool:boolean) => {
+    protected SetLoading = (bool:boolean) => {
         this.service.onLoadingChange$.next(bool);
-    }
-
-    public Ready = (bool:boolean) =>{
-        this.ready.next(bool);
     }
 
 }

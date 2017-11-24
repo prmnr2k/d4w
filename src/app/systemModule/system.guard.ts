@@ -36,19 +36,4 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
         this.router.navigate(['/login']);
         return false;
     }
-
-    /*LoginPageAccess():boolean{
-        let result = this.service.IsLogedIn();
-        if(result){
-            this.service.GetMe()
-                .subscribe((res:UserModel)=>{
-                    console.log(res);
-                },
-            (err:any)=>{
-                console.log(err);
-            })
-        }
-            //this.router.navigate(['/']);
-        return true;
-    }*/
 }

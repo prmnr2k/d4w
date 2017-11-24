@@ -41,13 +41,13 @@ export class MyBookingsComponent extends BaseComponent implements OnInit {
                 this.Coworkings[cwrk.id] = cwrk;
                 current += 1;
                 if(total == current){
-                  this.Ready(true);
+                  this.SetLoading(false);
                 }
               },
               err=>{
                 current += 1;
                 if(total == current){
-                  this.Ready(true);
+                  this.SetLoading(false);
                 }
               });
           }

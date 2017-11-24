@@ -10,21 +10,18 @@ import { Subscription } from 'rxjs/Subscription';
 import { error } from 'util';
 import { UserModel } from 'app/core/models/user.model';
 import { Base64ImageModel } from 'app/core/models/base64image.model';
+import { GUID } from 'app/core/models/guide.model';
 
 
 
 @Injectable()
 export class BaseComponent{
-    
-
+    private ActiveProcesses:string[] = [];
     public isLoading:boolean = false;
-
     public isLoggedIn:boolean = false;
     public userStatus:number = 0;
     public Me:UserModel = new UserModel();
     public MyLogo:string = '';
-
-
 
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
 
@@ -49,10 +46,28 @@ export class BaseComponent{
         
         this.service.onLoadingChange$
             .subscribe((val:boolean)=>{
-                this.isLoading = val;
-            });
+                console.log(this.ActiveProcesses);
+                if(this.ActiveProcesses.length == 0){
+                    this.isLoading = false;
+                }
+                else{
+                    this.isLoading = true;
+                }
+            });   
+    }
 
-        
+    private GenerateProcessID(){
+        let id:string = GUID.GetNewGUID();
+        this.ActiveProcesses.push(id);
+        this.SetLoading();
+        return id;
+    }
+
+    private DeleteProcess(str:string){
+        let index = this.ActiveProcesses.findIndex(x=>x == str);
+        this.ActiveProcesses.splice(index,1);
+        console.log('processed kiled ' + index);
+        this.SetLoading();
     }
 
     protected GetMyData(){
@@ -70,14 +85,23 @@ export class BaseComponent{
             });
     }
 
-    protected GetMyAccess(){
-        this.service.GetMyAccess()
-            .subscribe((res)=>{
+    
+    protected GetMyAccess(callback?:(params:any)=>void){
+        this.WaitBeforeLoading(
+            ()=>this.service.GetMyAccess(),
+            (res:any)=>{
                 this.SetUserStatus(res.role);
+                if(callback && typeof callback == "function"){
+                    callback(res);
+                }
             },
-            err=>{
+            (err)=>{
                 this.SetUserStatus('');
-            });
+                if(callback && typeof callback == "function"){
+                     callback(false);
+                }
+            }
+        );
     }
 
 
@@ -108,15 +132,20 @@ export class BaseComponent{
     
 
     public WaitBeforeLoading = (fun:()=>Observable<any>,success:(result?:any)=>void, err?:(obj?:any)=>void)=>{
-        this.SetLoading(true);
+        let process = this.GenerateProcessID();
+        
         fun()
             .subscribe(
                 res=>{
                     success(res);
+                    this.DeleteProcess(process);
                 },
                 error=>{
-                    if(err && typeof err == "function")
-                        err(error);
+                    if(err && typeof err == "function"){
+                        err(error); 
+                    }
+                    this.DeleteProcess(process);
+
                 });
     }
 
@@ -125,6 +154,7 @@ export class BaseComponent{
             .subscribe(
                 res=>{
                     success(res);
+                    
                 },
                 error=>{
                     if(err && typeof err == "function")
@@ -133,8 +163,8 @@ export class BaseComponent{
             );
     }
 
-    protected SetLoading = (bool:boolean) => {
-        this.service.onLoadingChange$.next(bool);
+    protected SetLoading = () => {
+        this.service.onLoadingChange$.next(true);
     }
 
 }

@@ -104,24 +104,18 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
               .subscribe((img:Base64ImageModel)=>{
                 this.Images[item.id] = img.base64;
                 current += 1;
-                if(total == current){
-                  this.SetLoading(false);
-                }
+               
               },
             (err)=>{
               this.Images[item.id] = null;//"assets/img/bg-sign-in.png";
               current += 1;
-              if(total == current){
-                this.SetLoading(false);
-            }
+             
           })
         }
         else{
           this.Images[item.id] = null;//"assets/img/bg-sign-in.png";
           current += 1;
-          if(total == current){
-            this.SetLoading(false);
-          }
+         
         }
       }
     });

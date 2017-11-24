@@ -40,15 +40,11 @@ export class MyBookingsComponent extends BaseComponent implements OnInit {
               .subscribe((cwrk:CoworkingModel)=>{
                 this.Coworkings[cwrk.id] = cwrk;
                 current += 1;
-                if(total == current){
-                  this.SetLoading(false);
-                }
+               
               },
               err=>{
                 current += 1;
-                if(total == current){
-                  this.SetLoading(false);
-                }
+                
               });
           }
         } 

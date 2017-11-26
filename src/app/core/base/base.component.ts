@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, NgZone, Injectable } from '@angular/core';
 import { MainService } from '../services/main.service';
-import { Router } from "@angular/router";
+import { Router, Params } from '@angular/router';
 import { Ng2Cable, Broadcaster } from "ng2-cable";
 import { setTimeout } from 'timers';
 import { Subject } from 'rxjs/Subject';
@@ -73,18 +73,75 @@ export class BaseComponent{
     protected GetMyData(){
         
         this.GetMyAccess();
-        this.service.GetMe()
-            .subscribe((res)=>{
-                this.Me = res;
-                if(this.Me.image_id){
-                    this.service.GetImageById(this.Me.image_id)
-                        .subscribe((img:Base64ImageModel)=>{
-                            this.MyLogo = img.base64;
-                        });
-                }
-            });
+        this.GetMe();
     }
 
+    protected GetImageById(id:number,callback:(res:any)=>any){
+        if(id){
+            this.WaitBeforeLoading(
+                ()=>this.service.GetImageById(id),
+                (res:Base64ImageModel)=>{
+                    if(callback && typeof callback == "function"){
+                        callback(res);
+                    }
+                },
+                (err)=>{
+                    console.log(err);
+                }
+            );
+        }
+        else{
+            if(callback && typeof callback == "function"){
+                callback(false);
+            }
+        }
+    }
+
+    protected GetMyImage(callback?:()=>any){
+        this.GetImageById(
+            this.Me.image_id,
+            (res:Base64ImageModel)=>{
+                this.MyLogo = res.base64;
+                if(callback && typeof callback == "function"){
+                    callback();
+                }
+            }
+        ); 
+    }
+
+    protected ReadImages(files:any,callback?:(params?)=>any){
+        for(let f of files){
+            let file:File = f;
+            if(!file){
+               break;
+            }
+            let myReader:FileReader = new FileReader();
+            myReader.onloadend = (e) => {
+                callback(myReader.result);
+            }
+            myReader.readAsDataURL(file);
+        }
+    }
+
+
+    protected GetMe(callback?:()=>any){
+        this.WaitBeforeLoading(
+            ()=>this.service.GetMe(),
+            (res)=>{
+                this.Me = res;
+
+                this.GetMyImage(callback);
+
+            },
+            (err)=>{
+                console.log(err);
+                if(callback && typeof callback == "function"){
+                    callback();
+                }
+            }
+        );
+
+    }
     
     protected GetMyAccess(callback?:(params:any)=>void){
         this.WaitBeforeLoading(

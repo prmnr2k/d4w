@@ -13,6 +13,7 @@ import { Base64ImageModel } from '../../core/models/base64image.model';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { UserModel } from 'app/core/models/user.model';
+import { BaseComponent } from '../../core/base/base.component';
 
 
 
@@ -21,16 +22,16 @@ import { UserModel } from 'app/core/models/user.model';
   templateUrl: './editCoworking.component.html',
   styleUrls: ['./st-form.css']
 })
-export class EditCoworkingComponent implements OnInit {
+export class EditCoworkingComponent extends BaseComponent implements OnInit {
     RegistrationErr = false;
-    isLoading = true;
+   
     RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
     Days:FrontWorkingDayModel[] = [];
     AmetiesCB: CheckboxModel[] = []; 
     Me:UserModel = new UserModel();
     CoworkingId:number = 0;
-    meRole:string = 'guest';
+    
     coworkingWorkers:UserModel[] = [];
     coworkingWorkersRequest:WorkerRequestModel[] = [];
     coworkingWorkersRequestUser:UserModel[] = [];
@@ -38,85 +39,112 @@ export class EditCoworkingComponent implements OnInit {
     flagForImages:boolean = true;
     imagesCount:number = 5;
     arrorTime:string = '';
-    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-        
-        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); 
-    }
-
     @ViewChild('submitFormCwrc') form: NgForm;
+
 
     ngOnInit() 
     {
-        this.service.GetMe()
-            .subscribe((user:UserModel)=>{
-                this.Me = user;
-                this.service.GetAllCoworking({creator_id:this.Me.id})
-                    .subscribe((cwr:CoworkingModel[])=>{
-                        this.CoworkingId = cwr[0].id;
-                        console.log(cwr);
-                        this.imagesCount = 5 - cwr[0].images.length;
-                        this.InitByCoworking(cwr[0]);
-                        this.service.GetMyAccess()
-                        .subscribe((res)=>{
-                          this.meRole = res.role;
-                          if(res.role!='creator') this.router.navigate(['/all_coworkings']);
-                        });
+       this.BaseInit();
+    }
+    GetUsersByRequests(){
+        for(let i in this.coworkingWorkersRequest){
+            this.WaitBeforeLoading(
+                ()=> this.service.GetUserById(this.coworkingWorkersRequest[i].user_id),
+                (res:UserModel)=>{
+                    this.coworkingWorkersRequest[i].user_name = res.first_name;
+                    this.coworkingWorkersRequest[i].user_email = res.email;
+                },
+                (err)=>{
+                    console.log(err);
+                }
+            );
 
-                        this.service.GetCoworkingWorkersRequest(this.CoworkingId)
-                        .subscribe((res:WorkerRequestModel[])=>{
-                            console.log(`request worker`,res);
-                            this.coworkingWorkersRequest = res;
-                            let count = 0;
-                            for(let i of res){
-                                console.log('get user by id',i.user_id);
-                                this.service.GetUserById(i.user_id)
-                                .subscribe((user:UserModel)=>{
-                                    console.log('user = ',user);
-                                    this.coworkingWorkersRequest[count].user_name = user.first_name;
-                                    this.coworkingWorkersRequest[count].user_email = user.email;
-                                    count++;
-                                });
-                            
-                            }
-                        });
+        }
+    }
 
-                        this.service.GetCoworkingWorkers(this.CoworkingId)
-                        .subscribe((res:UserModel[])=>{
-                            console.log(`avalieble worker`,res);
-                            this.coworkingWorkers = res;
-                        });
+    GetCoworkingWorkers(){
+        this.WaitBeforeLoading(
+            ()=>this.service.GetCoworkingWorkers(this.CoworkingId),
+            (res:UserModel[])=>{
+                this.coworkingWorkers = res;
+                
+            },
+            (err)=>{
+                console.log(err);
+            }
 
-                        this.isLoading = false;
-                    })
-            });
+        );
+    }
 
-            
-        
+    GetWorkersRequest(){
+        this.WaitBeforeLoading(
+            ()=> this.service.GetCoworkingWorkersRequest(this.CoworkingId),
+            (res:WorkerRequestModel[])=>{
+                this.coworkingWorkersRequest = res;
+                this.GetUsersByRequests();
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
+    }
+
+    BaseInit(){
+        this.GetMe(
+            ()=>{
+                this.GetMyCoworking();
+            }
+        );
+    }
+
+    GetMyCoworking(){
+        this.WaitBeforeLoading(
+            ()=> this.service.GetAllCoworking({creator_id:this.Me.id}),
+            (res:CoworkingModel[])=>{
+                this.CoworkingId = res[0].id;
+                this.imagesCount = 5 - res[0].images.length;
+                this.InitByCoworking(res[0]);
+                this.GetWorkersRequest();
+                this.GetCoworkingWorkers();
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
     }
 
     InitByCoworking(cwrk:CoworkingModel){
         this.Coworking = this.service.CoworkingModelToCreateCoworkingModel(cwrk);
-        this.Days = this.service.GetAllDays();
-        this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),this.Coworking.amenties);
+        this.InitByMyself();
         this.CoworkingId = cwrk.id?cwrk.id:0;
+
+        this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),this.Coworking.amenties);
+        this.Days = this.service.GetFrontDaysByWorkingDays(cwrk.working_days);
+        
+        let imgId = cwrk.image_id?cwrk.image_id:(this.Me.image_id?this.Me.image_id:0);
+        this.GetImageById(
+            imgId,
+            (res:Base64ImageModel)=>{
+                this.Coworking.image = res.base64;
+            }
+        );
+        for(let i of cwrk.images){
+            this.GetImageById(
+                i.id,
+                (res:Base64ImageModel)=>{
+                    this.Coworking.images.push(res.base64);
+                }
+            );
+        }
+    }
+
+   
+
+    InitByMyself(){
         this.Coworking.first_name = this.Me.first_name?this.Me.first_name:'';
         this.Coworking.last_name = this.Me.last_name?this.Me.last_name:'';
         this.Coworking.email = this.oldEmail = this.Me.email?this.Me.email:'';
         this.Coworking.phone = this.Me.phone?this.Me.phone:'';
-        this.Days = this.service.GetFrontDaysByWorkingDays(cwrk.working_days);
-        let imgId = cwrk.image_id?cwrk.image_id:(this.Me.image_id?this.Me.image_id:0);
-        if(imgId){
-            this.service.GetImageById(imgId)
-                .subscribe((res:Base64ImageModel)=>{
-                    this.Coworking.image = res.base64;
-                })
-        }
-        for(let i of cwrk.images){
-            this.service.GetImageById(i.id)
-                .subscribe((img:Base64ImageModel)=>{
-                    this.Coworking.images.push(img.base64);
-                })
-        }
     }
 
     DeleteImage(i:number){
@@ -124,71 +152,63 @@ export class EditCoworkingComponent implements OnInit {
         this.imagesCount += 1;
         this.flagForImages = true;
     }
-    /*DeleteWorkingDay(i:number){
-        this.Coworking.working_days.splice(i,1);
-    }
-
-    AddNewWorkingDay(){
-        this.Coworking.working_days.push(new WorkingDayModel(this.Days[0]));
-    }*/
+   
 
 
     UpdateCoworking(){
         if(this.form.valid){
-            this.isLoading = true;
             this.RegistrationErr = false;
             this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
             this.Coworking.working_days = this.service.GetWorkingDaysFromFront(this.Days);
             if(!this.CheckCwrk()){
                 this.RegistrationErr = true;
-                this.isLoading = false;
+                
                 return;
             }
             if(this.Coworking.email == this.oldEmail) {
                 this.finalUpdate();
             }
             else {
-                this.service.checkUserByEmail(this.Coworking.email).subscribe((ressponjo:any)=>{
-                    if(ressponjo.exists){
-                        console.log("susestv");
-                        this.RegErrMsg = 'This email is already taken! ';
-                        this.RegistrationErr = true;
-                        this.isLoading = false;
+                this.WaitBeforeLoading(
+                    ()=> this.service.checkUserByEmail(this.Coworking.email),
+                    (res:any)=>{
+                        if(res.exists){
+                            this.RegErrMsg = 'This email is already taken! ';
+                            this.RegistrationErr = true;
+                        }
+                        else{
+                            this.finalUpdate();
+                        }
+                    },
+                    (err)=>{
+                        console.log(err);
                     }
-                    else{
-                        this.finalUpdate();
-                    }
-                });
+                );
             }
         }
     }
-
     finalUpdate() {
-        this.service.UpdateCoworking(this.CoworkingId,this.Coworking)
-        .subscribe((res:CoworkingModel)=>{
-            this.service.GetMe()
-                .subscribe((usr:UserModel)=>{
-                    this.Me = usr;
-                    this.InitByCoworking(res);
-                })
-            
-            this.isLoading = false;
-            this.service.onAuthChange$.next(true);
-        },
-        (err:any)=>{
-            if(err.status == 422){
-                let body:any = JSON.parse(err._body); 
-                this.RegErrMsg = this.service.CheckErrMessage(body);
-                
+        this.WaitBeforeLoading(
+            ()=> this.service.UpdateCoworking(this.CoworkingId,this.Coworking),
+            (res:CoworkingModel)=>{
+                this.GetMe(
+                    ()=>{
+                        this.InitByCoworking(res);
+                        this.service.onAuthChange$.next(true);
+                    }
+                );
+            },
+            (err)=>{
+                if(err.status == 422){
+                    let body:any = JSON.parse(err._body); 
+                    this.RegErrMsg = this.service.CheckErrMessage(body);
+                }
+                else {
+                    this.RegErrMsg = "Can`t update coworking: " + err.body;
+                }
+                this.RegistrationErr = true;
             }
-            else {
-                this.RegErrMsg = "Can`t update coworking: " + err.body;
-            }
-            this.RegistrationErr = true;
-            this.isLoading = false;
-        });
-    this.isLoading = false;
-    this.RegistrationErr = false;
+        );
     }
 
     CheckCwrk(){
@@ -214,7 +234,6 @@ export class EditCoworkingComponent implements OnInit {
             this.RegErrMsg = "Input correct working time!";
             return false;
         }
-        
         return true;
     }
 
@@ -234,15 +253,12 @@ export class EditCoworkingComponent implements OnInit {
     }
 
     loadLogo($event:any):void{
-        let target = $event.target;
-        let file:File = target.files[0];
-        if(!file)
-            return;
-        let reader:FileReader = new FileReader();
-        reader.onload = (e) =>{
-            this.Coworking.image = reader.result;
-        }
-        reader.readAsDataURL(file);
+        this.ReadImages(
+            $event.target.files,
+            (res:string)=>{
+                this.Coworking.image = res;
+            }
+        );
     }
 
     changeListener($event: any) : void {
@@ -252,33 +268,14 @@ export class EditCoworkingComponent implements OnInit {
 
 
     readThis(inputValue: any): void {
-
-        for(let i in inputValue.files){
-            if(+i <= 5){
-                this.imagesCount -= 1;
-                console.log(this.imagesCount);
-                if(this.imagesCount >= 0){
-                   
-                    let file:File = inputValue.files[i];
-                    if(!file) break;
-                    let myReader:FileReader = new FileReader();
-                    myReader.onloadend = (e) => {
-                        this.Coworking.images.push(myReader.result);
-                    }
-                    
-                    myReader.readAsDataURL(file);
+        this.ReadImages(
+            inputValue.files,
+            (res:string)=>{
+                if(res && this.Coworking.images.length < 5){
+                    this.Coworking.images.push(res);
                 }
-                else{
-                    this.imagesCount = 0;
-                    this.flagForImages = false;
-                }
-                if(this.imagesCount == 0){
-                    this.flagForImages = false;
-                }
-
             }
-            
-        }
+        );
     }
     getMask(index:number){
         return {
@@ -288,7 +285,6 @@ export class EditCoworkingComponent implements OnInit {
     } 
 
     getMaskEnd(index:number){
-        
         return {
             mask: [/[0-2]/, this.Days[index].finish_work && parseInt(this.Days[index].finish_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
             keepCharPositions: true
@@ -300,7 +296,6 @@ export class EditCoworkingComponent implements OnInit {
         if(!this.Days[index].finish_work || 
             this.Days[index].finish_work < this.Days[index].start_work)
         {
-            
             if(this.Days[index].start_work.indexOf("_") == -1){
                 if(parseInt(this.Days[index].start_work[0]+this.Days[index].start_work[1]) <= 21 && parseInt(this.Days[index].start_work[3]+this.Days[index].start_work[4])<=59){
                     let beginArr = this.Days[index].start_work.split(":");
@@ -315,56 +310,47 @@ export class EditCoworkingComponent implements OnInit {
                     this.Days[index].finish_work = endHour+ ":" + beginArr[1];
                 }
                 else{
-                   
                     this.Days[index].finish_work = "23:59"
                 }
             }
-        
         }
-
     }
 
     SetWorkNonStop(i,$event){
-            this.Days[i].nonstop = $event;
-            if(this.Days[i].nonstop){
-                this.Days[i].checked = true;
-                this.Days[i].start_work = "00:00";
-                this.Days[i].finish_work = "23:59";
-            }
+        this.Days[i].nonstop = $event;
+        if(this.Days[i].nonstop){
+            this.Days[i].checked = true;
+            this.Days[i].start_work = "00:00";
+            this.Days[i].finish_work = "23:59";
+        }
     }
 
     AddWorker(id:number){
         this.service.RequestAccess(id)
         .subscribe((any)=>{
-            console.log(any,`add success!`);
-            location.reload();
+            this.GetWorkersRequest();
+            this.GetCoworkingWorkers();
         });
-        
     }
 
     DeleteWorker(id:number){
-        console.log(`remove_id = `,id);
+   
         this.service.RemoveAccess(id)
         .subscribe((any)=>{
-            console.log(any,`delete success!`);
-            location.reload();
+            this.GetCoworkingWorkers();
         });
-        
     }
     DeleteRequestWorker(id:number){
         this.service.RemoveAccessRequest(id)
         .subscribe((any)=>{
-            console.log(any,`delete request success!`);
-            location.reload();
+            this.GetWorkersRequest();
         })
     }
 
     AddWorkerEmail(email:string){
-        console.log(`add by email`,email);
         this.service.RequestAccessEmail(this.CoworkingId,email)
         .subscribe((any)=>{
-            console.log(any,`email add`);
-            location.reload();
+            this.GetCoworkingWorkers();
         });
     }
 

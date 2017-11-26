@@ -127,5 +127,10 @@ export class AllCoworkingsComponent implements OnInit {
         this.Params.lng = $event.coords.lng;
       }
     }
+    DeleteCoords(){
+      this.Params.lat = null;
+      this.Params.lng = null;
+      console.log(this.Params);
+    }
 }
 

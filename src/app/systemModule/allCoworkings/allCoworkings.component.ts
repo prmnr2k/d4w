@@ -8,11 +8,16 @@ import { WorkingDayModel } from '../../core/models/workingDay.model';
 import { TokenModel } from '../../core/models/token.model';
 import { UserModel } from '../../core/models/user.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
-import { MapsAPILoader } from "angular2-google-maps/core";
-import {} from '@types/googlemaps';
+
+
+import { FormControl } from '@angular/forms';
+import { } from 'googlemaps';
+import { MapsAPILoader } from '@agm/core';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
+
+import {} from '@types/googlemaps';
 
 
 declare var google: any;
@@ -46,8 +51,12 @@ export class AllCoworkingsComponent implements OnInit {
       //date:null
     };
 
+    @ViewChild('searchg') public searchElement: ElementRef;
 
-    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+    constructor(private service: MainService, private router: Router,
+       private mapsAPILoader: MapsAPILoader, 
+       private ngZone: NgZone, 
+       private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
       
       this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
 
@@ -65,9 +74,43 @@ export class AllCoworkingsComponent implements OnInit {
               .subscribe((image:Base64ImageModel)=>{
                   this.Images['act'+item.id] = image.base64;
               });}}
-              this.isLoading = false; 
+              this.isLoading = false;
+              this.CreateAutocompleteMap();
             });
     }
+
+    CreateAutocompleteMap(){
+      this.mapsAPILoader.load().then(
+          () => {
+             
+           let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, {types:[`(cities)`]});
+          
+            autocomplete.addListener("place_changed", () => {
+             this.ngZone.run(() => {
+             let place: google.maps.places.PlaceResult = autocomplete.getPlace();  
+             if(place.geometry === undefined || place.geometry === null ){
+              
+              return;
+             }
+             else {
+              //this.Params.address = autocomplete.getPlace().formatted_address;
+             
+             // this.Params.public_lat=autocomplete.getPlace().geometry.location.toJSON().lat;
+             // this.Params.public_lng=autocomplete.getPlace().geometry.location.toJSON().lng;
+             // this.lat = autocomplete.getPlace().geometry.location.toJSON().lat;
+              //this.lng = autocomplete.getPlace().geometry.location.toJSON().lng;
+              console.log( autocomplete.getPlace().geometry.location.toJSON().lat, autocomplete.getPlace().geometry.location.toJSON().lng);
+              this.Params.lat = autocomplete.getPlace().geometry.location.toJSON().lat;
+              this.Params.lng = autocomplete.getPlace().geometry.location.toJSON().lng;
+             }
+            });
+            });
+          }
+             );
+
+
+  }
+
     getMask(){
       return {
           mask: [/[0-2]/, this.Params.begin_work && parseInt(this.Params.begin_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],

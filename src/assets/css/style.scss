@@ -21,11 +21,11 @@
     font-style: normal;
 }
 bs-datepicker-container, bs-daterangepicker-container{
-    transform: translateX(-90px);
-    width: 318px;
+    transform: translateX(calc(-50% + 12%));
+    width: 616px;
 }
 .bs-datepicker-multiple{
-    margin-left: 0!important;
+   
 }
 $main_color : #FF8026;
 

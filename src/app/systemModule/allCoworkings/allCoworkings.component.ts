@@ -35,7 +35,7 @@ export class AllCoworkingsComponent implements OnInit {
     Coworkings:CoworkingModel[] = [];
     Images:string[] = [];
     Params = {
-      limit:10,
+      limit:20,
       offset:0,
       description:'',
       full_name:'',
@@ -139,15 +139,25 @@ export class AllCoworkingsComponent implements OnInit {
     }
 
     CoworkingSearch() {
-      
+
+      if(this.searchElement.nativeElement.value==""||!this.searchElement.nativeElement.value){
+        //console.log(`NO address`);
+        this.Params.lat = null;
+        this.Params.lng = null;
+        this.Params.limit = 100;
+        }
+
       for(let itemWeek of this.Working_days){
         if(itemWeek.checked){
           this.Params.working_days.push(itemWeek.en_name);
         }
       }
+
+     
     
       this.service.GetAllCoworking(this.Params)
       .subscribe((cwr:CoworkingModel[])=>{
+          console.log(`params: `,this.Params);
           console.log(cwr);
          this.Coworkings = cwr;
           for(let item of cwr){

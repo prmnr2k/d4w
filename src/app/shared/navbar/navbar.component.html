@@ -17,7 +17,7 @@
             <div class="ava-and-settings">
                 <div class="ava-wr">
                     <p>{{Me.first_name}} {{Me.last_name}}</p>
-                    <div class="ava" [ngStyle]="{'background-image': 'url(' + Image + ')'}"></div>
+                    <div class="ava" [ngStyle]="{'background-image': 'url(' + MyLogo + ')'}"></div>
                 </div>
                 <div class="drop-d">
                     <div class="settings-wr my-row" (click)="Navigate(['/system','user_profile'])">
@@ -36,7 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="settings-wr my-row" (click)="Navigate(['/system','my_bookings'])" *ngIf="isLoggedIn&& meRole=='user'">
+                    <div class="settings-wr my-row" (click)="Navigate(['/system','my_bookings'])" *ngIf="isLoggedIn&& userStatus == 1">
                         <div class="settings">
                             <p>Брони</p>
                             <div class="image">

@@ -23,21 +23,22 @@ import { FrontWorkingDayModel } from '../models/frontWorkingDays.model';
 export class MainService{
     public onAuthChange$: Subject<boolean>;
     public me: UserModel;
+    public onLoadingChange$: Subject<boolean>;
     //public pushNotif:NotificationsComponent = new NotificationsComponent();
     constructor(private http: HttpService, private router: Router){
         this.onAuthChange$ = new Subject();
         this.onAuthChange$.next(false);
-
+        this.onLoadingChange$ = new Subject();
+        this.onLoadingChange$.next(false);
         this.me = new UserModel();
     }
 
     /* Authentication BLOCK START */
     IsLogedIn():boolean{
         let token = this.http.GetToken();
-        let result = false;
-        if(token && token.token)
-            result = true;
-        return result;
+        if(!token || !token.token)
+            return false;
+        return true;
     }
     getToken()
     {
@@ -74,17 +75,23 @@ export class MainService{
     }
 
     ClearSession(){
+        
+        console.log(this.http.headers);
+        
         this.http.token = null;
+        console.log('this.http.token deleted');
         this.http.headers.delete('Authorization');
+        console.log('this.http.headers deleted');
         this.onAuthChange$.next(false);
+        console.log('this.onAuthChange$.next(false); deleted');
         localStorage.removeItem('token');
+        console.log('localStorage.removeItem deleted');
     }
     Logout(){
         return this.http.PostData("/auth/logout","")
             .subscribe((res:any)=>{
                 this.ClearSession();
             });
-        
     }
     /* Authentication BLOCK END */
 
@@ -421,6 +428,16 @@ export class MainService{
         for(let i of days){
             if(i.checked)
                 result.push(new WorkingDayModel(i.en_name,i.start_work,i.finish_work));
+        }
+        return result;
+    }
+
+    public GetCheckedWorkingDaysName(days:FrontWorkingDayModel[]):string[]{
+        let result:string[] = [];
+        for(let item of days){
+            if(item.checked){
+              result.push(item.en_name);
+            }
         }
         return result;
     }

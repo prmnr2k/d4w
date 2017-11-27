@@ -9,46 +9,53 @@ import { TokenModel } from '../../core/models/token.model';
 import { UserModel } from '../../core/models/user.model';
 import { BookingModel} from '../../core/models/booking.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
+import { BaseComponent } from 'app/core/base/base.component';
+import { CoworkingComponent } from 'app/systemModule/pageCoworking/pageCoworking.component';
 
 @Component({
   selector: 'my-coworkings',
   templateUrl: './myBookings.component.html'
 })
-export class MyBookingsComponent implements OnInit {
+export class MyBookingsComponent extends BaseComponent implements OnInit {
    
     RegistrationErr = false;
-    isLoading = true;
     Bookings:BookingModel[] = [];
     Coworkings:CoworkingModel[] = [];
-    Images:string[] = [];
-
-    constructor(private service: MainService, private router: Router) { }
 
     ngOnInit() 
     {
-      this.Coworkings = [];
-      this.Bookings = [];
-      this.service.GetMyBookings()
-      .subscribe((bk:BookingModel[])=>{
-      console.log(`my-bookings: `,this.Bookings);
-        for(let i of bk){
-          this.service.GetCoworkingById(i.coworking_id)
-          .subscribe((cwr:CoworkingModel)=>{
-            this.Coworkings.push(cwr);
-            this.Bookings.push(i);
-          });
-        }
-        this.isLoading = false;
-        console.log(`my-coworkings: `,this.Coworkings);
-      });
+      this.GetMyBookings();
     }
 
+    GetMyBookings(){
+      this.Coworkings = [];
+      this.Bookings = [];
+      this.WaitBeforeLoading(
+        ()=>this.service.GetMyBookings(),
+        (res)=>{
+          this.Bookings = res;
+          let total = this.Bookings.length, current = 0;
+          for(let item of this.Bookings){
+            this.service.GetCoworkingById(item.coworking_id)
+              .subscribe((cwrk:CoworkingModel)=>{
+                this.Coworkings[cwrk.id] = cwrk;
+                current += 1;
+               
+              },
+              err=>{
+                current += 1;
+                
+              });
+          }
+        } 
+      );
+
+    }
 
     UnBooking(id:number){
       this.service.UnBooking(id)
       .subscribe((any)=>{
-        console.log(`unbook `,id);
-        location.reload();
+        this.GetMyBookings();
       });
     
     }

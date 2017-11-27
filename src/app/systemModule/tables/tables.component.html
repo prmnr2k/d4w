@@ -1,4 +1,4 @@
-<loading-cmp *ngIf="isLoading&&canAccess"></loading-cmp>
+<loading-cmp *ngIf="isLoading"></loading-cmp>
 <nav id="nav-holder" class="nav-holder-3">
     <button class="menu-close">
         <span class="btn-close">
@@ -37,7 +37,7 @@
             
             
     <div class="mask-nav-3" (click)="closeModal($event)"></div>
-<div [ngStyle]="{'display': isLoading?'none':'block'}" class="coworking-stat-main-wrapp" *ngIf="meRole=='creator'||meRole=='receptionist'">
+<div [ngStyle]="{'display': isLoading?'none':'block'}" class="coworking-stat-main-wrapp">
     <ng-container>
         
                 

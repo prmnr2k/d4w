@@ -70,11 +70,11 @@ export class BaseComponent{
     }
 
     protected GetMyData(){
-        this.GetMyAccess();
+        this.GetMyAccess();     
         this.GetMe();
     }
 
-    protected GetImageById(id:number,callback:(res:any)=>any){
+    protected GetImageById(id:number,callback:(res:any)=>any, err?:(obj?:any)=>void){
         if(id){
             this.WaitBeforeLoading(
                 ()=>this.service.GetImageById(id),
@@ -85,6 +85,7 @@ export class BaseComponent{
                 },
                 (err)=>{
                     console.log(err);
+                    err();
                 }
             );
         }

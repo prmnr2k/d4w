@@ -147,31 +147,24 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
         if(this.Coworkings.length == 0)
           return;
         
-        let total = this.Coworkings.length,current=0;
-        this.Images = [];
-        for(let item of this.Coworkings)
-        {
-          if( item.images && item.images[0] && item.images[0].id){
-            this.service.GetImageById(item.images[0].id)
-              .subscribe((img:Base64ImageModel)=>{
-                this.Images[item.id] = img.base64;
-                current += 1;
-               
-              },
-            (err)=>{
-              this.Images[item.id] = null;//"assets/img/bg-sign-in.png";
-              current += 1;
-             
-          })
-        }
-        else{
-          this.Images[item.id] = null;//"assets/img/bg-sign-in.png";
-          current += 1;
-         
-        }
-      }
+        this.getCoworkingsImg();
+
     });
   }
+
+  getCoworkingsImg(){
+    this.Images = [];
+    for(let item of this.Coworkings)
+    {
+     if( item.images && item.images[0] && item.images[0].id){
+        this.GetImageById(item.images[0].id?item.images[0].id:null,(img:Base64ImageModel)=>{
+          this.Images[item.id] = img.base64;
+        },(err)=>{ this.Images[item.id] = null; });
+      } else this.Images[item.id] = null; 
+  
+  }
+}
+  
 
   SetPoint($event) {
     if($event && $event.coords){

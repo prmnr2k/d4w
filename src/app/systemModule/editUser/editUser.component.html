@@ -1,4 +1,4 @@
-<ng-container *ngIf="meRole&&(meRole=='creator'||meRole=='user'||meRole=='receptionist')" >
+<ng-container>
     <loading-cmp *ngIf="isLoading"></loading-cmp>
     <div class="wrapp-for-forms" *ngIf="!isLoading">
         <form (ngSubmit)="UpdateUser(submitFormUsr)" #submitFormUsr="ngForm">

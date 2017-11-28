@@ -21,7 +21,11 @@
     font-style: normal;
 }
 bs-datepicker-container, bs-daterangepicker-container{
-    transform: translateX(-90px);
+    transform: translateX(calc(-50% + 12%));
+    width: 616px;
+}
+.bs-datepicker-multiple{
+   
 }
 $main_color : #FF8026;
 

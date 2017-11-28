@@ -11,6 +11,7 @@ import { BookingModel } from '../../core/models/booking.model';
 import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/star-rating-struct";
 import { RateModel } from 'app/core/models/rate.model';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
+import { BaseComponent } from 'app/core/base/base.component';
 
 declare var jquery:any;
 declare var $ :any;
@@ -20,102 +21,132 @@ declare var $ :any;
   templateUrl: './tables.component.html',
   styleUrls: ['./tables.component.css']
 })
-export class TablesComponent implements OnInit {
-
-    isLoginErr = false;
-    isLoading:boolean;
+export class TablesComponent extends BaseComponent implements OnInit {
     Coworking = new CoworkingModel();
     Days:string[] = [];
-    AmetiesCB: CheckboxModel[] = []; 
-    Me:UserModel = new UserModel();
     Bookings:BookingModel[] = [];
     Users:UserModel[] = [];
-    meRole:string = 'guest';
     meCwrk:number = 0;
     Rates:RateModel[] = [];
-    canAccess:boolean = false;
     bsValue:Date= new Date();
     WorkingPlaces:number[] = [];
     Images:string[] = [];
     activeBooking:BookingModel = new BookingModel();
 
-    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
-    }
     ngOnInit() 
     {
-
-        this.isLoading = true;
         this.bsValue = new Date();
-        this.service.GetMyAccess()
-        .subscribe((res)=>{
-          this.meRole = res.role;
-          this.meCwrk = res.coworking_id;
-          if(this.meRole=='creator'||this.meRole=='receptionist')this.canAccess = true;
-          if(!this.canAccess)this.router.navigate(['/system','all_coworkings']);
-            this.service.GetMe()
-            .subscribe((user:UserModel)=>{
-                this.Me = user;
-                this.service.GetCoworkingById(this.meCwrk)
-                    .subscribe((cwr:CoworkingModel)=>{
-                        
-                        if(cwr)
-                        {
-                            this.Coworking = cwr;
-                            let i = 1;
-                            this.WorkingPlaces = Array(this.Coworking.capacity).fill(1).map((x,i)=>i+1);
+        this.BaseInit();
+    }
 
-                            this.GetBookings();
-                        }
-                    })
-            })
+    
+    GetMyCoworking(){
+        this.WaitBeforeLoading(
+            ()=>this.service.GetCoworkingById(this.Me.coworking_id?this.Me.coworking_id:(this.meCwrk?this.meCwrk:null)),
+            (res:CoworkingModel) => {
+                if(res){
+                    this.Coworking = res;
+                    let i = 1;
+                    this.WorkingPlaces = Array(this.Coworking.capacity).fill(1).map((x,i)=>i+1);
+                    this.GetBookings();
+                }
+            },
+            (err:any)=>{
+                console.log(err);
+            }
+        );
+    }
+
+    BaseInit(){
+        this.GetMyAccess((result)=>{
+            if(result){
+                this.meCwrk = result.coworking_id;
+                this.GetMyCoworking();
+            }
+            else{
+                console.log("access denied");
+            }
+
         });
+
     }
 
     GetBookings(date?:Date){
-        this.isLoading = true;
-        if(date)
+        if(date){
             this.bsValue = date;
+        }
               
         //let dateStr = this.bsValue.toISOString().split('T')[0]; //with UTC
+        //todo протестить на всех поисковиках формат даты
         let dateStr = this.bsValue.getFullYear()+'-'+(this.bsValue.getMonth()+1)+'-'+this.bsValue.getDate();
        
-        this.service.GetBookingsByCwr(this.Coworking.id,{date:dateStr})
-            .subscribe((res:BookingModel[])=>{
-                this.Bookings=res;
-                console.log(this.Bookings);
-                this.service.getMyRates().subscribe((resp:RateModel[])=>{
-                    this.Rates = [];
-                    for(let i of resp){
-                        this.Rates[i.user_id] = i;
-                    }
-                    
-                });
+        this.WaitBeforeLoading(
+            ()=> this.service.GetBookingsByCwr(this.Coworking.id,{date:dateStr}),
+            (res:BookingModel[])=> {
+                this.Bookings = res;
+                setTimeout(
+                    ()=> this.SetPositions(()=>{}),
+                300);
                 
-                if(!res.length){
-                    this.isLoading = false;
+                this.GetUsers();
+                this.GetMyRates();     
+            },
+            (err)=>{
+                console.log(err);
+            }
+        )
+    }
+
+    GetUserImage(user:UserModel){
+        if(user.image_id){
+            this.WaitBeforeLoading(
+                ()=>this.service.GetImageById(user.image_id),
+                (res:Base64ImageModel)=>{
+                    this.Images[user.id] = res.base64;
+                },
+                (err)=>{
+                    console.log(err);
                 }
 
-                for(let book of res){
-                
-                    this.service.GetUserById(book.user_id)
-                        .subscribe((usr:UserModel)=>{
-                            this.Users[usr.id] = usr;
-                            if(usr.image_id){
-                                this.service.GetImageById(usr.image_id).subscribe((img:Base64ImageModel)=>{
-                                    this.Images[usr.id] = img.base64;
-                                });
-                            }
-                        })
+
+            );
+        }
+    }
+
+    GetMyRates(){
+
+        this.WaitBeforeLoading(
+            ()=>this.service.getMyRates(),
+            (res:RateModel[])=>{
+                this.Rates = [];
+                for(let i of res){
+                    this.Rates[i.user_id] = i;
                 }
-                setTimeout(()=>{
-                    
-                    this.SetPositions(()=>{
-                        this.isLoading = false;
-                    });
-                    
-                },500);
-            })
+            },
+            (err)=>{
+                console.log(err);
+            }
+
+
+        );
+
+
+    }
+
+    GetUsers(){
+        for(let i of this.Bookings){
+            this.WaitBeforeLoading(
+                ()=>this.service.GetUserById(i.user_id),
+                (res:UserModel)=>{
+                    this.Users[res.id] = res;
+                    this.GetUserImage(res);
+                },
+                (err)=>{
+                    console.log(err);
+                }
+
+            );
+        }
     }
 
     openModal(e:any,book:BookingModel){
@@ -144,10 +175,10 @@ export class TablesComponent implements OnInit {
 
     SetPositions(callback:()=>void)
     {
-        if($(".one-user-state").length == 0){
+       /* if($(".one-user-state").length == 0){
             callback();
             return;
-        }
+        }*/
 
         $(".one-user-state").each(function (e) {
             let width = count_time_width($(this).find(".from").text(), $(this).find(".to").text());
@@ -163,9 +194,9 @@ export class TablesComponent implements OnInit {
                 $(this).parents(".place-info").addClass("height-big");
                 $(this).addClass("small-block");
             }
-            if(e == ($(".one-user-state").length - 1)){
+           /*if(e == ($(".one-user-state").length - 1)){
                 callback();
-            }
+            }*/
         });
         
         function count_time_width(firstDate, secondDate) {

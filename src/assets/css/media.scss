@@ -11,6 +11,14 @@
     .all-coworkings .all-coworkings-flex .one-cowork-wr{
         width: 50%;
     }
+    .my-form-groupe-3{
+
+        &.styles-adapt-groupe-3{
+            .one-nishtyaki{
+                padding-right: 14px;
+            }
+        }
+    }
 }
 
 @media (max-width: 1500px) {

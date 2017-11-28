@@ -1,6 +1,6 @@
 <loading-cmp *ngIf="isLoading"></loading-cmp>
 
-<div class="all-coworkings" *ngIf="!isLoading">
+<div class="all-coworkings" [ngStyle]="{'display':isLoading?'none':'block'}">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">
@@ -10,7 +10,10 @@
                             <a class="link-to-cowork" [routerLink]="['/coworking',item.id]">
                                 <span class="spanlink"></span>
                             </a>
-                            <div class="img-cowork" [ngStyle]="{'background-image':'url(' + Images['act'+item.id] + ')'}"></div>
+                            
+                            <div *ngIf="Images[item.id]" class="img-cowork" [ngStyle]="{'background-image':'url(' + Images[item.id] + ')'}"></div>
+                            <div *ngIf="!Images[item.id]" class="img-cowork"></div>
+
                             <div class="description">
                                 <p class="name-c">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</p>
                                 <div class="flex-price">
@@ -26,6 +29,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <form class="search-form">
                     <div class="col-md-12" *ngIf="RegistrationErr">
@@ -45,6 +49,15 @@
                         </div>
                         <div class="row-inputs">
                             <div class="left-side side">
+                                <p>Адресс</p>
+                            </div>
+                            <div class="right-side side">
+                                <input type="text"id="address" class="input-text-style" placeholder="" name="addr" autocorrect="off" autocapitalize="off" spellcheck="off" #searchg>   
+                            </div>
+                        </div>
+
+                        <div class="row-inputs">
+                            <div class="left-side side">
                                 <p>Описание</p>
                             </div>
                             <div class="right-side side">
@@ -59,16 +72,20 @@
                                 <input class="input-text-style" type="text" name="additional_info" [ngModel]="Params.additional_info" (ngModelChange)="Params.additional_info = $event">
                             </div>
                         </div>
-                        <div class="my-form-groupe-3">
-                            <div class="one-nishtyaki">
-                                <p>Понедельник</p>
-                                <div class="orange-checkbox">
-                                    <input type="checkbox" class="checkbox" name='weekDay-1' id="weekDay-1" [ngModel]="Params.qq" (ngModelChange)="item.checked =  $event">
-                                    <label for="weekDay-1"></label>
-                                </div>
+                        
+                    </div>
+                    <h6 class="head-form">
+                        <span>Дни недели</span>
+                    </h6>
+                    <div class="my-form-groupe-3 styles-adapt-groupe-3">
+                        <div class="one-nishtyaki" *ngFor="let item of Working_days; let i = index">
+                            <p>{{item.ru_name}}</p>
+                            <div class="orange-checkbox">
+                                <input type="checkbox" class="checkbox" [name]="'workingday'+i" [id]="'checkboxOr-day-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked = $event">
+                                <label [for]="'checkboxOr-day-'+i"></label>
                             </div>
-
                         </div>
+                        
                     </div>
                     <div class="advanced-search">
                         <h6 class="head-form">
@@ -82,7 +99,7 @@
                                 <div class="right-side side">
                                     <input class="input-text-style" type="text"
                                     #dp="bsDaterangepicker"
-                                    bsDaterangepicker [(bsValue)]="Params.date">
+                                    bsDaterangepicker [(bsValue)]="bsRangeValue" (bsValueChange)="setDate($event)">
                                 </div>
                             </div>
                             <div class="row-inputs">
@@ -106,11 +123,11 @@
                     <div class="map">
                         <agm-map [latitude]="55.751244" [longitude]="37.618423" (mapClick)="SetPoint($event)">
                             <ng-container *ngIf="Params.lat && Params.lng">
-                                <agm-marker [markerDraggable]="true" [latitude]="Params.lat" [longitude]="Params.lng"></agm-marker>
+                                <agm-marker (markerClick)="DeleteCoords()" [markerDraggable]="true" [latitude]="Params.lat" [longitude]="Params.lng"></agm-marker>
                             </ng-container>
                         </agm-map>
                     </div>
-                    <button class="butt-orange" (click)="CoworkingSearch()">Поиск</button>
+                    <button class="butt-orange" (click)="CoworkingSearch(true)">Поиск</button>
                 </form>
             </div>
         </div>

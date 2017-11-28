@@ -4,21 +4,30 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Injectable } from '@angular/core';
 import { UserModel } from './core/models/user.model';
 import { MainService } from './core/services/main.service';
+import { BaseComponent } from "app/core/base/base.component";
 
 @Injectable()
-export class AppAccessGuard implements CanActivate{
-    constructor(private service: MainService,private router: Router){
-    }
+export class AppAccessGuard extends BaseComponent implements CanActivate{
+    
     canActivate(router:ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|boolean{
-        if(router.routeConfig.path == "login"){
-            if(this.service.IsLogedIn()){
-                this.router.navigate(['system','all_coworkings']);
-                return false;
+
+        switch(router.routeConfig.path){
+            case "login":{
+                return this.LoginHandler(router,state);
+            }
+            default:{
+                return true;
             }
         }
-        
+    }
+
+    private LoginHandler(router:ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean{
+
+        if(this.isLoggedIn){
+            this.router.navigate(['/system','all_coworkings']);
+            return false;
+        }
         return true;
         
-
     }
 }

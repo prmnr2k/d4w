@@ -18,8 +18,9 @@
   font-weight: normal;
   font-style: normal; }
 bs-datepicker-container, bs-daterangepicker-container {
-  -webkit-transform: translateX(-90px);
-          transform: translateX(-90px); }
+  -webkit-transform: translateX(calc(-50% + 12%));
+          transform: translateX(calc(-50% + 12%));
+  width: 616px; }
 
 .load-img {
   max-width: 100px !important; }

@@ -9,6 +9,7 @@ import { CheckboxModel } from '../../core/models/checkbox.model';
 import { WorkingDayModel } from '../../core/models/workingDay.model';
 import { TokenModel } from '../../core/models/token.model';
 import { FrontWorkingDayModel } from '../../core/models/frontWorkingDays.model';
+import { BaseComponent } from 'app/core/base/base.component';
 
 
 declare var jquery:any;
@@ -21,10 +22,10 @@ declare var $ :any;
   styleUrls: ['./st-form.css']
 })
 
-export class RegistrationComponent implements OnInit  {
+export class RegistrationComponent extends BaseComponent implements OnInit  {
     
     RegistrationErr = false;
-    isLoading = true;
+    
     RegErrMsg = '';
     Coworking = new CreateCoworkingModel();
     Days:FrontWorkingDayModel[] = [];
@@ -33,14 +34,14 @@ export class RegistrationComponent implements OnInit  {
     flagForImages:boolean = true;
     imagesCount:number = 5;
     Weekends = false;
-    constructor(private service: MainService, private router: Router) { }
+   
     ngOnInit() 
     {
         this.Days = this.service.GetAllDays();
         this.AmetiesCB = this.service.GetAllAmenties();
         this.Coworking.images = [];
         this.Coworking.working_days = [];
-        this.isLoading = false;
+      
         
     }
    
@@ -52,80 +53,68 @@ export class RegistrationComponent implements OnInit  {
 
     CreateCoworking(){
         if(this.form.valid){
-            this.isLoading = true;
             this.RegistrationErr = false;
             this.Coworking.amenties = this.service.GetValuesOfCheckedCB(this.AmetiesCB);
             this.Coworking.working_days = this.service.GetWorkingDaysFromFront(this.Days);
             if(!this.CheckCwrk()){
                 this.RegistrationErr = true;
-                this.isLoading = false;
                 this.rulesShow = false;
                 return;
             }
+            this.WaitBeforeLoading(
+                ()=>this.service.checkUserByEmail(this.Coworking.email),
+                (res)=>{
+                    if(res.exists){
+                        this.RegErrMsg = 'Email is existed!';
+                        this.RegistrationErr = true;
+                    }
+                    else{
+                        this.rulesShow = true;
+                        this.RegistrationErr = false;
+                    }
+                },
+                (err)=>{
+                    console.log(err);
+                }
+            );
 
-            console.log(this.Coworking.email);
-            this.service.checkUserByEmail(this.Coworking.email).subscribe((ressponjo:any)=>{
-                console.log(ressponjo);
-                if(ressponjo.exists){
-                    console.log("susestv");
-                    this.RegErrMsg = 'Email is existed!';
-                    this.RegistrationErr = true;
-                    this.isLoading = false;
-                }
-                else{
-                    console.log(ressponjo.exists);
-                    this.rulesShow = true;
-                    this.isLoading = false;
-                    this.RegistrationErr = false;
-                }
-            });
         }
     }
 
    
 
     finalCreateCoworking(){
-        this.isLoading = true;
-        this.service.CreateCoworking(this.Coworking)
-        .subscribe((res:CoworkingModel)=>{
-            console.log(res);
-            this.rulesShow = true;
-            this.RegistrationErr = false; 
-            this.service.UserLogin(this.Coworking.email,this.Coworking.password)
-                .subscribe((res:TokenModel)=>{
-                    console.log(res);
-                    this.service.BaseInitAfterLogin(res);
-                    this.router.navigate(['system','all_coworkings']);
-                    this.isLoading = false;
-                    location.reload();
+        this.WaitBeforeLoading(
+            ()=>this.service.CreateCoworking(this.Coworking),
+            (res:CoworkingModel)=>{
+                this.rulesShow = true;
+                this.RegistrationErr = false;
+                this.Login(
+                    this.Coworking.email,
+                    this.Coworking.password,
+                    (err)=>{
+                        this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
+                        this.rulesShow = false;
+                        this.RegistrationErr = true;
+                    }
+                );
+            },
+            (err)=>{
+                if(err.status == 422){
+                    let body:any = JSON.parse(err._body); 
+                    this.RegErrMsg = this.service.CheckErrMessage(body);
+                    
                 }
-                ,
-                (err:any)=>{
-                    this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
-                    this.rulesShow = false;
-                    this.RegistrationErr = true;
-                    this.isLoading = false;
-                });
-            
-        },
-        (err)=>{
-            if(err.status == 422){
-                let body:any = JSON.parse(err._body); 
-                this.RegErrMsg = this.service.CheckErrMessage(body);
-                
+                else {
+                    this.RegErrMsg = "Cannot create profile: " + err.body;
+                }
+                console.log(err);
+                this.rulesShow = false;
+                this.RegistrationErr = true;
             }
-            else {
-                this.RegErrMsg = "Cannot create profile: " + err.body;
-            }
-            console.log(err);
-            this.rulesShow = false;
-            this.RegistrationErr = true;
-            this.isLoading = false;
-        })
-
+        );
     }
    
-
     @ViewChild('submitFormCwrc') form: NgForm
 
     CheckCwrk(){
@@ -159,14 +148,10 @@ export class RegistrationComponent implements OnInit  {
             this.RegErrMsg = "Input correct working time!";
             return false;
         }
-        
         return true;
     }
     
-
-
     checkWorkingTime(){
-        
         let date = new Date();
         let begin:Date,end:Date;
         for(let i of this.Coworking.working_days){
@@ -182,71 +167,39 @@ export class RegistrationComponent implements OnInit  {
     }
 
     loadLogo($event:any):void{
-        let target = $event.target;
-        let file:File = target.files[0];
-        if(!file)
-            return;
-        let reader:FileReader = new FileReader();
-        reader.onload = (e) =>{
-            this.Coworking.image = reader.result;
-        }
-        reader.readAsDataURL(file);
+        this.ReadImages(
+            $event.target.files,
+            (res:string)=>{
+                this.Coworking.image = res;
+            }
+        );
     }
 
     changeListener($event: any) : void {
         this.readThis($event.target);
     }
 
-
-
     readThis(inputValue: any): void {
-
-        for(let i in inputValue.files){
-            if(+i <= 5){
-                this.imagesCount -= 1;
-                console.log(this.imagesCount);
-                if(this.imagesCount >= 0){
-                   
-                    let file:File = inputValue.files[i];
-                    if(!file) break;
-                    let myReader:FileReader = new FileReader();
-                    myReader.onloadend = (e) => {
-                        this.Coworking.images.push(myReader.result);
-                    }
-                    
-                    myReader.readAsDataURL(file);
+        this.ReadImages(
+            inputValue.files,
+            (res:string)=>{
+                if(res && this.Coworking.images.length < 5){
+                    this.Coworking.images.push(res);
                 }
-                else{
-                    this.imagesCount = 0;
-                    this.flagForImages = false;
-                }
-                if(this.imagesCount == 0){
-                    this.flagForImages = false;
-                }
-
             }
-            
-        }
+        );
     }
 
     changeWeekends($event:any){
         this.Weekends = !this.Weekends;
-        console.log(this.Days);
         if(!this.Weekends){
             for(let i in this.Days){
                 if(this.Days[i].weekend){
-                    this.Days[i].checked = false;
-                    
-                }
-                    
+                    this.Days[i].checked = false;  
+                }   
             }
-        }
-
-        
+        } 
     }
-
-    
-   
 
     getMask(index:number){
         return {
@@ -255,8 +208,7 @@ export class RegistrationComponent implements OnInit  {
           };
     } 
 
-    getMaskEnd(index:number){
-        
+    getMaskEnd(index:number){    
         return {
             mask: [/[0-2]/, this.Days[index].finish_work && parseInt(this.Days[index].finish_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
             keepCharPositions: true

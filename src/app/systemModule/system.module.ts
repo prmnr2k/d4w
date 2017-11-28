@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { LoadingModule } from 'app/shared/loading/loading.module';
@@ -68,8 +68,10 @@ import { TextMaskModule } from 'angular2-text-mask';
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBB_1_ksAJ62AGdcPCnE-eQBIRTev320ys'
+      apiKey: 'AIzaSyBB_1_ksAJ62AGdcPCnE-eQBIRTev320ys',
+      libraries: ["places"]
     }),
+    ReactiveFormsModule,
     SystemRoutingModule,
     LbdModule
   ],

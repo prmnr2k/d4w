@@ -48,6 +48,15 @@
                         </div>
                         <div class="row-inputs">
                             <div class="left-side side">
+                                <p>Адресс</p>
+                            </div>
+                            <div class="right-side side">
+                                <input type="text"id="address" class="input-text-style" placeholder="" name="addr" autocorrect="off" autocapitalize="off" spellcheck="off" #searchg>   
+                            </div>
+                        </div>
+
+                        <div class="row-inputs">
+                            <div class="left-side side">
                                 <p>Описание</p>
                             </div>
                             <div class="right-side side">
@@ -113,7 +122,7 @@
                     <div class="map">
                         <agm-map [latitude]="55.751244" [longitude]="37.618423" (mapClick)="SetPoint($event)">
                             <ng-container *ngIf="Params.lat && Params.lng">
-                                <agm-marker [markerDraggable]="true" [latitude]="Params.lat" [longitude]="Params.lng"></agm-marker>
+                                <agm-marker (markerClick)="DeleteCoords()" [markerDraggable]="true" [latitude]="Params.lat" [longitude]="Params.lng"></agm-marker>
                             </ng-container>
                         </agm-map>
                     </div>

@@ -204,16 +204,13 @@ export class RegistrationComponent implements OnInit  {
         for(let i in inputValue.files){
             if(+i <= 5){
                 this.imagesCount -= 1;
-                console.log(this.imagesCount);
                 if(this.imagesCount >= 0){
-                   
                     let file:File = inputValue.files[i];
                     if(!file) break;
                     let myReader:FileReader = new FileReader();
                     myReader.onloadend = (e) => {
                         this.Coworking.images.push(myReader.result);
                     }
-                    
                     myReader.readAsDataURL(file);
                 }
                 else{
@@ -223,7 +220,6 @@ export class RegistrationComponent implements OnInit  {
                 if(this.imagesCount == 0){
                     this.flagForImages = false;
                 }
-
             }
             
         }

@@ -16,6 +16,7 @@ import { BaseComponent } from '../../core/base/base.component';
 export class NavbarComponent extends BaseComponent implements OnInit{
 
     ngOnInit(){
+        
     }
 
     Navigate(params:string[]){

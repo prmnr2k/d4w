@@ -34,22 +34,24 @@ export class MyBookingsComponent extends BaseComponent implements OnInit {
         ()=>this.service.GetMyBookings(),
         (res)=>{
           this.Bookings = res;
-          let total = this.Bookings.length, current = 0;
-          for(let item of this.Bookings){
-            this.service.GetCoworkingById(item.coworking_id)
-              .subscribe((cwrk:CoworkingModel)=>{
-                this.Coworkings[cwrk.id] = cwrk;
-                current += 1;
-               
-              },
-              err=>{
-                current += 1;
-                
-              });
-          }
+          this.GetCoworkings();
         } 
       );
 
+    }
+
+    GetCoworkings(){
+      for(let item of this.Bookings){
+        this.WaitBeforeLoading(
+          () => this.service.GetCoworkingById(item.coworking_id),
+          (res:CoworkingModel) => {
+              this.Coworkings[res.id] = res;
+          },
+          (err)=>{
+              console.log(err);
+          }
+        );
+      }
     }
 
     UnBooking(id:number){

@@ -13,6 +13,7 @@ import { UserModel } from '../../core/models/user.model';
 import { BookingModel } from "../../core/models/booking.model";
 import { Base64ImageModel } from '../../core/models/base64image.model';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
+import { BaseComponent } from 'app/core/base/base.component';
 
 declare var jquery:any;
 declare var $ :any;
@@ -23,11 +24,11 @@ declare var gapi :any;
   selector: 'page-coworking',
   templateUrl: './pageCoworking.component.html'
 })
-export class CoworkingComponent implements OnInit {
+export class CoworkingComponent extends BaseComponent implements OnInit {
 
   BookingErr = false;
   BookingOk = false;
-  isLoading = true;
+  
   RegErrMsg = '';
   Coworking:CoworkingModel = new CoworkingModel();
   Days:FrontWorkingDayModel[] = [];
@@ -50,9 +51,9 @@ export class CoworkingComponent implements OnInit {
   errTime:boolean = true;
   ErrBookingMsg:string = "Incorrect Date or Time!";
   //pushNot:NotificationsComponent = new NotificationsComponent();
-  constructor(private service: MainService, private router: Router, 
-  private activatedRoute: ActivatedRoute, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-      this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
+  constructor(protected service: MainService, protected router: Router, 
+    private activatedRoute: ActivatedRoute, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
+    super(service,router,ng2cable,broadcaster);
   }
 
   
@@ -60,50 +61,66 @@ export class CoworkingComponent implements OnInit {
   {
     this.activatedRoute.params.forEach((params) => {
       this.CoworkingId = params["id"];
+      this.GetCoworking(this.CoworkingId);
     });
-
-    
-    this.service.GetCoworkingById(this.CoworkingId)
-    .subscribe((cwr:CoworkingModel)=>{
-        this.Coworking = cwr;
-        this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),cwr.amenties);
-        if(this.Coworking.image_id){
-          this.service.GetImageById(this.Coworking.image_id).subscribe((res:Base64ImageModel)=>{
-            this.Image = res.base64;
-          });
-
-        }
-        let current = 0,total = cwr.images.length;
-        
-        this.Days = this.service.GetFrontDaysByWorkingDays(this.Coworking.working_days);
-        for(let item of cwr.images){
-          
-          this.service.GetImageById(item.id)
-            .subscribe((img:Base64ImageModel)=>{
-
-              this.Images.push(img);
-              current+=1;
-              if(current == total){
-                this.initSlider();
-              }
-
-            });
-        }
-          this.service.GetMyAccess()
-          .subscribe((res)=>{
-            this.meRole = res.role;
-            this.meCowork = res.coworking_id;
-            console.log('res access',res);
-            console.log(`role:`,this.meRole);
-          });
-          this.isLoading = false;
-    });        
     this.minDate = new Date();
    // this.minDate.setDate(this.minDate.getDate() - 1);
     this.Booking.begin_date = `2017-11-08T13:00`;
     this.Booking.end_date = `2017-11-08T15:00`;
     this.DateChange();
   }
+
+  GetCoworking(id:number){
+
+    this.WaitBeforeLoading(
+      ()=> this.service.GetCoworkingById(id),
+      (res:CoworkingModel)=>{
+        this.Coworking = res;
+        this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),res.amenties);
+        if(this.Coworking.image_id){
+
+          this.GetImageById(
+            this.Coworking.image_id,
+            (res:any)=>{
+              if(res){
+                this.Image = res.base64;
+              }
+            });
+        }
+        let current = 0,
+            total = res.images.length;
+        
+        this.Days = this.service.GetFrontDaysByWorkingDays(this.Coworking.working_days);
+        for(let item of res.images){
+          this.GetImageById(
+            item.id,
+            (res:any)=>{
+              if(res){
+                this.Images.push(res);
+                
+              }
+              current+=1;
+              if(current == total){
+                console.log("current"+ current);
+                this.initSlider();
+              }
+            });
+        }
+        this.GetMyAccess(
+          (res)=>{
+              this.meCowork = res.coworking_id;
+          }
+        );
+      },
+      (err)=>{
+        console.log(err);
+      }
+    );
+
+
+  }
+
+
 
   getMask(){
     return {
@@ -156,7 +173,9 @@ export class CoworkingComponent implements OnInit {
   incr(n:number){
     return n+1;
   }
+  
   initSlider(){
+
     setTimeout(function(){
       $('.slider-images-coworking-wr').slick({
         dots: true,
@@ -166,7 +185,7 @@ export class CoworkingComponent implements OnInit {
         slidesToShow: 1
     });
 
-    },300);
+    },800);
     
 
   }

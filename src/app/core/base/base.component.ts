@@ -11,6 +11,7 @@ import { error } from 'util';
 import { UserModel } from 'app/core/models/user.model';
 import { Base64ImageModel } from 'app/core/models/base64image.model';
 import { GUID } from 'app/core/models/guide.model';
+import { TokenModel } from 'app/core/models/token.model';
 
 
 
@@ -23,6 +24,7 @@ export class BaseComponent{
     public Me:UserModel = new UserModel();
     public MyLogo:string = '';
 
+    
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
 
         this.isLoggedIn = this.service.IsLogedIn();
@@ -46,7 +48,6 @@ export class BaseComponent{
         
         this.service.onLoadingChange$
             .subscribe((val:boolean)=>{
-                console.log(this.ActiveProcesses);
                 if(this.ActiveProcesses.length == 0){
                     this.isLoading = false;
                 }
@@ -54,6 +55,22 @@ export class BaseComponent{
                     this.isLoading = true;
                 }
             });   
+    }
+
+    protected Login(email:string,password:string,callback:(error)=>any){
+        this.WaitBeforeLoading(
+            ()=>this.service.UserLogin(email,password),
+            (res:TokenModel)=>{
+                this.service.BaseInitAfterLogin(res);
+                this.router.navigate(['/system','all_coworkings']);
+                //location.reload();
+            },
+            (err)=>{
+                callback(err);
+                
+            }
+
+        );
     }
 
     private GenerateProcessID(){
@@ -66,7 +83,6 @@ export class BaseComponent{
     private DeleteProcess(str:string){
         let index = this.ActiveProcesses.findIndex(x=>x == str);
         this.ActiveProcesses.splice(index,1);
-        console.log('processed kiled ' + index);
         this.SetLoading();
     }
 
@@ -87,6 +103,9 @@ export class BaseComponent{
                 },
                 (err)=>{
                     console.log(err);
+                    if(callback && typeof callback == "function"){
+                        callback(false);
+                    }
                 }
             );
         }

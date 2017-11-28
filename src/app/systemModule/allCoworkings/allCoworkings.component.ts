@@ -34,7 +34,9 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
   Coworkings:CoworkingModel[] = [];
   Images:string[] = [];
   bsRangeValue:any;
+
   @ViewChild('searchg') public searchElement: ElementRef;
+
   Params = {
     limit:20,
     offset:0,
@@ -62,6 +64,7 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
 
   ngOnInit() 
   {
+    this.CreateAutocompleteMap();
     this.Working_days = this.service.GetAllDays();
     this.CoworkingSearch();
   }

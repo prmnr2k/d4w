@@ -18,6 +18,7 @@ import { TimepickerModule } from 'ngx-bootstrap';
 
 import { AgmCoreModule } from '@agm/core'
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
 //import { LoginModule } from 'app/login/login.module';
 import { SystemModule } from './systemModule/system.module';
@@ -38,6 +39,7 @@ import { LoadingModule } from 'app/shared/loading/loading.module';
     RouterModule,
     AppRoutingModule,
     Ng2CableModule,
+    BrowserAnimationsModule,
     //LoginModule,
     SystemModule,
     LoadingModule

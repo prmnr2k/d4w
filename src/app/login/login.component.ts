@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MainService } from '../core/services/main.service';
 import { Router } from '@angular/router';
 import { TokenModel } from '../core/models/token.model';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
+
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html'
+    selector: 'app-login',
+    templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
     public LoginParams = {
@@ -20,6 +22,10 @@ export class LoginComponent implements OnInit {
     isLoading = true;
     ngOnInit(): void {
         this.isLoading = false;
+    }
+    clickedDivState = 'start';
+    change(){
+        this.clickedDivState = 'end';
     }
 
     TryToLogin(){

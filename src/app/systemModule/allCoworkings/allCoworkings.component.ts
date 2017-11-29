@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, NgZone, HostBinding } from '@angular/core';
 import { MainService } from '../../core/services/main.service';
 import { Router, Params } from '@angular/router';
 import { CoworkingModel } from '../../core/models/coworking.model';
@@ -18,6 +18,7 @@ import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 import {} from '@types/googlemaps';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 
 declare var google: any;
@@ -25,7 +26,10 @@ declare var google: any;
 @Component({
   selector: 'all-coworkings',
   templateUrl: './allCoworkings.component.html',
-  styleUrls:["./allCoworkings.component.css"]
+  styleUrls:["./allCoworkings.component.css"],
+  animations: [
+    ShowHideTrigger
+  ]
 })
 export class AllCoworkingsComponent implements OnInit {
     bsRangeValue:any;
@@ -50,7 +54,7 @@ export class AllCoworkingsComponent implements OnInit {
       end_date:'',
       //date:null
     };
-
+    
     @ViewChild('searchg') public searchElement: ElementRef;
 
     constructor(private service: MainService, private router: Router,

@@ -12,6 +12,7 @@ import { SystemAccessGuard } from './../system.guard';
 
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
+import { BaseComponent } from 'app/core/base/base.component';
 
 
 @Component({
@@ -19,18 +20,14 @@ import { Ng2Cable, Broadcaster } from 'ng2-cable';
   templateUrl: './changePassword.component.html',
   styleUrls: ['./st-form.css']
 })
-export class ChangePasswordComponent{
+export class ChangePasswordComponent extends BaseComponent{
     RegistrationErr = false;
-    isLoading = false;
     RegErrMsg = '';
     Params = {
       old_password:null,
       password:null,
       confirmation_password:null,
     };
-    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-        
-        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
 
     @ViewChild('submitFormPswrd') form: NgForm;
     

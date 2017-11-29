@@ -4,19 +4,25 @@ export const ShowHideTrigger = trigger('ShowHideTrigger',[
     state(
         'start',
         style({
-            opacity: 0
-        })
-    ),
-    state(
-        'end',
-        style({
-            opacity: 1
+            opacity: 1,
+            transform:'translateY(0)'
         })
     ),
     transition(
-        'start => end',
-        animate(1000)
-    )
-
+        '* => start',
+        [
+            style({
+                opacity: 0,
+                transform:'translateY(80px)'
+            }),
+            animate(
+                '500ms ease-out',
+                style({
+                    opacity: 1,
+                    transform:'translateY(0)'
+                })
+            )
+        ]
+    ),
 
 ])

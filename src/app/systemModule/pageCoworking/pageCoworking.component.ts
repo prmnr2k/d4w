@@ -14,6 +14,7 @@ import { BookingModel } from "../../core/models/booking.model";
 import { Base64ImageModel } from '../../core/models/base64image.model';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 import { BaseComponent } from 'app/core/base/base.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 declare var jquery:any;
 declare var $ :any;
@@ -22,7 +23,10 @@ declare var gapi :any;
 
 @Component({
   selector: 'page-coworking',
-  templateUrl: './pageCoworking.component.html'
+  templateUrl: './pageCoworking.component.html',
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class CoworkingComponent extends BaseComponent implements OnInit {
 

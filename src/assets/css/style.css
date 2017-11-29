@@ -17,10 +17,14 @@
   src: local("☺"), url("../fonts/RobotoMedium.woff") format("woff"), url("../fonts/RobotoMedium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
-bs-datepicker-container, bs-daterangepicker-container {
+.bs-datepicker {
   -webkit-transform: translateX(calc(-50% + 12%));
           transform: translateX(calc(-50% + 12%));
   width: 616px; }
+  .bs-datepicker.theme-blue {
+    width: auto;
+    -webkit-transform: none;
+            transform: none; }
 
 .load-img {
   max-width: 100px !important; }

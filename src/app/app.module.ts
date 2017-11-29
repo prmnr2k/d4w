@@ -1,6 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+
+
 
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -36,14 +37,14 @@ import { LoadingModule } from 'app/shared/loading/loading.module';
     LoginComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule,
     AppRoutingModule,
     Ng2CableModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
+    
     //LoginModule,
     SystemModule,
     LoadingModule

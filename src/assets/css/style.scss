@@ -20,9 +20,13 @@
     font-weight: normal;
     font-style: normal;
 }
-bs-datepicker-container, bs-daterangepicker-container{
+.bs-datepicker{
     transform: translateX(calc(-50% + 12%));
     width: 616px;
+    &.theme-blue{
+        width: auto;
+        transform: none;
+    }
 }
 .bs-datepicker-multiple{
    

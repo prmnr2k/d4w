@@ -7,11 +7,15 @@ import { CreateUserModel } from "app/core/models/createUser.model";
 import { UserModel } from "app/core/models/user.model";
 import { NgForm, FormControl } from '@angular/forms';
 import { BaseComponent } from 'app/core/base/base.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './userRegistration.component.html',
-  styleUrls: ['./st-form.css']
+  styleUrls: ['./st-form.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class UserRegistrationComponent extends BaseComponent implements OnInit {
     RegistrationErr = false;

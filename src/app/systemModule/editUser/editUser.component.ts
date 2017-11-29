@@ -10,13 +10,17 @@ import { NgForm, FormControl } from '@angular/forms';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { BaseComponent } from 'app/core/base/base.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './editUser.component.html',
-  styleUrls: ['./st-form.css']
+  styleUrls: ['./st-form.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class EditUserComponent extends BaseComponent implements OnInit {
     RegistrationErr = false;

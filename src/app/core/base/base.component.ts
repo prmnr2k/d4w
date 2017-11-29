@@ -19,6 +19,7 @@ import { TokenModel } from 'app/core/models/token.model';
 export class BaseComponent{
     private ActiveProcesses:string[] = [];
     public isLoading:boolean = false;
+    public fadeAnimState:string = 'start';
     public isLoggedIn:boolean = false;
     public userStatus:number = 0;
     public Me:UserModel = new UserModel();
@@ -50,9 +51,11 @@ export class BaseComponent{
             .subscribe((val:boolean)=>{
                 if(this.ActiveProcesses.length == 0){
                     this.isLoading = false;
+                    this.fadeAnimState = 'end';
                 }
                 else{
                     this.isLoading = true;
+                    this.fadeAnimState = 'start';
                 }
             });   
     }

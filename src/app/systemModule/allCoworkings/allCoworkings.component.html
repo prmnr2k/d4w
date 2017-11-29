@@ -1,6 +1,6 @@
 <loading-cmp *ngIf="isLoading"></loading-cmp>
 
-<div class="all-coworkings" [ngStyle]="{'display':isLoading?'none':'block'}">
+<div class="all-coworkings" [@ShowHideTrigger]="fadeAnimState" [ngStyle]="{'display':isLoading?'none':'block'}">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-8">

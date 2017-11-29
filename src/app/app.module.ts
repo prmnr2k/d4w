@@ -1,4 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -26,6 +29,7 @@ import { LoginComponent } from 'app/login/login.component';
 import { Ng2CableModule } from 'ng2-cable';
 import { LoadingModule } from 'app/shared/loading/loading.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +42,8 @@ import { LoadingModule } from 'app/shared/loading/loading.module';
     RouterModule,
     AppRoutingModule,
     Ng2CableModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule,
     //LoginModule,
     SystemModule,
     LoadingModule

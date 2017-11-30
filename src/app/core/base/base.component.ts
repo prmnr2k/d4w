@@ -31,6 +31,9 @@ export class BaseComponent{
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
 
         this.isLoggedIn = this.service.IsLogedIn();
+        
+        this.userStatus = this.service.GetUserStatus();
+
         if(this.isLoggedIn){
             this.ng2cable
                 .subscribe('wss://d4w-api.herokuapp.com/cable?token='+this.service.getToken().token, 'BookingsChannel');
@@ -68,7 +71,6 @@ export class BaseComponent{
             (res:TokenModel)=>{
                 this.service.BaseInitAfterLogin(res);
                 this.router.navigate(['/system','all_coworkings']);
-                //location.reload();
             },
             (err)=>{
                 callback(err);
@@ -176,6 +178,7 @@ export class BaseComponent{
             ()=>this.service.GetMyAccess(),
             (res:any)=>{
                 this.SetUserStatus(res.role);
+               
                 if(callback && typeof callback == "function"){
                     callback(res);
                 }
@@ -191,22 +194,26 @@ export class BaseComponent{
 
 
     private SetUserStatus(role:string){
-        //this.userStatus = UserEnumStatus.{role};
+        
         switch(role){
             case UserEnumRole.Creator:{
                 this.userStatus = UserEnumStatus.Creator;
+                this.service.SetUserStatus(UserEnumStatus.Creator);
                 break;
             }
             case UserEnumRole.Receptionist:{
                 this.userStatus = UserEnumStatus.Receptionist;
+                this.service.SetUserStatus(UserEnumStatus.Creator);
                 break;
             }
             case UserEnumRole.User:{
                 this.userStatus = UserEnumStatus.User;
+                this.service.SetUserStatus(UserEnumStatus.User);
                 break;
             }
             default:{
                 this.userStatus = UserEnumStatus.None;
+                this.service.SetUserStatus(UserEnumStatus.None);
                 break;
             }
         }

@@ -18,7 +18,7 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                 case "my_bookings":{
                     
                     setTimeout(()=>{
-                        if(this.userStatus == 1){
+                        if(this.userStatus == this.UsrEnumStatus.User){
                             console.log('returned');
                             return true;
                         }

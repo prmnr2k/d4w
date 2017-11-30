@@ -4,7 +4,7 @@
 
 <div class="wrapp-for-forms" [@ShowHideTrigger]="!isLoading ? 'start':'void'" [ngStyle]="{'display': isLoading?'none':'block'}">
        
-    <span *ngIf="userStatus > 1 && meCowork == CoworkingId" class="label label-info" style="font-size:12px; padding:10px;background-color:#FF8026;">You are Admin!</span>
+    <span *ngIf="userStatus > UsrEnumStatus.User && meCowork == CoworkingId" class="label label-info" style="font-size:12px; padding:10px;background-color:#FF8026;">You are Admin!</span>
     <h6 class="head-form">
         <span>Коворкинг "{{Coworking?.full_name}}"</span>
     </h6>
@@ -46,7 +46,7 @@
            
         </div>
     </div>
-    <form (ngSubmit)="BookingCoworking()" *ngIf="userStatus == 1">
+    <form (ngSubmit)="BookingCoworking()" *ngIf="userStatus == UsrEnumStatus.User">
         <h6 class="head-form">
             <span>Бронирование</span>
         </h6>
@@ -79,7 +79,7 @@
         </div>
         <button class="butt-orange" type="submit" [class.btn-danger]="!showTime" [class.btn-danger]="errTime" [disabled]="!showTime" [disabled]="errTime">{{showTime&&!errTime?"Booking Coworking":"Select Working Day and Time"}}</button>
     </form>
-    <div *ngIf="userStatus == 1">
+    <div *ngIf="userStatus == UsrEnumStatus.User">
         <form class="form-inline" style="text-align:center;" (ngSubmit)="receptionCoworking()">
             <button *ngIf="!receptionSend" type="submit" class="butt-orange">Запрос админ. прав</button>
             <span *ngIf="receptionSend" class="" style="font-size:16px; padding:10px; color: #FF8026;">Запрос отправлен</span>

@@ -26,6 +26,24 @@
     -webkit-transform: none;
             transform: none; }
 
+.theme-green .bs-datepicker-head {
+  background-color: #FF8026; }
+
+.theme-green .bs-datepicker-body table td.week span {
+  color: #FF8026; }
+
+.theme-green .bs-datepicker-body table td span.selected, .theme-green .bs-datepicker-body table td.selected span, .theme-green .bs-datepicker-body table td span[class*="select-"]:after, .theme-green .bs-datepicker-body table td[class*="select-"] span:after {
+  background-color: #FF8026; }
+
+.theme-blue .bs-datepicker-head {
+  background-color: #FF8026; }
+
+.theme-blue .bs-datepicker-body table td.week span {
+  color: #FF8026; }
+
+.theme-blue .bs-datepicker-body table td span.selected, .theme-green .bs-datepicker-body table td.selected span, .theme-green .bs-datepicker-body table td span[class*="select-"]:after, .theme-green .bs-datepicker-body table td[class*="select-"] span:after {
+  background-color: #FF8026; }
+
 .load-img {
   max-width: 100px !important; }
 

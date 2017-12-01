@@ -66,12 +66,10 @@ export class MainService{
     TryToLoginWithToken()
     {
         let token = localStorage.getItem('token');
-        //let token = window.localStorage.getItem('token');
         if(token)
         {
             this.BaseInitAfterLogin(new TokenModel(token));
         }
-
     }
 
     ClearSession(){

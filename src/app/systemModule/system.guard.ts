@@ -12,26 +12,25 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
     /*constructor(private service: MainService,private router: Router){
     }*/
     canActivate(router:ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|boolean{
-        //console.log(router.routeConfig.path);
-        
-            switch(router.routeConfig.path){
-                case "my_bookings":{
-                    
-                    setTimeout(()=>{
-                        if(this.userStatus == this.UsrEnumStatus.User){
-                            console.log('returned');
-                            return true;
-                        }
-                        else{
-                            return this.LoginNavigate();
-                        }
-                     },300);
-                }
-                default:{
-                    return true;
-                }
+        switch(router.routeConfig.path){
+            case "my_bookings":{
+                
+                setTimeout(()=>{
+                    if(this.userStatus == this.UsrEnumStatus.User){
+                        console.log('returned');
+                        return true;
+                    }
+                    else{
+                        return this.LoginNavigate();
+                    }
+                },300);
             }
+            default:{
+                return true;
+            }
+        }
     }
+    
     LoginNavigate(){
         this.router.navigate(['/login']);
         return false;

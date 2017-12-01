@@ -191,7 +191,6 @@ export class BaseComponent{
 
 
     private SetUserStatus(role:string){
-        //this.userStatus = UserEnumStatus.{role};
         switch(role){
             case UserEnumRole.Creator:{
                 this.userStatus = UserEnumStatus.Creator;

@@ -13,12 +13,16 @@ import { SystemAccessGuard } from './../system.guard';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { BaseComponent } from 'app/core/base/base.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './changePassword.component.html',
-  styleUrls: ['./st-form.css']
+  styleUrls: ['./st-form.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class ChangePasswordComponent extends BaseComponent{
     RegistrationErr = false;

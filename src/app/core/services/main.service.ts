@@ -18,6 +18,7 @@ import { WorkingDayModel } from '../models/workingDay.model';
 import { CreateUserModel } from "app/core/models/createUser.model";
 import { BookingModel } from '../models/booking.model';
 import { FrontWorkingDayModel } from '../models/frontWorkingDays.model';
+import { UserEnumStatus } from "app/core/base/base.enum";
 
 @Injectable()
 export class MainService{
@@ -53,6 +54,26 @@ export class MainService{
         return this.http.PostData('/auth/login',JSON.stringify(params));
     }
 
+    SetupLocalUserStatus(status){
+        console.log(status);
+        try{
+            localStorage.setItem('userStatus',status+"");
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+
+    GetLocalUserStatus():number{
+        try{
+            return +localStorage.getItem('userStatus');
+        }
+        catch(err){
+            console.log(err);
+            return UserEnumStatus.None;
+        }
+    }
+
     BaseInitAfterLogin(data:TokenModel){
         localStorage.setItem('token',data.token);
         this.http.BaseInitByToken(data.token);
@@ -82,6 +103,7 @@ export class MainService{
         return this.http.PostData("/auth/logout","")
             .subscribe((res:any)=>{
                 this.ClearSession();
+                this.SetupLocalUserStatus(UserEnumStatus.None);
             });
     }
     /* Authentication BLOCK END */

@@ -229,9 +229,7 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
             return false;
         }
         if(!this.Coworking.working_days || this.Coworking.working_days.length == 0 || this.Coworking.working_days.filter(x=> !x.begin_work || !x.end_work).length > 0){
-            
             this.arrorTime = "Input working days!";
-
             return false;
         }
         if(!this.checkWorkingTime()){

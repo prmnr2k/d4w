@@ -31,6 +31,7 @@ export class BaseComponent{
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
 
         this.isLoggedIn = this.service.IsLogedIn();
+        this.userStatus = this.service.GetLocalUserStatus();
         if(this.isLoggedIn){
             this.ng2cable
                 .subscribe('wss://d4w-api.herokuapp.com/cable?token='+this.service.getToken().token, 'BookingsChannel');
@@ -157,7 +158,6 @@ export class BaseComponent{
                 this.GetMyImage(callback);
             },
             (err)=>{
-                console.log(err);
                 if(callback && typeof callback == "function"){
                     callback();
                 }
@@ -204,6 +204,8 @@ export class BaseComponent{
                 break;
             }
         }
+        console.log('setup user status');
+        this.service.SetupLocalUserStatus(this.userStatus);
     }
 
     public Logout(){
@@ -221,10 +223,15 @@ export class BaseComponent{
                     this.DeleteProcess(process);
                 },
                 error=>{
+                    
                     if(err && typeof err == "function"){
                         err(error); 
                     }
                     this.DeleteProcess(process);
+                    if(error.status == 401){
+                        this.Logout();
+                        return;
+                    }
                 });
     }
 

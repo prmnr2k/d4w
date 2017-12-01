@@ -55,6 +55,7 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
   showTime:boolean = false;
   errTime:boolean = true;
   ErrBookingMsg:string = "Incorrect Date or Time!";
+  bsConfig = Object.assign({}, { containerClass: "theme-blue"});
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(protected service: MainService, protected router: Router, 
     private activatedRoute: ActivatedRoute, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {

@@ -140,7 +140,7 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
       //console.log(`NO address`);
       this.Params.lat = null;
       this.Params.lng = null;
-      this.Params.limit = 100;
+      this.Params.limit = 20;
       }
 
     if(params){

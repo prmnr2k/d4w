@@ -16,6 +16,7 @@ import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 import { BaseComponent } from 'app/core/base/base.component';
 import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
+
 declare var jquery:any;
 declare var $ :any;
 declare var gapi :any;

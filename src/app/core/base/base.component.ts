@@ -12,6 +12,7 @@ import { UserModel } from 'app/core/models/user.model';
 import { Base64ImageModel } from 'app/core/models/base64image.model';
 import { GUID } from 'app/core/models/guide.model';
 import { TokenModel } from 'app/core/models/token.model';
+import { UserEnumStatus, UserEnumRole } from 'app/core/base/base.enum';
 
 
 
@@ -19,11 +20,13 @@ import { TokenModel } from 'app/core/models/token.model';
 export class BaseComponent{
     private ActiveProcesses:string[] = [];
     public isLoading:boolean = false;
+    public UsrEnumStatus = UserEnumStatus;
     public isLoggedIn:boolean = false;
     public userStatus:number = 0;
     public Me:UserModel = new UserModel();
     public MyLogo:string = '';
 
+   
     
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
 
@@ -151,9 +154,7 @@ export class BaseComponent{
             ()=>this.service.GetMe(),
             (res)=>{
                 this.Me = res;
-
                 this.GetMyImage(callback);
-
             },
             (err)=>{
                 console.log(err);
@@ -185,21 +186,22 @@ export class BaseComponent{
 
 
     private SetUserStatus(role:string){
+        //this.userStatus = UserEnumStatus.{role};
         switch(role){
-            case 'creator':{
-                this.userStatus = 3;
+            case UserEnumRole.Creator:{
+                this.userStatus = UserEnumStatus.Creator;
                 break;
             }
-            case 'receptionist':{
-                this.userStatus = 2;
+            case UserEnumRole.Receptionist:{
+                this.userStatus = UserEnumStatus.Receptionist;
                 break;
             }
-            case 'user':{
-                this.userStatus = 1;
+            case UserEnumRole.User:{
+                this.userStatus = UserEnumStatus.User;
                 break;
             }
             default:{
-                this.userStatus = 0;
+                this.userStatus = UserEnumStatus.None;
                 break;
             }
         }

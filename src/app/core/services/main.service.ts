@@ -73,17 +73,10 @@ export class MainService{
     }
 
     ClearSession(){
-        
-        console.log(this.http.headers);
-        
         this.http.token = null;
-        console.log('this.http.token deleted');
         this.http.headers.delete('Authorization');
-        console.log('this.http.headers deleted');
         this.onAuthChange$.next(false);
-        console.log('this.onAuthChange$.next(false); deleted');
         localStorage.removeItem('token');
-        console.log('localStorage.removeItem deleted');
     }
     Logout(){
         return this.http.PostData("/auth/logout","")

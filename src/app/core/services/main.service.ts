@@ -147,7 +147,7 @@ export class MainService{
     
     GetUserStatus(){
         let status = 'none';
-        status = localStorage.getItem('statusUser');
+        status = localStorage.getItem('statusUser')?localStorage.getItem('statusUser'):'0';
         return +status;
     }
 

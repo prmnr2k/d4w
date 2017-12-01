@@ -19,6 +19,7 @@ import { BaseComponent } from '../../core/base/base.component';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 import {} from '@types/googlemaps';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 
 declare var google: any;
@@ -26,7 +27,10 @@ declare var google: any;
 @Component({
   selector: 'all-coworkings',
   templateUrl: './allCoworkings.component.html',
-  styleUrls:["./allCoworkings.component.css"]
+  styleUrls:["./allCoworkings.component.css"],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 
 export class AllCoworkingsComponent extends BaseComponent implements OnInit{

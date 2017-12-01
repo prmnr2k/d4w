@@ -1,5 +1,5 @@
 <loading-cmp *ngIf="isLoading"></loading-cmp>
-<div class="all-coworkings" *ngIf="!isLoading" >
+<div class="all-coworkings" [@ShowHideTrigger]="'start'" *ngIf="!isLoading" >
     <div class="container">
         <div class="row">
             <div class="col-md-12">

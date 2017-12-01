@@ -33,15 +33,10 @@ export class ChangePasswordComponent extends BaseComponent{
     
     ChangePassword() {
         if(this.form.valid){
-            this.isLoading = true;
-            console.log('change password');
-            this.service.ChangeUserPassword(this.Params)
-                .subscribe((res:any)=>{
-                    console.log(res);
-                    this.service.Logout()
-                        .add((logOutRes:any)=>{
-                            this.router.navigate(['/login']);
-                        });
+            this.WaitBeforeLoading(
+                ()=>this.service.ChangeUserPassword(this.Params),
+                (res:any)=>{
+                    this.Logout();
                 },
                 (err)=>{
                     if(err.status == 422){
@@ -54,8 +49,8 @@ export class ChangePasswordComponent extends BaseComponent{
 
                     }
                     this.RegistrationErr = true;
-                    this.isLoading = false;
                 })
+            
         }
     } 
 

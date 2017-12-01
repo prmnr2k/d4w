@@ -12,6 +12,7 @@ import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angula
 import { RateModel } from 'app/core/models/rate.model';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { BaseComponent } from 'app/core/base/base.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 declare var jquery:any;
 declare var $ :any;
@@ -19,7 +20,10 @@ declare var $ :any;
 @Component({
   selector: 'app-tables',
   templateUrl: './tables.component.html',
-  styleUrls: ['./tables.component.css']
+  styleUrls: ['./tables.component.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class TablesComponent extends BaseComponent implements OnInit {
     Coworking = new CoworkingModel();
@@ -32,7 +36,7 @@ export class TablesComponent extends BaseComponent implements OnInit {
     WorkingPlaces:number[] = [];
     Images:string[] = [];
     activeBooking:BookingModel = new BookingModel();
-
+    bsConfig = Object.assign({}, { containerClass: "theme-blue"});
     ngOnInit() 
     {
         this.bsValue = new Date();

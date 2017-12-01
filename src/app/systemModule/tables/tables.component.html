@@ -37,7 +37,7 @@
             
             
     <div class="mask-nav-3" (click)="closeModal($event)"></div>
-<div [ngStyle]="{'display': isLoading?'none':'block'}" class="coworking-stat-main-wrapp">
+<div [@ShowHideTrigger]="!isLoading ? 'start':'void'" [ngStyle]="{'display': isLoading?'none':'block'}" class="coworking-stat-main-wrapp">
     <ng-container>
         
                 
@@ -48,10 +48,11 @@
             <span>Выберите дату</span>
         </h6>
         <input type="text"
-        readonly style="background-color:white; cursor: pointer;text-align:center"
+        readonly style="background-color:white; cursor: pointer;text-align:center;"
         class="form-control"
         #dp="bsDatepicker"
         bsDatepicker [bsValue]="bsValue"
+        [bsConfig]="bsConfig"
         (bsValueChange)="GetBookings($event)">
     </form>
     <div class="time-line-wr">

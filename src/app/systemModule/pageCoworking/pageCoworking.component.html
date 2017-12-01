@@ -2,7 +2,7 @@
 <loading-cmp *ngIf="isLoading"></loading-cmp>
 
 
-<div class="wrapp-for-forms" [ngStyle]="{'display': isLoading?'none':'block'}">
+<div class="wrapp-for-forms" [@ShowHideTrigger]="!isLoading ? 'start':'void'" [ngStyle]="{'display': isLoading?'none':'block'}">
        
     <span *ngIf="userStatus > 1 && meCowork == CoworkingId" class="label label-info" style="font-size:12px; padding:10px;background-color:#FF8026;">You are Admin!</span>
     <h6 class="head-form">

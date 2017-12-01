@@ -13,11 +13,15 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operator/take';
 import { RateModel } from '../../core/models/rate.model';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 @Component({
   selector: 'id-booking',
   templateUrl: './idBooking.component.html',
-  styleUrls: ['./idBooking.css']
+  styleUrls: ['./idBooking.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class IdBookingComponent implements OnInit {
 

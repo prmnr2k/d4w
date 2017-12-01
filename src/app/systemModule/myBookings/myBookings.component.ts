@@ -11,10 +11,14 @@ import { BookingModel} from '../../core/models/booking.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
 import { BaseComponent } from 'app/core/base/base.component';
 import { CoworkingComponent } from 'app/systemModule/pageCoworking/pageCoworking.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 @Component({
   selector: 'my-coworkings',
-  templateUrl: './myBookings.component.html'
+  templateUrl: './myBookings.component.html',
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class MyBookingsComponent extends BaseComponent implements OnInit {
    

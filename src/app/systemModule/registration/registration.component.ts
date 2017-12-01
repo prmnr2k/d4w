@@ -10,6 +10,7 @@ import { WorkingDayModel } from '../../core/models/workingDay.model';
 import { TokenModel } from '../../core/models/token.model';
 import { FrontWorkingDayModel } from '../../core/models/frontWorkingDays.model';
 import { BaseComponent } from 'app/core/base/base.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 
 declare var jquery:any;
@@ -19,7 +20,10 @@ declare var $ :any;
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./st-form.css']
+  styleUrls: ['./st-form.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 
 export class RegistrationComponent extends BaseComponent implements OnInit  {

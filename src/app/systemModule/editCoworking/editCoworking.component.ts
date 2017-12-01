@@ -14,13 +14,17 @@ import { Base64ImageModel } from '../../core/models/base64image.model';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { UserModel } from 'app/core/models/user.model';
 import { BaseComponent } from '../../core/base/base.component';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 
 
 @Component({
   selector: 'app-edit-coworking',
   templateUrl: './editCoworking.component.html',
-  styleUrls: ['./st-form.css']
+  styleUrls: ['./st-form.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class EditCoworkingComponent extends BaseComponent implements OnInit {
     RegistrationErr = false;

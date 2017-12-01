@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { LegendItem, ChartType } from '../lbd/lbd-chart/lbd-chart.component';
 import * as Chartist from 'chartist';
+import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  animations:[
+    ShowHideTrigger
+  ]
 })
 export class HomeComponent implements OnInit {
     public emailChartType: ChartType;

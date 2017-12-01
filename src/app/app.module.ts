@@ -1,4 +1,8 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
+
+
+
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -26,18 +30,21 @@ import { LoginComponent } from 'app/login/login.component';
 import { Ng2CableModule } from 'ng2-cable';
 import { LoadingModule } from 'app/shared/loading/loading.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule,
     AppRoutingModule,
     Ng2CableModule,
+    
     //LoginModule,
     SystemModule,
     LoadingModule

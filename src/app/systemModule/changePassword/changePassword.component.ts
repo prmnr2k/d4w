@@ -12,43 +12,31 @@ import { SystemAccessGuard } from './../system.guard';
 
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
-import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
+import { BaseComponent } from 'app/core/base/base.component';
 
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './changePassword.component.html',
-  styleUrls: ['./st-form.css'],
-  animations:[
-    ShowHideTrigger
-  ]
+  styleUrls: ['./st-form.css']
 })
-export class ChangePasswordComponent{
+export class ChangePasswordComponent extends BaseComponent{
     RegistrationErr = false;
-    isLoading = false;
     RegErrMsg = '';
     Params = {
       old_password:null,
       password:null,
       confirmation_password:null,
     };
-    constructor(private service: MainService, private router: Router, private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-        
-        this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel'); }
 
     @ViewChild('submitFormPswrd') form: NgForm;
     
     ChangePassword() {
         if(this.form.valid){
-            this.isLoading = true;
-            console.log('change password');
-            this.service.ChangeUserPassword(this.Params)
-                .subscribe((res:any)=>{
-                    console.log(res);
-                    this.service.Logout()
-                        .add((logOutRes:any)=>{
-                            this.router.navigate(['/login']);
-                        });
+            this.WaitBeforeLoading(
+                ()=>this.service.ChangeUserPassword(this.Params),
+                (res:any)=>{
+                    this.Logout();
                 },
                 (err)=>{
                     if(err.status == 422){
@@ -61,8 +49,8 @@ export class ChangePasswordComponent{
 
                     }
                     this.RegistrationErr = true;
-                    this.isLoading = false;
                 })
+            
         }
     } 
 

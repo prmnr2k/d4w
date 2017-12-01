@@ -66,24 +66,16 @@ export class MainService{
     TryToLoginWithToken()
     {
         let token = localStorage.getItem('token');
-        //let token = window.localStorage.getItem('token');
         if(token)
         {
             this.BaseInitAfterLogin(new TokenModel(token));
         }
-
     }
 
     ClearSession(){
-        
-        console.log(this.http.headers);
-        
         this.http.token = null;
-        console.log('this.http.token deleted');
         this.http.headers.delete('Authorization');
-        console.log('this.http.headers deleted');
         this.onAuthChange$.next(false);
-        console.log('this.onAuthChange$.next(false); deleted');
         localStorage.removeItem('token');
         console.log('localStorage.removeItem deleted');
         localStorage.removeItem('statusUser');

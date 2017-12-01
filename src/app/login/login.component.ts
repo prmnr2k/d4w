@@ -25,7 +25,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
         this.isLoginErr = false;
         this.Login(
             this.LoginParams.email,
-            this.LoginParams.email,
+            this.LoginParams.password,
             (err)=>{
                 console.log(err);
                 this.isLoginErr = true;

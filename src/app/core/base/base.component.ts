@@ -56,11 +56,9 @@ export class BaseComponent{
             .subscribe((val:boolean)=>{
                 if(this.ActiveProcesses.length == 0){
                     this.isLoading = false;
-                   
                 }
                 else{
                     this.isLoading = true;
-                
                 }
             });   
     }
@@ -74,9 +72,7 @@ export class BaseComponent{
             },
             (err)=>{
                 callback(err);
-                
             }
-
         );
     }
 
@@ -238,22 +234,7 @@ export class BaseComponent{
                         err(error); 
                     }
                     this.DeleteProcess(process);
-
                 });
-    }
-
-    public WaitBeforeDataGetting = (fun:()=>Observable<any>,success:(result?:any)=>any,err?:(obj?:any)=>any)=>{
-        return fun()
-            .subscribe(
-                res=>{
-                    success(res);
-                    
-                },
-                error=>{
-                    if(err && typeof err == "function")
-                        err(error);
-                }
-            );
     }
 
     protected SetLoading = () => {

@@ -147,22 +147,20 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
       this.Params.working_days = this.service.GetCheckedWorkingDaysName(this.Working_days);
     }
 
-    
-
-    
     this.WaitBeforeLoading(
       ()=>this.service.GetAllCoworking(params?this.Params:null),
       (res:any)=>{
-
         this.Coworkings = res;
         if(this.Coworkings.length == 0)
           return;
-        
         this.getCoworkingsImg();
-
+    },
+    (err)=>{
+      console.log(err);
     });
   }
 
+  
 
   getCoworkingsImg(){
     this.Images = [];

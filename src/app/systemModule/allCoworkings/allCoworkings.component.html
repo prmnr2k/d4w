@@ -28,6 +28,13 @@
                         </div>
                     </div>
                 </div>
+                <div class="pagination">
+                    <ul>
+                        <li *ngIf="Page>1"><a (click)="PrevOrNextPage(false)" >« Previous Page</a></li>
+                        <!-- <li *ngFor="let i of Pages" ><a (click)="ChangePageNumber(i*1)" [ngClass]="Page*1 == i*1 ? 'active-page':''" >{{i}}</a></li>-->
+                        <li><a (click)="PrevOrNextPage(true)" >Next Page »</a></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="col-md-4">

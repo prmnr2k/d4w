@@ -39,7 +39,7 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
   Images:string[] = [];
   bsRangeValue:any;
   Page: number=1;
- // Pages: number[] = [];
+  Pages: number[] = [];
 
   @ViewChild('searchg') public searchElement: ElementRef;
 
@@ -153,20 +153,21 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
     this.Params.offset = (this.Page - 1)*12;
 
     this.WaitBeforeLoading(
-      ()=>this.service.GetAllCoworking(params?this.Params:null),
+      ()=>this.service.GetAllPaged(params?this.Params:null),
       (res:any)=>{
-        this.Coworkings = res;
+        
+        this.Coworkings = res.coworkings;
         if(this.Coworkings.length == 0)
           return;
-        /*
+        
         let i = 0;
         this.Pages = [];
-        while(i<res.total_count){
-            this.Pages.push(i/10+1);
-            i+=10;
+        while(i<res.count){
+            this.Pages.push(i/12+1);
+            i+=12;
         }
         if(this.Pages.length == 1)this.Pages = [];
-        */
+        
         this.getCoworkingsImg();
     },
     (err)=>{

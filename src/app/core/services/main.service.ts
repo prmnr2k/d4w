@@ -217,6 +217,9 @@ export class MainService{
     GetAllCoworking(params?:any){
         return this.http.GetData('/coworkings/get_all',this.ParamsToUrlSearchParams(params));
     }
+    GetAllPaged(params?:any){
+        return this.http.GetData('/coworkings/get_all_paged',this.ParamsToUrlSearchParams(params));
+    }
 
     GetCoworkingById(id:number){
         return this.http.GetData('/coworkings/get/'+id,"");

@@ -42,7 +42,12 @@ export class TablesComponent extends BaseComponent implements OnInit {
         this.bsValue = new Date();
         this.BaseInit();
     }
-
+    CloseModalMenu(){
+        $("body").removeClass("has-active-menu");
+        $(".mainWrapper").removeClass("has-push-left");
+        $(".nav-holder-3").removeClass("is-active");
+        $(".mask-nav-3").removeClass("is-active");
+    }
     
     GetMyCoworking(){
         this.WaitBeforeLoading(

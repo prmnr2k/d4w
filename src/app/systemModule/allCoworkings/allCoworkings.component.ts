@@ -38,6 +38,8 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
   Coworkings:CoworkingModel[] = [];
   Images:string[] = [];
   bsRangeValue:any;
+  Page: number=1;
+ // Pages: number[] = [];
 
   @ViewChild('searchg') public searchElement: ElementRef;
 
@@ -70,7 +72,7 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
   {
     this.CreateAutocompleteMap();
     this.Working_days = this.service.GetAllDays();
-    this.CoworkingSearch();
+    this.CoworkingSearch(true);
   }
 
   getMask(){
@@ -147,12 +149,24 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
       this.Params.working_days = this.service.GetCheckedWorkingDaysName(this.Working_days);
     }
 
+    this.Params.limit = 12;
+    this.Params.offset = (this.Page - 1)*12;
+
     this.WaitBeforeLoading(
       ()=>this.service.GetAllCoworking(params?this.Params:null),
       (res:any)=>{
         this.Coworkings = res;
         if(this.Coworkings.length == 0)
           return;
+        /*
+        let i = 0;
+        this.Pages = [];
+        while(i<res.total_count){
+            this.Pages.push(i/10+1);
+            i+=10;
+        }
+        if(this.Pages.length == 1)this.Pages = [];
+        */
         this.getCoworkingsImg();
     },
     (err)=>{
@@ -190,6 +204,17 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
       this.Params.lng = null;
       console.log(this.Params);
     }
+
+    ChangePageNumber(page:number){
+      
+      this.Page = page;
+      this.CoworkingSearch(true);
+  }
+  PrevOrNextPage(next:boolean)
+  {
+      this.Page += next?1:-1;
+      this.CoworkingSearch(true);
+  }
 
 }
 

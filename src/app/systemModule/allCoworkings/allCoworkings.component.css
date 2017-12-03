@@ -116,3 +116,13 @@ background-color: rgba(184, 184, 184, 0.808);
     .sebm-google-map-container {
       height: 300px;
     }
+
+    /* Pagination */
+    .pagination{display:block; width:100%; text-align:center; clear:both; cursor: pointer;}
+    .pagination li{display:inline-block; }
+    .pagination li:last-child{margin-right:0;}
+    .pagination a, .pagination strong{display:block;margin: 0 2px 0 0; padding:8px 11px; border:1px solid; border-radius: 3px; font-weight:normal;}
+
+    .pagination a, .pagination strong{border-color:#D7D7D7;color:#FF8026;;}
+    .pagination:hover a:hover, .pagination:hover strong:hover{color:white;background: #FF8026;;}
+    .pagination .current{color:#FFFFFF; background-color:#000000;}

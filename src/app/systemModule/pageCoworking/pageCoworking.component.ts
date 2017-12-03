@@ -33,7 +33,7 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
 
   BookingErr = false;
   BookingOk = false;
-  
+  tmpDay:any;
   RegErrMsg = '';
   Coworking:CoworkingModel = new CoworkingModel();
   Days:FrontWorkingDayModel[] = [];
@@ -65,15 +65,18 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
   
   ngOnInit() 
   {
+   
+    
     this.activatedRoute.params.forEach((params) => {
       this.CoworkingId = params["id"];
       this.GetCoworking(this.CoworkingId);
+      
     });
     this.minDate = new Date();
    // this.minDate.setDate(this.minDate.getDate() - 1);
     this.Booking.begin_date = `2017-11-08T13:00`;
     this.Booking.end_date = `2017-11-08T15:00`;
-    this.DateChange();
+
   }
 
   GetCoworking(id:number){
@@ -83,6 +86,7 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
       (res:CoworkingModel)=>{
         this.Coworking = res;
         this.AmetiesCB = this.service.SetCheckedCB(this.service.GetAllAmenties(),res.amenties);
+        
         if(this.Coworking.image_id){
 
           this.GetImageById(
@@ -97,6 +101,8 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
             total = res.images.length;
         
         this.Days = this.service.GetFrontDaysByWorkingDays(this.Coworking.working_days);
+        this.tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
+        this.DateChange();
         for(let item of res.images){
           this.GetImageById(
             item.id,
@@ -107,7 +113,6 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
               }
               current+=1;
               if(current == total){
-                console.log("current"+ current);
                 this.initSlider();
               }
             });
@@ -282,11 +287,11 @@ else{
       return true;
     }
     else if(endHour==maxHour&&endMin<=maxMin){
-      console.log('equal',endMin,maxMin);
+   
       return true;
     }
     else {
-      console.log('no equal',endMin,maxMin);
+     
       this.toTime = this.maxTime;
       return false;
     }
@@ -294,21 +299,20 @@ else{
 
 
   DateChange(){
-    console.log("showTime ="+this.showTime);
+    console.log("showTime = "+this.showTime);
  
     if(this.Days && this.bsValue){
-      let tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
+      this.tmpDay = this.Days[ (this.bsValue.getDay()+6)%7];
       this.showTime = false;
       this.minTime = '00:00';
       this.maxTime = '00:00';
-      if(tmpDay){
+      console.log(this.tmpDay);
+      if(this.tmpDay){
         for(let i of this.Coworking.working_days){
-          if(tmpDay.en_name==i.day){
+          if(this.tmpDay.en_name==i.day){
             this.showTime = true;
             this.toTime = '11:00';
             this.fromTime= '10:00';
-            console.log("tmpDay = " +tmpDay)
-            console.log("errTime ="+this.errTime);
             this.errTime = false;
             this.maxTime = i.end_work;
             this.minTime = i.begin_work;

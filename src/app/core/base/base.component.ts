@@ -110,9 +110,6 @@ export class BaseComponent{
                     if(errCallback && typeof errCallback == "function"){
                         errCallback();
                     }
-
-                   
-
                 }
             );
         }

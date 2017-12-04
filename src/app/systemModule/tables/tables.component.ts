@@ -40,6 +40,15 @@ export class TablesComponent extends BaseComponent implements OnInit {
     ngOnInit() 
     {
         this.bsValue = new Date();
+        this.broadcaster.on<JSON>('BookingsChannel').subscribe(
+            message => {
+              if (message['event_type'] == 'extending'){
+                    console.log(`EXTENDING!`);
+                   // location.reload();
+                   this.GetMyCoworking();
+              }
+            });
+
         this.BaseInit();
     }
     CloseModalMenu(){

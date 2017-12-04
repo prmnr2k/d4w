@@ -295,7 +295,7 @@ export class MainService{
     }
 
     UnBooking(id:number){
-        return this.http.DeleteData('/bookings/delete/'+id);
+        return this.http.PostData('/bookings/cancel_booking/', JSON.stringify({'booking_id':id}));
     }
 
     public ValidateBooking(booking_id:any){

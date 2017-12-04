@@ -12,6 +12,7 @@ import { Base64ImageModel } from '../../core/models/base64image.model';
 import { BaseComponent } from 'app/core/base/base.component';
 import { CoworkingComponent } from 'app/systemModule/pageCoworking/pageCoworking.component';
 import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
+import { startTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 @Component({
   selector: 'my-coworkings',
@@ -59,10 +60,11 @@ export class MyBookingsComponent extends BaseComponent implements OnInit {
     }
 
     UnBooking(id:number){
-      this.service.UnBooking(id)
-      .subscribe((any)=>{
-        this.GetMyBookings();
-      });
+      this.WaitBeforeLoading(()=>
+      this.service.UnBooking(id),
+      ()=>{
+        this.GetMyBookings();}
+      );
     
     }
 

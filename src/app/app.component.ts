@@ -18,10 +18,11 @@ export class AppComponent implements OnInit {
   title = 'app';
   constructor(private service: MainService,
               private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
+                if(+localStorage.getItem('userStatus')>1){
                 let notGiveNow = true;
                 let prevUser = 0;
                 let count = new Date().getTime();
-                this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+service.getToken().token, 'BookingsChannel');
+                this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
                 console.log('ng2cable success');
                 this.broadcaster.on<JSON>('BookingsChannel').subscribe(
                   message => {
@@ -101,11 +102,15 @@ export class AppComponent implements OnInit {
                       });
                     }
 
-                   setTimeout(()=>{notGiveNow = true;prevUser = 0;},1000); 
+                  setTimeout(()=>{
+                    notGiveNow = true;
+                    prevUser = 0;},
+                    1000); 
                   }
                 }
                 );
               }
+            }
 
   ngOnInit(){
     this.service.onAuthChange$.subscribe(bool => {

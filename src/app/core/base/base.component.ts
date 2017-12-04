@@ -34,7 +34,7 @@ export class BaseComponent{
         this.userStatus = this.service.GetLocalUserStatus();
         if(this.isLoggedIn){
             this.ng2cable
-                .subscribe('wss://d4w-api.herokuapp.com/cable?token='+this.service.getToken().token, 'BookingsChannel');
+                .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
             this.GetMyData();
         }
         this.service.onAuthChange$
@@ -43,7 +43,7 @@ export class BaseComponent{
                 if(this.isLoggedIn){
                     this.GetMyData();
                     this.ng2cable
-                        .subscribe('wss://d4w-api.herokuapp.com/cable?token='+this.service.getToken().token, 'BookingsChannel');
+                        .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
                 }
                 else
                     this.router.navigate(['/login']);

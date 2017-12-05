@@ -3,13 +3,13 @@
     <div class="for-fixed-bg"></div>
     <div class="middle-line-bg">
         <div class="lang-change">
-            <span class="active">ru</span>
-            <span>en</span>
+            <span class="active" (click)="SwitchLanguage('ru')">ru</span>
+            <span (click)="SwitchLanguage('en')">en</span>
         </div>
         <img src="../assets/img/main-logo.svg" class="sign-in-style-logo img-responsive" alt="">
         <div class="body-forms">
             <form (ngSubmit)="TryToLogin()" *ngIf="switchForm">
-                <p class="head-text">Добро пожаловать!</p>
+                <p class="head-text" translate>welcome</p>
                 <div *ngIf="isLoginErr" class="col-md-12">
                     <h2 class="error-text-style">Incorrect email or password!</h2>
                 </div>

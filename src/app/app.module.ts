@@ -30,6 +30,14 @@ import { LoginComponent } from 'app/login/login.component';
 import { Ng2CableModule } from 'ng2-cable';
 import { LoadingModule } from 'app/shared/loading/loading.module';
 
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 
 @NgModule({
   declarations: [
@@ -44,7 +52,14 @@ import { LoadingModule } from 'app/shared/loading/loading.module';
     RouterModule,
     AppRoutingModule,
     Ng2CableModule,
-    
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     //LoginModule,
     SystemModule,
     LoadingModule

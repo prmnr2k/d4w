@@ -13,7 +13,7 @@ import { Base64ImageModel } from 'app/core/models/base64image.model';
 import { GUID } from 'app/core/models/guide.model';
 import { TokenModel } from 'app/core/models/token.model';
 import { UserEnumStatus, UserEnumRole } from 'app/core/base/base.enum';
-
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
@@ -28,8 +28,8 @@ export class BaseComponent{
 
    
     
-    constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
-
+    constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster,public translate: TranslateService) {
+        translate.setDefaultLang(this.service.GetCurrentLang());
         this.isLoggedIn = this.service.IsLogedIn();
         this.userStatus = this.service.GetLocalUserStatus();
         if(this.isLoggedIn){
@@ -72,6 +72,11 @@ export class BaseComponent{
                 callback(err);
             }
         );
+    }
+
+    public SwitchLanguage(language: string) {
+        this.translate.use(language);
+        this.service.SetCurrentLang(language);
     }
 
     private GenerateProcessID(){

@@ -21,7 +21,7 @@
 
         <button class="butt-orange" *ngIf="!activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmStart(activeBooking)">Начало работы</button>
         <button class="butt-orange" *ngIf="activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmEnd(activeBooking)">Конец работы</button>
-
+        <button class="butt-orange" *ngIf="ExtendRequest.length > 0" (click)=" ApplyExtendBooking(ExtendRequest[0].id)" >Продлить на 30 мин</button>
 
         <div *ngIf="activeBooking.is_closed" class="likeDislike">
             <button class="like" (click)="rateUser(Users[activeBooking.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[activeBooking.user_id] && Rates[activeBooking.user_id].score == 'yes'}"></button>

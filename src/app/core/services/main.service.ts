@@ -202,6 +202,9 @@ export class MainService{
 
     }
 
+    GetExendRequests(id){
+        return this.http.GetData('/bookings/get_extend_requests/'+id,'');
+    } 
 
     /* USERS BLOCK END */
 
@@ -285,6 +288,13 @@ export class MainService{
             'extend_time':time
         }
         return this.http.PostData('/bookings/extend_booking',JSON.stringify(params));
+    }
+
+    ApplyExtendRequest(id:number){
+        let params={
+            'request_id':id,
+        }
+        return this.http.PostData('/bookings/apply_extend_request',JSON.stringify(params));
     }
 
     BookingCreate(book:BookingModel){

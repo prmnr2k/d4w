@@ -80,7 +80,6 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
   }
 
   GetCoworking(id:number){
-
     this.WaitBeforeLoading(
       ()=> this.service.GetCoworkingById(id),
       (res:CoworkingModel)=>{
@@ -141,7 +140,6 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
     } 
 
   getMaskEnd(){
-    
     return {
         mask: [/[0-2]/, this.toTime && parseInt(this.toTime[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],
         keepCharPositions: true

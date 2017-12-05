@@ -9,7 +9,9 @@
     <h6 class="head-form">
         <span>Коворкинг "{{Coworking?.full_name}}"</span>
     </h6>
-
+    <div *ngIf="isErr">
+        <h2 class="error-text-style">{{errExtend}}</h2>
+    </div>
     <div class="description-coworking-wr">
         <div class="description-coworking">
             <p><strong>Цена: </strong>{{Coworking.price}}$</p>

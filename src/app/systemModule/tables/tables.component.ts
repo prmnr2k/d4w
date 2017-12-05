@@ -28,6 +28,7 @@ declare var $ :any;
 export class TablesComponent extends BaseComponent implements OnInit {
     Coworking = new CoworkingModel();
     Days:string[] = [];
+    ExtendRequest:any = [];
     Bookings:BookingModel[] = [];
     Users:UserModel[] = [];
     meCwrk:number = 0;
@@ -47,10 +48,43 @@ export class TablesComponent extends BaseComponent implements OnInit {
                    // location.reload();
                    this.GetMyCoworking();
               }
+              else if (message['event_type'] == 'created'){
+                this.GetMyCoworking();
+              }
+             
             });
 
         this.BaseInit();
     }
+
+
+    ApplyExtendBooking(id:number){
+        this.service.ApplyExtendRequest(id).subscribe(
+            (res:any)=>{
+                console.log(res);
+                this.ExtendRequest = [];
+                this.GetMyCoworking();
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
+    }
+
+    GetExtendsbyUsers(id:number){
+        this.service.GetExendRequests(id).subscribe(
+            (res:any)=>{
+                console.log(res);
+                this.ExtendRequest = res;
+            },
+            (err)=>{
+                console.log(err);
+            }
+        );
+    }
+
+
+
     CloseModalMenu(){
         $("body").removeClass("has-active-menu");
         $(".mainWrapper").removeClass("has-push-left");
@@ -66,6 +100,7 @@ export class TablesComponent extends BaseComponent implements OnInit {
                     this.Coworking = res;
                     let i = 1;
                     this.WorkingPlaces = Array(this.Coworking.capacity).fill(1).map((x,i)=>i+1);
+                    
                     this.GetBookings();
                 }
             },
@@ -169,6 +204,7 @@ export class TablesComponent extends BaseComponent implements OnInit {
 
     openModal(e:any,book:BookingModel){
         this.activeBooking = book;
+        this.GetExtendsbyUsers(this.activeBooking.id);
         e.preventDefault();
         $("body").addClass("has-active-menu");
         $(".mainWrapper").addClass("has-push-left");

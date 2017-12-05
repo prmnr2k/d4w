@@ -34,6 +34,9 @@ export class IdBookingComponent implements OnInit {
     rightNow: Date;
     timerSubscription: any = null;
     isLoading = false;
+    errExtend:string = '';
+    isErr:boolean = false;
+
     constructor(private service: MainService, private router: Router, 
         private activatedRoute: ActivatedRoute) { 
         }
@@ -79,8 +82,14 @@ export class IdBookingComponent implements OnInit {
     confirm("Запрос на продление будет отправлен администратору! ")
     this.service.ExtendBooking(this.Booking.id, "00:30")
     .subscribe((res:any)=>{
-      console.log("RES" + res);
-    })
+      this.isErr = true;
+      this.errExtend = "sent request succesfully";
+    },(err)=>{
+      console.log(err);
+      this.isErr = true;
+      if(err._body==`{"capacity":["LIMIT_REACHED"]}`) this.errExtend = `imposible to extend`;
+    }
+  )
   }
    
 

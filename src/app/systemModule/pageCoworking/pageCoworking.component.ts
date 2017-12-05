@@ -15,6 +15,7 @@ import { Base64ImageModel } from '../../core/models/base64image.model';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 import { BaseComponent } from 'app/core/base/base.component';
 import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
+import { TranslateService } from '@ngx-translate/core';
 
 
 declare var jquery:any;
@@ -58,8 +59,8 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
   bsConfig = Object.assign({}, { containerClass: "theme-blue"});
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(protected service: MainService, protected router: Router, 
-    private activatedRoute: ActivatedRoute, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
-    super(service,router,ng2cable,broadcaster);
+      private activatedRoute: ActivatedRoute, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster,public translate: TranslateService) {
+      super(service,router,ng2cable,broadcaster,translate);
   }
 
   

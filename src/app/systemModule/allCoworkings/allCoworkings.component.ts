@@ -20,6 +20,7 @@ import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
 import {} from '@types/googlemaps';
 import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
+import { TranslateService } from '@ngx-translate/core';
 
 
 declare var google: any;
@@ -63,8 +64,8 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
   constructor(protected service: MainService, protected router: Router,
     private mapsAPILoader: MapsAPILoader, 
     private ngZone: NgZone, 
-    protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster) {
-    super(service,router,ng2cable,broadcaster);
+    protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster,public translate: TranslateService) {
+    super(service,router,ng2cable,broadcaster,translate);
 }
 
 

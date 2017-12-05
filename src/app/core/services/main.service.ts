@@ -554,5 +554,16 @@ export class MainService{
           };
           xhr.send();
     }
+    SetCurrentLang(lang:string){
+        localStorage.setItem('lang',lang);
+    }
+    GetCurrentLang(){
+        let lang = localStorage.getItem('lang');
+        if(!lang){
+            lang = 'ru';
+            this.SetCurrentLang(lang);
+        }
+        return lang;
+    }
 
 }

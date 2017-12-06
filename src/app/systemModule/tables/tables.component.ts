@@ -41,8 +41,6 @@ export class TablesComponent extends BaseComponent implements OnInit {
     ngOnInit() 
     {
         this.bsValue = new Date();
-        
-
         this.BaseInit();
     }
 

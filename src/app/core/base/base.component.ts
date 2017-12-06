@@ -32,18 +32,20 @@ export class BaseComponent{
         translate.setDefaultLang(this.service.GetCurrentLang());
         this.isLoggedIn = this.service.IsLogedIn();
         this.userStatus = this.service.GetLocalUserStatus();
+
         if(this.isLoggedIn){
-            this.ng2cable
-                .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+          //  this.ng2cable
+            //    .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
             this.GetMyData();
         }
+
         this.service.onAuthChange$
             .subscribe((res:boolean)=>{
                 this.isLoggedIn = res;
                 if(this.isLoggedIn){
                     this.GetMyData();
-                    this.ng2cable
-                        .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+                 //   this.ng2cable
+                   //     .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
                 }
                 else
                     this.router.navigate(['/login']);
@@ -193,26 +195,22 @@ export class BaseComponent{
         switch(role){
             case UserEnumRole.Creator:{
                 this.userStatus = UserEnumStatus.Creator;
-                this.service.SetUserStatus(UserEnumStatus.Creator);
                 break;
             }
             case UserEnumRole.Receptionist:{
                 this.userStatus = UserEnumStatus.Receptionist;
-                this.service.SetUserStatus(UserEnumStatus.Creator);
                 break;
             }
             case UserEnumRole.User:{
                 this.userStatus = UserEnumStatus.User;
-                this.service.SetUserStatus(UserEnumStatus.User);
                 break;
             }
             default:{
                 this.userStatus = UserEnumStatus.None;
-                this.service.SetUserStatus(UserEnumStatus.None);
                 break;
             }
         }
-        console.log('setup user status');
+
         this.service.SetupLocalUserStatus(this.userStatus);
     }
 

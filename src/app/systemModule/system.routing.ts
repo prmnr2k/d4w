@@ -27,8 +27,8 @@ const routes: Routes =
 [
   {path:'',component:SystemComponent, children:
     [
-      { path:'', redirectTo: 'all_coworkings', pathMatch:'full' },
-      { path: 'user',           component: UserComponent},
+      //{ path:'', redirectTo: 'all_coworkings', pathMatch:'full' },
+      //{ path: 'user',           component: UserComponent},
       { path: 'table',          component: TablesComponent, canActivate: [SystemAccessGuard] },
       { path: 'typography',     component: TypographyComponent },
       { path: 'icons',          component: IconsComponent},
@@ -36,14 +36,14 @@ const routes: Routes =
       { path: 'notifications',  component: NotificationsComponent },
       { path: 'registration', component: RegistrationComponent, canActivate: [SystemAccessGuard] },
       { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [SystemAccessGuard] },
-      { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
-      { path: 'all_coworkings', component:AllCoworkingsComponent},
-      { path: 'my_bookings', component:MyBookingsComponent,canActivate: [SystemAccessGuard]},
-      { path: 'coworking/:id', component:CoworkingComponent},
+      //{ path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
+      //{ path: 'all_coworkings', component:AllCoworkingsComponent},
+      //{ path: 'my_bookings', component:MyBookingsComponent,canActivate: [SystemAccessGuard]},
+      //{ path: 'coworking/:id', component:CoworkingComponent},
       { path: 'user_profile', component: EditUserComponent, canActivate: [SystemAccessGuard] },
-      { path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
+      //{ path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
       { path: 'change_password', component: ChangePasswordComponent, canActivate: [SystemAccessGuard] },
-      { path: 'booking/:id', component: IdBookingComponent, canActivate: [SystemAccessGuard] }
+      //{ path: 'booking/:id', component: IdBookingComponent, canActivate: [SystemAccessGuard] }
     ]
   }
 ];

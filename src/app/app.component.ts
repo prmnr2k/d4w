@@ -23,12 +23,12 @@ export class AppComponent implements OnInit {
                 let prevUser = 0;
                 let count = new Date().getTime();
                 this.ng2cable.subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
-                console.log('ng2cable success');
+              //  console.log('ng2cable success');
+
                 this.broadcaster.on<JSON>('BookingsChannel').subscribe(
                   message => {
                     if(notGiveNow||(!notGiveNow&&prevUser!=message['booking'].user_id)){
                     notGiveNow = false;
-                    count++;
                     prevUser = message['booking'].user_id;
                     console.log(message['event_type']);
                     console.log(message['booking']);

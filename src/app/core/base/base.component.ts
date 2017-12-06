@@ -25,7 +25,7 @@ export class BaseComponent{
     public userStatus:number = 0;
     public Me:UserModel = new UserModel();
     public MyLogo:string = '';
-
+    public NewErrForUser:boolean = false;
    
     
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster,public translate: TranslateService) {
@@ -34,8 +34,8 @@ export class BaseComponent{
         this.userStatus = this.service.GetLocalUserStatus();
 
         if(this.isLoggedIn){
-          //  this.ng2cable
-            //    .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+            this.ng2cable
+                .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
             this.GetMyData();
         }
 
@@ -44,8 +44,8 @@ export class BaseComponent{
                 this.isLoggedIn = res;
                 if(this.isLoggedIn){
                     this.GetMyData();
-                 //   this.ng2cable
-                   //     .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+                    this.ng2cable
+                        .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
                 }
                 else
                     this.router.navigate(['/login']);
@@ -68,7 +68,8 @@ export class BaseComponent{
             ()=>this.service.UserLogin(email,password),
             (res:TokenModel)=>{
                 this.service.BaseInitAfterLogin(res);
-                this.router.navigate(['/system','all_coworkings']);
+                //this.router.navigate(['/system','tabel']);
+                
             },
             (err)=>{
                 callback(err);
@@ -212,10 +213,20 @@ export class BaseComponent{
         }
 
         this.service.SetupLocalUserStatus(this.userStatus);
+        if(+this.userStatus<=1){
+            this.Logout();
+            this.NewErrForUser = true;
+        } 
+        else{
+            this.NewErrForUser = false;
+            this.router.navigate(['/system','table']);
+        }
+
     }
 
     public Logout(){
         this.service.Logout();
+        this.ng2cable.unsubscribe();
     }
     
 

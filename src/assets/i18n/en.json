@@ -1,5 +1,6 @@
 {
     "welcome": "Welcome!",
+<<<<<<< HEAD
     "invalidEmail": "Incorrect email or password!",
     "signIn": "Sign in",
     "guestSignIn": "Sign in as a guest",
@@ -12,4 +13,7 @@
     "recover": "Recover",
     "iRemeberPsw": "I remember my password",
     "email": "Еmail"
+=======
+    "incorrect": "Incorrect email or password!"
+>>>>>>> 28c537ddaef7069cc610589febf867bcf6b9aca5
 }

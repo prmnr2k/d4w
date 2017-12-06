@@ -24,7 +24,7 @@ export class AppAccessGuard extends BaseComponent implements CanActivate{
     private LoginHandler(router:ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean{
 
         if(this.isLoggedIn){
-            this.router.navigate(['/system','all_coworkings']);
+            this.router.navigate(['/system','table']);
             return false;
         }
         return true;

@@ -29,6 +29,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
             (err)=>{
                 console.log(err);
                 this.isLoginErr = true;
+                
             }  
         );
     }

@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   title = 'app';
   constructor(private service: MainService,
               private ng2cable: Ng2Cable, private broadcaster: Broadcaster) {
-                if(+localStorage.getItem('userStatus')>1){
+                //if(+localStorage.getItem('userStatus')>1){
                 let notGiveNow = true;
                 let prevUser = 0;
                 let count = new Date().getTime();
@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
                   }
                 }
                 );
-              }
+              //}
             }
 
   ngOnInit(){

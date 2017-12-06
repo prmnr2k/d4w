@@ -55,7 +55,6 @@ export class MainService{
     }
 
     SetupLocalUserStatus(status){
-        console.log(status);
         try{
             localStorage.setItem('userStatus',status+"");
         }
@@ -99,8 +98,6 @@ export class MainService{
         this.onAuthChange$.next(false);
         localStorage.removeItem('token');
         console.log('localStorage.removeItem deleted');
-        localStorage.removeItem('statusUser');
-        console.log('localStorage.statusUser deleted');
     }
     Logout(){
         return this.http.PostData("/auth/logout","")
@@ -154,16 +151,7 @@ export class MainService{
       return status;
     }
 
-    SetUserStatus(status:number){
-        localStorage.setItem('statusUser',''+status);
-    }
-
-    
-    GetUserStatus(){
-        let status = 'none';
-        status = localStorage.getItem('statusUser')?localStorage.getItem('statusUser'):'0';
-        return +status;
-    }
+   
 
     UserModelToCreateUserModel(input:UserModel){
         let result = new CreateUserModel();

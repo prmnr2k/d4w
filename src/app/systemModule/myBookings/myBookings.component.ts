@@ -61,11 +61,16 @@ export class MyBookingsComponent extends BaseComponent implements OnInit {
 
     UnBooking(id:number){
       this.WaitBeforeLoading(()=>
-      this.service.UnBooking(id),
+      this.service.CancelBooking(id),
       ()=>{
-        this.GetMyBookings();}
+        this.WaitBeforeLoading(()=>
+        this.service.DeleteBooking(id),
+        ()=>{
+          this.GetMyBookings();
+        });
+       }
       );
-    
+      
     }
 
 

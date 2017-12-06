@@ -34,8 +34,8 @@ export class BaseComponent{
         this.userStatus = this.service.GetLocalUserStatus();
 
         if(this.isLoggedIn){
-          //  this.ng2cable
-            //    .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+            this.ng2cable
+                .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
             this.GetMyData();
         }
 
@@ -44,8 +44,8 @@ export class BaseComponent{
                 this.isLoggedIn = res;
                 if(this.isLoggedIn){
                     this.GetMyData();
-                 //   this.ng2cable
-                   //     .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+                    this.ng2cable
+                        .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
                 }
                 else
                     this.router.navigate(['/login']);
@@ -69,6 +69,7 @@ export class BaseComponent{
             (res:TokenModel)=>{
                 this.service.BaseInitAfterLogin(res);
                 this.router.navigate(['/system','all_coworkings']);
+               
             },
             (err)=>{
                 callback(err);
@@ -216,6 +217,7 @@ export class BaseComponent{
 
     public Logout(){
         this.service.Logout();
+        this.ng2cable.unsubscribe();
     }
     
 

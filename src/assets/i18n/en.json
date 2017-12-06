@@ -1,4 +1,15 @@
 {
-    "welcome": "Welcome!"
-   
+    "welcome": "Welcome!",
+    "invalidEmail": "Incorrect email or password!",
+    "signIn": "Sign in",
+    "guestSignIn": "Sign in as a guest",
+    "forgotPassword": "Forgot password?",
+    "signUp": "Sign up",
+    "cwrkSignUp": "Sign up as coworking",
+    "usrSignUp": "Sign up as user",
+    "pswRecovery": "Password recovery",
+    "instructions": "Input your email and we will send you instructions on how to restore account access",
+    "recover": "Recover",
+    "iRemeberPsw": "I remember my password",
+    "email": "Еmail"
 }

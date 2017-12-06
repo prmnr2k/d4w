@@ -22,6 +22,7 @@ import { EditUserComponent } from "./editUser/editUser.component";
 import { ChangePasswordComponent } from './changePassword/changePassword.component';
 import { SystemComponent } from './system.component';
 import { IdBookingComponent } from './idBooking/idBooking.component';
+import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
 
 const routes: Routes =
 [
@@ -41,6 +42,7 @@ const routes: Routes =
       //{ path: 'my_bookings', component:MyBookingsComponent,canActivate: [SystemAccessGuard]},
       //{ path: 'coworking/:id', component:CoworkingComponent},
       { path: 'user_profile', component: EditUserComponent, canActivate: [SystemAccessGuard] },
+      { path: 'statistic', component: StatisticCoworkingComponent, canActivate: [SystemAccessGuard] },
       //{ path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
       { path: 'change_password', component: ChangePasswordComponent, canActivate: [SystemAccessGuard] },
       //{ path: 'booking/:id', component: IdBookingComponent, canActivate: [SystemAccessGuard] }

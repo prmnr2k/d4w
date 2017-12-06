@@ -58,6 +58,13 @@
                     </div>
                 </div>
             </div>
+            <h6 class="head-form">
+                <span>Изменение профиля</span>
+            </h6>
+            <div class="lang-change">
+                <span [ngClass]="{'active': service.GetCurrentLang() == 'ru'}" (click)="SwitchLanguage('ru')">ru</span>
+                <span [ngClass]="{'active': service.GetCurrentLang() == 'en'}" (click)="SwitchLanguage('en')">en</span>
+            </div>
             <button class="butt-orange" type="submit" [disabled]="!submitFormUsr.valid">Сохранить</button>
             <div class="clearfix"></div>
         </form>

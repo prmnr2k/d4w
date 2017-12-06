@@ -559,6 +559,7 @@ export class MainService{
     }
     GetCurrentLang(){
         let lang = localStorage.getItem('lang');
+        
         if(!lang){
             lang = 'ru';
             this.SetCurrentLang(lang);

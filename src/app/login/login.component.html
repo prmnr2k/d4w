@@ -11,7 +11,7 @@
             <form (ngSubmit)="TryToLogin()" *ngIf="switchForm">
                 <p class="head-text" translate>welcome</p>
                 <div *ngIf="isLoginErr" class="col-md-12">
-                    <h2 class="error-text-style">Incorrect email or password!</h2>
+                    <h2 class="error-text-style" translate>incorrect</h2>
                 </div>
                 <input autocomplete="off" class="input-style-transp" type="text" placeholder="Еmail" name="email" [ngModel]="LoginParams.email" (ngModelChange)="LoginParams.email = $event">
                 <input autocomplete="off" class="input-style-transp" type="password" placeholder="Пароль" name="pw" [ngModel]="LoginParams.password" (ngModelChange)="LoginParams.password = $event">

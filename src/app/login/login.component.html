@@ -10,18 +10,19 @@
         <div class="body-forms">
             <form (ngSubmit)="TryToLogin()" *ngIf="switchForm">
                 <p class="head-text" translate>welcome</p>
-                <div *ngIf="isLoginErr" class="col-md-12">
+                <div *ngIf="isLoginErr || NewErrForUser" class="col-md-12">
                     <h2 class="error-text-style" translate>incorrect</h2>
                 </div>
                 <input autocomplete="off" class="input-style-transp" type="text" placeholder="Еmail" name="email" [ngModel]="LoginParams.email" (ngModelChange)="LoginParams.email = $event">
                 <input autocomplete="off" class="input-style-transp" type="password" placeholder="Пароль" name="pw" [ngModel]="LoginParams.password" (ngModelChange)="LoginParams.password = $event">
                 <button class="butt-orange" type="submit">Войти</button>
-                <a [routerLink]="['/system','all_coworkings']"  class="butt-orange">Войти как гость</a>
+                <!--<a [routerLink]="['/system','all_coworkings']"  class="butt-orange">Войти как гость</a>-->
                 <span class="forgot-pass" (click)="switchForm = !switchForm">Забыли пароль?</span>
-                <div class="for-flex-regist-links">
-                    <a [routerLink]="['/system','userRegistration']" class="butt-orange">Регистация</a>
-                    <a [routerLink]="['/system','registration']" class="butt-orange">Регистрация коворкинга</a>
-                </div>
+                <a [routerLink]="['/system','registration']" class="butt-orange">Регистрация коворкинга</a>
+                 <!--<div class="for-flex-regist-links">
+                   <a [routerLink]="['/system','userRegistration']" class="butt-orange">Регистация</a>
+                   
+                </div>-->
             </form>
             <form *ngIf="!switchForm">
                 <p class="head-text">Восстановление пароля</p>

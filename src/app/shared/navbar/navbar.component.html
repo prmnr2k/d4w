@@ -3,11 +3,12 @@
     <div class="right-side" *ngIf="!isLoggedIn">
         <ul class="sign-menu-wr">
             <li routerLinkActive="active">
-                <a routerLink="/login">Sign in</a>
+                <a routerLink="/login" translate>signIn</a>
             </li>
             <li routerLinkActive="active">
-                <a routerLink="/system/registration">Sign up as coworking</a>
+                <a routerLink="/system/registration" translate>cwrkSignUp</a>
             </li>
+
             <!--<li routerLinkActive="active">
                 <a routerLink="/system/userRegistration">Sign up as user</a>
             </li>-->
@@ -22,7 +23,7 @@
                 <div class="drop-d">
                     <div class="settings-wr my-row" (click)="Navigate(['/system','user_profile'])">
                         <div class="settings">
-                            <p>Настройки</p>
+                            <p translate>settings</p>
                             <div class="image">
                                 <img src="../assets/img/Settings.svg" class="img-responsive" alt="">
                             </div>
@@ -30,7 +31,7 @@
                     </div>
                     <div class="settings-wr my-row" (click)="Navigate(['/system','change_password'])">
                         <div class="settings">
-                            <p>Смена пароля</p>
+                            <p translate>changePsw</p>
                             <div class="image">
                                 <img src="../assets/img/key.svg" class="img-responsive" alt="">
                             </div>
@@ -38,7 +39,7 @@
                     </div>
                     <div class="settings-wr my-row" (click)="Navigate(['/system','my_bookings'])" *ngIf="isLoggedIn&& userStatus == 1">
                         <div class="settings">
-                            <p>Брони</p>
+                            <p translate>bookings</p>
                             <div class="image">
                                 <img src="../assets/img/Chair2.svg" class="img-responsive" alt="">
                             </div>
@@ -46,7 +47,7 @@
                     </div>
                     <div class="exit-wr my-row" (click)="Logout()">
                         <div class="settings">
-                            <p>Выход</p>
+                            <p translate>exit</p>
                             <div class="image">
                                 <img src="../assets/img/exit.svg" class="img-responsive" alt="">
                             </div>

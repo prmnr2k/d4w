@@ -355,63 +355,179 @@ export class MainService{
 
     CheckErrMessage(body:any):string{
         let RegErrMsg = '';
-        if(body.email) {
-            for(let i of body.email) {
-                if(i == "INVALID")
-                    RegErrMsg += "Email contains invalid symbols! ";
-                if(i == "ALREADY_TAKEN")
-                    RegErrMsg += "Email is already registered! ";
-                if(i == "EMPTY_FIELD")
-                    RegErrMsg += "Please input email! ";
-                if(i == "TOO_LONG")
-                    RegErrMsg += "Email is too long! ";
+            if(body.email) {
+                for(let i of body.email) {
+                    if(i == "INVALID")
+                        RegErrMsg += "Email contains invalid symbols! ";
+                    if(i == "ALREADY_TAKEN")
+                        RegErrMsg += "Email is already registered! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Please input email! ";
+                    if(i == "TOO_LONG")
+                        RegErrMsg += "Email is too long! ";
+                }
+            }
+            if(body.old_password) {
+                for(let i of body.old_password) {
+                    if(i == "NOT_MATCHED")
+                        RegErrMsg += "Old password is incorrect! ";
+                }
+            }
+            if(body.phone) {
+                for(let i of body.phone) {
+                    if(i == "INVALID")
+                        RegErrMsg += "Phone contains invalid symbols! ";
+                }
+            }
+            if(body.password) {
+                for(let i of body.password) {
+                    if(i == "TOO_SHORT")
+                        RegErrMsg += "Password is too short. Password must contain more than 6 symbols! ";
+                    if(i == "TOO_LONG")
+                        RegErrMsg += "Password is too long! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Please input password! ";
+                }
+            }
+            if(body.password_confirmation) {
+                for(let i of body.password_confirmation) {
+                    if(i == "NOT_MACHED")
+                        RegErrMsg += "Confirmed passwrod must be the same as password! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Please confirm password! ";
+                }
+            }
+            if(body.capacity) {
+                for(let i of body.capacity) {
+                    if(i == "LIMIT_REACHED")
+                        RegErrMsg += "Limit of places reached! ";
+                }
+            }
+            if(body.images) {
+                for(let i of body.images) {
+                    if(i == "LIMIT_REACHED")
+                        RegErrMsg += "Limit of images reached! ";
+                }
+            }
+        return RegErrMsg;
+    }
+
+    CheckErrMessageRu(body:any):string{
+        let RegErrMsg = '';
+        if(this.GetCurrentLang() == 'en'){
+            if(body.email) {
+                for(let i of body.email) {
+                    if(i == "INVALID")
+                        RegErrMsg += "Email contains invalid symbols! ";
+                    if(i == "ALREADY_TAKEN")
+                        RegErrMsg += "Email is already registered! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Please input email! ";
+                    if(i == "TOO_LONG")
+                        RegErrMsg += "Email is too long! ";
+                }
+            }
+            if(body.old_password) {
+                for(let i of body.old_password) {
+                    if(i == "NOT_MATCHED")
+                        RegErrMsg += "Old password is incorrect! ";
+                }
+            }
+            if(body.phone) {
+                for(let i of body.phone) {
+                    if(i == "INVALID")
+                        RegErrMsg += "Phone contains invalid symbols! ";
+                }
+            }
+            if(body.password) {
+                for(let i of body.password) {
+                    if(i == "TOO_SHORT")
+                        RegErrMsg += "Password is too short. Password must contain more than 6 symbols! ";
+                    if(i == "TOO_LONG")
+                        RegErrMsg += "Password is too long! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Please input password! ";
+                }
+            }
+            if(body.password_confirmation) {
+                for(let i of body.password_confirmation) {
+                    if(i == "NOT_MACHED")
+                        RegErrMsg += "Confirmed passwrod must be the same as password! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Please confirm password! ";
+                }
+            }
+            if(body.capacity) {
+                for(let i of body.capacity) {
+                    if(i == "LIMIT_REACHED")
+                        RegErrMsg += "Limit of places reached! ";
+                }
+            }
+            if(body.images) {
+                for(let i of body.images) {
+                    if(i == "LIMIT_REACHED")
+                        RegErrMsg += "Limit of images reached! ";
+                }
             }
         }
-        if(body.old_password) {
-            for(let i of body.old_password) {
-                if(i == "NOT_MATCHED")
-                    RegErrMsg += "Old password is incorrect! ";
+        else {
+            if(body.email) {
+                for(let i of body.email) {
+                    if(i == "INVALID")
+                        RegErrMsg += "Неверный формат email!";
+                    if(i == "ALREADY_TAKEN")
+                        RegErrMsg += "Данный еmail уже зарегистрирован! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Пожалуйста введите email! ";
+                    if(i == "TOO_LONG")
+                        RegErrMsg += "Email слишком длинный! ";
+                }
             }
-        }
-        if(body.phone) {
-            for(let i of body.phone) {
-                if(i == "INVALID")
-                    RegErrMsg += "Phone contains invalid symbols! ";
+            if(body.old_password) {
+                for(let i of body.old_password) {
+                    if(i == "NOT_MATCHED")
+                        RegErrMsg += "Старый пароль введен неправильно! ";
+                }
             }
-        }
-        if(body.password) {
-            for(let i of body.password) {
-                if(i == "TOO_SHORT")
-                    RegErrMsg += "Password is too short. Password must contain more than 6 symbols! ";
-                if(i == "TOO_LONG")
-                    RegErrMsg += "Password is too long! ";
-                if(i == "EMPTY_FIELD")
-                    RegErrMsg += "Please input password! ";
+            if(body.phone) {
+                for(let i of body.phone) {
+                    if(i == "INVALID")
+                        RegErrMsg += "Телефон содержит некорректные символы! ";
+                }
             }
-        }
-        if(body.password_confirmation) {
-            for(let i of body.password_confirmation) {
-                if(i == "NOT_MACHED")
-                    RegErrMsg += "Confirmed passwrod must be the same as password! ";
-                if(i == "EMPTY_FIELD")
-                    RegErrMsg += "Please confirm password! ";
+            if(body.password) {
+                for(let i of body.password) {
+                    if(i == "TOO_SHORT")
+                        RegErrMsg += "Пароль слишком короткий. Длина пароля должна быть больше 6 символов! ";
+                    if(i == "TOO_LONG")
+                        RegErrMsg += "Пароль слишком длинный! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Пожалуйста введите пароль! ";
+                }
             }
-        }
-        if(body.capacity) {
-            for(let i of body.capacity) {
-                if(i == "LIMIT_REACHED")
-                    RegErrMsg += "Limit of places reached! ";
+            if(body.password_confirmation) {
+                for(let i of body.password_confirmation) {
+                    if(i == "NOT_MACHED")
+                        RegErrMsg += "Подтверждающий пароль должен совпадать с паролем! ";
+                    if(i == "EMPTY_FIELD")
+                        RegErrMsg += "Пожалуйста введите подтверждающий пароль! ";
+                }
             }
-        }
-        if(body.images) {
-            for(let i of body.images) {
-                if(i == "LIMIT_REACHED")
-                    RegErrMsg += "Limit of images reached! ";
+            if(body.capacity) {
+                for(let i of body.capacity) {
+                    if(i == "LIMIT_REACHED")
+                        RegErrMsg += "Достигнут лимит мест! ";
+                }
+            }
+            if(body.images) {
+                for(let i of body.images) {
+                    if(i == "LIMIT_REACHED")
+                        RegErrMsg += "Достигнут лимит картинок! ";
+                }
             }
         }
         return RegErrMsg;
     }
-
 
     ParamsToUrlSearchParams(params:any):string{
         let options = new URLSearchParams();
@@ -478,23 +594,23 @@ export class MainService{
 
     public GetAllAmenties(){
         return [
-            new CheckboxModel("Free coffee","free_coffee"),
-            new CheckboxModel("Coffee","coffee"),
-            new CheckboxModel("Free printing","free_printing"),
-            new CheckboxModel("Conference room","conference_room"),
-            new CheckboxModel("Outdoor space","outdoor_space"),
-            new CheckboxModel("Extra monitor","extra_monitor"),
-            new CheckboxModel("Nap room","nap_room"),
-            new CheckboxModel("Pet friendly","pet_friendly"),
-            new CheckboxModel("Kitchen","kitchen"),
-            new CheckboxModel("Bike storage","bike_storage"),
-            new CheckboxModel("Free parking","free_parking"),
-            new CheckboxModel("Parking","parking"),
-            new CheckboxModel("Snacks","snacks"),
-            new CheckboxModel("Whiteboards","whiteboards"),
-            new CheckboxModel("Standing desk","standing_desk"),
-            new CheckboxModel("Mail service","mail_service"),
-            new CheckboxModel("Phone booth","phone_booth")
+            new CheckboxModel("Free coffee","free_coffee", "Бесплатный кофе"),
+            new CheckboxModel("Coffee","coffee", "Кофе"),
+            new CheckboxModel("Free printing","free_printing", "Бесплатная печать"),
+            new CheckboxModel("Conference room","conference_room", "Комната для конференций"),
+            new CheckboxModel("Outdoor space","outdoor_space", "Место на улице"),
+            new CheckboxModel("Extra monitor","extra_monitor", "Дополнительный монитор"),
+            new CheckboxModel("Nap room","nap_room", "Комната для сна"),
+            new CheckboxModel("Pet friendly","pet_friendly", "Можно с домашними животными"),
+            new CheckboxModel("Kitchen","kitchen", "Кухня"),
+            new CheckboxModel("Bike storage","bike_storage", "Место для велосипедов"),
+            new CheckboxModel("Free parking","free_parking", "Бесплатная парковка"),
+            new CheckboxModel("Parking","parking", "Парковка"),
+            new CheckboxModel("Snacks","snacks", "Закуски"),
+            new CheckboxModel("Whiteboards","whiteboards", "Настенные доски"),
+            new CheckboxModel("Standing desk","standing_desk", "Переносные доски"),
+            new CheckboxModel("Mail service","mail_service", "Почтовый сервис"),
+            new CheckboxModel("Phone booth","phone_booth", "Телефонная будка")
         ];
     }
 

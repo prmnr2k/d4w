@@ -14,11 +14,11 @@
     </div>
     <div class="description-coworking-wr">
         <div class="description-coworking">
-            <p><strong>Цена: </strong>{{Coworking.price}}$</p>
-            <p><strong>Кол-во мест: </strong>{{Coworking.capacity}}</p>
-            <p><strong>Адрес: </strong>{{Coworking.address}}</p>
-            <p><strong>Дата окончания: </strong>{{Booking.end_date.split("T")[0]| date: "MM/d/y"}}  {{Booking.end_date.split("T")[1].split(":")[0]}}{{Booking.end_date | date: ":mm"}}</p>
-            <p><strong>Описание </strong>{{Coworking.description}}</p>
+            <p translate><strong>price </strong>{{Coworking.price}}$</p>
+            <p translate><strong>numOfPlaces </strong>{{Coworking.capacity}}</p>
+            <p translate><strong>address </strong>{{Coworking.address}}</p>
+            <p translate><strong>endDate </strong>{{Booking.end_date.split("T")[0]| date: "MM/d/y"}}  {{Booking.end_date.split("T")[1].split(":")[0]}}{{Booking.end_date | date: ":mm"}}</p>
+            <p translate><strong>description </strong>{{Coworking.description}}</p>
 
         </div>
         <div class="likeDislike">
@@ -26,7 +26,7 @@
             <button class="dislike" (click)="rateCoworking(Coworking.id,'no')" [ngClass]="{'checked-rate':Rate && Rate.score == 'no'}"></button>
             
         </div>
-        <button type="button" class="butt-orange" style="margin-right: 15px;" (click)="extendBooking()">Продлить на 30 минут</button>
+        <button type="button" class="butt-orange" style="margin-right: 15px;" (click)="extendBooking()" translate>extend</button>
     </div>
  </div>
 

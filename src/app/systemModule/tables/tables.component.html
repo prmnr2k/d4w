@@ -10,18 +10,18 @@
         <p class="name">{{Users[activeBooking.user_id]?.first_name}} {{Users[activeBooking.user_id]?.last_name}}</p>
         <div class="time-show">
             <div>
-                <p>Начало</p>
+                <p translate>begin</p>
                 <p> {{activeBooking?.begin_date?.split("T")[1]?.split(":")[0]}}{{activeBooking?.begin_date | date:":mm"}}</p>
             </div>
             <div>
-                <p>Конец</p>
+                <p translate>end</p>
                 <p>{{activeBooking?.end_date?.split("T")[1]?.split(":")[0]}}{{activeBooking?.end_date | date:":mm"}}</p>
             </div>
         </div>
 
-        <button class="butt-orange" *ngIf="!activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmStart(activeBooking)">Начало работы</button>
-        <button class="butt-orange" *ngIf="activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmEnd(activeBooking)">Конец работы</button>
-        <button class="butt-orange" *ngIf="ExtendRequest.length > 0" (click)=" ApplyExtendBooking(ExtendRequest[0].id)" >Продлить на 30 мин</button>
+        <button class="butt-orange" *ngIf="!activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmStart(activeBooking)" translate>workBegin</button>
+        <button class="butt-orange" *ngIf="activeBooking.is_visit_confirmed && !activeBooking.is_closed" (click)="changeConfirmEnd(activeBooking)">endWork</button>
+        <button class="butt-orange" *ngIf="ExtendRequest.length > 0" (click)=" ApplyExtendBooking(ExtendRequest[0].id)" translate>extend</button>
 
         <div *ngIf="activeBooking.is_closed" class="likeDislike">
             <button class="like" (click)="rateUser(Users[activeBooking.user_id].id,'yes')" [ngClass]="{'checked-rate':Rates[activeBooking.user_id] && Rates[activeBooking.user_id].score == 'yes'}"></button>
@@ -45,7 +45,7 @@
 
     <form class="pich-the-date-for-stat">
         <h6 class="head-form">
-            <span>Выберите дату</span>
+            <span translate>chooseDate</span>
         </h6>
         <input type="text"
         readonly style="background-color:white; cursor: pointer;text-align:center;"

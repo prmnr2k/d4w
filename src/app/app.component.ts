@@ -38,8 +38,12 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                         subscribe((any)=>{
                           name = any.first_name.slice(0,20);
-                         
-                         this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
+                         if(this.service.GetCurrentLang() == 'en') {
+                          this.pushNotification.showNotification('New booking by '+name+'!','bottom','right');
+                        }
+                        else {
+                          this.pushNotification.showNotification('Новая бронь от '+name+'!','bottom','right');
+                        }
                         //this.pushNotification.showNotification('User is 10 minutes late!<button type="button" id="id-but" class="form-control" class="btn btn-info btn-fill" (click)="SendSMS()">Send SMS to User</button>','bottom','right',phone);  
                      
                         }); 
@@ -50,7 +54,12 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name.slice(0,20);
-                        this.pushNotification.showNotification(name+' will come soon!','bottom','right');
+                        if(this.service.GetCurrentLang() == 'en') {
+                          this.pushNotification.showNotification(name+' will come soon!','bottom','right');
+                        }
+                        else {
+                          this.pushNotification.showNotification(name+' скоро придет!','bottom','right');
+                        }
                       });
                     }
 
@@ -62,7 +71,11 @@ export class AppComponent implements OnInit {
                             count = new Date().getTime();
                             phone = any.phone;
                             name = any.first_name.slice(0,20);
-                          this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but-'+count+'" class="form-control" class="btn btn-info btn-fill">Send SMS to User</button>','bottom','right',phone,count);                   
+                            if(this.service.GetCurrentLang() == 'en') {
+                              this.pushNotification.showNotification(name+' is 10 minutes late!<button type="button" id="id-but-'+count+'" class="form-control" class="btn btn-info btn-fill">Send SMS to User</button>','bottom','right',phone,count); 
+                            }
+                            else {
+                              this.pushNotification.showNotification(name+' опаздывает на 10 минут!<button type="button" id="id-but-'+count+'" class="form-control" class="btn btn-info btn-fill">Отправить пользователю SMS</button>','bottom','right',phone,count); }                  
                         });
                       }
                     }
@@ -72,7 +85,12 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name.slice(0,20);
-                        this.pushNotification.showNotification(name+' will finish in 5 minutes!','bottom','right');
+                        if(this.service.GetCurrentLang() == 'en') {
+                          this.pushNotification.showNotification(name+' will finish in 5 minutes!','bottom','right');
+                        }
+                        else {
+                          this.pushNotification.showNotification(name+' закончит через 5 минут!','bottom','right');
+                        }
                       });
                     }
 
@@ -81,7 +99,11 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name.slice(0,20);
-                        this.pushNotification.showNotification(name+' canceled booking!','bottom','right');
+                        if(this.service.GetCurrentLang() == 'en') {
+                          this.pushNotification.showNotification(name+' canceled booking!','bottom','right');
+                        }
+                        else {
+                          this.pushNotification.showNotification(name+' отменил бронь!','bottom','right');}
                       });
                     }
 
@@ -90,7 +112,11 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name.slice(0,20);
-                        this.pushNotification.showNotification(name+' add more time to booking!','bottom','right');
+                        if(this.service.GetCurrentLang() == 'en') {
+                          this.pushNotification.showNotification(name+' add more time to booking!','bottom','right');
+                        }
+                        else {
+                          this.pushNotification.showNotification(name+' продлил бронь!','bottom','right');}
                       });
                     }
                     else if (message['event_type'] == 'leaving'){
@@ -98,7 +124,11 @@ export class AppComponent implements OnInit {
                       this.service.GetUserById(message['booking'].user_id).
                       subscribe((any)=>{
                         name = any.first_name.slice(0,20);
-                        this.pushNotification.showNotification(name+' want to leave coworking!','bottom','right');
+                        if(this.service.GetCurrentLang() == 'en') {
+                          this.pushNotification.showNotification(name+' want to leave coworking!','bottom','right');
+                        }
+                        else {
+                          this.pushNotification.showNotification(name+' хочет покинуть коворкинг!','bottom','right');}
                       });
                     }
 

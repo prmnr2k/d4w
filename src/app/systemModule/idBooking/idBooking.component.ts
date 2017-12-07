@@ -87,7 +87,7 @@ export class IdBookingComponent implements OnInit {
     },(err)=>{
       console.log(err);
       this.isErr = true;
-      if(err._body==`{"capacity":["LIMIT_REACHED"]}`) this.errExtend = `imposible to extend`;
+      this.service.CheckErrMessage(err);
     }
   )
   }

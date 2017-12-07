@@ -34,6 +34,7 @@ import { SystemAccessGuard } from './system.guard';
 import { IdBookingComponent } from './idBooking/idBooking.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { StatisticCoworkingComponent } from './statisticCoworking/statisticCowor
     StatisticCoworkingComponent
   ],
   imports: [
+    ChartsModule,
     CommonModule,
     LoadingModule,
     FormsModule,

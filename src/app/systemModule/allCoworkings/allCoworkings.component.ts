@@ -41,6 +41,8 @@ export class AllCoworkingsComponent extends BaseComponent implements OnInit{
   bsRangeValue:any;
   Page: number=1;
   Pages: number[] = [];
+  LeftPagin:number = 3;
+  RightPagin:number = 3;
 
   @ViewChild('searchg') public searchElement: ElementRef;
 

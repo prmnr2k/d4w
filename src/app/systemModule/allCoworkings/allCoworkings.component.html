@@ -30,9 +30,16 @@
                 </div>
                 <div class="pagination">
                     <ul>
-                        <li *ngIf="Page>1"><a (click)="PrevOrNextPage(false)" >« Previous Page</a></li>
+                        <!--<li *ngIf="Page>1"><a (click)="PrevOrNextPage(false)" >« Previous Page</a></li>
                         <li *ngFor="let i of Pages" [ngClass]="Page*1 == i*1 ? 'active-page':''" ><a (click)="ChangePageNumber(i*1)">{{i}}</a></li>
+                        <li *ngIf="Page<Pages.length"><a (click)="PrevOrNextPage(true)" >Next Page »</a></li>-->
+
+                        <li *ngIf="Page>1"><a (click)="PrevOrNextPage(false)" >« Previous Page</a></li>
+                        <li *ngFor="let i of Pages" [ngClass]="Page*1 == i*1 ? 'active-page':''" ><a *ngIf="i  < Page*1 + LeftPagin && i  > Page*1 - LeftPagin && i<=Pages.length-RightPagin" (click)="ChangePageNumber(i*1)">{{i}}</a></li>
+                        <li *ngIf="Pages.length-RightPagin>=LeftPagin+Page*1">...</li>   
+                         <li *ngFor="let i of Pages" [ngClass]="Page*1 == i*1 ? 'active-page':''" ><a *ngIf="i>Pages.length-RightPagin" (click)="ChangePageNumber(i*1)">{{i}}</a></li>   
                         <li *ngIf="Page<Pages.length"><a (click)="PrevOrNextPage(true)" >Next Page »</a></li>
+                        
                     </ul>
                 </div>
             </div>

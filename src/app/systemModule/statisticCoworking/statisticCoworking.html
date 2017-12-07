@@ -8,40 +8,50 @@
             <div class="col-md-8">
                 <div class="statistics">
                <div class="row">
-  <div class="col-md-12">
-    <div style="display: block;">
-    <canvas baseChart width="400" height="200"
-                [datasets]="lineChartData"
-                [labels]="lineChartLabels"
-                [options]="lineChartOptions"
-                [colors]="lineChartColors"
-                [legend]="lineChartLegend"
-                [chartType]="lineChartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)"></canvas>
-    </div>
-  </div>
-  <!-- <div class="col-md-6" style="margin-bottom: 10px">
-   <table class="table table-responsive table-condensed">
-      <tr>
-        <th *ngFor="let label of lineChartLabels">{{label}}</th>
-      </tr>
-      <tr *ngFor="let d of lineChartData">
-        <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
-      </tr>
-    </table>
-    <button (click)="randomize()">CLICK</button>
-  </div>-->
-</div>
+                    <div class="col-md-12">
+                        <input class="form-control" bsDaterangepicker [(bsValue)]="bsRangeValue" [bsConfig]="bsConfig" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">           
+                        <button type="button" class="btn btn-success" (click)="GetMyCoworking()">Отобразить</button>                 
+                    </div>
+
+                    <div class="col-md-12">
+                            <div style="display: block;">
+                                <canvas baseChart width="400" height="100"
+                                            [datasets]="lineIncomeChartData"
+                                            [labels]="lineIncomeChartLabels"
+                                            [options]="lineIncomeChartOptions"
+                                            [colors]="lineIncomeChartColors"
+                                            [legend]="lineIncomeChartLegend"
+                                            [chartType]="lineIncomeChartType"
+                                            (chartHover)="chartHovered($event)"
+                                            (chartClick)="chartClicked($event)">
+                                </canvas>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                                <div style="display: block;">
+                                    <canvas baseChart width="400" height="100"
+                                                [datasets]="lineVisitorsChartData"
+                                                [labels]="lineVisitorsChartLabels"
+                                                [options]="lineVisitorsChartOptions"
+                                               
+                                                [legend]="lineVisitorsChartLegend"
+                                                [chartType]="lineVisitorsChartType"
+                                                (chartHover)="chartHovered($event)"
+                                                (chartClick)="chartClicked($event)">
+                                    </canvas>
+                                </div>
+                        </div>
+                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="statistics-info">
-                    <p class="count">224 560Р</p>
+                    <p class="count">{{total_income}} {{currency}}</p>
                     <p class="what-is-it" translate>money</p>
                 </div>
                 <div class="statistics-info">
-                    <p class="count">534</p>
+                    <p class="count">{{total_visitors}}</p>
                     <p class="what-is-it" translate>visitors</p>
                 </div>
             </div>

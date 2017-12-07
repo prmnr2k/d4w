@@ -222,6 +222,15 @@ export class MainService{
         return this.http.GetData('/coworkings/get_accessed_users/'+id,"");
     }
 
+    GetCoworkingStat(id:number,begin:string,end:string){
+        let params={
+            begin_date: begin,
+            end_date: end
+        }
+        return this.http.GetData('/coworkings/get_stat/'+id,this.ParamsToUrlSearchParams(params));
+    }
+
+
     RateCoworking(coworking_id:number,user_id:number,score:string){
         const data = {
             coworking_id: coworking_id,

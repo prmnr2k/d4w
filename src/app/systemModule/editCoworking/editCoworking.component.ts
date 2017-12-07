@@ -110,6 +110,7 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
                 this.InitByCoworking(res[0]);
                 this.GetWorkersRequest();
                 this.GetCoworkingWorkers();
+                console.log(`me---`,this.CoworkingId);
             },
             (err)=>{
                 console.log(err);

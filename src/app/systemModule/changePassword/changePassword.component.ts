@@ -48,10 +48,6 @@ export class ChangePasswordComponent extends BaseComponent{
                         this.RegErrMsg = this.service.CheckErrMessage(body);
                         
                     }
-                    else {
-                        this.RegErrMsg = "Cannot change password! " + err.body;
-
-                    }
                     this.RegistrationErr = true;
                 })
             

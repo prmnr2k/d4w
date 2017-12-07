@@ -34,6 +34,7 @@ import { SystemAccessGuard } from './system.guard';
 import { IdBookingComponent } from './idBooking/idBooking.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
+import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { TranslateModule } from '@ngx-translate/core';
     EditUserComponent,
     ChangePasswordComponent,
     SystemComponent,
-    IdBookingComponent
+    IdBookingComponent,
+    StatisticCoworkingComponent
   ],
   imports: [
     CommonModule,

@@ -149,7 +149,8 @@
                                             <input type="checkbox" class="checkbox" [name]="'workingday'+i" [id]="'checkboxOr-day-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked = $event">
                                             <label [for]="'checkboxOr-day-'+i"></label>
                                         </div>
-                                        <p class="day-of-week">{{item.ru_name}}</p>
+                                        <p class="day-of-week" *ngIf="service.GetCurrentLang() == 'ru'">{{item.ru_name}}</p>
+                                        <p class="day-of-week" *ngIf="service.GetCurrentLang() == 'en'">{{item.en_name}}</p>
                                     </div>
                                     <div class="inputs checked-day">
                                         <input class="input-time-style" [textMask]="getMask(i)" [disabled]="item.nonstop || !item.checked" autocomplete="off" type="text" [name]="'from'+i" [ngModel]="item.start_work" (ngModelChange)="OnBeginWorkChanged(i,$event)">
@@ -163,13 +164,24 @@
                         <span translate>cwrkServices</span>
                     </h6>
                     <div class="my-form-groupe-3">
-                        <div class="one-nishtyaki" *ngFor="let item of AmetiesCB;let i = index">
-                            <p>{{item.name}}</p>
-                            <div class="orange-checkbox">
-                                <input type="checkbox" class="checkbox" [name]="'nyshtiak'+i" [id]="'check-nyshtiak-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked =  $event">
-                                <label [for]="'check-nyshtiak-'+i"></label>
+                        <ng-container *ngIf="service.GetCurrentLang() == 'en'">
+                            <div class="one-nishtyaki" *ngFor="let item of AmetiesCB;let i = index">
+                                <p>{{item.name}}</p>
+                                <div class="orange-checkbox">
+                                    <input type="checkbox" class="checkbox" [name]="'nyshtiak'+i" [id]="'check-nyshtiak-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked =  $event">
+                                    <label [for]="'check-nyshtiak-'+i"></label>
+                                </div>
                             </div>
-                        </div>
+                        </ng-container>
+                        <ng-container *ngIf="service.GetCurrentLang() == 'ru'">
+                                <div class="one-nishtyaki" *ngFor="let item of AmetiesCB;let i = index">
+                                    <p>{{item.ru_name}}</p>
+                                    <div class="orange-checkbox">
+                                        <input type="checkbox" class="checkbox" [name]="'nyshtiak'+i" [id]="'check-nyshtiak-'+i" [ngModel]="item.checked" (ngModelChange)="item.checked =  $event">
+                                        <label [for]="'check-nyshtiak-'+i"></label>
+                                    </div>
+                                </div>
+                            </ng-container>
                     </div>
                     <button class="butt-orange" [disabled]="!submitFormCwrc.valid" type="submit" translate>chngCwrk</button>
                 </form>

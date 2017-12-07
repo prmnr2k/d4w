@@ -97,7 +97,12 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
                     this.Coworking.email,
                     this.Coworking.password,
                     (err)=>{
-                        this.RegErrMsg = "Coworking was created but sign in is failed. Try to login yourself!";
+                        if(this.service.GetCurrentLang() == 'en') {
+                            this.RegErrMsg = "Coworking was created but sign in is failed. Try to login by yourself!";
+                        }
+                        else {
+                            this.RegErrMsg = "Коворкинг был создан, но возникли проблемы со входом. Попробуйте войти вручную!";
+                        }
                         this.rulesShow = false;
                         this.RegistrationErr = true;
                     }
@@ -108,9 +113,6 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
                     let body:any = JSON.parse(err._body); 
                     this.RegErrMsg = this.service.CheckErrMessage(body);
                     
-                }
-                else {
-                    this.RegErrMsg = "Cannot create profile: " + err.body;
                 }
                 console.log(err);
                 this.rulesShow = false;
@@ -123,33 +125,49 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
 
     CheckCwrk(){
         if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){
-            this.RegErrMsg = "Input all fields!";
-            return false;
-        }
-        if(!this.Coworking.password || !this.Coworking.password_confirmation)
-        {
-            this.RegErrMsg = "Input password and password confirmation!";
-            return false;
-        }
-        if(this.Coworking.password != this.Coworking.password_confirmation)
-        {
-            this.RegErrMsg = "Passwords are not matched!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Input all fields!";
+            }
+            else {
+                this.RegErrMsg = "Введите все поля!";
+            }
             return false;
         }
         if(this.Coworking.price < 0){
-            this.RegErrMsg = "Input positive value for price!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Price cannot be negative!";
+            }
+            else {
+                this.RegErrMsg = "Цена не может иметь отрицательное значение!";
+            }
             return false;
         }
         if(this.Coworking.capacity < 0){
-            this.RegErrMsg = "Input positive value for capacity!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Capacity cannot be negative!";   
+            }
+            else {
+                this.RegErrMsg = "Количество мест не может быть отрицательным!";
+
+            }
             return false;
         }
         if(!this.Coworking.working_days || this.Coworking.working_days.length == 0 || this.Coworking.working_days.filter(x=> !x.begin_work || !x.end_work).length > 0){
-            this.RegErrMsg = "Input working days!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Input working days!";
+            }
+            else {
+                this.RegErrMsg = "Введите рабочие дни!";
+            }
             return false;
         }
         if(!this.checkWorkingTime()){
-            this.RegErrMsg = "Input correct working time!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Input correct working time!";
+            }
+            else {
+                this.RegErrMsg = "Введите верное время работы!";
+            }
             return false;
         }
         return true;

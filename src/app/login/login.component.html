@@ -11,14 +11,14 @@
             <form (ngSubmit)="TryToLogin()" *ngIf="switchForm">
                 <p class="head-text" translate>welcome</p>
                 <div *ngIf="isLoginErr" class="col-md-12">
-                    <h2 class="error-text-style" translate>invalidEmail</h2>
+                    <h2 class="error-text-style" translate>invalidEmailorPsw</h2>
                 </div>
                 <input autocomplete="off" class="input-style-transp" type="text" [placeholder]="'email' | translate" name="email" [ngModel]="LoginParams.email" (ngModelChange)="LoginParams.email = $event">
                 <input autocomplete="off" class="input-style-transp" type="password" placeholder="Пароль" name="pw" [ngModel]="LoginParams.password" (ngModelChange)="LoginParams.password = $event">
-                <button class="butt-orange" type="submit">Войти</button>
+                <button class="butt-orange" type="submit" translate>signIn</button>
                 <!--<a [routerLink]="['/system','all_coworkings']"  class="butt-orange">Войти как гость</a>-->
-                <span class="forgot-pass" (click)="switchForm = !switchForm">Забыли пароль?</span>
-                <a [routerLink]="['/system','registration']" class="butt-orange">Регистрация коворкинга</a>
+                <span class="forgot-pass" (click)="switchForm = !switchForm" translate>forgotPassword</span>
+                <a [routerLink]="['/system','registration']" class="butt-orange" translate>cwrkSignUp</a>
                  <!--<div class="for-flex-regist-links">
                    <a [routerLink]="['/system','userRegistration']" class="butt-orange">Регистация</a>
                    

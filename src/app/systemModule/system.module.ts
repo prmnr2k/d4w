@@ -33,6 +33,7 @@ import { SystemComponent } from 'app/systemModule/system.component';
 import { SystemAccessGuard } from './system.guard';
 import { IdBookingComponent } from './idBooking/idBooking.component';
 import { TextMaskModule } from 'angular2-text-mask';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     }),
     ReactiveFormsModule,
     SystemRoutingModule,
-    LbdModule
+    LbdModule,
+    TranslateModule
   ],
   providers: [ SystemAccessGuard]
 })

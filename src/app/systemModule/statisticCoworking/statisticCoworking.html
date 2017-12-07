@@ -14,17 +14,21 @@
                                   
                             </div>
                             <div class="form-group">
-                                    <button type="button" class="btn btn-success " (click)="GetMyCoworking()">Отобразить</button>    
-                                    
+                                    <select class="form-control" [value]="model" [(ngModel)]="model" (ngModelChange)="changedRadio()">
+                                      <option>Income</option>
+                                      <option>Visitors</option>
+                                    </select>
                             </div>
+                            <div class="form-group">
+                                    <button type="button" class="butt-orange" (click)="GetMyCoworking()" style="padding-left:15px;padding-right:15px;">Отобразить</button>    
+                            </div>
+                            
                         </div>
-                       
-                              
-
+                       <br>
                <div class="row">
                     <div class="col-md-12">
                             <div style="display: block;">
-                                <canvas baseChart width="400" height="100"
+                                <canvas baseChart width="400" height="200"
                                             [datasets]="lineIncomeChartData"
                                             [labels]="lineIncomeChartLabels"
                                             [options]="lineIncomeChartOptions"
@@ -37,6 +41,7 @@
                             </div>
                         </div>
 
+                        <!--
                         <div class="col-md-12">
                                 <div style="display: block;">
                                     <canvas baseChart width="400" height="100"
@@ -51,6 +56,7 @@
                                     </canvas>
                                 </div>
                         </div>
+                    -->
                      </div>
                 </div>
             </div>

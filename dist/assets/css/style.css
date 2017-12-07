@@ -126,7 +126,7 @@ input:disabled {
   border-radius: 50px;
   display: block;
   margin: 20px auto !important;
-  background-color: #FF8026;
+  background-color: rgb(254, 127, 35);
   padding: 12px 0;
   text-align: center;
   outline: none;

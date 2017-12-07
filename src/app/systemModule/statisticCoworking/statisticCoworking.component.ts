@@ -34,9 +34,9 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     dates:string[] = [];
     incomes:number[] = [];
     visitors:number[] = [];
-    begin_date:string = '01.11.2017';
-    end_date:string = '10.12.2017';
-
+    
+    model:string = 'Income';
+    
     bsConfig:Partial<BsDatepickerConfig>;
     _bsRangeValue: any = this.getLastMonthDates();
 
@@ -49,18 +49,18 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     }
 
     public lineIncomeChartData:Array<any> = [
-      {data: [], label: ''},
+      {data: [], label: ''}
     ];
     
     public lineIncomeChartLabels:Array<any> = [];
 
     public lineIncomeChartOptions:any = {
-      responsive: true
+      responsive: true     
     };
     public lineIncomeChartColors:Array<any> = [
-      { 
-        backgroundColor: 'rgba(148,159,177,0.2)',
-        borderColor: 'orangered',
+      { lineTension: 0,
+        backgroundColor: 'rgba(0,0,0,0)',
+        borderColor: 'rgb(254, 127, 35)',
         pointBackgroundColor: 'rgba(77,83,96,1)',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
@@ -68,7 +68,7 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
       }
     ];
 
-    public lineIncomeChartLegend:boolean = true;
+    public lineIncomeChartLegend:boolean = false;
     public lineIncomeChartType:string = 'line';
 
 
@@ -147,10 +147,16 @@ GetMyCoworking(){
           this.lineIncomeChartLabels = this.dates;
           this.lineVisitorsChartLabels = this.dates;
           
+          
+          
     
        setTimeout(()=>{
+         if(this.model=='Income')
         this.lineIncomeChartData = [
           {data: this.incomes, label: 'Income'}
+        ];
+        else this.lineIncomeChartData = [
+          {data: this.visitors, label: 'Visitors'}
         ];
         this.lineVisitorsChartData = [
           {data: this.visitors, label: 'Visitors'}
@@ -187,4 +193,7 @@ GetMyCoworking(){
         return nextDay;
     }
 
+    changedRadio(){
+      console.log(this.model);
+    }
 }

@@ -5,7 +5,8 @@
                     <a *ngIf="userStatus>=menuItem.userStatus" [routerLink]="menuItem.path">
                         <img [src]="menuItem.icon" class="img-responsive" alt="">
                         <div class="hover-tool">
-                            <p>{{menuItem.title}}</p>
+                            <p *ngIf="service.GetCurrentLang() == 'en'">{{menuItem.title}} </p>
+                            <p *ngIf="service.GetCurrentLang() == 'ru'">{{menuItem.ru_title}} </p>
                         </div>
                     </a>
                 </li>

@@ -110,6 +110,7 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
                 this.InitByCoworking(res[0]);
                 this.GetWorkersRequest();
                 this.GetCoworkingWorkers();
+                console.log(`me---`,this.CoworkingId);
             },
             (err)=>{
                 console.log(err);
@@ -177,7 +178,7 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
                     ()=> this.service.checkUserByEmail(this.Coworking.email),
                     (res:any)=>{
                         if(res.exists){
-                            this.RegErrMsg = 'This email is already taken! ';
+                            this.RegErrMsg = this.service.CheckErrMessage(res);
                             this.RegistrationErr = true;
                         }
                         else{
@@ -207,9 +208,6 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
                     let body:any = JSON.parse(err._body); 
                     this.RegErrMsg = this.service.CheckErrMessage(body);
                 }
-                else {
-                    this.RegErrMsg = "Can`t update coworking: " + err.body;
-                }
                 this.RegistrationErr = true;
             }
         );
@@ -217,23 +215,49 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
 
     CheckCwrk(){
         if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){
-            this.RegErrMsg = "Input all fields!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Input all fields!";
+            }
+            else {
+                this.RegErrMsg = "Введите все поля!";
+            }
             return false;
         }
         if(this.Coworking.price < 0){
-            this.RegErrMsg = "Input positive value for price!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Price cannot be negative!";
+            }
+            else {
+                this.RegErrMsg = "Цена не может иметь отрицательное значение!";
+            }
             return false;
         }
         if(this.Coworking.capacity < 0){
-            this.RegErrMsg = "Input positive value for capacity!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Capacity cannot be negative!";   
+            }
+            else {
+                this.RegErrMsg = "Количество мест не может быть отрицательным!";
+
+            }
             return false;
         }
         if(!this.Coworking.working_days || this.Coworking.working_days.length == 0 || this.Coworking.working_days.filter(x=> !x.begin_work || !x.end_work).length > 0){
-            this.arrorTime = "Input working days!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.arrorTime = "Input working days!";
+            }
+            else {
+                this.arrorTime = "Введите рабочие дни!";
+            }
             return false;
         }
         if(!this.checkWorkingTime()){
-            this.RegErrMsg = "Input correct working time!";
+            if(this.service.GetCurrentLang() == 'en') {
+                this.RegErrMsg = "Input correct working time!";
+            }
+            else {
+                this.RegErrMsg = "Введите верное время работы!";
+            }
             return false;
         }
         return true;

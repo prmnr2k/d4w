@@ -7,17 +7,67 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="statistics">
-                Тут график
+
+                        <div class="form-inline">
+                            <div class="form-group">
+                                    <input class="form-control " bsDaterangepicker [(bsValue)]="bsRangeValue" [bsConfig]="bsConfig" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">                              
+                                  
+                            </div>
+                            <div class="form-group">
+                                    <select class="form-control" [value]="model" [(ngModel)]="model" (ngModelChange)="changedRadio()">
+                                      <option>Income</option>
+                                      <option>Visitors</option>
+                                    </select>
+                            </div>
+                            <div class="form-group">
+                                    <button type="button" class="butt-orange" (click)="GetMyCoworking()" style="padding-left:15px;padding-right:15px;">Отобразить</button>    
+                            </div>
+                            
+                        </div>
+                       <br>
+               <div class="row">
+                    <div class="col-md-12">
+                            <div style="display: block;">
+                                <canvas baseChart width="400" height="200"
+                                            [datasets]="lineIncomeChartData"
+                                            [labels]="lineIncomeChartLabels"
+                                            [options]="lineIncomeChartOptions"
+                                            [colors]="lineIncomeChartColors"
+                                            [legend]="lineIncomeChartLegend"
+                                            [chartType]="lineIncomeChartType"
+                                            (chartHover)="chartHovered($event)"
+                                            (chartClick)="chartClicked($event)">
+                                </canvas>
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="col-md-12">
+                                <div style="display: block;">
+                                    <canvas baseChart width="400" height="100"
+                                                [datasets]="lineVisitorsChartData"
+                                                [labels]="lineVisitorsChartLabels"
+                                                [options]="lineVisitorsChartOptions"
+                                               
+                                                [legend]="lineVisitorsChartLegend"
+                                                [chartType]="lineVisitorsChartType"
+                                                (chartHover)="chartHovered($event)"
+                                                (chartClick)="chartClicked($event)">
+                                    </canvas>
+                                </div>
+                        </div>
+                    -->
+                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="statistics-info">
-                    <p class="count">224 560Р</p>
-                    <p class="what-is-it">Деньги</p>
+                    <p class="count">{{total_income}} {{currency}}</p>
+                    <p class="what-is-it" translate>money</p>
                 </div>
                 <div class="statistics-info">
-                    <p class="count">534</p>
-                    <p class="what-is-it">Посетители</p>
+                    <p class="count">{{total_visitors}}</p>
+                    <p class="what-is-it" translate>visitors</p>
                 </div>
             </div>
         </div>

@@ -169,8 +169,8 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
     (err)=>{
       console.log(`error = `,err);
       if(this.showTime){
-        if(err._body==`{"begin_date":["INVALID"]}`) this.ErrBookingMsg = `In Start Time Coworking isn't work!`;
-        if(err._body==`{"end_date":["INVALID"]}`) this.ErrBookingMsg = `In End Time Coworking isn't work!`;
+        if(err._body==`{"begin_date":["INVALID"]}`) this.ErrBookingMsg = `In Start Time Coworking doesn't work!`;
+        if(err._body==`{"end_date":["INVALID"]}`) this.ErrBookingMsg = `In End Time Coworking doesn't work!`;
         if(err._body==`{"capacity":["LIMIT_REACHED"]}`) this.ErrBookingMsg = `No available seats at this time!`;
       }
       else this.ErrBookingMsg = `In This Date Coworking isn't work!`;

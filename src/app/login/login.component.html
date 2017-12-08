@@ -13,7 +13,7 @@
                 <div *ngIf="isLoginErr" class="col-md-12">
                     <h2 class="error-text-style" translate>invalidEmailorPsw</h2>
                 </div>
-                <input autocomplete="off" class="input-style-transp" type="text" [placeholder]="'email' | translate" name="email" [ngModel]="LoginParams.email" (ngModelChange)="LoginParams.email = $event">
+                <input autocomplete="off" class="input-style-transp" type="text" placeholder="Email" name="email" [ngModel]="LoginParams.email" (ngModelChange)="LoginParams.email = $event">
                 <input autocomplete="off" class="input-style-transp" type="password" [placeholder]="'password' | translate" name="pw" [ngModel]="LoginParams.password" (ngModelChange)="LoginParams.password = $event">
                 <button class="butt-orange" type="submit" translate>signIn</button>
                 <!--<a [routerLink]="['/system','all_coworkings']"  class="butt-orange">Войти как гость</a>-->

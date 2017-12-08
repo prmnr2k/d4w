@@ -68,7 +68,11 @@ export class BaseComponent{
             ()=>this.service.UserLogin(email,password),
             (res:TokenModel)=>{
                 this.service.BaseInitAfterLogin(res);
-                //this.router.navigate(['/system','tabel']);
+                console.log("before_navigate");
+                this.router.navigate(['/system','tabel']);
+
+              
+                
                 
             },
             (err)=>{
@@ -221,7 +225,7 @@ export class BaseComponent{
         } 
         else{
             this.NewErrForUser = false;
-            if(location.pathname=='/login')
+            if(location.pathname=='/login' || location.pathname=='/system/registration')
             this.router.navigate(['/system','table']);
         }
 

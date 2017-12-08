@@ -25,8 +25,8 @@ export class BaseComponent{
     public userStatus:number = 0;
     public Me:UserModel = new UserModel();
     public MyLogo:string = '';
+
     public NewErrForUser:boolean = false;
-   
     
     constructor(protected service: MainService, protected router: Router, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster,public translate: TranslateService) {
         translate.setDefaultLang(this.service.GetCurrentLang());
@@ -191,7 +191,7 @@ export class BaseComponent{
     }
 
 
-    private SetUserStatus(role:string){
+    private SetUserStatus(role:string, first?:boolean){
         
         switch(role){
             case UserEnumRole.Creator:{
@@ -213,12 +213,15 @@ export class BaseComponent{
         }
 
         this.service.SetupLocalUserStatus(this.userStatus);
-        if(+this.userStatus<=1){
+
+
+        if(+this.userStatus <= 1){
             this.Logout();
             this.NewErrForUser = true;
         } 
         else{
             this.NewErrForUser = false;
+            if(location.pathname=='/login')
             this.router.navigate(['/system','table']);
         }
 

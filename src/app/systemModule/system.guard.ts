@@ -55,6 +55,14 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                     return this.LoginNavigate();
                 }
             }
+            case "statistic":{
+                if(this.userStatus == this.UsrEnumStatus.Creator && login){
+                    return true;
+                }
+                else{
+                    return this.LoginNavigate();
+                }
+            }
             default:{
                 return true;
             }

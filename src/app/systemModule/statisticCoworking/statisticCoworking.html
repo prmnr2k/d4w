@@ -1,0 +1,30 @@
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+
+
+
+<div class="all-statistics" [@ShowHideTrigger]="'start'" [ngStyle]="{'display': isLoading?'none':'block'}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="statistics">
+                Тут график
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="statistics-info">
+                    <p class="count">224 560Р</p>
+                    <p class="what-is-it">Деньги</p>
+                </div>
+                <div class="statistics-info">
+                    <p class="count">534</p>
+                    <p class="what-is-it">Посетители</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    
+
+
+    

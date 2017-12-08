@@ -93,6 +93,7 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
             (res:CoworkingModel)=>{
                 //this.rulesShow = true;
                 this.RegistrationErr = false;
+                this.rulesShow = false;
                 this.Login(
                     this.Coworking.email,
                     this.Coworking.password,

@@ -15,8 +15,7 @@
                             </div>
                             <div class="form-group">
                                     <select class="form-control" [value]="model" [(ngModel)]="model" (ngModelChange)="changedRadio()">
-                                      <option>Income</option>
-                                      <option>Visitors</option>
+                                      <option *ngFor="let mod of models">{{mod}}</option>
                                     </select>
                             </div>
                             <div class="form-group">

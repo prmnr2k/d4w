@@ -35,7 +35,8 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     incomes:number[] = [];
     visitors:number[] = [];
     
-    model:string = 'Income';
+    models:string[] = ['Income','Visitors']
+    model:string = this.models[0];
     
     bsConfig:Partial<BsDatepickerConfig>;
     _bsRangeValue: any = this.getLastMonthDates();

@@ -38,6 +38,8 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     models:string[] = ['Income','Visitors']
     model:string = this.models[0];
     
+    isMoney:boolean = true;
+
     bsConfig:Partial<BsDatepickerConfig>;
     _bsRangeValue: any = this.getLastMonthDates();
 
@@ -155,7 +157,7 @@ GetMyCoworking(){
           
     
        setTimeout(()=>{
-         if(this.model==this.models[0])
+         if(this.isMoney)
         this.lineIncomeChartData = [
           {data: this.incomes, label: this.models[0]}
         ];
@@ -197,7 +199,8 @@ GetMyCoworking(){
         return nextDay;
     }
 
-    changedRadio(){
-      console.log(this.model);
+    changedLabel(){
+      this.isMoney = !this.isMoney;
+      this.GetMyCoworking();
     }
 }

@@ -942,6 +942,8 @@ input::-webkit-inner-spin-button {
       color: #FF8026; }
     .all-statistics .statistics-info .count {
       font-size: 56px; }
+      .all-statistics .statistics-info .count.active {
+        color: #FF8026; }
     .all-statistics .statistics-info .what-is-it {
       font-size: 16px; }
   .all-statistics .for-marg-stat {
@@ -979,7 +981,7 @@ input::-webkit-inner-spin-button {
 
 .error-text-style {
   font-size: 20px;
-  color: #000;
+  color: #FF8026;
   text-align: center;
   padding: 10px 0 25px 0; }
 

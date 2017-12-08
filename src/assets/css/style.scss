@@ -1019,7 +1019,9 @@ input::-webkit-inner-spin-button {
         }
         .count{
             font-size: 56px;
-            
+            &.active{
+                color: $main_color;
+            }
         }
         .what-is-it{
             font-size: 16px;
@@ -1058,7 +1060,7 @@ input::-webkit-inner-spin-button {
 
 .error-text-style{
     font-size: 20px;
-    color: #000;
+    color: #FF8026;
     text-align: center;
     padding: 10px 0 25px 0;
 }

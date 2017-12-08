@@ -17,6 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/system/coworking_profile', title: 'Coworking Profile', ru_title: 'Профиль коворкинга', icon:'../assets/img/Tune.svg', class: '', userStatus:3 },
     { path: '/system/table', title: 'Coworking stat',  ru_title: 'Статистика коворкинга', icon:'../assets/img/Chair.svg', class: '',  userStatus:2 },
     { path: '/system/statistic', title: 'Statistics',  ru_title: 'Статистика', icon:'../assets/img/Statistic.svg', class: '',  userStatus:2 }
+
     //{ path: '/system/all_coworkings', title: 'Avaliable Coworkings',  icon:'../assets/img/avail-cow.svg', class: '', userStatus:0  }
     //{ path: 'typography', title: 'Typography',  icon:'pe-7s-news-paper', class: '' },
     //{ path: 'icons', title: 'Icons',  icon:'pe-7s-science', class: '', isLoggedIn: false },

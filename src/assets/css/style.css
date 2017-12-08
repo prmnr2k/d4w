@@ -126,7 +126,7 @@ input:disabled {
   border-radius: 50px;
   display: block;
   margin: 20px auto !important;
-  background-color: rgb(254, 127, 35);
+  background-color: #FF8026;
   padding: 12px 0;
   text-align: center;
   outline: none;
@@ -944,6 +944,22 @@ input::-webkit-inner-spin-button {
       font-size: 56px; }
     .all-statistics .statistics-info .what-is-it {
       font-size: 16px; }
+  .all-statistics .for-marg-stat {
+    width: 187px;
+    margin-right: 10px; }
+  .all-statistics .butt-orange {
+    width: 170px;
+    padding: 5px 0; }
+  .all-statistics .form-inline {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
 
 .for-disabled-style {
   opacity: 0.7;

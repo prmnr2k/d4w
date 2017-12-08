@@ -152,16 +152,16 @@ GetMyCoworking(){
           
     
        setTimeout(()=>{
-         if(this.model=='Income')
+         if(this.model==this.models[0])
         this.lineIncomeChartData = [
-          {data: this.incomes, label: 'Income'}
+          {data: this.incomes, label: this.models[0]}
         ];
         else this.lineIncomeChartData = [
-          {data: this.visitors, label: 'Visitors'}
+          {data: this.visitors, label: this.models[1]}
         ];
-        this.lineVisitorsChartData = [
-          {data: this.visitors, label: 'Visitors'}
-        ];
+        //this.lineVisitorsChartData = [
+          //{data: this.visitors, label: 'Visitors'}
+        //];
        },100);
         
     

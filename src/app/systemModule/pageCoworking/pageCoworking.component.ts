@@ -55,7 +55,7 @@ export class CoworkingComponent extends BaseComponent implements OnInit {
   maxTime:string = '23:59';
   showTime:boolean = false;
   errTime:boolean = true;
-  ErrBookingMsg:string = "Incorrect Date or Time!";
+  ErrBookingMsg:string = '';
   bsConfig = Object.assign({}, { containerClass: "theme-blue"});
   //pushNot:NotificationsComponent = new NotificationsComponent();
   constructor(protected service: MainService, protected router: Router, 

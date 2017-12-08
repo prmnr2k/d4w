@@ -58,8 +58,11 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     public lineIncomeChartOptions:any = {
       responsive: true     
     };
+
     public lineIncomeChartColors:Array<any> = [
-      { lineTension: 0,
+      { 
+        lineTension: 0,
+        scalesTicks:2,
         backgroundColor: 'rgba(0,0,0,0)',
         borderColor: 'rgb(254, 127, 35)',
         pointBackgroundColor: 'rgba(77,83,96,1)',

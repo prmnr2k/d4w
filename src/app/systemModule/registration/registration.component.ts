@@ -85,7 +85,6 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
         }
     }
 
-   
 
     finalCreateCoworking(){
         this.WaitBeforeLoading(

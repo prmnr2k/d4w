@@ -70,10 +70,6 @@ export class BaseComponent{
                 this.service.BaseInitAfterLogin(res);
                 console.log("before_navigate");
                 this.router.navigate(['/system','tabel']);
-
-              
-                
-                
             },
             (err)=>{
                 callback(err);

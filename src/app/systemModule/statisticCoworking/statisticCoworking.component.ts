@@ -43,6 +43,9 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     bsConfig:Partial<BsDatepickerConfig>;
     _bsRangeValue: any = this.getLastMonthDates();
 
+    @ViewChild('mylinechart')
+    private chartComponent: any;
+
     get bsRangeValue(): any {
       return this._bsRangeValue;
     }
@@ -57,7 +60,16 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     
     public lineIncomeChartLabels:Array<any> = [];
 
-    public lineIncomeChartOptions:any = {
+    public lineIncomeChartOptions:any = {   
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,  
+              min: 0  
+            },
+            
+          }]
+        },
       responsive: true     
     };
 
@@ -76,6 +88,13 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
 
     public lineIncomeChartLegend:boolean = false;
     public lineIncomeChartType:string = 'line';
+
+
+
+
+
+
+
 
 
     public lineVisitorsChartData:Array<any> = [
@@ -154,19 +173,32 @@ GetMyCoworking(){
           this.lineVisitorsChartLabels = this.dates;
           
           
+          this.lineIncomeChartOptions = {   
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  stepSize:this.isMoney?null:1,
+                  min: 0  
+                },
+                
+              }]
+            },
+          responsive: true     
+        };
           
     
        setTimeout(()=>{
-         if(this.isMoney)
-        this.lineIncomeChartData = [
-          {data: this.incomes, label: this.models[0]}
-        ];
-        else this.lineIncomeChartData = [
-          {data: this.visitors, label: this.models[1]}
-        ];
-        //this.lineVisitorsChartData = [
-          //{data: this.visitors, label: 'Visitors'}
-        //];
+         if(this.isMoney){
+            this.lineIncomeChartData = [
+              {data: this.incomes}
+            ];
+          }
+          else {
+            this.lineIncomeChartData = [
+              {data: this.visitors}
+            ];
+          }
        },100);
         
     
@@ -178,6 +210,8 @@ GetMyCoworking(){
     // events
     public chartClicked(e:any):void {
       console.log(e);
+      var chart = this.chartComponent.chart; //Internal chart.js chart object
+      console.log(chart);
     }
    
     public chartHovered(e:any):void {
@@ -199,8 +233,8 @@ GetMyCoworking(){
         return nextDay;
     }
 
-    changedLabel(){
-      this.isMoney = !this.isMoney;
+    changedLabel(param:boolean){
+      this.isMoney = param;
       this.GetMyCoworking();
     }
 }

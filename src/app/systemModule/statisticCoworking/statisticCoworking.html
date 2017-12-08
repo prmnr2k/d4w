@@ -29,7 +29,7 @@
                <div class="row">
                     <div class="col-md-12">
                             <div style="display: block;">
-                                <canvas baseChart width="400" height="200"
+                                <canvas #mylinechart baseChart width="400" height="200"
                                             [datasets]="lineIncomeChartData"
                                             [labels]="lineIncomeChartLabels"
                                             [options]="lineIncomeChartOptions"
@@ -46,11 +46,11 @@
             </div>
             <div class="col-md-4">
                 <div class="statistics-info">
-                    <p class="count" [ngClass]="{active: isMoney}" (click)="changedLabel()">{{total_income}} {{currency}}</p>
+                    <p class="count" [ngClass]="{active: isMoney}" (click)="changedLabel(true)">{{total_income}} {{currency}}</p>
                     <p class="what-is-it" translate>money</p>
                 </div>
                 <div class="statistics-info">
-                    <p class="count" [ngClass]="{active: !isMoney}" (click)="changedLabel()">{{total_visitors}}</p>
+                    <p class="count" [ngClass]="{active: !isMoney}" (click)="changedLabel(false)">{{total_visitors}}</p>
                     <p class="what-is-it" translate>visitors</p>
                 </div>
             </div>

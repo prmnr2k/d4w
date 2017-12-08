@@ -10,11 +10,12 @@
 
                         <div class="form-inline">
                             <div class="form-group ">
-                                <input class="form-control for-marg-stat" bsDaterangepicker [(bsValue)]="bsRangeValue" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">                              
-                                  
+                               <div class="form-group ">
+                                 <input class="form-control for-marg-stat" bsDaterangepicker [(bsValue)]="bsRangeValue" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">                              
+                                    
                             </div>
                             <div class="form-group">
-                                    <select class="form-control" [value]="model" [(ngModel)]="model" (ngModelChange)="changedRadio()">
+                                    <select class="form-control for-marg-stat" [value]="model" [(ngModel)]="model" (ngModelChange)="changedRadio()">
                                       <option *ngFor="let mod of models">{{mod}}</option>
                                     </select>
                             </div>
@@ -22,6 +23,7 @@
                                     <button type="button" class="butt-orange" (click)="GetMyCoworking()" style="padding-left:15px;padding-right:15px;">Отобразить</button>    
                             </div>
                             
+                        </div>
                         </div>
                        <br>
                <div class="row">

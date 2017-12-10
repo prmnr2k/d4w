@@ -237,4 +237,7 @@ GetMyCoworking(){
       this.isMoney = param;
       this.GetMyCoworking();
     }
+    hideDates(){
+      this.GetMyCoworking();
+    }
 }

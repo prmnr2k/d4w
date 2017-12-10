@@ -11,7 +11,7 @@
                         <div class="form-inline">
                             <div class="form-group ">
                                <div class="form-group ">
-                                 <input class="form-control for-marg-stat" bsDaterangepicker [(bsValue)]="bsRangeValue" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">                              
+                                 <input class="form-control for-marg-stat" bsDaterangepicker (onHidden)="hideDates()" [(bsValue)]="bsRangeValue" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">                              
                                     
                             </div>
                            <!-- <div class="form-group">

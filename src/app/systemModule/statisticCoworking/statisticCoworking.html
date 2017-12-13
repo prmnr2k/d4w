@@ -11,17 +11,17 @@
                         <div class="form-inline">
                             <div class="form-group ">
                                <div class="form-group ">
-                                 <input class="form-control for-marg-stat" bsDaterangepicker [(bsValue)]="bsRangeValue" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">                              
+                                 <input class="form-control for-marg-stat" bsDaterangepicker (onHidden)="hideDates()" [(bsValue)]="bsRangeValue" (ngModelChange)="bsRangeValue = $event" placeholder="Dates" readonly placement="right bottom"  style="background-color:white;">                              
                                     
                             </div>
-                            <div class="form-group">
+                           <!-- <div class="form-group">
                                     <select class="form-control for-marg-stat" [value]="model" [(ngModel)]="model" (ngModelChange)="changedRadio()">
                                       <option *ngFor="let mod of models">{{mod}}</option>
                                     </select>
                             </div>
                             <div class="form-group">
-                                    <button type="button" class="butt-orange" (click)="GetMyCoworking()" style="padding-left:15px;padding-right:15px;">build</button>    
-                            </div>
+                                    <button type="button" class="butt-orange"  style="padding-left:15px;padding-right:15px;">build</button>    
+                            </div>-->
                             
                         </div>
                         </div>
@@ -29,7 +29,7 @@
                <div class="row">
                     <div class="col-md-12">
                             <div style="display: block;">
-                                <canvas baseChart width="400" height="200"
+                                <canvas #mylinechart baseChart width="400" height="200"
                                             [datasets]="lineIncomeChartData"
                                             [labels]="lineIncomeChartLabels"
                                             [options]="lineIncomeChartOptions"
@@ -41,33 +41,16 @@
                                 </canvas>
                             </div>
                         </div>
-
-                        <!--
-                        <div class="col-md-12">
-                                <div style="display: block;">
-                                    <canvas baseChart width="400" height="100"
-                                                [datasets]="lineVisitorsChartData"
-                                                [labels]="lineVisitorsChartLabels"
-                                                [options]="lineVisitorsChartOptions"
-                                               
-                                                [legend]="lineVisitorsChartLegend"
-                                                [chartType]="lineVisitorsChartType"
-                                                (chartHover)="chartHovered($event)"
-                                                (chartClick)="chartClicked($event)">
-                                    </canvas>
-                                </div>
-                        </div>
-                    -->
                      </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="statistics-info">
-                    <p class="count active">{{total_income}} {{currency}}</p>
+                    <p class="count" [ngClass]="{active: isMoney}" (click)="changedLabel(true)">{{total_income}} {{currency}}</p>
                     <p class="what-is-it" translate>money</p>
                 </div>
                 <div class="statistics-info">
-                    <p class="count">{{total_visitors}}</p>
+                    <p class="count" [ngClass]="{active: !isMoney}" (click)="changedLabel(false)">{{total_visitors}}</p>
                     <p class="what-is-it" translate>visitors</p>
                 </div>
             </div>

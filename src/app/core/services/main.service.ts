@@ -105,6 +105,7 @@ export class MainService{
                 this.ClearSession();
                 this.SetupLocalUserStatus(UserEnumStatus.None);
             });
+            
     }
 
     

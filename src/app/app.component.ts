@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
                 this.broadcaster.on<JSON>('BookingsChannel').subscribe(
                   message => {
-                    if(notGiveNow||(!notGiveNow&&prevUser!=message['booking'].user_id)){
+                    if((notGiveNow||(!notGiveNow&&prevUser!=message['booking'].user_id))&&+localStorage.getItem('userStatus')>1){
                     notGiveNow = false;
                     prevUser = message['booking'].user_id;
                     console.log(message['event_type']);

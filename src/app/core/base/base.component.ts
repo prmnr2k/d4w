@@ -221,8 +221,10 @@ export class BaseComponent{
         } 
         else{
             this.NewErrForUser = false;
-            if(location.pathname=='/login' || location.pathname=='/system/registration')
-            {this.router.navigate(['/system','table']);location.reload();}
+            if(location.pathname=='/login' || location.pathname=='/system/registration'){
+                this.router.navigate(['/system','table']);
+                location.reload();
+            }
         }
 
     }

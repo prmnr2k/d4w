@@ -90,6 +90,7 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
         this.WaitBeforeLoading(
             ()=>this.service.CreateCoworking(this.Coworking),
             (res:CoworkingModel)=>{
+                console.log(`ok - finalCreateCoworking`);
                 //this.rulesShow = true;
                 this.RegistrationErr = false;
                 this.rulesShow = false;
@@ -107,7 +108,7 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
                         this.RegistrationErr = true;
                     }
                 );
-                
+                console.log(`end - finalCreateCoworking`);
             },
             (err)=>{
                 if(err.status == 422){

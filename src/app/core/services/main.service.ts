@@ -604,23 +604,23 @@ export class MainService{
 
     public GetAllAmenties(){
         return [
-            new CheckboxModel("Free coffee","free_coffee", "Бесплатный кофе"),
             new CheckboxModel("Coffee","coffee", "Кофе"),
+            //new CheckboxModel("Printing","printing", "Печать"),
             new CheckboxModel("Free printing","free_printing", "Бесплатная печать"),
-            new CheckboxModel("Conference room","conference_room", "Комната для конференций"),
+            /*new CheckboxModel("Conference room","conference_room", "Комната для конференций"),
             new CheckboxModel("Outdoor space","outdoor_space", "Место на улице"),
             new CheckboxModel("Extra monitor","extra_monitor", "Дополнительный монитор"),
             new CheckboxModel("Nap room","nap_room", "Комната для сна"),
             new CheckboxModel("Pet friendly","pet_friendly", "Можно с домашними животными"),
             new CheckboxModel("Kitchen","kitchen", "Кухня"),
-            new CheckboxModel("Bike storage","bike_storage", "Место для велосипедов"),
+            new CheckboxModel("Bike storage","bike_storage", "Место для велосипедов"),*/
             new CheckboxModel("Free parking","free_parking", "Бесплатная парковка"),
             new CheckboxModel("Parking","parking", "Парковка"),
-            new CheckboxModel("Snacks","snacks", "Закуски"),
-            new CheckboxModel("Whiteboards","whiteboards", "Настенные доски"),
+            new CheckboxModel("Snacks","snacks", "Закуски")
+            /*new CheckboxModel("Whiteboards","whiteboards", "Настенные доски"),
             new CheckboxModel("Standing desk","standing_desk", "Переносные доски"),
             new CheckboxModel("Mail service","mail_service", "Почтовый сервис"),
-            new CheckboxModel("Phone booth","phone_booth", "Телефонная будка")
+            new CheckboxModel("Phone booth","phone_booth", "Телефонная будка")*/
         ];
     }
 

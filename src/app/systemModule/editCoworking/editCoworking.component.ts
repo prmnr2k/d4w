@@ -65,7 +65,12 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
 
         }
     }
-
+    MaskTelephone(){
+        return {
+            mask: ['+','7','(', /[1-9]/, /\d/, /\d/, ')',/\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/],
+            keepCharPositions: true
+          };
+    }
     GetCoworkingWorkers(){
         this.WaitBeforeLoading(
             ()=>this.service.GetCoworkingWorkers(this.CoworkingId),

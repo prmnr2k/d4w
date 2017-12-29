@@ -225,6 +225,13 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
         } 
     }
 
+    MaskTelephone(){
+        return {
+            mask: ['+','7','(', /[1-9]/, /\d/, /\d/, ')',/\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/],
+            keepCharPositions: true
+          };
+    }
+
     getMask(index:number){
         return {
             mask: [/[0-2]/, this.Days[index].start_work && parseInt(this.Days[index].start_work[0]) > 1 ? /[0-3]/ : /\d/, ':', /[0-5]/, /\d/],

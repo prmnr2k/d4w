@@ -43,7 +43,7 @@
                                 <p translate>phone</p>
                             </div>
                             <div class="right-side side">
-                                <input class="input-text-style" type="text" pattern="^[+]?[0-9]{3,}$" #phone="ngModel" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event">
+                                <input class="input-text-style" type="text" [textMask]="MaskTelephone()" #phone="ngModel" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event">
                                 <p *ngIf="phone.invalid && phone.touched" class="red-error" translate>incPhone</p>
                             </div>
                         </div>

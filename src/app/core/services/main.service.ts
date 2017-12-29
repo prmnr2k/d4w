@@ -263,6 +263,10 @@ export class MainService{
         return result;
 
     }
+
+    GetAddress(address:string){
+        return this.http.GetDaDataRu(address);
+    }
     /* Coworkings BLOCK END */
 
 

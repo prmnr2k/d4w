@@ -36,6 +36,8 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
 import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
 import { ChartsModule } from 'ng2-charts';
+import { NgxTypeaheadModule } from 'ngx-typeahead';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 
 @NgModule({
@@ -80,8 +82,10 @@ import { ChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     SystemRoutingModule,
     LbdModule,
-    TranslateModule
+    TranslateModule,
+    NgxTypeaheadModule
   ],
   providers: [ SystemAccessGuard]
 })
 export class SystemModule {}
+

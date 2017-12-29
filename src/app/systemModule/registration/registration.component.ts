@@ -38,6 +38,19 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
     flagForImages:boolean = true;
     imagesCount:number = 5;
     Weekends = false;
+    Addresses:string[] = [];
+    selected:string = 'address';
+
+    public params = {
+        hl: 'en',
+        ds: 'yt',
+        xhr: 't'
+      };
+
+      handleResultSelected (result) {
+        this.Coworking.address = result;
+      }
+  
    
     ngOnInit() 
     {
@@ -49,6 +62,15 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
         
     }
    
+    getLocation(address:string){
+
+        this.Addresses = [];
+        this.service.GetAddress(address).subscribe((res)=>{
+            for(let adr of res.suggestions) this.Addresses.push(adr.value);
+        });
+
+        console.log(`Addr = `, this.Addresses);
+    }
     DeleteImage(i:number){
         this.Coworking.images.splice(i,1);
         this.imagesCount += 1;

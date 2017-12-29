@@ -110,7 +110,15 @@
                     <p translate>address</p>
                 </div>
                 <div class="right-side side">
-                    <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event">
+                    <!-- <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event"> -->
+                
+                    <input  class="input-text-style" type="text" autocomplete="off"
+                    name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event"
+                    ngxTypeahead [taList]="Addresses.length>0?Addresses:[]" [taParams]="params"
+                     (taSelected)="handleResultSelected($event)" 
+                     (input)="getLocation($event.target.value)">
+   
+                   
                 </div>
             </div>
             <div class="row-inputs">

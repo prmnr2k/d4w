@@ -76,4 +76,19 @@ export class HttpService
           })
     }
 
+    GetDaDataRu(address:string){
+
+      let header:Headers = new Headers([]);
+    
+        header.append('Content-Type','application/json');
+        header.append('Authorization','Token bf69a05b6ce842dcd0cbc159648d19a8c49fdf33');
+      
+            return this.http.post("https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address", {query:address},{headers:header}).map(res => {
+                let json = res.json();
+                console.log(`address `,json);
+                return json;
+              })
+
+    }
+
 }

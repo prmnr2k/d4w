@@ -17,14 +17,15 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
         switch(router.routeConfig.path){
             case "my_bookings":{
                 if(this.userStatus == this.UsrEnumStatus.User && login){
-                    return true;
+                    return false;
                 }
                 else{
                     return this.LoginNavigate();
                 }
             }
             case "change_password":{
-                if(this.userStatus > this.UsrEnumStatus.None && login){
+                //if(this.userStatus > this.UsrEnumStatus.None && login){
+                    if(this.userStatus == this.UsrEnumStatus.Creator && login){
                     return true;
                 }
                 else{
@@ -32,7 +33,8 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                 }
             }
             case "user_profile":{
-                if(this.userStatus > this.UsrEnumStatus.None && login){
+                //if(this.userStatus > this.UsrEnumStatus.None && login){
+                    if(this.userStatus == this.UsrEnumStatus.Creator && login){
                     return true;
                 }
                 else{
@@ -40,7 +42,8 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                 }
             }
             case "table":{
-                if(this.userStatus > this.UsrEnumStatus.User && login){
+                //if(this.userStatus > this.UsrEnumStatus.User && login){
+                    if(this.userStatus == this.UsrEnumStatus.Creator && login){
                     return true;
                 }
                 else{

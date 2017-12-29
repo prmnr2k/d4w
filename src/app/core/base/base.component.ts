@@ -219,6 +219,7 @@ export class BaseComponent{
             this.Logout();
             this.NewErrForUser = true;
         } 
+        
         else{
             this.NewErrForUser = false;
             if(location.pathname=='/login' || location.pathname=='/system/registration')

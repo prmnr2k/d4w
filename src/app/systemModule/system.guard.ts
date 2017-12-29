@@ -42,8 +42,8 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                 }
             }
             case "table":{
-                //if(this.userStatus > this.UsrEnumStatus.User && login){
-                    if(this.userStatus == this.UsrEnumStatus.Creator && login){
+                if(this.userStatus > this.UsrEnumStatus.User && login){
+                   // if(this.userStatus == this.UsrEnumStatus.Creator && login){
                     return true;
                 }
                 else{

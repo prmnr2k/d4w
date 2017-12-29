@@ -67,6 +67,7 @@ export class BaseComponent{
         this.WaitBeforeLoading(
             ()=>this.service.UserLogin(email,password),
             (res:TokenModel)=>{
+                console.log(`ok - Login`);
                 this.service.BaseInitAfterLogin(res);
                 console.log("before_navigate");
                 this.router.navigate(['/system','tabel']);

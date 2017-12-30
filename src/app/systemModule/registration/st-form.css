@@ -13,3 +13,31 @@ input.ng-touched.ng-invalid{
     flex-wrap: wrap;
    
 }
+.new-relative-dropdown{
+    position: relative;
+    
+}
+.dropdown-wrapp{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow: auto;
+    border: 1px solid rgba(0, 0, 0, 0.12);  
+    z-index: 400;
+    background: #fff;
+    display: block;
+
+}
+.dropdown-wrapp.show{
+    display: block;
+}
+.row-item{
+    padding: 7px 15px;
+    transition: 0.3s;
+}
+.row-item:hover{
+    background: rgba(0, 0, 0, 0.12);
+
+}

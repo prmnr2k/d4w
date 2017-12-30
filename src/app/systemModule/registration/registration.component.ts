@@ -39,7 +39,7 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
     imagesCount:number = 5;
     Weekends = false;
     Addresses:string[] = [];
-    selected:string = 'address';
+    selected:boolean = true;
 
     public params = {
         hl: 'en',
@@ -63,13 +63,13 @@ export class RegistrationComponent extends BaseComponent implements OnInit  {
     }
    
     getLocation(address:string){
-
+        this.selected = true;
         this.Addresses = [];
         this.service.GetAddress(address).subscribe((res)=>{
             for(let adr of res.suggestions) this.Addresses.push(adr.value);
         });
 
-        console.log(`Addr = `, this.Addresses);
+       // console.log(`Addr = `, this.Addresses);
     }
     DeleteImage(i:number){
         this.Coworking.images.splice(i,1);

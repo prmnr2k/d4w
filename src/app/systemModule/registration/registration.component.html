@@ -111,13 +111,15 @@
                 </div>
                 <div class="right-side side">
                     <!-- <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event"> -->
-                
-                    <input  class="input-text-style" type="text" autocomplete="off"
-                    name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event"
-                    ngxTypeahead [taList]="Addresses.length>0?Addresses:[]" [taParams]="params"
-                     (taSelected)="handleResultSelected($event)" 
-                     (input)="getLocation($event.target.value)">
-   
+                    <div class="new-relative-dropdown">
+                        <input  
+                        class="input-text-style" type="text" autocomplete="off"
+                        name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event"
+                        (input)="getLocation($event.target.value)">
+                        <div class="dropdown-wrapp" *ngIf="selected&&Addresses.length>0">
+                            <div class="row-item" *ngFor="let item of Addresses" (click)="Coworking.address = item; selected = false;">{{item}}</div>
+                        </div>
+                    </div>
                    
                 </div>
             </div>

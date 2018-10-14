@@ -42,12 +42,15 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                 }
             }
             case "table":{
+                // console.log(this.userStatus,this.UsrEnumStatus.User,login);
                 if(this.userStatus > this.UsrEnumStatus.User && login){
                    // if(this.userStatus == this.UsrEnumStatus.Creator && login){
                     return true;
                 }
                 else{
-                    return this.LoginNavigate();
+                    if(!login)
+                        this.LoginNavigate();
+                    return false;
                 }
             }
             case "coworking_profile":{

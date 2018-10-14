@@ -7,7 +7,7 @@ import { AppAccessGuard } from 'app/app.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch:'full'},
-    { path: 'login',component: LoginComponent, canActivate: [AppAccessGuard]},
+    { path: 'login', component: LoginComponent, canActivate: [AppAccessGuard]},
     { path: 'system', loadChildren: './systemModule/system.module#SystemModule'}
 ];
 

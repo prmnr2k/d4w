@@ -85,6 +85,8 @@ export class TablesComponent extends BaseComponent implements OnInit {
             (res:CoworkingModel) => {
                 if(res){
                     this.Coworking = res;
+                    console.log(this.Coworking);
+                    
                     let i = 1;
                     this.WorkingPlaces = Array(this.Coworking.capacity).fill(1).map((x,i)=>i+1);
                     
@@ -101,6 +103,7 @@ export class TablesComponent extends BaseComponent implements OnInit {
         this.GetMyAccess((result)=>{
             if(result){
                 this.meCwrk = result.coworking_id;
+                console.log("access ",this.meCwrk);
                 this.GetMyCoworking();
             }
             else{

@@ -123,21 +123,23 @@ export class TablesComponent extends BaseComponent implements OnInit {
         //todo протестить на всех поисковиках формат даты
         let dateStr = this.bsValue.getFullYear()+'-'+(this.bsValue.getMonth()+1)+'-'+this.bsValue.getDate();
        
-        this.WaitBeforeLoading(
-            ()=> this.service.GetBookingsByCwr(this.Coworking.id,{date:dateStr}),
-            (res:BookingModel[])=> {
-                this.Bookings = res;
-                setTimeout(
-                    ()=> this.SetPositions(()=>{}),
-                300);
-                
-                this.GetUsers();
-                this.GetMyRates();     
-            },
-            (err)=>{
-                console.log(err);
-            }
-        )
+        if(this.Coworking.id){
+            this.WaitBeforeLoading(
+                ()=> this.service.GetBookingsByCwr(this.Coworking.id,{date:dateStr}),
+                (res:BookingModel[])=> {
+                    this.Bookings = res;
+                    setTimeout(
+                        ()=> this.SetPositions(()=>{}),
+                    300);
+                    
+                    this.GetUsers();
+                    this.GetMyRates();     
+                },
+                (err)=>{
+                    console.log(err);
+                }
+            )
+        }
     }
 
     GetUserImage(user:UserModel){

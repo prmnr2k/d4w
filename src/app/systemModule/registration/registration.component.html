@@ -1,6 +1,6 @@
-<loading-cmp *ngIf="isLoading"></loading-cmp>
-<div class="wrapp-for-forms" [@ShowHideTrigger]="'start'" *ngIf="!isLoading">
-    <form *ngIf="!rulesShow" (ngSubmit)="CreateCoworking(submitFormCwrc)" #submitFormCwrc="ngForm">
+<loading-cmp *ngIf="isLoading||isCreating"></loading-cmp>
+<div class="wrapp-for-forms" [@ShowHideTrigger]="'start'" *ngIf="!isLoading&&!isCreating">
+    <form *ngIf="!rulesShow" (ngSubmit)="CheckCoworking(submitFormCwrc)" #submitFormCwrc="ngForm">
             <div *ngIf="RegistrationErr">
                     <h2 class="error-text-style">{{RegErrMsg}}</h2>
                 </div>
@@ -110,8 +110,8 @@
                     <p translate>address</p>
                 </div>
                 <div class="right-side side">
-                    <!-- <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event"> -->
-                    <div class="new-relative-dropdown">
+                    <input autocomplete="off" type="text" class="input-text-style" name="address" [(ngModel)]="Coworking.address" #searchg>
+                    <!-- <div class="new-relative-dropdown">
                         <input  
                         class="input-text-style" type="text" autocomplete="off"
                         name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event"
@@ -119,7 +119,7 @@
                         <div class="dropdown-wrapp" *ngIf="selected&&Addresses.length>0">
                             <div class="row-item" *ngFor="let item of Addresses" (click)="Coworking.address = item; selected = false;">{{item}}</div>
                         </div>
-                    </div>
+                    </div> -->
                    
                 </div>
             </div>

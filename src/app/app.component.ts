@@ -5,7 +5,7 @@ import { MainService } from './core/services/main.service';
 
 import { NotificationsComponent } from './systemModule/notifications/notifications.component';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
-import { setTimeout } from 'timers';
+// import { setTimeout } from 'timers';
 
 @Component({
   selector: 'app-root',

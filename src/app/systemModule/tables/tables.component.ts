@@ -8,7 +8,7 @@ import { CoworkingModel } from '../../core/models/coworking.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
 import { BookingModel } from '../../core/models/booking.model';
 
-import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/star-rating-struct";
+// import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/star-rating-struct";
 import { RateModel } from 'app/core/models/rate.model';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { BaseComponent } from 'app/core/base/base.component';
@@ -306,20 +306,20 @@ export class TablesComponent extends BaseComponent implements OnInit {
 
 
 
-    onClickResult:OnClickEvent;
-    onHoverRatingChangeResult:OnHoverRatingChangeEvent;
-    onRatingChangeResult:OnRatingChangeEven;
+    // onClickResult:OnClickEvent;
+    // onHoverRatingChangeResult:OnHoverRatingChangeEvent;
+    // onRatingChangeResult:OnRatingChangeEven;
  
-    onClick = ($event:OnClickEvent) => {
-        this.onClickResult = $event;
-    };
+    // onClick = ($event:OnClickEvent) => {
+    //     this.onClickResult = $event;
+    // };
  
-    onRatingChange = ($event:OnRatingChangeEven) => {
-        this.onRatingChangeResult = $event;
-    };
+    // onRatingChange = ($event:OnRatingChangeEven) => {
+    //     this.onRatingChangeResult = $event;
+    // };
  
-    onHoverRatingChange = ($event:OnHoverRatingChangeEvent) => {
-        this.onHoverRatingChangeResult = $event;
-    };
+    // onHoverRatingChange = ($event:OnHoverRatingChangeEvent) => {
+    //     this.onHoverRatingChangeResult = $event;
+    // };
 
 }

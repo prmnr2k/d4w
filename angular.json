@@ -1,0 +1,165 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "d4w-dashboard": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.json",
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/app/images",
+              {
+                "glob": "**/*",
+                "input": "images",
+                "output": "/images"
+              }
+            ],
+            "styles": [
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/slick.css",
+              "src/assets/css/style.css",
+              "src/assets/css/media.css"
+            ],
+            "scripts": [
+              "src/assets/js/jquery.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/slick.min.js",
+              "src/assets/js/gapi.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "node_modules/bootstrap-notify/bootstrap-notify.js",
+              "node_modules/chartist/dist/chartist.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "d4w-dashboard:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "d4w-dashboard:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "d4w-dashboard:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "scripts": [
+              "src/assets/js/jquery.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/slick.min.js",
+              "src/assets/js/gapi.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "node_modules/bootstrap-notify/bootstrap-notify.js",
+              "node_modules/chartist/dist/chartist.js"
+            ],
+            "styles": [
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/slick.css",
+              "src/assets/css/style.css",
+              "src/assets/css/media.css"
+            ],
+            "assets": [
+              "src/assets",
+              "src/favicon.ico",
+              "src/app/images",
+              {
+                "glob": "**/*",
+                "input": "images",
+                "output": "/images"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.json"
+            ],
+            "exclude": []
+          }
+        }
+      }
+    },
+    "d4w-dashboard-e2e": {
+      "root": "e2e",
+      "sourceRoot": "e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "d4w-dashboard:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.json"
+            ],
+            "exclude": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "d4w-dashboard",
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "app",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
+}

@@ -1,26 +1,25 @@
 $('.slider-images-coworking-wr').slick({
-    dots: true
-    , arrows: true
-    , infinite: true
-    , speed: 300
-    , slidesToShow: 1
+    dots: true,
+    arrows: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 1
 });
 $(".one-user-state").each(function () {
-    let width = count_time_width($(this).find(".from").text(), $(this).find(".to").text());
-    let margin = 0;
+    var width = count_time_width($(this).find(".from").text(), $(this).find(".to").text());
+    var margin = 0;
     if ($(this).find(".from").text() != '00:00') {
         margin = count_time_width('00:00', $(this).find(".from").text());
     }
     $(this).css({
-        "width": width + "%"
-        ,"left": margin + "%"
+        "width": width + "%",
+        "left": margin + "%"
     });
 });
-
 function count_time_width(firstDate, secondDate) {
-    let getDate = (string) => new Date(0, 0, 0, string.split(':')[0], string.split(':')[1]);
-    let different = (getDate(secondDate) - getDate(firstDate));
-    let differentRes, hours, minuts;
+    var getDate = function (string) { return new Date(0, 0, 0, string.split(':')[0], string.split(':')[1]); };
+    var different = (getDate(secondDate) - getDate(firstDate));
+    var differentRes, hours, minuts;
     if (different > 0) {
         differentRes = different;
         hours = Math.floor((differentRes % 86400000) / 3600000);

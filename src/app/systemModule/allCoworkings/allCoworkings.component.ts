@@ -11,14 +11,14 @@ import { Base64ImageModel } from '../../core/models/base64image.model';
 
 
 import { FormControl } from '@angular/forms';
-import { } from 'googlemaps';
+// import { } from 'googlemaps';
 import { MapsAPILoader } from '@agm/core';
 
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { BaseComponent } from '../../core/base/base.component';
 import { FrontWorkingDayModel } from 'app/core/models/frontWorkingDays.model';
 
-import {} from '@types/googlemaps';
+// import {} from '@types/googlemaps';
 import { ShowHideTrigger } from 'app/shared/animations/showFade.animation';
 import { TranslateService } from '@ngx-translate/core';
 

@@ -24,7 +24,7 @@ import { AgmCoreModule } from '@agm/core'
 import { CommonModule } from '@angular/common';
 import { PasswordValidationDirective } from './shared/directives/pass.validator.directive';
 //import { LoginModule } from 'app/login/login.module';
-import { SystemModule } from 'app/systemModule/system.module';
+// import { SystemModule } from 'app/systemModule/system.module';
 import { LoginComponent } from 'app/login/login.component';
 
 import { Ng2CableModule } from 'ng2-cable';

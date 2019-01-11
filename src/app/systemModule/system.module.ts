@@ -36,7 +36,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
 import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
 import { ChartsModule } from 'ng2-charts';
-
+import { StarRatingModule } from 'angular-star-rating';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 
@@ -82,7 +82,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     ReactiveFormsModule,
     SystemRoutingModule,
     LbdModule,
-    TranslateModule
+    TranslateModule,
+    StarRatingModule.forRoot()
   ],
   providers: [ SystemAccessGuard]
 })

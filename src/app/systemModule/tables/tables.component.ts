@@ -8,7 +8,7 @@ import { CoworkingModel } from '../../core/models/coworking.model';
 import { Base64ImageModel } from '../../core/models/base64image.model';
 import { BookingModel } from '../../core/models/booking.model';
 
-// import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/star-rating-struct";
+// import {OnClickEvent, OnRatingChangeEven, OnHoverRatingChangeEvent} from "angular-star-rating/angular-star-rating";
 import { RateModel } from 'app/core/models/rate.model';
 import { Ng2Cable, Broadcaster } from 'ng2-cable';
 import { BaseComponent } from 'app/core/base/base.component';

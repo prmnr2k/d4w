@@ -23,6 +23,7 @@ import { ChangePasswordComponent } from './changePassword/changePassword.compone
 import { SystemComponent } from './system.component';
 import { IdBookingComponent } from './idBooking/idBooking.component';
 import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
+import { HalfMapComponent } from './halfMap/halfMap.component';
 
 const routes: Routes =
 [
@@ -38,13 +39,15 @@ const routes: Routes =
       { path: 'registration', component: RegistrationComponent, canActivate: [SystemAccessGuard] },
       { path: 'coworking_profile', component:EditCoworkingComponent, canActivate: [SystemAccessGuard] },
       //{ path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
-      //{ path: 'all_coworkings', component:AllCoworkingsComponent},
+      { path: 'all_coworkings', component:AllCoworkingsComponent},
       //{ path: 'my_bookings', component:MyBookingsComponent,canActivate: [SystemAccessGuard]},
       //{ path: 'coworking/:id', component:CoworkingComponent},
       { path: 'user_profile', component: EditUserComponent, canActivate: [SystemAccessGuard] },
       { path: 'statistic', component: StatisticCoworkingComponent, canActivate: [SystemAccessGuard] },
       //{ path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
       { path: 'change_password', component: ChangePasswordComponent, canActivate: [SystemAccessGuard] },
+      { path: 'half_map', component:HalfMapComponent},
+      
       //{ path: 'booking/:id', component: IdBookingComponent, canActivate: [SystemAccessGuard] }
     ]
   }

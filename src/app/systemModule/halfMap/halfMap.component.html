@@ -1,0 +1,62 @@
+<loading-cmp *ngIf="isLoading"></loading-cmp>
+
+<div class="all-coworkings" [@ShowHideTrigger]="!isLoading ? 'start':'void'" [ngStyle]="{'display':isLoading?'none':'block'}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="map-coworkings-list">
+                    <div class="all-coworkings-flex">
+                        <div class="one-cowork-wr" *ngFor="let item of Coworkings">
+                            <div class="one-cowork">
+                                <a class="link-to-cowork">
+                                    <span class="spanlink"></span>
+                                </a>
+                                
+                                <div *ngIf="Images[item.id]" class="img-cowork" [ngStyle]="{'background-image':'url(' + Images[item.id] + ')'}"></div>
+                                <div *ngIf="!Images[item.id]" class="img-cowork"></div>
+
+                                <div class="description">
+                                    <p class="name-c">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</p>
+                                    <div class="flex-price">
+                                        <span class="price"><strong>Цена:</strong> {{item.price}}$</span>
+                                        <span class="capacity"><strong>Вместимость:</strong> {{item.capacity}}</span>
+                                    </div>
+                                    <p class="adress"><strong>Address:</strong> {{item.address}}</p>
+                                    <p class="week">
+                                        <span *ngFor="let day of item.working_days;let j = index">| {{day.day.slice(0,2)}} </span>
+                                    |</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination">
+                        <ul>
+                            <!--<li *ngIf="Page>1"><a (click)="PrevOrNextPage(false)" >« Previous Page</a></li>
+                            <li *ngFor="let i of Pages" [ngClass]="Page*1 == i*1 ? 'active-page':''" ><a (click)="ChangePageNumber(i*1)">{{i}}</a></li>
+                            <li *ngIf="Page<Pages.length"><a (click)="PrevOrNextPage(true)" >Next Page »</a></li>-->
+
+                            <li *ngIf="Page>1"><a (click)="PrevOrNextPage(false)" >« Previous Page</a></li>
+                            <li *ngFor="let i of Pages" [ngClass]="Page*1 == i*1 ? 'active-page':''" ><a *ngIf="i  < Page*1 + LeftPagin && i  > Page*1 - LeftPagin && i<=Pages.length-RightPagin" (click)="ChangePageNumber(i*1)">{{i}}</a></li>
+                            <li *ngIf="Pages.length-RightPagin>=LeftPagin+Page*1">...</li>   
+                            <li *ngFor="let i of Pages" [ngClass]="Page*1 == i*1 ? 'active-page':''" ><a *ngIf="i>Pages.length-RightPagin" (click)="ChangePageNumber(i*1)">{{i}}</a></li>   
+                            <li *ngIf="Page<Pages.length"><a (click)="PrevOrNextPage(true)" >Next Page »</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 map-fixed">
+                <form class="search-form">
+                    <div class="map" style="height: 800px;">
+                        <agm-map [latitude]="55.751244" [longitude]="37.618423">
+                            <ng-container *ngFor="let item of Coworkings">
+                                <agm-marker [markerDraggable]="false" [latitude]="item.lat" [longitude]="item.lng"></agm-marker>
+                            </ng-container>
+                        </agm-map>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

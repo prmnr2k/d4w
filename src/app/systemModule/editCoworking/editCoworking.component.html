@@ -27,7 +27,7 @@
                                 <p translate>cwrkFullName</p>
                             </div>
                             <div class="right-side side">
-                                <input type="text" maxlength="35" class="input-text-style" autocomplete="off"  name="fullname" [ngModel]="Coworking.full_name" (ngModelChange)="Coworking.full_name = $event" >
+                                <input type="text" maxlength="35" class="input-text-style" autocomplete="off"  name="fullname" [ngModel]="Coworking.full_name" (ngModelChange)="Coworking.full_name = $event" required>
                             </div>
                         </div>
                         <div class="row-inputs">
@@ -35,7 +35,7 @@
                                 <p translate>cwrkShortName</p>
                             </div>
                             <div class="right-side side">
-                                <input autocomplete="off" maxlength="20" type="text" class="input-text-style" name="short_name" [ngModel]="Coworking.short_name" (ngModelChange)="Coworking.short_name = $event" >
+                                <input autocomplete="off" maxlength="20" type="text" class="input-text-style" name="short_name" [ngModel]="Coworking.short_name" (ngModelChange)="Coworking.short_name = $event" required>
                             </div>
                         </div>
                         <div class="row-inputs">
@@ -53,7 +53,7 @@
                                 <p translate>numOfPlaces</p>
                             </div>
                             <div class="right-side side">
-                                <input autocomplete="off" type="text" #capacity="ngModel" maxlength="4" pattern="^[0-9]+$" class="input-text-style" name="capacity" [ngModel]="Coworking.capacity" (ngModelChange)="Coworking.capacity = $event">
+                                <input autocomplete="off" type="text" #capacity="ngModel" maxlength="4" pattern="^[0-9]+$" class="input-text-style" name="capacity" [ngModel]="Coworking.capacity" (ngModelChange)="Coworking.capacity = $event" required>
                                 <p *ngIf="capacity.invalid && capacity.touched" class="red-error" translate>invCapacity</p>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                                 <p translate>price</p>
                             </div>
                             <div class="right-side side">
-                                <input autocomplete="off" type="text" #price="ngModel" maxlength="4" pattern="^[0-9]+$" class="input-text-style" name="price" [ngModel]="Coworking.price" (ngModelChange)="Coworking.price = $event">
+                                <input autocomplete="off" type="text" #price="ngModel" maxlength="4" pattern="^[0-9]+$" class="input-text-style" name="price" [ngModel]="Coworking.price" (ngModelChange)="Coworking.price = $event" required>
                                 <p *ngIf="price.invalid && price.touched" class="red-error" translate>invPrice</p>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="right-side side">
                                 <input autocomplete="off" class="input-text-style" type="text" #firstN="ngModel" name="fname" [ngModel]="Coworking.first_name" (ngModelChange)="Coworking.first_name = $event" required>
-                                <p *ngIf="firstN.invalid && firstN.touched" class="red-error" translate>emptyName</p>
+                                <p *ngIf="firstN.invalid && firstN.touched" class="red-error" translate>nameEmpty</p>
                             </div>
                         </div>
                         

@@ -44,8 +44,6 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
     imagesCount:number = 5;
     arrorTime:string = '';
     @ViewChild('submitFormCwrc') form: NgForm;
-
-
     ngOnInit() 
     {
        this.BaseInit();

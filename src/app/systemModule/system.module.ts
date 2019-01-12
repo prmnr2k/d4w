@@ -38,6 +38,7 @@ import { StatisticCoworkingComponent } from './statisticCoworking/statisticCowor
 import { ChartsModule } from 'ng2-charts';
 import { StarRatingModule } from 'angular-star-rating';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { HalfMapComponent } from './halfMap/halfMap.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     ChangePasswordComponent,
     SystemComponent,
     IdBookingComponent,
-    StatisticCoworkingComponent
+    StatisticCoworkingComponent,
+    HalfMapComponent
   ],
   imports: [
     ChartsModule,
@@ -76,7 +78,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     BsDatepickerModule.forRoot(),
     TimepickerModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBB_1_ksAJ62AGdcPCnE-eQBIRTev320ys',
+      // apiKey: 'AIzaSyC2BkBEmbEb1Shxzr9wtZScnUCC-SQZKhA',
+      apiKey: "AIzaSyDNxl1cQw-cqFs5sv0vGJYmW_Ew5qWKNCc",
       libraries: ["places"]
     }),
     ReactiveFormsModule,

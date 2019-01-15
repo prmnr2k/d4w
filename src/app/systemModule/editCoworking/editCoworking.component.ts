@@ -217,7 +217,7 @@ export class EditCoworkingComponent extends BaseComponent implements OnInit {
     }
 
     CheckCwrk(){
-        if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name){
+        if(!this.Coworking.email || !this.Coworking.price || !this.Coworking.capacity || !this.Coworking.full_name || !this.Coworking.short_name || !this.Coworking.phone || !this.Coworking.address){
             if(this.service.GetCurrentLang() == 'en') {
                 this.RegErrMsg = "Input all fields!";
             }

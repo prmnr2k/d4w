@@ -15,7 +15,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     //{ path: 'dashboard', title: 'Dashboard',  icon: 'pe-7s-graph', class: '', isLoggedIn: false },
     { path: '/system/coworking_profile', title: 'Coworking Profile', ru_title: 'Профиль коворкинга', icon:'../assets/img/Tune.svg', class: '', userStatus:3 },
-    { path: '/system/table', title: 'Coworking stat',  ru_title: 'Статистика коворкинга', icon:'../assets/img/Chair.svg', class: '',  userStatus:2 },
+    { path: '/system/table', title: 'Booking',  ru_title: 'Бронь', icon:'../assets/img/Chair.svg', class: '',  userStatus:2 },
     { path: '/system/statistic', title: 'Statistics',  ru_title: 'Статистика', icon:'../assets/img/Statistic.svg', class: '',  userStatus:2 },
     { path: '/system/half_map', title: 'Map',  ru_title: 'Карта', icon:'../assets/img/pin.svg', class: '',  userStatus:2 }
 

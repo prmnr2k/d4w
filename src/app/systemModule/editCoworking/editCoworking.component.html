@@ -43,7 +43,7 @@
                                 <p translate>phone</p>
                             </div>
                             <div class="right-side side">
-                                <input class="input-text-style" type="text" [textMask]="MaskTelephone()" #phone="ngModel" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event">
+                                <input class="input-text-style" type="text" [textMask]="MaskTelephone()" #phone="ngModel" name="phone" [ngModel]="Coworking.phone" (ngModelChange)="Coworking.phone = $event" required>
                                 <p *ngIf="phone.invalid && phone.touched" class="red-error" translate>incPhone</p>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                 <p translate>address</p>
                             </div>
                             <div class="right-side side">
-                                <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event">
+                                <input autocomplete="off" type="text" class="input-text-style" name="address" [ngModel]="Coworking.address" (ngModelChange)="Coworking.address = $event" required>
                             </div>
                         </div>
                         <div class="row-inputs">

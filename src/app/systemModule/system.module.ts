@@ -1,3 +1,4 @@
+import { AdminStatComponent } from './admin-stat/admin-stat.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -39,6 +40,7 @@ import { ChartsModule } from 'ng2-charts';
 import { StarRatingModule } from 'angular-star-rating';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { HalfMapComponent } from './halfMap/halfMap.component';
+import { CoworkingStatComponent } from './admin-stat/coworking-stat/coworking-stat.component';
 
 
 @NgModule({
@@ -63,7 +65,9 @@ import { HalfMapComponent } from './halfMap/halfMap.component';
     SystemComponent,
     IdBookingComponent,
     StatisticCoworkingComponent,
-    HalfMapComponent
+    HalfMapComponent,
+    AdminStatComponent,
+    CoworkingStatComponent
   ],
   imports: [
     ChartsModule,

@@ -1,0 +1,152 @@
+.pull-left{
+  float:left;
+}
+.card{
+  height: 334px;
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+}
+.bg_cover{
+  background-repeat: no-repeat!important;
+  background-size: cover!important;
+}
+
+.cardshadow {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: block;
+  z-index: 1;
+  /* background: */
+  background-image: linear-gradient(-180deg, rgba(0,0,0,0.54) 0%, rgba(212,212,212,0.00) 37%, rgba(128,128,128,0.25) 65%, rgba(0,0,0,0.50) 96%);
+}
+
+.spanlink {
+  top: 0;
+  left: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: block;
+  z-index: 3;
+}
+
+.card-info-bg{
+
+  background-color: rgba(0, 0, 0, 0.719);
+  border:1px rgba(0, 0, 0, 0.308) solid;
+  padding: 10px;
+  border-radius: 5px;
+    word-wrap: break-word;
+    word-break: break-all; 
+}
+
+.cardname{
+position: absolute;
+top: 40px;
+left: 8%;
+
+font-size: 22px;
+color: #ffffff;
+margin: 0;
+margin-right: 15px;
+z-index: 2;
+}
+
+
+.cardprice{
+position: absolute;
+top: 120px;
+left: 8%;
+font-size: 15px;
+color: #000000;
+margin: 0;
+margin-right: 15px;
+z-index: 2;
+background-color: rgba(184, 184, 184, 0.808);
+}
+
+.cardcapacity{
+  position: absolute;
+  top: 120px;
+  right: 8%;
+  font-size: 15px;
+  color: #000000;
+  margin: 0;
+  margin-right: 15px;
+  z-index: 2;
+  background-color: rgba(184, 184, 184, 0.808);
+  }
+
+.cardaddress{
+    position: absolute;
+    top: 200px;
+    left: 8%;
+    font-size: 15px;
+    color: #000000;
+    margin: 0;
+    margin-right: 15px;
+    z-index: 2;
+    background-color: rgba(184, 184, 184, 0.808);
+    }
+
+  .carddates{
+      position: absolute;
+      bottom: 20px;
+      left: 8%;
+      font-size: 12px;
+      color: #000000;
+      margin: 0;
+      margin-right: 15px;
+      z-index: 2;
+      background-color: rgba(184, 184, 184, 0.808);
+    }
+  
+    .carddates span {
+      margin-right:5px;
+    }
+    
+    .time {
+      padding-left: 0;
+      height: 39px;
+      width: 100%;
+    }
+
+    .sebm-google-map-container {
+      height: 800px;
+    }
+
+    /* Pagination */
+    .pagination{display:block; width:100%; text-align:center; clear:both; cursor: pointer;}
+    .pagination li{display:inline-block; }
+    .pagination li:last-child{margin-right:0;}
+    .pagination a, .pagination strong{display:block;margin: 0 2px 0 0; padding:8px 11px; border:1px solid; border-radius: 3px; font-weight:normal;}
+
+    .pagination a, .pagination strong{border-color:#D7D7D7;color:#FF8026;;}
+    .pagination:hover a:hover, .pagination:hover strong:hover{color:white;background: #FF8026;}
+    .pagination .current{color:#FFFFFF; background-color:#000000;}
+    
+    .pagination .active-page a , .pagination strong .active-page{border: 2px solid #FF8026;}
+    
+.all-coworkings .all-coworkings-flex .one-cowork-wr{
+  width: 50%;
+}
+
+.map-coworkings-list{
+
+}
+
+.map-fixed{
+  
+}
+
+.cart-sight-wrapp {
+    width: 275px;
+}
+
+.cart-sight-wrapp .img {
+    height: 200px;
+    background-size: cover;
+    background-position: 50%;
+}

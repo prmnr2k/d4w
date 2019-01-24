@@ -1,3 +1,5 @@
+import { AdminAccessGuard } from './admin-access.guard';
+import { AdminStatComponent } from './admin-stat/admin-stat.component';
 import { NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
@@ -24,6 +26,7 @@ import { SystemComponent } from './system.component';
 import { IdBookingComponent } from './idBooking/idBooking.component';
 import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
 import { HalfMapComponent } from './halfMap/halfMap.component';
+import { CoworkingStatComponent } from './admin-stat/coworking-stat/coworking-stat.component';
 
 const routes: Routes =
 [
@@ -47,7 +50,8 @@ const routes: Routes =
       //{ path: 'userRegistration', component: UserRegistrationComponent, canActivate: [SystemAccessGuard] },
       { path: 'change_password', component: ChangePasswordComponent, canActivate: [SystemAccessGuard] },
       { path: 'half_map', component:HalfMapComponent},
-      
+      { path: 'admin_stat', component:AdminStatComponent, canActivate: [AdminAccessGuard]},
+      { path: 'admin_stat/:id', component:CoworkingStatComponent, canActivate: [AdminAccessGuard]},
       //{ path: 'booking/:id', component: IdBookingComponent, canActivate: [SystemAccessGuard] }
     ]
   }

@@ -80,6 +80,7 @@ export class TablesComponent extends BaseComponent implements OnInit {
     }
     
     GetMyCoworking(){
+        if(this.Me.coworking_id||this.meCwrk)
         this.WaitBeforeLoading(
             ()=>this.service.GetCoworkingById(this.Me.coworking_id?this.Me.coworking_id:(this.meCwrk?this.meCwrk:null)),
             (res:CoworkingModel) => {

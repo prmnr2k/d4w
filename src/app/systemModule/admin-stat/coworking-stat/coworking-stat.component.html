@@ -1,3 +1,20 @@
-<p>
-  coworking-stat works!
-</p>
+
+<div class="wrapp-for-forms">
+       
+    <h6 class="head-form">
+        <span>Коворкинг "{{Coworking.full_name?Coworking.full_name:Coworking.short_name?Coworking.short_name:''}}"</span>
+    </h6>
+    <div class="avatar-img" [ngStyle]="{'background-image': 'url('+ Coworking.image +')'}"></div>
+    <div class="description-coworking-wr">
+        <div class="description-coworking">
+                <p><strong>Цена: </strong>${{Coworking.price}}</p>
+                <p><strong>Кол-во мест: </strong>{{Coworking.capacity}}</p>
+                <p><strong>Адрес: </strong>{{Coworking.address}}</p>
+                <p><strong>Описание: </strong>{{Coworking.description}}</p>
+                <p><strong>Контакты: </strong>{{Coworking.contacts}}</p>
+                <p><strong>Дополнительная информация: </strong>{{Coworking.additional_info}}</p>
+        </div>
+    </div>
+    <hr>
+    <app-statistic-coworking *ngIf="CoworkingId" [CoworkingId]="CoworkingId"></app-statistic-coworking>
+</div>

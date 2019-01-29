@@ -10,7 +10,15 @@
                         </div>
                     </a>
                 </li>
-    
+                <li *ngIf="Me.is_admin" >
+                    <a [routerLink]="'/system/admin_stat'">
+                        <img [src]="'../assets/img/Statistic.svg'" class="img-responsive" alt="">
+                        <div class="hover-tool">
+                            <p *ngIf="service.GetCurrentLang() == 'en'">Admin</p>
+                            <p *ngIf="service.GetCurrentLang() == 'ru'">Админ</p>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
        

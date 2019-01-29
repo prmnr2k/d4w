@@ -32,7 +32,7 @@ const routes: Routes =
 [
   {path:'',component:SystemComponent, children:
     [
-      //{ path:'', redirectTo: 'all_coworkings', pathMatch:'full' },
+      { path:'', redirectTo: 'table', pathMatch:'full' },
       //{ path: 'user',           component: UserComponent},
       { path: 'table',          component: TablesComponent, canActivate: [SystemAccessGuard] },
       { path: 'typography',     component: TypographyComponent },

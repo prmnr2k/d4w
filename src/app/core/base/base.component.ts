@@ -34,8 +34,8 @@ export class BaseComponent{
         this.userStatus = this.service.GetLocalUserStatus();
 
         if(this.isLoggedIn){
-            this.ng2cable
-                .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+            // this.ng2cable
+            //     .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
             this.GetMyData();
         }
 
@@ -44,8 +44,8 @@ export class BaseComponent{
                 this.isLoggedIn = res;
                 if(this.isLoggedIn){
                     this.GetMyData();
-                    this.ng2cable
-                        .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
+                    // this.ng2cable
+                    //     .subscribe('wss://d4w-api.herokuapp.com/cable?token='+localStorage.getItem('token'), 'BookingsChannel');
                 }
                 else
                     this.router.navigate(['/login']);
@@ -97,8 +97,9 @@ export class BaseComponent{
     }
 
     protected GetMyData(){
-        this.GetMyAccess();     
+             
         this.GetMe();
+        this.GetMyAccess();
     }
 
     protected GetImageById(id:number,callback:(res:any)=>any, errCallback?:(obj?:any)=>void){
@@ -157,6 +158,7 @@ export class BaseComponent{
 
 
     protected GetMe(callback?:()=>any){
+        if(this.service.IsLogedIn())
         this.WaitBeforeLoading(
             ()=>this.service.GetMe(),
             (res)=>{
@@ -215,8 +217,7 @@ export class BaseComponent{
 
         this.service.SetupLocalUserStatus(this.userStatus);
 
-
-        if(+this.userStatus <= 1){
+        if(+this.userStatus <= 1 && !this.service.me.is_admin){
             this.Logout();
             this.NewErrForUser = true;
         } 
@@ -225,7 +226,10 @@ export class BaseComponent{
             this.NewErrForUser = false;
             if(location.pathname=='/login' || location.pathname=='/system/registration')
             {  
-                this.router.navigate(['/system','table']);
+                if(this.service.me.is_admin)
+                    this.router.navigate(['/system','admin_stat']);
+                else
+                    this.router.navigate(['/system','table']);
                 //location.reload();
             }
         }
@@ -234,7 +238,7 @@ export class BaseComponent{
 
     public Logout(){
         this.service.Logout();
-        this.ng2cable.unsubscribe();
+        // this.ng2cable.unsubscribe();
     }
     
 

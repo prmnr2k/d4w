@@ -1,22 +1,22 @@
 <loading-cmp *ngIf="isLoading"></loading-cmp>
 
-<div class="all-coworkings" [@ShowHideTrigger]="!isLoading ? 'start':'void'" [ngStyle]="{'display':isLoading?'none':'block'}">
+<div class="all-coworkings" [ngStyle]="{'display':isLoading?'none':'block'}">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
                 <div class="map-coworkings-list">
                     <div class="all-coworkings-flex">
                         <div class="one-cowork-wr" *ngFor="let item of Coworkings">
-                            <div class="one-cowork">
+                            <div [routerLink]="['/system', 'admin_stat', item.id]" class="one-cowork">
                                 <a class="link-to-cowork">
                                     <span class="spanlink"></span>
                                 </a>
                                 
-                                <div *ngIf="Images[item.id]" class="img-cowork" [ngStyle]="{'background-image':'url(' + Images[item.id] + ')'}"></div>
-                                <div *ngIf="!Images[item.id]" class="img-cowork"></div>
+                                <div *ngIf="item.image" class="img-cowork" [ngStyle]="{'background-image':'url(' + item.image + ')'}"></div>
+                                <div *ngIf="!item.image" class="img-cowork"></div>
 
                                 <div class="description">
-                                    <p [routerLink]="['/system', 'admin_stat', item.id]" class="name-c">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</p>
+                                    <p class="name-c">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</p>
                                     <div class="flex-price">
                                         <span class="price"><strong>Цена:</strong> {{item.price}}$</span>
                                         <span class="capacity"><strong>Вместимость:</strong> {{item.capacity}}</span>
@@ -55,7 +55,7 @@
                                   <agm-info-window>
                                     <p [routerLink]="['/system', 'admin_stat', item.id]" class="name-c">{{item.short_name?item.short_name:item.full_name.slice(0,15)}}</p>
                                     <div class="cart-sight-wrapp">                                      
-                                      <div class="img" [ngStyle]="{'background-image':'url(' + Images[item.id] + ')'}"></div>
+                                      <div class="img" [ngStyle]="{'background-image':'url(' + item.image + ')'}"></div>
                                     </div>
                                   </agm-info-window>
                                 </agm-marker>

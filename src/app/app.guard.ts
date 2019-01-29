@@ -25,7 +25,7 @@ export class AppAccessGuard extends BaseComponent implements CanActivate{
 
        // this.router.navigate(['/system','table']);
         if(this.isLoggedIn){
-            this.router.navigate(['/system','table']);
+            this.router.navigate(['/system', 'table']);
             return false;
         }
         

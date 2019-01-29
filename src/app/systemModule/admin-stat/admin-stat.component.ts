@@ -37,7 +37,7 @@ export class AdminStatComponent extends BaseComponent implements OnInit {
 RegistrationErr = false;
 
   Coworkings:CoworkingModel[] = [];
-  Images:string[] = [];
+  Images:{img: string, id: number}[] = [];
   bsRangeValue:any;
   Page: number=1;
   Pages: number[] = [];
@@ -136,12 +136,6 @@ RegistrationErr = false;
     },
     (err)=>{
       console.log(err);
-      this.Coworkings = [new CoworkingModel()];
-      this.Coworkings[0].id = 0;
-      this.Coworkings[0].lat = 0;
-      this.Coworkings[0].lng = 0;
-      this.Coworkings[0].full_name = 'Name Coworking';
-      this.Images[0] = './../../../assets/img/1.jpg';
     });
   }
 
@@ -152,10 +146,17 @@ RegistrationErr = false;
     for(let item of this.Coworkings)
     {
      if( item.images && item.images[0] && item.images[0].id){
-        this.GetImageById(item.images[0].id?item.images[0].id:null,(img:Base64ImageModel)=>{
-          this.Images[item.id] = img.base64;
-        },(err)=>{ this.Images[item.id] = null; });
-      } else this.Images[item.id] = null; 
+        this.GetImageById(item.images[0].id,(img:Base64ImageModel)=>{
+          if(img.base64.startsWith('data:image/jpeg;base64,'))
+            item.image = img.base64;
+          else 
+            item.image = 'data:image/jpeg;base64,'+img.base64;
+        },(err)=>{ 
+          item.image = './../../../assets/img/bg-sign-in.png'; 
+          });
+      } else {
+        item.image = './../../../assets/img/bg-sign-in.png'; 
+      }
   
   }
 }

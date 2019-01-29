@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MainService } from '../../core/services/main.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CheckboxModel } from '../../core/models/checkbox.model';
 import { TokenModel } from '../../core/models/token.model';
 import { UserModel } from '../../core/models/user.model';
@@ -27,7 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class StatisticCoworkingComponent extends BaseComponent implements OnInit{
     
-    CoworkingId:number;
+    @Input() CoworkingId:number;
     total_income:number = 0;
     total_visitors:number = 0;
     currency:string = 'rub';
@@ -120,17 +120,28 @@ export class StatisticCoworkingComponent extends BaseComponent implements OnInit
     public lineVisitorsChartLegend:boolean = true;
     public lineVisitorsChartType:string = 'bar';
 
+    constructor(protected service: MainService, protected router: Router, 
+      private activatedRoute: ActivatedRoute, protected ng2cable: Ng2Cable, protected broadcaster: Broadcaster,public translate: TranslateService) {
+      super(service,router,ng2cable,broadcaster,translate);
+      
+    }
+
     ngOnInit() {
       this.bsConfig = Object.assign({}, {containerClass: 'theme-default',showWeekNumbers:false});
       this.BaseInit();
     }
        
   BaseInit(){
-    this.GetMe(
-        ()=>{
-            this.GetMyCoworking();
-        }
-    );
+    if(this.CoworkingId){
+      this.GetStatistic();
+    }
+    else{
+      this.GetMe(
+          ()=>{
+              this.GetMyCoworking();
+          }
+      );
+    }
 }
 
 GetMyCoworking(){
@@ -238,6 +249,6 @@ GetMyCoworking(){
       this.GetMyCoworking();
     }
     hideDates(){
-      this.GetMyCoworking();
+      this.GetStatistic();
     }
 }

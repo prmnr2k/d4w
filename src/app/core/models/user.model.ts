@@ -9,6 +9,7 @@ export class UserModel{
         public address?: string,
         public coworking_id?: number,
         public created_at?: Date,
-        public updated_at?: Date
+        public updated_at?: Date,
+        public is_admin?: boolean
     ){}
 }

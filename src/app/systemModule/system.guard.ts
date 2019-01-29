@@ -16,7 +16,7 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
         let login = this.service.IsLogedIn();
         switch(router.routeConfig.path){
             case "my_bookings":{
-                if(this.userStatus == this.UsrEnumStatus.User && login){
+                if(( this.userStatus == this.UsrEnumStatus.User) && login){
                     return false;
                 }
                 else{
@@ -25,7 +25,7 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
             }
             case "change_password":{
                 //if(this.userStatus > this.UsrEnumStatus.None && login){
-                    if(this.userStatus == this.UsrEnumStatus.Creator && login){
+                    if(( this.service.me.is_admin || this.userStatus == this.UsrEnumStatus.Creator) && login){
                     return true;
                 }
                 else{
@@ -34,7 +34,7 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
             }
             case "user_profile":{
                 //if(this.userStatus > this.UsrEnumStatus.None && login){
-                    if(this.userStatus == this.UsrEnumStatus.Creator && login){
+                    if((this.service.me.is_admin || this.userStatus == this.UsrEnumStatus.Creator) && login){
                     return true;
                 }
                 else{
@@ -43,7 +43,7 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
             }
             case "table":{
                 // console.log(this.userStatus,this.UsrEnumStatus.User,login);
-                if(this.userStatus > this.UsrEnumStatus.User && login){
+                if(( this.userStatus > this.UsrEnumStatus.User) && login){
                    // if(this.userStatus == this.UsrEnumStatus.Creator && login){
                     return true;
                 }
@@ -54,7 +54,7 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                 }
             }
             case "coworking_profile":{
-                if(this.userStatus == this.UsrEnumStatus.Creator && login){
+                if(( this.userStatus == this.UsrEnumStatus.Creator) && login){
                     return true;
                 }
                 else{
@@ -62,7 +62,7 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                 }
             }
             case "statistic":{
-                if(this.userStatus == this.UsrEnumStatus.Creator && login){
+                if(( this.userStatus == this.UsrEnumStatus.Creator) && login){
                     return true;
                 }
                 else{
@@ -76,7 +76,10 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
     }
     
     LoginNavigate(){
-        this.router.navigate(['/login']);
+        if(!this.service.me.is_admin)
+            this.router.navigate(['/login']);
+        else 
+            this.router.navigate(['/system', 'admin_stat']);
         return false;
     }
 }

@@ -1,3 +1,4 @@
+import { BaseComponent } from 'app/core/base/base.component';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -5,21 +6,23 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAccessGuard implements CanActivate {
+export class AdminAccessGuard extends BaseComponent implements CanActivate {
 
-  IsAdmin = true;
-  constructor(protected router: Router){}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if(this.IsAdmin)
-      {
-        return true;
-      } 
-      else 
-      {
-        this.router.navigate(['/login']);
-        return false;
+        let login = this.service.IsLogedIn();
+        switch(next.routeConfig.path){
+          case "admin_stat":{
+              if(this.service.me.is_admin && login){
+                return true;
+              }
+              else{
+                  this.router.navigate(['/login']);
+                return false;
+              }
+          }
       }
+      return true;
   }
 }

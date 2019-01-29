@@ -22,6 +22,7 @@ export class CoworkingModel{
         public creator_id?:number,
         public created_at?: Date,
         public updated_at?: Date,
-        public image_id?:number
+        public image_id?:number,
+        public image?:string
     ){}
 }

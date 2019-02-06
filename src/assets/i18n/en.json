@@ -27,6 +27,7 @@
     "phone": "Phone*",
     "incPhone": "Phone contains invalid symbols!",
     "address": "Address*",
+    "backUps": "Backup",
     "save": "Save",
     "deleteProfile": "Delete profile",
     "currentPsw": "Current password*",
@@ -74,5 +75,8 @@
     "extend": "Extend by 30 min",
     "endDate": "End date:",
     "build": "Build",
-    "passwordReq": "Password*"
+    "passwordReq": "Password*",
+    "fileDownload": "Download",
+    "fileUpload": "File uploaded!",
+    "uploadFile": "Upload file"
 }

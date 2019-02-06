@@ -41,6 +41,7 @@ import { StarRatingModule } from 'angular-star-rating';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { HalfMapComponent } from './halfMap/halfMap.component';
 import { CoworkingStatComponent } from './admin-stat/coworking-stat/coworking-stat.component';
+import { BackupsComponent } from './backups/backups.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { CoworkingStatComponent } from './admin-stat/coworking-stat/coworking-st
     StatisticCoworkingComponent,
     HalfMapComponent,
     AdminStatComponent,
-    CoworkingStatComponent
+    CoworkingStatComponent,
+    BackupsComponent
   ],
   imports: [
     ChartsModule,

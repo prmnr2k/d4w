@@ -45,6 +45,26 @@ export class HttpService
             .catch((error:any) =>{return Observable.throw(error);});
     }
 
+    // PostFile(method:string,data)
+    // {
+    //     const HEADER = new Headers([]);
+        
+    //     HEADER.append('Authorization',data);
+    //     HEADER.append('Content-Type','multipart/form-data');
+    //     HEADER.append('Content-Type','boundary');
+
+    //     return this.http.post(this.serverUrl + method,data, {headers: HEADER})
+    //         .map((resp:Response)=>resp.json())
+    //         .catch((error:any) =>{return Observable.throw(error);});
+    // }
+
+    PostFile(method:string,data)
+    {
+        return this.http.post(this.serverUrl + method,data)
+            .map((resp:Response)=>resp.json())
+            .catch((error:any) =>{return Observable.throw(error);});
+    }
+
     GetData(method:string,params:string)
     {
         if(!this.headers.has('Content-Type'))

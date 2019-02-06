@@ -18,11 +18,20 @@ export class AdminAccessGuard extends BaseComponent implements CanActivate {
                 return true;
               }
               else{
-                  this.router.navigate(['/login']);
+                  this.router.navigate(['/system']);
+                  return false;
+              }
+          }
+          case "backup":{
+              if(this.service.me.is_admin && login){
+                return true;
+              }
+              else{
+                  this.router.navigate(['/system']);
                 return false;
               }
           }
       }
-      return true;
+      return false;
   }
 }

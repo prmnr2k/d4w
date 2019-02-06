@@ -14,6 +14,7 @@
     "email": "Еmail*",
     "settings": "Настройки",
     "changePsw": "Смена пароля",
+    "backUps": "Бэкап",
     "bookings": "Брони",
     "exit": "Выход",
     "cwrkChange": "Изменение коворкинга",
@@ -74,5 +75,8 @@
     "extend": "Продлить на 30 мин",
     "endDate": "Дата окончания:",
     "build": "Отобразить",
-    "passwordReq": "Пароль*"
+    "passwordReq": "Пароль*",
+    "fileDownload": "Скачать",
+    "fileUpload": "Файл загружен!",
+    "uploadFile": "Загрузить файл"
 }

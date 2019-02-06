@@ -41,16 +41,14 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
                     return this.LoginNavigate();
                 }
             }
-            case "table":{
+            case "table": {
                 // console.log(this.userStatus,this.UsrEnumStatus.User,login);
                 if(( this.userStatus > this.UsrEnumStatus.User) && login){
                    // if(this.userStatus == this.UsrEnumStatus.Creator && login){
                     return true;
                 }
-                else{
-                    if(!login)
-                        this.LoginNavigate();
-                    return false;
+                else {
+                    return this.LoginNavigate();
                 }
             }
             case "coworking_profile":{
@@ -76,10 +74,14 @@ export class SystemAccessGuard extends BaseComponent implements CanActivate{
     }
     
     LoginNavigate(){
-        if(!this.service.me.is_admin)
+        if(this.isLoggedIn){
+            if(!this.service.me.is_admin)
+                this.router.navigate(['/system', 'table']);
+            else 
+                this.router.navigate(['/system', 'admin_stat']);
+        }  else {
             this.router.navigate(['/login']);
-        else 
-            this.router.navigate(['/system', 'admin_stat']);
+        }
         return false;
     }
 }

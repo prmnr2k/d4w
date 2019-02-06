@@ -363,6 +363,26 @@ export class MainService{
 
 
 
+    GetAllPrivateCoworking(){
+        return this.http.GetData('/private_coworkings/get_all',this.ParamsToUrlSearchParams({}));
+    }
+
+    // AddPrivateCoworking(uploaded_file){
+
+
+    //     var formData = new FormData();
+    //     formData.append('file', uploaded_file);xx
+    //     var options = { uploaded_file: formData };
+
+    //     return this.http.PostFile('/private_coworkings/create', options);
+    // }
+
+    AddPrivateCoworking(uploaded_file){
+
+       return this.http.PostData('/private_coworkings/create', JSON.stringify(uploaded_file));
+        // return this.http.PostFile('/private_coworkings/create', options);
+    }
+
 
     /* DATA BLOCK START */
 

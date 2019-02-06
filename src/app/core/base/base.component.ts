@@ -156,6 +156,20 @@ export class BaseComponent{
         }
     }
 
+    protected ReadFile(files:any,callback?:(params?)=>any){
+        for(let f of files){
+            let file:File = f;
+            if(!file){
+               break;
+            }
+            let myReader:FileReader = new FileReader();
+            myReader.onloadend = (e) => {
+                callback(myReader.result);
+            }
+            myReader.readAsText(file);
+        }
+    }
+
 
     protected GetMe(callback?:()=>any){
         if(this.service.IsLogedIn())

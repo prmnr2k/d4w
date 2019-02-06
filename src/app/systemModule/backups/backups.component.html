@@ -1,0 +1,30 @@
+<div class="wrapp-for-forms" [@ShowHideTrigger]="'start'" *ngIf="!isLoading">
+
+    <form #submitFormPswrd="ngForm">
+
+        <h6 class="head-form">
+            <span translate>backUps</span>
+        </h6>
+
+        <h2 *ngIf="RegistrationErr" class="error-text-style">{{RegErrMsg}}</h2>
+
+        <div class="photos-wrapp">
+          <label class="files_upload">
+              <span class="butt-orange" translate>uploadFile</span>
+              <input name="galery_images" type="file" accept=".json" (change)="onFileChange($event)" #fileInput>
+          </label>
+          <p *ngIf="file" style="text-align: center">{{fileName}}</p>
+        </div>
+
+        <button (click)="UploadFile()" class="butt-orange" type="submit" [disabled]="!file || isLoadingFile" translate>save</button>
+        <loading-cmp *ngIf="isLoadingFile"></loading-cmp>
+        <p class="succes_upload" *ngIf="isFileUploaded" translate>
+            fileUpload
+        </p>
+        <hr>
+        <button (click)="DownloadFile()" class="butt-orange" type="button" translate>fileDownload</button>
+
+    </form>
+</div>
+
+    

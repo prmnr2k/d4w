@@ -27,6 +27,7 @@ import { IdBookingComponent } from './idBooking/idBooking.component';
 import { StatisticCoworkingComponent } from './statisticCoworking/statisticCoworking.component';
 import { HalfMapComponent } from './halfMap/halfMap.component';
 import { CoworkingStatComponent } from './admin-stat/coworking-stat/coworking-stat.component';
+import { BackupsComponent } from './backups/backups.component';
 
 const routes: Routes =
 [
@@ -52,6 +53,7 @@ const routes: Routes =
       { path: 'half_map', component:HalfMapComponent},
       { path: 'admin_stat', component:AdminStatComponent, canActivate: [AdminAccessGuard]},
       { path: 'admin_stat/:id', component:CoworkingStatComponent, canActivate: [AdminAccessGuard]},
+      { path: 'backup', component:BackupsComponent, canActivate: [AdminAccessGuard]},
       //{ path: 'booking/:id', component: IdBookingComponent, canActivate: [SystemAccessGuard] }
     ]
   }

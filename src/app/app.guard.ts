@@ -22,13 +22,10 @@ export class AppAccessGuard extends BaseComponent implements CanActivate{
     }
 
     private LoginHandler(router:ActivatedRouteSnapshot, state: RouterStateSnapshot):boolean{
-
-       // this.router.navigate(['/system','table']);
         if(this.isLoggedIn){
-            this.router.navigate(['/system', 'table']);
+            this.router.navigate(['/system']);
             return false;
         }
-        
         return true;
         
     }

@@ -19,6 +19,15 @@
                         </div>
                     </a>
                 </li>
+                <li *ngIf="Me.is_admin" >
+                    <a [routerLink]="'/system/backup'">
+                        <img [src]="'../assets/img/Add.svg'" class="img-responsive" alt="">
+                        <div class="hover-tool">
+                            <p *ngIf="service.GetCurrentLang() == 'en'">Backup</p>
+                            <p *ngIf="service.GetCurrentLang() == 'ru'">Бэкап</p>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
        
